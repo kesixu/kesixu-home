@@ -25,7 +25,7 @@
       c.setAttribute("cx", cx.toFixed(1));
       c.setAttribute("cy", cy.toFixed(1));
       c.setAttribute("r", (0.5 + (i * 37 % 10) / 12).toFixed(2));
-      c.setAttribute("opacity", (0.05 + (i * 53 % 10) / 60).toFixed(3));
+      c.setAttribute("opacity", (0.12 + (i * 53 % 10) / 45).toFixed(3));
       field.appendChild(c);
     }
   }
@@ -62,6 +62,7 @@
     var phase = 0, active = false, raf = 0, last = 0;
     var parts = [], sparks = [];
     var MAXP = isMobile ? 90 : 150;
+    var nameEdge = 0; // 名字右缘（px），驻位锚定用；0 = 未测量
 
     // 预渲染光斑 sprite：金 / 琥珀 / 橙 / 烬红
     var tints = ["255,222,160", "255,169,77", "255,107,53", "179,58,30"];
@@ -106,8 +107,11 @@
         ang = lerp(-0.55, -0.35, eSt);
         inten = eSt * 0.25;
       } else {
-        // 驻位在名字右侧：像举着火柴照亮名字，避开居中的文字列
-        mx = lerp(W * 0.34, W * 0.72, ease(eUp));
+        // 驻位在名字右侧：像举着火柴照亮名字。宽屏时收拢到名字右缘附近，
+        // 手机上 min() 仍取 0.72W（名字右缘 + 间距 ≈ 0.72W），行为不变
+        var restX = Math.min(W * 0.72,
+          (nameEdge > 0 ? nameEdge : W * 0.72) + Math.min(W * 0.08, 96));
+        mx = lerp(W * 0.34, restX, ease(eUp));
         my = lerp(H * 0.58, H * 0.56, ease(eUp));
         ang = lerp(-0.35, -1.45, ease(eUp));
         inten = lerp(0.25, 1, ease(eUp));
@@ -225,6 +229,7 @@
 
     return {
       setPhase: function (p) { phase = p; },
+      setNameEdge: function (v) { nameEdge = v; },
       setActive: function (on) {
         on = on && !document.hidden;
         if (on === active) return;
@@ -238,6 +243,12 @@
   }
 
   var flame = FlameScene(document.getElementById("flame"));
+
+  var nameEl = document.querySelector(".hero-name h1");
+  function measureName() {
+    flame.setNameEdge(nameEl.getBoundingClientRect().right);
+  }
+  measureName();
 
   /* ============================================================
      章一 · hero pinned 时间轴（scroll 即划火柴）
@@ -282,8 +293,10 @@
     var H = story.scrollHeight;
     var Wl = fuseSvg.clientWidth || 60;
     // 几何约定：svg 宽 = gutter+20，灯芯中线 = gutter/2（与 .lamp-dot 的 CSS 对齐）
+    // 纵向向上多出 EXT，与 CSS #fuse{top:-90px; height:calc(100%+90px)} 1:1 对应
+    var EXT = 90;
     var x = (Wl - 20) / 2;
-    fuseSvg.setAttribute("viewBox", "0 0 " + Wl + " " + H);
+    fuseSvg.setAttribute("viewBox", "0 -" + EXT + " " + Wl + " " + (H + EXT));
 
     var storyTop = story.getBoundingClientRect().top + window.scrollY;
     var pins = [];
@@ -291,7 +304,7 @@
       var r = d.getBoundingClientRect();
       pins.push(r.top + r.height / 2 + window.scrollY - storyTop);
     });
-    var pts = [[x, 0]];
+    var pts = [[x, -EXT]];
     var y = 0, stepY = 300, k = 0;
     var nextPin = 0;
     function nearPin(yy) {
@@ -416,12 +429,14 @@
     clearTimeout(rT);
     rT = setTimeout(function () {
       flame.resize();
+      measureName();
       buildFuse();
       ScrollTrigger.refresh();
     }, 280);
   });
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(function () {
+      measureName();
       buildFuse();
       ScrollTrigger.refresh();
     });
