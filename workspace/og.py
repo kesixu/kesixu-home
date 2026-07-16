@@ -9,6 +9,9 @@ with sync_playwright() as p:
     page.wait_for_timeout(500)
     page.evaluate(f"window.scrollTo(0, {int(630 * 2.3 * 0.80)})")
     page.wait_for_timeout(1600)
-    page.screenshot(path="site/assets/og.png")
+    page.screenshot(path="/tmp/og-raw.png")
     b.close()
-print("og.png done")
+
+from PIL import Image
+Image.open("/tmp/og-raw.png").convert("RGB").save("site/assets/og.jpg", "JPEG", quality=85, optimize=True)
+print("og.jpg done")

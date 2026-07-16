@@ -31,7 +31,11 @@
   }
 
   var reducedQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (reducedQuery.matches || !window.gsap || !window.ScrollTrigger) return; // 基线：静态点亮态
+  if (reducedQuery.matches || !window.gsap || !window.ScrollTrigger) {
+    // 基线：静态点亮态（与中途切 reduced 的终态保持一致）
+    document.querySelectorAll(".lamp").forEach(function (el) { el.classList.add("lit"); });
+    return;
+  }
 
   gsap.registerPlugin(ScrollTrigger);
   document.documentElement.classList.add("fx");
@@ -392,6 +396,18 @@
   gsap.to("#ember > *", {
     opacity: 1, y: 0, duration: 1.1, stagger: 0.14, ease: "power2.out",
     scrollTrigger: { trigger: "#ember", start: "top 72%", once: true }
+  });
+
+  /* ---------- 键盘兜底：Tab 进未点亮区域时立即点亮，焦点永不落在透明元素上 ---------- */
+  document.getElementById("lamps").addEventListener("focusin", function (e) {
+    var lamp = e.target.closest(".lamp");
+    if (lamp && !lamp.classList.contains("lit")) {
+      lamp.classList.add("lit");
+      gsap.to(lamp, { opacity: 1, y: 0, duration: 0.3, overwrite: true });
+    }
+  });
+  document.getElementById("ember").addEventListener("focusin", function () {
+    gsap.to("#ember > *", { opacity: 1, y: 0, duration: 0.3, overwrite: true });
   });
 
   /* ---------- 布局变动：重建引信 ---------- */
