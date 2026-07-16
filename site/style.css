@@ -1,0 +1,491 @@
+/* ============================================================
+   《划亮》 kesixu.com — 设计宪法见 ../AGENTS.md
+   世界观：一间黑屋子，唯一光源是访客划亮的火柴。
+   基线（无 JS / reduced-motion）：整页处于"已点亮"的静态可读态。
+   .fx 作用域：仅在 JS + 允许动效时才进入"待点亮"态。
+   ============================================================ */
+
+:root {
+  --ink:   #0d0b09;
+  --ember: #b33a1e;
+  --flame: #ff6b35;
+  --amber: #ffa94d;
+  --gold:  #ffd28a;
+  --paper: #f2ece1;
+  --smoke: #8a8378;
+  --smoke-dim: #6f695f;
+  --char:  #2a2019;            /* 未点燃的引信/物件色 */
+  --gutter: clamp(24px, 7vw, 52px);
+  --display: "LXGW WenKai", "Noto Serif SC", "Songti SC", serif;
+  --echo-font: "EB Garamond", Georgia, "Times New Roman", serif;
+  --body-font: "Segoe UI", -apple-system, "Helvetica Neue",
+               "PingFang SC", "HarmonyOS Sans SC", "MiSans",
+               "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+}
+
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("/fonts/wenkai-subset.woff2") format("woff2");
+  font-weight: 400 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "EB Garamond";
+  src: url("/fonts/garamond-italic-subset.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 400 600;
+  font-display: swap;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  background: var(--ink);
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background:
+    radial-gradient(120% 90% at 50% 0%, #14100c 0%, var(--ink) 55%),
+    var(--ink);
+  color: var(--paper);
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 1.9;
+  overflow-x: hidden;
+}
+
+::selection { background: rgba(255, 169, 77, .28); color: var(--paper); }
+
+a { color: inherit; text-decoration: none; }
+a:focus-visible {
+  outline: 1px solid var(--amber);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.echo {
+  display: block;
+  font-family: var(--echo-font);
+  font-style: italic;
+  font-weight: 450;
+  color: var(--smoke-dim);
+  letter-spacing: .05em;
+}
+
+/* ------------------------------------------------------------
+   章零 + 章一 · hero
+   ------------------------------------------------------------ */
+
+#hero {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+}
+
+#flame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.whisper {
+  position: absolute;
+  top: 18svh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  text-align: center;
+  font-family: var(--display);
+  font-size: clamp(19px, 5vw, 26px);
+  letter-spacing: .22em;
+  color: var(--smoke);
+}
+.whisper .echo { margin-top: .9em; font-size: .62em; letter-spacing: .1em; }
+
+.hero-name {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.hero-name h1 {
+  writing-mode: vertical-rl;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(92px, 23vw, 176px);
+  line-height: 1.06;
+  letter-spacing: .1em;
+  color: var(--paper);
+  text-shadow:
+    0 0 24px rgba(255, 169, 77, .38),
+    0 0 90px rgba(255, 107, 53, .18);
+}
+
+.hero-name .latin {
+  font-family: var(--echo-font);
+  font-style: italic;
+  font-size: clamp(17px, 4.4vw, 22px);
+  letter-spacing: .34em;
+  text-indent: .34em;      /* 视觉居中补偿 */
+  color: var(--amber);
+}
+
+.hero-name .tagline {
+  font-family: var(--display);
+  font-size: clamp(15px, 4vw, 18px);
+  letter-spacing: .08em;
+  line-height: 2.1;
+  color: var(--smoke);
+  max-width: 30em;
+}
+
+.hero-name .echo { font-size: clamp(12px, 3.2vw, 14px); }
+
+.scroll-hint {
+  position: absolute;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--display);
+  font-size: 15px;
+  letter-spacing: .5em;
+  text-indent: .5em;
+  color: var(--smoke);
+  text-align: center;
+}
+.scroll-hint::before {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 34px;
+  margin: 0 auto 14px;
+  background: linear-gradient(to bottom, transparent, var(--amber));
+}
+
+/* ------------------------------------------------------------
+   引信（贯穿 #story 的光线）
+   ------------------------------------------------------------ */
+
+#story {
+  position: relative;
+  max-width: 780px;
+  margin-inline: auto;
+  padding: 4vh 22px 10vh calc(var(--gutter) + 26px);
+}
+
+#fuse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--gutter) + 20px);
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+#fuseBase { stroke: var(--char); stroke-width: 1.5; }
+#fuseLit  { stroke-width: 1.5; filter: drop-shadow(0 0 6px rgba(255, 169, 77, .65)); }
+
+#fuseHead {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow:
+    0 0 10px 3px rgba(255, 210, 138, .9),
+    0 0 34px 12px rgba(255, 107, 53, .35);
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* ------------------------------------------------------------
+   章二 · 自述
+   ------------------------------------------------------------ */
+
+.chapter { position: relative; }
+
+#about { padding: 16vh 0 10vh; }
+
+#about .line {
+  font-family: var(--display);
+  font-size: clamp(23px, 6vw, 36px);
+  font-weight: 500;
+  line-height: 1.85;
+  letter-spacing: .04em;
+  color: var(--paper);
+  margin-bottom: 11vh;
+}
+
+#about .line.strong { color: var(--gold); }
+
+#about .echo { font-size: clamp(14px, 3.6vw, 17px); margin-top: -6vh; }
+
+/* ------------------------------------------------------------
+   章三 · 七盏灯
+   ------------------------------------------------------------ */
+
+#lamps { padding: 8vh 0 6vh; }
+
+#lamps h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(34px, 9vw, 54px);
+  letter-spacing: .14em;
+  color: var(--paper);
+}
+#lamps h2 .echo { font-size: .38em; margin-top: .7em; letter-spacing: .12em; }
+
+.chapter-sub {
+  font-family: var(--display);
+  font-size: clamp(15px, 4vw, 18px);
+  color: var(--smoke);
+  letter-spacing: .1em;
+  margin: 3.5vh 0 4vh;
+}
+
+.lamp-list { list-style: none; }
+
+.lamp {
+  position: relative;
+  padding: 5.5vh 0;
+}
+.lamp::before {                      /* 火光衬底，点亮时浮现 */
+  content: "";
+  position: absolute;
+  inset: 0 -8% 0 -30%;
+  background: radial-gradient(closest-side at 18% 42%,
+              rgba(255, 140, 66, .085), transparent 72%);
+  opacity: 0;
+  transition: opacity 1.1s ease;
+  pointer-events: none;
+}
+.lamp.lit::before { opacity: 1; }
+
+.lamp-dot {
+  position: absolute;
+  /* 落在 gutter 里、与引信同一竖线（JS 会将引信路径过此点） */
+  left: calc(-26px - var(--gutter) / 2 - 3.5px);
+  top: calc(5.5vh + .95em);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--char);
+  transition: background 1s ease, box-shadow 1.2s ease, transform 1.2s ease;
+}
+.lamp.lit .lamp-dot {
+  background: var(--gold);
+  transform: scale(1.25);
+  box-shadow:
+    0 0 8px 2px rgba(255, 210, 138, .85),
+    0 0 26px 9px rgba(255, 107, 53, .3);
+}
+
+.lamp h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(26px, 7vw, 34px);
+  letter-spacing: .06em;
+  color: var(--smoke);
+  transition: color 1s ease, text-shadow 1s ease;
+}
+.lamp.lit h3 {
+  color: var(--paper);
+  text-shadow: 0 0 18px rgba(255, 169, 77, .3);
+}
+
+.lamp h3 a {
+  border-bottom: 1px solid rgba(255, 169, 77, .5);
+  padding-bottom: 2px;
+}
+.lamp h3 .ext {
+  font-size: .55em;
+  color: var(--amber);
+  vertical-align: .55em;
+  margin-left: .25em;
+}
+
+.lamp-desc {
+  font-size: clamp(15px, 4vw, 16.5px);
+  color: var(--smoke);
+  max-width: 34em;
+  margin: 1.6vh 0 2.2vh;
+  transition: color 1s ease;
+}
+.lamp.lit .lamp-desc { color: #cfc7b8; }
+
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-indent: .22em;
+  color: var(--smoke-dim);
+  border: 1px solid rgba(138, 131, 120, .35);
+  border-radius: 999px;
+  padding: 4px 13px 3px;
+  transition: color 1s ease, border-color 1s ease;
+}
+.lamp.lit .tag { color: var(--amber); border-color: rgba(255, 169, 77, .45); }
+.lamp.lit .tag-open {
+  color: var(--gold);
+  border-color: rgba(255, 210, 138, .65);
+}
+
+/* ------------------------------------------------------------
+   章四 · 星图
+   ------------------------------------------------------------ */
+
+#sky {
+  min-height: 120svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6vh;
+  padding: 14vh 24px;
+  text-align: center;
+  overflow: hidden;
+}
+
+#dipper {
+  width: min(86vw, 480px);
+  height: auto;
+}
+
+#dipperLines line {
+  stroke: #8a7a5e;
+  stroke-width: .6;
+  opacity: .4;
+}
+
+#dipperStars circle {
+  fill: var(--gold);
+}
+#dipperStars .star text {
+  font-family: var(--display);
+  font-size: 11px;
+  fill: var(--smoke);
+  letter-spacing: .08em;
+}
+#dipperStars .bright circle {
+  filter: drop-shadow(0 0 4px rgba(255, 210, 138, .9));
+}
+
+#skyField circle { fill: var(--paper); }
+
+.sky-line {
+  font-family: var(--display);
+  font-size: clamp(22px, 6vw, 34px);
+  letter-spacing: .08em;
+  color: var(--paper);
+  text-wrap: balance;
+}
+
+#sky .echo { font-size: clamp(13px, 3.4vw, 16px); margin-top: -3vh; }
+
+/* ------------------------------------------------------------
+   章五 · 灯留着
+   ------------------------------------------------------------ */
+
+#ember {
+  min-height: 92svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4.5vh;
+  text-align: center;
+  padding: 10vh 24px calc(8vh + env(safe-area-inset-bottom));
+}
+
+.ember-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow:
+    0 0 10px 3px rgba(255, 210, 138, .8),
+    0 0 40px 14px rgba(255, 107, 53, .28);
+}
+
+.keep {
+  font-family: var(--display);
+  font-size: clamp(26px, 7vw, 40px);
+  letter-spacing: .1em;
+  color: var(--paper);
+}
+
+.reach {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2vh;
+  font-size: 15.5px;
+  letter-spacing: .12em;
+}
+.reach a {
+  color: var(--amber);
+  border-bottom: 1px solid rgba(255, 169, 77, .35);
+  padding-bottom: 3px;
+  transition: color .4s ease, border-color .4s ease;
+}
+.reach a:hover { color: var(--gold); border-color: rgba(255, 210, 138, .7); }
+.reach .mail i { font-style: normal; opacity: .75; }
+
+.fine {
+  font-size: 12.5px;
+  line-height: 2.2;
+  color: var(--smoke-dim);
+  letter-spacing: .06em;
+}
+.fine .echo { display: inline; font-size: 11.5px; }
+
+/* ------------------------------------------------------------
+   动效作用域 .fx —— 仅 JS + 允许动效时进入"待点亮"态。
+   所有初始隐藏只允许写在这里；基线永远完整可读。
+   ------------------------------------------------------------ */
+
+.fx #heroName { opacity: 0; }
+.fx #about .line,
+.fx #about .echo { opacity: 0; transform: translateY(28px); }
+.fx #lamps h2,
+.fx .chapter-sub { opacity: 0; transform: translateY(24px); }
+.fx .lamp { opacity: 0; transform: translateY(30px); }
+.fx .sky-line,
+.fx #sky .echo { opacity: 0; }
+.fx #dipperStars .star { opacity: 0; }
+.fx #dipperLines line { opacity: 0; }
+.fx #ember > * { opacity: 0; transform: translateY(20px); }
+.fx #fuseHead { opacity: 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 呼吸放在内层 span：外层透明度归 GSAP 管，两者相乘互不打架 */
+  .scroll-hint span { display: inline-block; animation: hint-pulse 2.8s ease-in-out infinite; }
+  .ember-dot { animation: ember-breathe 4.4s ease-in-out infinite; }
+  @keyframes hint-pulse {
+    0%, 100% { opacity: .55; transform: translateY(0); }
+    50%      { opacity: 1;   transform: translateY(6px); }
+  }
+  @keyframes ember-breathe {
+    0%, 100% { box-shadow: 0 0 10px 3px rgba(255,210,138,.8),
+                           0 0 40px 14px rgba(255,107,53,.28); }
+    50%      { box-shadow: 0 0 14px 5px rgba(255,210,138,.95),
+                           0 0 64px 22px rgba(255,107,53,.4); }
+  }
+}
+
+/* 打印：给一个体面的静态版本 */
+@media print {
+  body { background: #fff; color: #111; }
+  #flame, #fuse, #fuseHead, .scroll-hint { display: none; }
+}
