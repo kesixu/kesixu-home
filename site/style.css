@@ -1,7 +1,8 @@
 /* ============================================================
    《划亮》 kesixu.com — 设计宪法见 ../AGENTS.md
    世界观：一间黑屋子，唯一光源是访客划亮的火柴。
-   基线（无 JS / reduced-motion）：整页处于"已点亮"的静态可读态。
+   基线（无 JS / reduced-motion / JS 异常）：整页静态、完整可读；
+   无 JS 时灯保持暗色可读，JS 基线路径会补 .lit 点亮。
    .fx 作用域：仅在 JS + 允许动效时才进入"待点亮"态。
    ============================================================ */
 
@@ -93,6 +94,7 @@ a:focus-visible {
 
 #hero {
   position: relative;
+  height: 100vh;   /* svh 兜底：老内核丢弃 svh 时不至于塌成 0 高 */
   height: 100svh;
   overflow: hidden;
 }
@@ -106,6 +108,7 @@ a:focus-visible {
 
 .whisper {
   position: absolute;
+  top: 18vh;
   top: 18svh;
   left: 50%;
   transform: translateX(-50%);
@@ -372,6 +375,7 @@ a:focus-visible {
    ------------------------------------------------------------ */
 
 #sky {
+  min-height: 120vh;
   min-height: 120svh;
   display: flex;
   flex-direction: column;
@@ -424,6 +428,7 @@ a:focus-visible {
    ------------------------------------------------------------ */
 
 #ember {
+  min-height: 92vh;
   min-height: 92svh;
   display: flex;
   flex-direction: column;

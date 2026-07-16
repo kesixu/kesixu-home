@@ -38,18 +38,38 @@
   }
 
   gsap.registerPlugin(ScrollTrigger);
-  document.documentElement.classList.add("fx");
+  ScrollTrigger.config({ ignoreMobileResize: true }); // 地址栏伸缩不触发 refresh
 
-  /* 中途切到"减少动态"：拆掉全部演出，回到静态点亮态 */
-  reducedQuery.addEventListener("change", function (e) {
-    if (!e.matches) return;
-    ScrollTrigger.getAll().forEach(function (st) { st.kill(); });
-    gsap.globalTimeline.clear();
+  var flame = null;
+
+  /* 拆掉全部演出、剥净内联样式，回到静态点亮态。
+     用于：中途切 reduced-motion、初始化任何异常（渐进增强的执行点）。 */
+  function teardownToStatic() {
+    try {
+      ScrollTrigger.getAll().forEach(function (st) { st.kill(true); }); // revert=true 剥内联样式
+      gsap.globalTimeline.clear();
+      gsap.set("#heroName, #whisper, #scrollHint, .hero-name h1, .hero-name .latin, " +
+        ".hero-name .tagline, .hero-name .echo, #about .line, #about .echo, #lamps h2, " +
+        ".chapter-sub, .lamp, .sky-line, #sky .echo, #dipperStars .star, #dipperLines line, " +
+        "#ember > *, #fuseHead", { clearProps: "all" });
+    } catch (e) { /* 清理路径自身绝不允许再抛 */ }
+    // 这些是绕开 gsap 手设的内联样式，clearProps 管不到
+    document.querySelectorAll("#dipperLines line, #fuseLit").forEach(function (el) {
+      el.style.strokeDasharray = "";
+      el.style.strokeDashoffset = "";
+    });
     document.documentElement.classList.remove("fx");
     if (flame) flame.setActive(false);
     document.querySelectorAll(".lamp").forEach(function (el) { el.classList.add("lit"); });
-    gsap.set("#heroName, #about .line, #about .echo, #lamps h2, .chapter-sub, .lamp, .sky-line, #sky .echo, #dipperStars .star, #dipperLines line, #ember > *", { clearProps: "all", opacity: 1 });
-  });
+  }
+
+  /* 中途切到"减少动态"（老 WebKit 无 EventTarget 接口，走 addListener 兜底） */
+  function onReducedChange(e) { if (e.matches) teardownToStatic(); }
+  if (reducedQuery.addEventListener) reducedQuery.addEventListener("change", onReducedChange);
+  else if (reducedQuery.addListener) reducedQuery.addListener(onReducedChange);
+
+  try { // ---- 动效初始化整体受保护：任何异常 → teardownToStatic() 静态可读 ----
+  document.documentElement.classList.add("fx");
 
   /* ============================================================
      火柴与火焰（canvas 2D）
@@ -242,7 +262,7 @@
     };
   }
 
-  var flame = FlameScene(document.getElementById("flame"));
+  flame = FlameScene(document.getElementById("flame"));
 
   var nameEl = document.querySelector(".hero-name h1");
   function measureName() {
@@ -401,7 +421,7 @@
     scrollTrigger: { trigger: "#sky", start: "top 62%", once: true }
   })
     .to("#dipperStars .star", { opacity: 1, duration: 0.7, stagger: 0.16, ease: "power1.out" }, 0)
-    .to(dipLines, { strokeDashoffset: 0, opacity: 1, duration: 0.9, stagger: 0.14, ease: "power1.inOut" }, 0.25)
+    .to(dipLines, { strokeDashoffset: 0, opacity: 0.4, duration: 0.9, stagger: 0.14, ease: "power1.inOut" }, 0.25)
     .to(".sky-line", { opacity: 1, duration: 1.2 }, 1.1)
     .to("#sky .echo", { opacity: 1, duration: 1.2 }, 1.35);
 
@@ -423,22 +443,33 @@
     gsap.to("#ember > *", { opacity: 1, y: 0, duration: 0.3, overwrite: true });
   });
 
-  /* ---------- 布局变动：重建引信 ---------- */
-  var rT;
+  /* ---------- 布局变动：重建引信（忽略移动端地址栏伸缩级别的高度抖动） ---------- */
+  var rT, lastW = window.innerWidth, lastH = window.innerHeight;
   window.addEventListener("resize", function () {
     clearTimeout(rT);
     rT = setTimeout(function () {
-      flame.resize();
-      measureName();
-      buildFuse();
-      ScrollTrigger.refresh();
+      var w = window.innerWidth, h = window.innerHeight;
+      if (w === lastW && Math.abs(h - lastH) < 140) { lastH = h; return; }
+      lastW = w; lastH = h;
+      try {
+        flame.resize();
+        measureName();
+        buildFuse();
+        ScrollTrigger.refresh();
+      } catch (e) { teardownToStatic(); }
     }, 280);
   });
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(function () {
-      measureName();
-      buildFuse();
-      ScrollTrigger.refresh();
+      try {
+        measureName();
+        buildFuse();
+        ScrollTrigger.refresh();
+      } catch (e) { teardownToStatic(); }
     });
+  }
+
+  } catch (err) { // ---- 动效初始化失败：降级为静态可读页 ----
+    teardownToStatic();
   }
 })();
