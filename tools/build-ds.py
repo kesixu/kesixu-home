@@ -82,15 +82,10 @@ a:focus-visible {{ outline:1px solid var(--color-amber); outline-offset:4px; bor
 .lamp-no {{ display:block; font-family:var(--font-display); font-size:12.5px; letter-spacing:.5em;
            color:var(--color-smoke); margin-bottom:8px; transition:color 1s ease; }}
 .lamp.lit .lamp-no {{ color:var(--color-amber); }}
-.seal {{ display:inline-flex; align-items:center; justify-content:center; writing-mode:vertical-rl;
-        width:34px; height:34px; font-family:var(--font-display); font-size:14px; font-weight:500;
-        letter-spacing:.12em; color:#f2e6d8; background:var(--color-ember); border-radius:7px;
-        transform:rotate(-3deg); box-shadow:0 0 14px rgba(179,58,30,.35),inset 0 0 6px rgba(13,11,9,.35); }}
-
 /* ── 标签 ── */
 .tag {{ display:inline-block; font-size:var(--type-tag); letter-spacing:.22em; text-indent:.22em;
-       color:var(--color-smoke); border:1px solid rgba(138,131,120,.35); border-radius:999px;
-       padding:4px 13px 3px; transition:color 1s ease,border-color 1s ease; }}
+       color:var(--color-smoke); border:1px solid rgba(138,131,120,.35); border-radius:3px;
+       padding:4px 12px 3px; transition:color 1s ease,border-color 1s ease; }}
 .lit .tag, .tag.lit {{ color:var(--color-amber); border-color:rgba(255,169,77,.45); }}
 .lit .tag-open, .tag-open.lit {{ color:var(--color-gold); border-color:rgba(255,210,138,.65); }}
 
@@ -163,10 +158,11 @@ write("readme.md", """# 划亮 · kesixu.com design system
 
 ## Voice（文案纪律）
 
-全部中文；文雅、有典故、有节奏、用成语；典故织入不注出处。已织入的典源：《诗经·庭燎》
-（夜如何其）、《大学》格物、韩愈焚膏继晷、《庄子》薪火相传、《礼记》玉琢成器、《维摩诘经》
-无尽灯（一灯燃百灯）、《孟子》观水观澜与明察秋毫、《孙子》庙算、《诗经·大东》维北有斗、
-《论语》有朋自远方来。七盏灯以「其一…其七」古典序数编次。题眼「往下，划」保持白话，一字不动。
+全部中文；**文雅、通顺、有新意，不拗口**——典故织入但不堆砌，现代语序为主，不注出处。
+已织入的典源：未央（《庭燎》/长乐未央）、《大学》格物、《庄子》薪火相传、《维摩诘经》无尽灯
+（一灯点亮能燃百灯）、《孟子》观澜与明察秋毫、按图索骥、老吏断案、《孙子》庙算、
+《诗经·大东》维北有斗（「在野」双关 indie）、《论语》有朋自远方来。
+七盏灯以「其一…其七」编次。题眼「往下，划」保持白话，一字不动。装饰宁缺毋滥：不用印章、不用图章式点缀，稳定流畅高于巧思。
 
 ## Glow
 
@@ -248,10 +244,10 @@ write("foundations/type.html", """<!-- @dsCard group="Foundations" name="字体�
   <div style="font-family:var(--font-display);font-size:var(--type-h2);margin-bottom:8px">七盏灯
     <span class="echo" style="display:inline;font-size:.38em">Seven lamps</span></div>
   <p class="ds-note" style="margin-bottom:26px">↑ --type-h2 章题 + 内联回声（0.38 倍）</p>
-  <p class="line" style="margin-bottom:8px">入夜焚膏——一言燃一念，众智传薪，琢之成器。</p>
+  <p class="line" style="margin-bottom:8px">入夜，一句话点燃一个念头，众智传薪。</p>
   <p class="ds-note" style="margin-bottom:26px">↑ --type-line 章句（文楷 500，行高 1.85，手工断行）</p>
   <p style="font-size:var(--type-body);color:var(--color-smoke);max-width:34em;margin-bottom:8px">
-    把散落的检查、文献与随访，织成可问询的谱图——观水有术，必观其澜。</p>
+    把散落的检查、文献与随访，织成一张可以问询的图谱——观水，必观其澜。</p>
   <p class="ds-note" style="margin-bottom:26px">↑ --type-body 正文（系统栈，零下载）</p>
   <p class="echo" style="font-size:14px;letter-spacing:.4em">维北有斗，七星在野。</p>
   <p class="ds-note">↑ .echo 中文小注：雅文在上、小注在下；英文只保留人名 "Kesi Xu"（.latin-echo）</p>
@@ -297,7 +293,7 @@ write("components/hero.html", """<!-- @dsCard group="Components" name="Hero · �
     <div class="name" style="font-size:116px">徐可斯</div>
     <div class="latin-echo" style="font-size:17px">Kesi&nbsp;Xu</div>
     <div style="font-family:var(--font-display);font-size:15px;color:var(--color-smoke);line-height:2.1">
-      格毫厘之物，佐岐黄之术；<br>昼营实证，夜划星火。</div>
+      格物于毫厘，点灯于长夜。</div>
     <p class="echo" style="font-size:12.5px">计算病理出身，做医学与智能之间的转化。</p>
   </div>
   <div style="position:absolute;right:22%;top:38%;width:3px;height:100px;background:#31241b;border-radius:2px;transform:rotate(6deg)">
@@ -312,14 +308,14 @@ write("components/lamp.html", """<!-- @dsCard group="Components" name="灯 · �
     <span class="lamp-dot" style="top:calc(var(--space-lamp) + .95em + 27px)"></span>
     <span class="lamp-no">其一</span>
     <h3>见微</h3>
-    <p class="lamp-desc">拂晓拾遗：科学智能与生医的微末信号，读作三分钟晨报——见微，知著。</p>
+    <p class="lamp-desc">每天拂晓，把科学智能与生医的微末信号，读成三分钟晨报——见微，知著。</p>
     <span class="tag">内测中</span>
   </div>
   <div class="lamp lit">
     <span class="lamp-dot" style="top:calc(var(--space-lamp) + .95em + 27px)"></span>
     <span class="lamp-no">其五</span>
     <h3>MatchPoint<span style="font-size:.55em;color:var(--color-amber);vertical-align:.55em;margin-left:.25em">↗</span></h3>
-    <p class="lamp-desc">一语道出想动之念，运筹组局，皆付智能。</p>
+    <p class="lamp-desc">一句话说出想动的念头，剩下的运筹组局，交给智能。</p>
     <span class="tag tag-open">公开 · 联袂之作</span>
   </div>
   <p class="ds-note">上：未点亮（全 smoke/char）。下：.lit 点亮态 —— 灯芯金点 + 标题纸白 + 火光衬底浮现。
@@ -391,9 +387,8 @@ write("components/ember.html", """<!-- @dsCard group="Components" name="余烬 �
     <a style="color:var(--color-amber);border-bottom:1px solid rgba(255,169,77,.35);padding-bottom:3px">GitHub&nbsp;@kesixu</a>
   </div>
   <p class="echo" style="font-size:13px;letter-spacing:.22em">有朋自远方来——来信，即复。</p>
-  <p class="fine">此页不设追踪，不藏埋点，不引外物。<br>手起手落，筑于自家服务器。</p>
-  <p style="display:flex;align-items:center;gap:16px"><span class="seal">可斯</span>
-    <span style="font-size:12.5px;color:var(--color-smoke);letter-spacing:.1em">© 2026 徐可斯</span></p>
+  <p class="fine">此页无追踪、无埋点、无第三方。<br>一砖一瓦，皆是手作。</p>
+  <p style="font-size:12.5px;color:var(--color-smoke);letter-spacing:.1em">© 2026 徐可斯</p>
 </div></body>""")
 
 # ═══ templates/landing —— 线上站点的自包含静态快照 ═══

@@ -48,7 +48,7 @@
     try {
       ScrollTrigger.getAll().forEach(function (st) { st.kill(true); }); // revert=true 剥内联样式
       gsap.globalTimeline.clear();
-      gsap.set("#heroName, #whisper, #scrollHint, .hero-name h1, .hero-name .latin, " +
+      gsap.set("#heroName, #whisper, #scrollHint, .hero-name h1, .hero-name h1 span, .hero-name .latin, " +
         ".hero-name .tagline, .hero-name .echo, #about .line, #about .echo, #lamps h2, " +
         ".chapter-sub, .lamp, .sky-line, #sky .echo, #dipperStars .star, #dipperLines line, " +
         "#ember > *, #fuseHead", { clearProps: "all" });
@@ -209,16 +209,22 @@
       ctx.fillStyle = st.inten > 0.05 ? "#7a4a28" : "#402a1e";
       ctx.beginPath(); ctx.arc(hx, hy, 4.4, 0, 6.2832); ctx.fill();
 
-      // 发光层
+      // 发光层（多周期正弦叠出近似噪声的呼吸，比单一正弦更像真火）
       ctx.globalCompositeOperation = "lighter";
+      var flick = 0.5 + 0.28 * Math.sin(t / 61) * Math.sin(t / 137) + 0.22 * Math.sin(t / 43);
       if (st.inten > 0.01) {
-        var R = Math.min(W, H) * (0.16 + 0.42 * st.inten) * (1 + Math.sin(t / 700) * 0.03);
+        var R = Math.min(W, H) * (0.16 + 0.42 * st.inten) * (0.97 + flick * 0.06);
         var g = ctx.createRadialGradient(hx, hy - 8, 0, hx, hy - 8, R);
         g.addColorStop(0, "rgba(255,190,110," + (0.30 * st.inten) + ")");
         g.addColorStop(0.5, "rgba(255,120,50," + (0.10 * st.inten) + ")");
         g.addColorStop(1, "rgba(255,90,40,0)");
         ctx.fillStyle = g;
         ctx.fillRect(hx - R, hy - 8 - R, R * 2, R * 2);
+        // 白热内核：贴着火柴头的小亮核，随 flick 跳动
+        var cs = (16 + flick * 9) * (0.5 + st.inten * 0.6);
+        ctx.globalAlpha = st.inten * (0.55 + flick * 0.4);
+        ctx.drawImage(sprites[0], hx - cs / 2, hy - 10 - cs / 2, cs, cs);
+        ctx.globalAlpha = 1;
       }
       var i, q, f, sp;
       for (i = 0; i < parts.length; i++) {
@@ -279,7 +285,7 @@
       start: "top top",
       end: "+=230%",
       pin: true,
-      scrub: 0.4,
+      scrub: 0.7,
       onUpdate: function (st) { flame.setPhase(st.progress); },
       onToggle: function (st) { flame.setActive(st.isActive); }
     }
@@ -288,7 +294,7 @@
     .to("#scrollHint", { opacity: 0, duration: 0.06 }, 0.02)
     .to("#whisper", { opacity: 0, y: -26, duration: 0.16 }, 0.13)
     .fromTo("#heroName", { opacity: 0 }, { opacity: 1, duration: 0.26, ease: "none" }, 0.33)
-    .from(".hero-name h1", { y: 30, duration: 0.3, ease: "power1.out" }, 0.33)
+    .from(".hero-name h1 span", { opacity: 0, y: 26, stagger: 0.085, duration: 0.22, ease: "power1.out" }, 0.34)
     .from(".hero-name .latin, .hero-name .tagline, .hero-name .echo",
       { opacity: 0, y: 18, stagger: 0.05, duration: 0.2, ease: "power1.out" }, 0.44)
     .to({}, { duration: 0.2 }); // 驻留
@@ -380,7 +386,7 @@
     trigger: "#story",
     start: "top 58%",
     end: "bottom 62%",
-    scrub: 0.5,
+    scrub: 0.8,
     onUpdate: function (st) { placeHead(st.progress); }
   });
 
