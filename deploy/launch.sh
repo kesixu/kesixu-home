@@ -14,7 +14,8 @@ EXISTING=$(curl -s --max-time 20 -X POST https://api.porkbun.com/api/json/v3/dns
   | python3 -c "import sys,json; recs=json.load(sys.stdin)['records']; print(' '.join(r['name']+'/'+r['type'] for r in recs))")
 for entry in "|kesixu.com" "www|www.kesixu.com"; do
   short="${entry%%|*}"; fqdn="${entry##*|}"
-  if echo "$EXISTING" | grep -q "$fqdn/A"; then
+  # 锚定匹配：避免 chaogu.kesixu.com/A 之类子域名误匹配根域名
+  if echo "$EXISTING" | grep -qE "(^| )$fqdn/A( |$)"; then
     echo "· $fqdn A 记录已存在，跳过"
   else
     curl -s --max-time 20 -X POST https://api.porkbun.com/api/json/v3/dns/create/kesixu.com \
@@ -23,10 +24,20 @@ for entry in "|kesixu.com" "www|www.kesixu.com"; do
     echo "  ← $fqdn（回滚：dns/delete/kesixu.com/<上面返回的 id>）"
   fi
 done
-echo "· 权威 NS 验证："
-sleep 5
-dig +short kesixu.com @maceio.ns.porkbun.com
-dig +short www.kesixu.com @maceio.ns.porkbun.com
+echo "· 等待权威 NS 生效（certbot 的前置门）…"
+APEX=""
+for i in $(seq 1 12); do
+  APEX=$(dig +short kesixu.com @maceio.ns.porkbun.com | head -1)
+  WWW=$(dig +short www.kesixu.com @maceio.ns.porkbun.com | head -1)
+  [ -n "$APEX" ] && [ -n "$WWW" ] && break
+  sleep 5
+done
+echo "  kesixu.com     -> ${APEX:-未生效}"
+echo "  www.kesixu.com -> ${WWW:-未生效}"
+if [ -z "$APEX" ] || [ -z "$WWW" ]; then
+  echo "DNS 尚未在权威 NS 生效，中止。稍等一分钟重跑本脚本即可（全程幂等）。"
+  exit 1
+fi
 
 banner "② nginx 阶段 A：仅 80 端口"
 if [ ! -f /etc/letsencrypt/live/kesixu.com/fullchain.pem ]; then
