@@ -560,3 +560,35 @@ a:focus-visible {
   body { background: #fff; color: #111; }
   #flame, #fuse, #fuseHead, .scroll-hint { display: none; }
 }
+
+/* ── 主灯 Logo ── */
+.hero-logo {
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  margin-bottom: .6em;
+  filter: grayscale(30%) brightness(.9);
+  transition: filter .6s ease;
+}
+.hero-lamp:hover .hero-logo,
+.hero-lamp:focus-visible .hero-logo {
+  filter: grayscale(0%) brightness(1.1);
+}
+
+/* ── 向下箭头 ── */
+.scroll-arrow {
+  position: absolute;
+  bottom: clamp(30px, 7vh, 50px);
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--amber);
+  font-size: clamp(18px, 4vw, 24px);
+  animation: arrow-bounce 1.6s ease-in-out infinite;
+  opacity: .7;
+}
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+.reduced .scroll-arrow { animation: none; }
