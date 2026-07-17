@@ -75,7 +75,7 @@ a:focus-visible {{ outline:1px solid var(--color-amber); outline-offset:4px; bor
            letter-spacing:.06em; color:var(--color-smoke); transition:color 1s ease,text-shadow 1s ease; }}
 .lamp.lit h3 {{ color:var(--color-paper); text-shadow:var(--glow-md); }}
 .lamp-desc {{ font-size:var(--type-body); color:var(--color-smoke); max-width:34em;
-             margin:1.6vh 0 2.2vh; transition:color 1s ease; }}
+             margin:1.6vh 0 2.2vh; transition:color 1s ease; text-wrap:pretty; }}
 .lamp.lit .lamp-desc {{ color:#cfc7b8; }}
 
 /* ── 序数与落款 ── */
@@ -186,6 +186,37 @@ scroll 是唯一输入；只动 transform/opacity；reveal 1.0–1.1s power2.out
 - 不让英文与中文同字号并排。
 - 不给静态基线留下任何不可读的残缺。
 - 不加载任何第三方资源（大陆可达性 + 隐私是硬约束）。
+
+## 组件类词汇表（设计代理按此取用，全部经存在性校验）
+
+| 类 | 用途 |
+|---|---|
+| `.name` | 竖排大名（--type-name + --glow-lg） |
+| `.echo` | 中文小注（文楷、smoke、.18em 字距） |
+| `.latin-echo` | 人名 "Kesi Xu" 专用（Garamond Italic、amber） |
+| `.line` / `.line-strong` | 章句 / 金色强调句 |
+| `.lamp` + `.lit` | 产品卡容器；点亮态加 `.lit`（衬底/灯芯/标题联动） |
+| `.lamp-dot` / `.lamp-no` / `.lamp-desc` | 灯芯点 / 「其N」序数 / 一句话描述 |
+| `.tag` / `.tag-open` | 状态标签（方角 hairline）；公开款加 `.tag-open` |
+| `.keep` / `.fine` | 结语大字 / 页脚小字 |
+| `.ember-dot` | 呼吸余烬（伪元素光晕，只动 opacity/scale） |
+| `.ds-stage` / `.ds-label` / `.ds-note` | DS 文档页自用排版 |
+
+最小可用骨架（每页必须链接唯一样式表；深底由 body 自带）：
+
+```html
+<link rel="stylesheet" href="styles.css">
+<div class="lamp lit">
+  <span class="lamp-dot"></span>
+  <span class="lamp-no">其一</span>
+  <h3>灯名</h3>
+  <p class="lamp-desc">一句话，宁短勿长。</p>
+  <span class="tag">内测中</span>
+</div>
+```
+
+颜色/字号/间距/辉光一律取 `var(--color-*) / var(--type-*) / var(--space-*) / var(--glow-*)`，
+禁止硬编码；新增元素前先看本表有没有现成的类。
 
 ## Files
 

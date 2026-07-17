@@ -57,7 +57,7 @@ a:focus-visible { outline:1px solid var(--color-amber); outline-offset:4px; bord
            letter-spacing:.06em; color:var(--color-smoke); transition:color 1s ease,text-shadow 1s ease; }
 .lamp.lit h3 { color:var(--color-paper); text-shadow:var(--glow-md); }
 .lamp-desc { font-size:var(--type-body); color:var(--color-smoke); max-width:34em;
-             margin:1.6vh 0 2.2vh; transition:color 1s ease; }
+             margin:1.6vh 0 2.2vh; transition:color 1s ease; text-wrap:pretty; }
 .lamp.lit .lamp-desc { color:#cfc7b8; }
 
 /* ── 序数与落款 ── */

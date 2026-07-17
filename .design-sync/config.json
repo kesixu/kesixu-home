@@ -1,0 +1,8 @@
+{
+  "projectId": "28dd8dc2-1221-45cc-98e4-a4f6b5d093bc",
+  "projectName": "划亮 · kesixu.com Design System",
+  "shape": "custom-static",
+  "generator": "tools/build-ds.py",
+  "localDir": "ds",
+  "note": "本仓库是 no-build 纯静态站（无 package.json/组件库/storybook），在 design-sync 转换器包络之外。布局由 tools/build-ds.py 手工产出：styles.css(token+内嵌字体)+theme.json+readme.md(设计代理 conventions)+foundations/components 卡片(@dsCard)+templates/landing 整页快照。同步方式：DesignSync finalize_plan → write_files（15 文件全量幂等）。"
+}

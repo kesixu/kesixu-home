@@ -1,0 +1,1209 @@
+{
+ "m360": {
+  "viewport": {
+   "w": 360,
+   "h": 780
+  },
+  "hoverflow": 0,
+  "textlines": {
+   "whisper": [
+    "长夜未央。",
+    "先取一根火柴。"
+   ],
+   "tagline": [
+    "格物于毫厘，点灯于长夜。"
+   ],
+   "heroEcho": [
+    "计算病理出身，做医学与智能之间的转化。"
+   ],
+   "chapterSub": [
+    "薪火相传，次第点亮。"
+   ],
+   "skyline": [
+    "点过的灯，抬头再看，",
+    "已成星斗。"
+   ],
+   "skyEcho": [
+    "维北有斗，七星在野。"
+   ],
+   "emberEcho": [
+    "有朋自远方来——来信，即复。"
+   ],
+   "keep": [
+    "灯为君留。"
+   ],
+   "fine": [
+    "此页无追踪、无埋点、无第三方。",
+    "一砖一瓦，皆是手作。"
+   ]
+  },
+  "aboutLines": [
+   [
+    "白日，我在病理的毫厘之间，",
+    "为临床求一份可用的证据。"
+   ],
+   [
+    "入夜，一句话点燃一个念头，",
+    "众智传薪，把它烧成产品。"
+   ],
+   [
+    "我信小而亮的东西：",
+    "一灯点亮，能燃百灯。"
+   ]
+  ],
+  "lampDescs": [
+   [
+    "每天拂晓，把科学智能与生医的微末信号，",
+    "读成三分钟晨报——见微，知著。"
+   ],
+   [
+    "把散落的检查、文献与随访，织成一张可以",
+    "问询的图谱——观水，必观其澜。"
+   ],
+   [
+    "一部博士论文的舆图：章节、论断、代码、",
+    "实验，按图索骥，层层放大。"
+   ],
+   [
+    "中国双层股权研究工作台：披露、治理、监",
+    "管动态，尽收一屏，明察秋毫。"
+   ],
+   [
+    "一句话说出想动的念头，剩下的运筹组局，",
+    "交给智能。"
+   ],
+   [
+    "可信的病理智能助手，读片如老吏断案。"
+   ],
+   [
+    "学术会议的私人驾驶舱：会前庙算，会中引",
+    "路，会后致意。"
+   ]
+  ],
+  "lampTitles": [
+   [
+    "见微"
+   ],
+   [
+    "杏林观澜"
+   ],
+   [
+    "ThesisAtlas"
+   ],
+   [
+    "DCSchina"
+   ],
+   [
+    "MatchPoint↗"
+   ],
+   [
+    "TrustPathBot"
+   ],
+   [
+    "ConferenceCockpit"
+   ]
+  ],
+  "eloverflow": [
+   {
+    "tag": "H1",
+    "cls": "",
+    "d": 5
+   },
+   {
+    "tag": "SPAN",
+    "cls": "ember-dot",
+    "d": 34
+   }
+  ],
+  "lamps": [
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2872.40625,
+    "dotCx": 12.59375,
+    "noCy": -2906.234375,
+    "h3lineCy": -2861.859375,
+    "h3lineTop": -2877.359375,
+    "h3lineBottom": -2846.359375
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2587.96875,
+    "dotCx": 12.59375,
+    "noCy": -2621.796875,
+    "h3lineCy": -2577.421875,
+    "h3lineTop": -2592.921875,
+    "h3lineBottom": -2561.921875
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2303.53125,
+    "dotCx": 12.59375,
+    "noCy": -2337.359375,
+    "h3lineCy": -2292.984375,
+    "h3lineTop": -2308.484375,
+    "h3lineBottom": -2277.484375
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2019.09375,
+    "dotCx": 12.59375,
+    "noCy": -2052.921875,
+    "h3lineCy": -2008.546875,
+    "h3lineTop": -2024.046875,
+    "h3lineBottom": -1993.046875
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -1734.65625,
+    "dotCx": 12.59375,
+    "noCy": -1768.484375,
+    "h3lineCy": -1724.109375,
+    "h3lineTop": -1739.609375,
+    "h3lineBottom": -1708.609375
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -1450.21875,
+    "dotCx": 12.59375,
+    "noCy": -1484.046875,
+    "h3lineCy": -1439.671875,
+    "h3lineTop": -1455.171875,
+    "h3lineBottom": -1424.171875
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -1194.28125,
+    "dotCx": 12.59375,
+    "noCy": -1228.109375,
+    "h3lineCy": -1183.734375,
+    "h3lineTop": -1199.234375,
+    "h3lineBottom": -1168.234375
+   }
+  ],
+  "fuseDotDist": [
+   1.2,
+   0.3,
+   0.2,
+   0.2,
+   0.2,
+   0.3,
+   0.3
+  ],
+  "emberChildren": [
+   {
+    "cls": "ember-dot",
+    "top": 222,
+    "h": 9
+   },
+   {
+    "cls": "keep",
+    "top": 266,
+    "h": 49
+   },
+   {
+    "cls": "echo",
+    "top": 351,
+    "h": 25
+   },
+   {
+    "cls": "reach",
+    "top": 411,
+    "h": 84
+   },
+   {
+    "cls": "fine",
+    "top": 530,
+    "h": 55
+   },
+   {
+    "cls": "copyright",
+    "top": 612,
+    "h": 24
+   }
+  ],
+  "emberEchoStyle": {
+   "fs": "13px",
+   "lh": "24.7px",
+   "ls": "2.86px"
+  },
+  "hero": {
+   "wm": "vertical-rl",
+   "h1": {
+    "t": -4510.1,
+    "l": 131.2,
+    "r": 228.8,
+    "b": -4206.5
+   },
+   "nameBox": {
+    "t": -4678,
+    "l": 0,
+    "r": 360,
+    "b": -3898
+   }
+  },
+  "flare": [
+   {
+    "stroke": "rgb(255, 210, 138)",
+    "opacity": "0.55",
+    "width": "0.5px"
+   },
+   {
+    "stroke": "rgb(255, 210, 138)",
+    "opacity": "0.55",
+    "width": "0.5px"
+   }
+  ],
+  "unlitLampNoColor": "rgb(138, 131, 120)",
+  "console": [],
+  "manifest": [
+   {
+    "shot": "final-m360-0-dark.png",
+    "scrollY": 0
+   },
+   {
+    "shot": "final-m360-1-tagline.png",
+    "scrollY": 1399
+   },
+   {
+    "shot": "final-m360-2-about-a.png",
+    "scrollY": 2633
+   },
+   {
+    "shot": "final-m360-3-about-b.png",
+    "scrollY": 2728
+   },
+   {
+    "shot": "final-m360-4-lamp1.png",
+    "scrollY": 3463
+   },
+   {
+    "shot": "final-m360-4-lamp3.png",
+    "scrollY": 4031
+   },
+   {
+    "shot": "final-m360-4-lamp5.png",
+    "scrollY": 4600
+   },
+   {
+    "shot": "final-m360-4-lamp7.png",
+    "scrollY": 5141
+   },
+   {
+    "shot": "final-m360-7-sky.png",
+    "scrollY": 5658
+   },
+   {
+    "shot": "final-m360-8-ember.png",
+    "scrollY": 6472
+   },
+   {
+    "shot": "final-m360-9-footer.png"
+   }
+  ]
+ },
+ "m390": {
+  "viewport": {
+   "w": 390,
+   "h": 844
+  },
+  "hoverflow": 0,
+  "textlines": {
+   "whisper": [
+    "长夜未央。",
+    "先取一根火柴。"
+   ],
+   "tagline": [
+    "格物于毫厘，点灯于长夜。"
+   ],
+   "heroEcho": [
+    "计算病理出身，做医学与智能之间的转化。"
+   ],
+   "chapterSub": [
+    "薪火相传，次第点亮。"
+   ],
+   "skyline": [
+    "点过的灯，抬头再看，",
+    "已成星斗。"
+   ],
+   "skyEcho": [
+    "维北有斗，七星在野。"
+   ],
+   "emberEcho": [
+    "有朋自远方来——来信，即复。"
+   ],
+   "keep": [
+    "灯为君留。"
+   ],
+   "fine": [
+    "此页无追踪、无埋点、无第三方。",
+    "一砖一瓦，皆是手作。"
+   ]
+  },
+  "aboutLines": [
+   [
+    "白日，我在病理的毫厘之间，",
+    "为临床求一份可用的证据。"
+   ],
+   [
+    "入夜，一句话点燃一个念头，",
+    "众智传薪，把它烧成产品。"
+   ],
+   [
+    "我信小而亮的东西：",
+    "一灯点亮，能燃百灯。"
+   ]
+  ],
+  "lampDescs": [
+   [
+    "每天拂晓，把科学智能与生医的微末信号，",
+    "读成三分钟晨报——见微，知著。"
+   ],
+   [
+    "把散落的检查、文献与随访，织成一张可以",
+    "问询的图谱——观水，必观其澜。"
+   ],
+   [
+    "一部博士论文的舆图：章节、论断、代码、",
+    "实验，按图索骥，层层放大。"
+   ],
+   [
+    "中国双层股权研究工作台：披露、治理、监",
+    "管动态，尽收一屏，明察秋毫。"
+   ],
+   [
+    "一句话说出想动的念头，剩下的运筹组局，",
+    "交给智能。"
+   ],
+   [
+    "可信的病理智能助手，读片如老吏断案。"
+   ],
+   [
+    "学术会议的私人驾驶舱：会前庙算，会中引",
+    "路，会后致意。"
+   ]
+  ],
+  "lampTitles": [
+   [
+    "见微"
+   ],
+   [
+    "杏林观澜"
+   ],
+   [
+    "ThesisAtlas"
+   ],
+   [
+    "DCSchina"
+   ],
+   [
+    "MatchPoint↗"
+   ],
+   [
+    "TrustPathBot"
+   ],
+   [
+    "ConferenceCockpit"
+   ]
+  ],
+  "eloverflow": [
+   {
+    "tag": "H1",
+    "cls": "",
+    "d": 5
+   },
+   {
+    "tag": "SPAN",
+    "cls": "ember-dot",
+    "d": 34
+   }
+  ],
+  "lamps": [
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -3049.078125,
+    "dotCx": 13.65625,
+    "noCy": -3082.90625,
+    "h3lineCy": -3038.03125,
+    "h3lineTop": -3054.03125,
+    "h3lineBottom": -3022.03125
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2750.453125,
+    "dotCx": 13.65625,
+    "noCy": -2784.28125,
+    "h3lineCy": -2739.40625,
+    "h3lineTop": -2755.40625,
+    "h3lineBottom": -2723.40625
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2451.828125,
+    "dotCx": 13.65625,
+    "noCy": -2485.65625,
+    "h3lineCy": -2440.78125,
+    "h3lineTop": -2456.78125,
+    "h3lineBottom": -2424.78125
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2153.203125,
+    "dotCx": 13.65625,
+    "noCy": -2187.03125,
+    "h3lineCy": -2142.15625,
+    "h3lineTop": -2158.15625,
+    "h3lineBottom": -2126.15625
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -1854.578125,
+    "dotCx": 13.65625,
+    "noCy": -1888.40625,
+    "h3lineCy": -1843.53125,
+    "h3lineTop": -1859.53125,
+    "h3lineBottom": -1827.53125
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -1555.953125,
+    "dotCx": 13.65625,
+    "noCy": -1589.78125,
+    "h3lineCy": -1544.90625,
+    "h3lineTop": -1560.90625,
+    "h3lineBottom": -1528.90625
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -1286.953125,
+    "dotCx": 13.65625,
+    "noCy": -1320.78125,
+    "h3lineCy": -1275.90625,
+    "h3lineTop": -1291.90625,
+    "h3lineBottom": -1259.90625
+   }
+  ],
+  "fuseDotDist": [
+   0.5,
+   0.3,
+   0.2,
+   0.2,
+   0.3,
+   0.1,
+   0.4
+  ],
+  "emberChildren": [
+   {
+    "cls": "ember-dot",
+    "top": 248,
+    "h": 9
+   },
+   {
+    "cls": "keep",
+    "top": 295,
+    "h": 52
+   },
+   {
+    "cls": "echo",
+    "top": 385,
+    "h": 26
+   },
+   {
+    "cls": "reach",
+    "top": 449,
+    "h": 85
+   },
+   {
+    "cls": "fine",
+    "top": 572,
+    "h": 55
+   },
+   {
+    "cls": "copyright",
+    "top": 656,
+    "h": 24
+   }
+  ],
+  "emberEchoStyle": {
+   "fs": "13.65px",
+   "lh": "25.935px",
+   "ls": "3.003px"
+  },
+  "hero": {
+   "wm": "vertical-rl",
+   "h1": {
+    "t": -4796.3,
+    "l": 146.2,
+    "r": 243.8,
+    "b": -4492.7
+   },
+   "nameBox": {
+    "t": -4995,
+    "l": 0,
+    "r": 390,
+    "b": -4151
+   }
+  },
+  "flare": [
+   {
+    "stroke": "rgb(255, 210, 138)",
+    "opacity": "0.55",
+    "width": "0.5px"
+   },
+   {
+    "stroke": "rgb(255, 210, 138)",
+    "opacity": "0.55",
+    "width": "0.5px"
+   }
+  ],
+  "unlitLampNoColor": "rgb(138, 131, 120)",
+  "console": [],
+  "manifest": [
+   {
+    "shot": "final-m390-0-dark.png",
+    "scrollY": 0
+   },
+   {
+    "shot": "final-m390-1-tagline.png",
+    "scrollY": 1514
+   },
+   {
+    "shot": "final-m390-2-about-a.png",
+    "scrollY": 2846
+   },
+   {
+    "shot": "final-m390-3-about-b.png",
+    "scrollY": 2952
+   },
+   {
+    "shot": "final-m390-4-lamp1.png",
+    "scrollY": 3740
+   },
+   {
+    "shot": "final-m390-4-lamp3.png",
+    "scrollY": 4337
+   },
+   {
+    "shot": "final-m390-4-lamp5.png",
+    "scrollY": 4934
+   },
+   {
+    "shot": "final-m390-4-lamp7.png",
+    "scrollY": 5502
+   },
+   {
+    "shot": "final-m390-7-sky.png",
+    "scrollY": 6050
+   },
+   {
+    "shot": "final-m390-8-ember.png",
+    "scrollY": 6936
+   },
+   {
+    "shot": "final-m390-9-footer.png"
+   }
+  ]
+ },
+ "d1440": {
+  "viewport": {
+   "w": 1440,
+   "h": 900
+  },
+  "hoverflow": 0,
+  "textlines": {
+   "whisper": [
+    "长夜未央。",
+    "先取一根火柴。"
+   ],
+   "tagline": [
+    "格物于毫厘，点灯于长夜。"
+   ],
+   "heroEcho": [
+    "计算病理出身，做医学与智能之间的转化。"
+   ],
+   "chapterSub": [
+    "薪火相传，次第点亮。"
+   ],
+   "skyline": [
+    "点过的灯，抬头再看，",
+    "已成星斗。"
+   ],
+   "skyEcho": [
+    "维北有斗，七星在野。"
+   ],
+   "emberEcho": [
+    "有朋自远方来——来信，即复。"
+   ],
+   "keep": [
+    "灯为君留。"
+   ],
+   "fine": [
+    "此页无追踪、无埋点、无第三方。",
+    "一砖一瓦，皆是手作。"
+   ]
+  },
+  "aboutLines": [
+   [
+    "白日，我在病理的毫厘之间，",
+    "为临床求一份可用的证据。"
+   ],
+   [
+    "入夜，一句话点燃一个念头，",
+    "众智传薪，把它烧成产品。"
+   ],
+   [
+    "我信小而亮的东西：",
+    "一灯点亮，能燃百灯。"
+   ]
+  ],
+  "lampDescs": [
+   [
+    "每天拂晓，把科学智能与生医的微末信号，读成三分钟晨报——见微，知",
+    "著。"
+   ],
+   [
+    "把散落的检查、文献与随访，织成一张可以问询的图谱——观水，必观其",
+    "澜。"
+   ],
+   [
+    "一部博士论文的舆图：章节、论断、代码、实验，按图索骥，层层放大。"
+   ],
+   [
+    "中国双层股权研究工作台：披露、治理、监管动态，尽收一屏，明察秋毫。"
+   ],
+   [
+    "一句话说出想动的念头，剩下的运筹组局，交给智能。"
+   ],
+   [
+    "可信的病理智能助手，读片如老吏断案。"
+   ],
+   [
+    "学术会议的私人驾驶舱：会前庙算，会中引路，会后致意。"
+   ]
+  ],
+  "lampTitles": [
+   [
+    "见微"
+   ],
+   [
+    "杏林观澜"
+   ],
+   [
+    "ThesisAtlas"
+   ],
+   [
+    "DCSchina"
+   ],
+   [
+    "MatchPoint↗"
+   ],
+   [
+    "TrustPathBot"
+   ],
+   [
+    "ConferenceCockpit"
+   ]
+  ],
+  "eloverflow": [
+   {
+    "tag": "H1",
+    "cls": "",
+    "d": 10
+   },
+   {
+    "tag": "SPAN",
+    "cls": "ember-dot",
+    "d": 34
+   }
+  ],
+  "lamps": [
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -3382.96875,
+    "dotCx": 356,
+    "noCy": -3416.78125,
+    "h3lineCy": -3365.40625,
+    "h3lineTop": -3385.90625,
+    "h3lineBottom": -3344.90625
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -3059.859375,
+    "dotCx": 356,
+    "noCy": -3093.671875,
+    "h3lineCy": -3042.296875,
+    "h3lineTop": -3062.796875,
+    "h3lineBottom": -3021.796875
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2736.75,
+    "dotCx": 356,
+    "noCy": -2770.5625,
+    "h3lineCy": -2719.1875,
+    "h3lineTop": -2739.6875,
+    "h3lineBottom": -2698.6875
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2444.984375,
+    "dotCx": 356,
+    "noCy": -2478.796875,
+    "h3lineCy": -2427.421875,
+    "h3lineTop": -2447.921875,
+    "h3lineBottom": -2406.921875
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2153.21875,
+    "dotCx": 356,
+    "noCy": -2187.03125,
+    "h3lineCy": -2135.65625,
+    "h3lineTop": -2156.15625,
+    "h3lineBottom": -2115.15625
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -1861.453125,
+    "dotCx": 356,
+    "noCy": -1895.265625,
+    "h3lineCy": -1843.890625,
+    "h3lineTop": -1864.390625,
+    "h3lineBottom": -1823.390625
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -1569.6875,
+    "dotCx": 356,
+    "noCy": -1603.5,
+    "h3lineCy": -1552.125,
+    "h3lineTop": -1572.625,
+    "h3lineBottom": -1531.625
+   }
+  ],
+  "fuseDotDist": [
+   0.4,
+   0.2,
+   0.4,
+   0.3,
+   0.1,
+   0.1,
+   0.3
+  ],
+  "emberChildren": [
+   {
+    "cls": "ember-dot",
+    "top": 259,
+    "h": 9
+   },
+   {
+    "cls": "keep",
+    "top": 309,
+    "h": 76
+   },
+   {
+    "cls": "echo",
+    "top": 425,
+    "h": 29
+   },
+   {
+    "cls": "reach",
+    "top": 494,
+    "h": 87
+   },
+   {
+    "cls": "fine",
+    "top": 621,
+    "h": 55
+   },
+   {
+    "cls": "copyright",
+    "top": 708,
+    "h": 24
+   }
+  ],
+  "emberEchoStyle": {
+   "fs": "15px",
+   "lh": "28.5px",
+   "ls": "3.3px"
+  },
+  "hero": {
+   "wm": "vertical-rl",
+   "h1": {
+    "t": -5541.5,
+    "l": 626.7,
+    "r": 813.3,
+    "b": -4960.7
+   },
+   "nameBox": {
+    "t": -5621,
+    "l": 0,
+    "r": 1440,
+    "b": -4721
+   }
+  },
+  "flare": [
+   {
+    "stroke": "rgb(255, 210, 138)",
+    "opacity": "0.55",
+    "width": "0.5px"
+   },
+   {
+    "stroke": "rgb(255, 210, 138)",
+    "opacity": "0.55",
+    "width": "0.5px"
+   }
+  ],
+  "unlitLampNoColor": "rgb(138, 131, 120)",
+  "console": [],
+  "manifest": [
+   {
+    "shot": "final-d1440-0-dark.png",
+    "scrollY": 0
+   },
+   {
+    "shot": "final-d1440-1-tagline.png",
+    "scrollY": 1614
+   },
+   {
+    "shot": "final-d1440-2-about-a.png",
+    "scrollY": 3034
+   },
+   {
+    "shot": "final-d1440-3-about-b.png",
+    "scrollY": 3236
+   },
+   {
+    "shot": "final-d1440-4-lamp1.png",
+    "scrollY": 4152
+   },
+   {
+    "shot": "final-d1440-4-lamp3.png",
+    "scrollY": 4799
+   },
+   {
+    "shot": "final-d1440-4-lamp5.png",
+    "scrollY": 5382
+   },
+   {
+    "shot": "final-d1440-4-lamp7.png",
+    "scrollY": 5966
+   },
+   {
+    "shot": "final-d1440-7-sky.png",
+    "scrollY": 6521
+   },
+   {
+    "shot": "final-d1440-8-ember.png",
+    "scrollY": 7691
+   },
+   {
+    "shot": "final-d1440-9-footer.png"
+   }
+  ]
+ },
+ "land": {
+  "viewport": {
+   "w": 844,
+   "h": 390
+  },
+  "hoverflow": 0,
+  "textlines": {
+   "whisper": [
+    "长夜未央。",
+    "先取一根火柴。"
+   ],
+   "tagline": [
+    "格物于毫厘，点灯于长夜。"
+   ],
+   "heroEcho": [
+    "计算病理出身，做医学与智能之间的转化。"
+   ],
+   "chapterSub": [
+    "薪火相传，次第点亮。"
+   ],
+   "skyline": [
+    "点过的灯，抬头再看，",
+    "已成星斗。"
+   ],
+   "skyEcho": [
+    "维北有斗，七星在野。"
+   ],
+   "emberEcho": [
+    "有朋自远方来——来信，即复。"
+   ],
+   "keep": [
+    "灯为君留。"
+   ],
+   "fine": [
+    "此页无追踪、无埋点、无第三方。",
+    "一砖一瓦，皆是手作。"
+   ]
+  },
+  "aboutLines": [
+   [
+    "白日，我在病理的毫厘之间，",
+    "为临床求一份可用的证据。"
+   ],
+   [
+    "入夜，一句话点燃一个念头，",
+    "众智传薪，把它烧成产品。"
+   ],
+   [
+    "我信小而亮的东西：",
+    "一灯点亮，能燃百灯。"
+   ]
+  ],
+  "lampDescs": [
+   [
+    "每天拂晓，把科学智能与生医的微末信号，读成三分钟晨报——见微，知",
+    "著。"
+   ],
+   [
+    "把散落的检查、文献与随访，织成一张可以问询的图谱——观水，必观其",
+    "澜。"
+   ],
+   [
+    "一部博士论文的舆图：章节、论断、代码、实验，按图索骥，层层放大。"
+   ],
+   [
+    "中国双层股权研究工作台：披露、治理、监管动态，尽收一屏，明察秋毫。"
+   ],
+   [
+    "一句话说出想动的念头，剩下的运筹组局，交给智能。"
+   ],
+   [
+    "可信的病理智能助手，读片如老吏断案。"
+   ],
+   [
+    "学术会议的私人驾驶舱：会前庙算，会中引路，会后致意。"
+   ]
+  ],
+  "lampTitles": [
+   [
+    "见微"
+   ],
+   [
+    "杏林观澜"
+   ],
+   [
+    "ThesisAtlas"
+   ],
+   [
+    "DCSchina"
+   ],
+   [
+    "MatchPoint↗"
+   ],
+   [
+    "TrustPathBot"
+   ],
+   [
+    "ConferenceCockpit"
+   ]
+  ],
+  "eloverflow": [
+   {
+    "tag": "SPAN",
+    "cls": "ember-dot",
+    "d": 26
+   }
+  ],
+  "lamps": [
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2716.4375,
+    "dotCx": 58,
+    "noCy": -2750.265625,
+    "h3lineCy": -2698.890625,
+    "h3lineTop": -2719.390625,
+    "h3lineBottom": -2678.390625
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2468.828125,
+    "dotCx": 58,
+    "noCy": -2502.65625,
+    "h3lineCy": -2451.28125,
+    "h3lineTop": -2471.78125,
+    "h3lineBottom": -2430.78125
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2221.21875,
+    "dotCx": 58,
+    "noCy": -2255.046875,
+    "h3lineCy": -2203.671875,
+    "h3lineTop": -2224.171875,
+    "h3lineBottom": -2183.171875
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -2004.953125,
+    "dotCx": 58,
+    "noCy": -2038.78125,
+    "h3lineCy": -1987.40625,
+    "h3lineTop": -2007.90625,
+    "h3lineBottom": -1966.90625
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -1788.6875,
+    "dotCx": 58,
+    "noCy": -1822.515625,
+    "h3lineCy": -1771.140625,
+    "h3lineTop": -1791.640625,
+    "h3lineBottom": -1750.640625
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -1572.421875,
+    "dotCx": 58,
+    "noCy": -1606.25,
+    "h3lineCy": -1554.875,
+    "h3lineTop": -1575.375,
+    "h3lineBottom": -1534.375
+   },
+   {
+    "lit": true,
+    "noColor": "rgb(255, 169, 77)",
+    "dotCy": -1356.15625,
+    "dotCx": 58,
+    "noCy": -1389.984375,
+    "h3lineCy": -1338.609375,
+    "h3lineTop": -1359.109375,
+    "h3lineBottom": -1318.109375
+   }
+  ],
+  "fuseDotDist": [
+   0.2,
+   0.1,
+   0.2,
+   0.1,
+   0.1,
+   0.3,
+   0
+  ],
+  "emberChildren": [
+   {
+    "cls": "ember-dot",
+    "top": 7,
+    "h": 9
+   },
+   {
+    "cls": "keep",
+    "top": 34,
+    "h": 76
+   },
+   {
+    "cls": "echo",
+    "top": 127,
+    "h": 29
+   },
+   {
+    "cls": "reach",
+    "top": 173,
+    "h": 75
+   },
+   {
+    "cls": "fine",
+    "top": 266,
+    "h": 55
+   },
+   {
+    "cls": "copyright",
+    "top": 335,
+    "h": 24
+   }
+  ],
+  "emberEchoStyle": {
+   "fs": "15px",
+   "lh": "28.5px",
+   "ls": "3.3px"
+  },
+  "hero": {
+   "wm": "horizontal-tb",
+   "h1": {
+    "t": -3922.2,
+    "l": 315.9,
+    "r": 528.1,
+    "b": -3856
+   },
+   "nameBox": {
+    "t": -4016,
+    "l": 0,
+    "r": 844,
+    "b": -3626
+   }
+  },
+  "flare": [
+   {
+    "stroke": "rgb(255, 210, 138)",
+    "opacity": "0.55",
+    "width": "0.5px"
+   },
+   {
+    "stroke": "rgb(255, 210, 138)",
+    "opacity": "0.55",
+    "width": "0.5px"
+   }
+  ],
+  "unlitLampNoColor": "rgb(138, 131, 120)",
+  "console": [],
+  "manifest": [
+   {
+    "shot": "final-land-0-dark.png",
+    "scrollY": 0
+   },
+   {
+    "shot": "final-land-1-tagline.png",
+    "scrollY": 699
+   },
+   {
+    "shot": "final-land-2-about-a.png",
+    "scrollY": 1330
+   },
+   {
+    "shot": "final-land-3-about-b.png",
+    "scrollY": 1581
+   },
+   {
+    "shot": "final-land-7-sky.png",
+    "scrollY": 3828
+   },
+   {
+    "shot": "final-land-8-ember.png",
+    "scrollY": 4913
+   },
+   {
+    "shot": "final-land-9-footer.png"
+   }
+  ]
+ }
+}

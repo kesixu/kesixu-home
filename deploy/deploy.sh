@@ -3,6 +3,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+python3 tools/check-glyphs.py   # 字形完整性门：缺字即中止
+
 sudo mkdir -p /var/www/kesixu-home
 sudo rsync -a --delete site/ /var/www/kesixu-home/
 sudo chown -R root:root /var/www/kesixu-home
