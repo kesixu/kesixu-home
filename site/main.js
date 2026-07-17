@@ -33,7 +33,7 @@
   var reducedQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (reducedQuery.matches || !window.gsap || !window.ScrollTrigger) {
     // 基线：静态点亮态（与中途切 reduced 的终态保持一致）
-    document.querySelectorAll(".lamp").forEach(function (el) { el.classList.add("lit"); });
+    document.querySelectorAll(".hero-lamp").forEach(function (el) { el.classList.add("lit"); });
     return;
   }
 
@@ -50,7 +50,7 @@
       gsap.globalTimeline.clear();
       gsap.set("#heroName, #whisper, #scrollHint, .hero-name h1, .hero-name h1 span, .hero-name .latin, " +
         ".hero-name .tagline, .hero-name .echo, #about .line, #about .echo, #lamps h2, " +
-        ".chapter-sub, .lamp, .sky-line, #sky .echo, #dipperStars .star, #dipperLines line, " +
+        ".chapter-sub, .hero-lamp, .sky-line, #sky .echo, #dipperStars .star, #dipperLines line, " +
         "#ember > *, #fuseHead", { clearProps: "all" });
     } catch (e) { /* 清理路径自身绝不允许再抛 */ }
     // 这些是绕开 gsap 手设的内联样式，clearProps 管不到
@@ -60,7 +60,7 @@
     });
     document.documentElement.classList.remove("fx");
     if (flame) flame.setActive(false);
-    document.querySelectorAll(".lamp").forEach(function (el) { el.classList.add("lit"); });
+    document.querySelectorAll(".hero-lamp").forEach(function (el) { el.classList.add("lit"); });
   }
 
   /* 中途切到"减少动态"（老 WebKit 无 EventTarget 接口，走 addListener 兜底） */
@@ -326,7 +326,7 @@
 
     var storyTop = story.getBoundingClientRect().top + window.scrollY;
     var pins = [];
-    document.querySelectorAll(".lamp-dot").forEach(function (d) {
+    document.querySelectorAll(".hero-dot").forEach(function (d) {
       var r = d.getBoundingClientRect();
       pins.push(r.top + r.height / 2 + window.scrollY - storyTop);
     });
@@ -405,7 +405,7 @@
       scrollTrigger: { trigger: el, start: "top 76%", once: true }
     });
   });
-  gsap.utils.toArray(".lamp").forEach(function (el) {
+  gsap.utils.toArray(".hero-lamp").forEach(function (el) {
     ScrollTrigger.create({
       trigger: el, start: "top 66%", once: true,
       onEnter: function () {
@@ -439,7 +439,7 @@
 
   /* ---------- 键盘兜底：Tab 进未点亮区域时立即点亮，焦点永不落在透明元素上 ---------- */
   document.getElementById("lamps").addEventListener("focusin", function (e) {
-    var lamp = e.target.closest(".lamp");
+    var lamp = e.target.closest(".hero-lamp");
     if (lamp && !lamp.classList.contains("lit")) {
       lamp.classList.add("lit");
       gsap.to(lamp, { opacity: 1, y: 0, duration: 0.3, overwrite: true });

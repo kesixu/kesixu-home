@@ -282,119 +282,105 @@ a:focus-visible {
   margin: 3.5vh 0 4vh;
 }
 
-.lamp-list { list-style: none; }
+/* ── 两盏主灯 ── */
+.hero-lamps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 3vw, 32px);
+  margin-bottom: 6vh;
+}
 
-.lamp {
+.hero-lamp {
   position: relative;
-  padding: 5.5vh 0;
+  display: block;
+  padding: 3.5vh 0 3.5vh clamp(18px, 4vw, 28px);
+  border: 1px solid rgba(255, 169, 77, .18);
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .6s ease, background .6s ease;
 }
-.lamp::before {                      /* 火光衬底，点亮时浮现（右缘不出血，防横向溢出） */
-  content: "";
-  position: absolute;
-  inset: 0 0 0 -30%;
-  background: radial-gradient(closest-side at 18% 42%,
-              rgba(255, 140, 66, .085), transparent 72%);
-  opacity: 0;
-  transition: opacity 1.1s ease;
-  pointer-events: none;
+.hero-lamp:hover,
+.hero-lamp:focus-visible {
+  border-color: var(--amber);
+  background: rgba(255, 169, 77, .06);
 }
-.lamp.lit::before { opacity: 1; }
+.hero-lamp:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 
-.lamp-dot {
+.hero-dot {
   position: absolute;
-  /* 落在 gutter 里、与引信同一竖线（JS 会将引信路径过此点）；+27px 对齐序数下方的标题行 */
-  left: calc(-26px - var(--gutter) / 2 - 3.5px);
-  top: calc(5.5vh + .95em + 27px);
-  width: 7px;
-  height: 7px;
+  left: -10px;
+  top: calc(3.5vh + 1em);
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: var(--char);
-  transition: background 1s ease, box-shadow 1.2s ease, transform 1.2s ease;
+  transition: background 1s ease, box-shadow 1.2s ease;
 }
-/* 点燃一瞬迸出的火花环（一次性） */
-.lamp-dot::after {
-  content: "";
-  position: absolute;
-  inset: -7px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 210, 138, .75);
-  opacity: 0;
-  transform: scale(.4);
-}
-.lamp.lit .lamp-dot {
+.hero-lamp.lit .hero-dot {
   background: var(--gold);
-  transform: scale(1.25);
   box-shadow:
     0 0 8px 2px rgba(255, 210, 138, .85),
     0 0 26px 9px rgba(255, 107, 53, .3);
 }
 
-.lamp-no {
-  display: block;
-  font-family: var(--display);
-  font-size: 12.5px;
-  letter-spacing: .5em;
-  color: var(--smoke);
-  margin-bottom: 8px;
-  transition: color 1s ease;
-}
-.lamp.lit .lamp-no { color: var(--amber); }
-
-.lamp h3 {
+.hero-lamp h3 {
   font-family: var(--display);
   font-weight: 500;
   font-size: clamp(26px, 7vw, 34px);
-  letter-spacing: .06em;
-  color: var(--smoke);
-  transition: color 1s ease, text-shadow 1s ease;
-}
-.lamp.lit h3 {
   color: var(--paper);
-  text-shadow: 0 0 18px rgba(255, 169, 77, .3);
+  margin: 0 0 .6em;
 }
 
-.lamp h3 a {
-  border-bottom: 1px solid rgba(255, 169, 77, .5);
-  padding-bottom: 2px;
-  transition: color .5s ease, text-shadow .5s ease, border-color .5s ease;
-}
-.lamp h3 a:hover {
-  color: var(--gold);
-  text-shadow: 0 0 22px rgba(255, 210, 138, .45);
-  border-color: rgba(255, 210, 138, .85);
-}
-.lamp h3 .ext {
-  font-size: .55em;
+.hero-lamp h3 .ext {
+  font-family: var(--body-font);
+  font-size: .6em;
   color: var(--amber);
-  vertical-align: .55em;
-  margin-left: .25em;
+  margin-left: .3em;
+  vertical-align: super;
+}
+.hero-lamp:hover h3 .ext { color: var(--gold); }
+
+.hero-lamp .lamp-desc {
+  font-family: var(--body-font);
+  font-size: clamp(14px, 3.8vw, 16px);
+  color: var(--smoke);
+  line-height: 1.65;
 }
 
-.lamp-desc {
-  font-size: clamp(15px, 4vw, 16.5px);
-  color: var(--smoke);
-  max-width: 34em;
-  margin: 1.6vh 0 2.2vh;
-  transition: color 1s ease;
-  text-wrap: pretty;   /* 防桌面宽行尾字孤悬（老内核安全忽略） */
+/* ── 其余灯火 ── */
+.rest-label {
+  font-family: var(--display);
+  font-size: clamp(13px, 3.4vw, 15px);
+  color: var(--smoke-dim);
+  letter-spacing: .15em;
+  margin-bottom: 2.5vh;
 }
-.lamp.lit .lamp-desc { color: #cfc7b8; }
 
-.tag {
-  display: inline-block;
-  font-size: 11px;
-  letter-spacing: .22em;
-  text-indent: .22em;
-  color: var(--smoke);
-  border: 1px solid rgba(138, 131, 120, .35);
-  border-radius: 3px;
-  padding: 4px 12px 3px;
-  transition: color 1s ease, border-color 1s ease;
+.rest-lamps {
+  list-style: none;
+  padding: 0;
 }
-.lamp.lit .tag { color: var(--amber); border-color: rgba(255, 169, 77, .45); }
-.lamp.lit .tag-open {
-  color: var(--gold);
-  border-color: rgba(255, 210, 138, .65);
+.rest-lamps li {
+  font-size: clamp(13px, 3.2vw, 14.5px);
+  color: var(--smoke);
+  line-height: 1.9;
+}
+.rest-lamps li strong {
+  font-family: var(--display);
+  font-weight: 500;
+  color: var(--paper);
+  margin-right: .4em;
+}
+.rest-lamps a {
+  color: var(--amber);
+  text-decoration: none;
+}
+.rest-lamps a:hover { text-decoration: underline; }
+
+/* ── 手机堆叠 ── */
+@media (max-width: 540px) {
+  .hero-lamps { grid-template-columns: 1fr; }
 }
 
 /* ------------------------------------------------------------
@@ -540,7 +526,9 @@ a:focus-visible {
 .fx #about .echo { opacity: 0; transform: translateY(28px); }
 .fx #lamps h2,
 .fx .chapter-sub { opacity: 0; transform: translateY(24px); }
-.fx .lamp { opacity: 0; transform: translateY(30px); }
+.fx .hero-lamp,
+.fx .rest-label,
+.fx .rest-lamps li { opacity: 0; transform: translateY(30px); }
 .fx .sky-line,
 .fx #sky .echo { opacity: 0; }
 .fx #dipperStars .star { opacity: 0; }
@@ -552,7 +540,7 @@ a:focus-visible {
   /* 呼吸放在内层 span：外层透明度归 GSAP 管，两者相乘互不打架 */
   .scroll-hint span { display: inline-block; animation: hint-pulse 2.8s ease-in-out infinite; }
   .ember-dot::after { animation: ember-breathe 4.4s ease-in-out infinite; }
-  .lamp.lit .lamp-dot::after { animation: dot-spark 1.1s ease-out 1; }
+  .hero-lamp.lit .hero-dot::after { animation: dot-spark 1.1s ease-out 1; }
   @keyframes dot-spark {
     0%   { opacity: .95; transform: scale(.4); }
     100% { opacity: 0;   transform: scale(2.8); }
