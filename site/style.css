@@ -79,13 +79,13 @@ a:focus-visible {
   border-radius: 2px;
 }
 
+/* 中文小注：雅文在上，小注在下（或作诗余小字）。Garamond 只留给人名 .latin */
 .echo {
   display: block;
-  font-family: var(--echo-font);
-  font-style: italic;
-  font-weight: 450;
-  color: var(--smoke-dim);
-  letter-spacing: .05em;
+  font-family: var(--display);
+  font-weight: 400;
+  color: var(--smoke);
+  letter-spacing: .18em;
 }
 
 /* ------------------------------------------------------------
@@ -119,7 +119,7 @@ a:focus-visible {
   letter-spacing: .22em;
   color: var(--smoke);
 }
-.whisper .echo { margin-top: .9em; font-size: .62em; letter-spacing: .1em; }
+.whisper .echo { margin-top: 1em; font-size: .6em; letter-spacing: .34em; text-indent: .34em; }
 
 .hero-name {
   position: absolute;
@@ -273,7 +273,6 @@ a:focus-visible {
   letter-spacing: .14em;
   color: var(--paper);
 }
-#lamps h2 .echo { font-size: .38em; margin-top: .7em; letter-spacing: .12em; }
 
 .chapter-sub {
   font-family: var(--display);
@@ -303,9 +302,9 @@ a:focus-visible {
 
 .lamp-dot {
   position: absolute;
-  /* 落在 gutter 里、与引信同一竖线（JS 会将引信路径过此点） */
+  /* 落在 gutter 里、与引信同一竖线（JS 会将引信路径过此点）；+27px 对齐序数下方的标题行 */
   left: calc(-26px - var(--gutter) / 2 - 3.5px);
-  top: calc(5.5vh + .95em);
+  top: calc(5.5vh + .95em + 27px);
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -319,6 +318,17 @@ a:focus-visible {
     0 0 8px 2px rgba(255, 210, 138, .85),
     0 0 26px 9px rgba(255, 107, 53, .3);
 }
+
+.lamp-no {
+  display: block;
+  font-family: var(--display);
+  font-size: 12.5px;
+  letter-spacing: .5em;
+  color: var(--smoke);
+  margin-bottom: 8px;
+  transition: color 1s ease;
+}
+.lamp.lit .lamp-no { color: var(--amber); }
 
 .lamp h3 {
   font-family: var(--display);
@@ -421,7 +431,9 @@ a:focus-visible {
   text-wrap: balance;
 }
 
-#sky .echo { font-size: clamp(13px, 3.4vw, 16px); margin-top: -3vh; }
+#sky .echo { font-size: clamp(13px, 3.4vw, 16px); margin-top: -3vh; letter-spacing: .4em; text-indent: .4em; }
+
+#ember .echo { font-size: clamp(13px, 3.5vw, 15px); letter-spacing: .22em; }
 
 /* ------------------------------------------------------------
    章五 · 灯留着
@@ -486,9 +498,39 @@ a:focus-visible {
   font-size: 12.5px;
   line-height: 2.2;
   color: var(--smoke);
-  letter-spacing: .06em;
+  letter-spacing: .1em;
 }
-.fine .echo { display: inline; font-size: 11.5px; }
+
+/* 落款：朱文印 + 版权行 */
+.colophon {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 1vh;
+}
+.seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  width: 34px;
+  height: 34px;
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  color: #f2e6d8;
+  background: var(--ember);
+  border-radius: 7px;
+  transform: rotate(-3deg);
+  box-shadow: 0 0 14px rgba(179, 58, 30, .35), inset 0 0 6px rgba(13, 11, 9, .35);
+  user-select: none;
+}
+.copyright {
+  font-size: 12.5px;
+  color: var(--smoke);
+  letter-spacing: .1em;
+}
 
 /* ------------------------------------------------------------
    动效作用域 .fx —— 仅 JS + 允许动效时进入"待点亮"态。

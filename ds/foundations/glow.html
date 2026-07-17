@@ -1,0 +1,17 @@
+<!-- @dsCard group="Foundations" name="辉光层级" subtitle="辉光即层级：sm 灯芯 / md 标题 / lg 名字" -->
+<!doctype html><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<body><div class="ds-stage">
+  <div class="ds-label">Glow Scale（token: --glow-*）</div>
+  <div style="display:grid;gap:44px;padding:30px 0">
+    <div style="display:flex;align-items:center;gap:28px">
+      <span style="width:7px;height:7px;border-radius:50%;background:var(--color-gold);box-shadow:var(--glow-sm)"></span>
+      <span class="ds-note">--glow-sm · 灯芯点：近层烛金 + 远层火橙的双层光</span></div>
+    <div style="display:flex;align-items:center;gap:28px">
+      <span style="font-family:var(--font-display);font-size:28px;color:var(--color-paper);text-shadow:var(--glow-md)">杏林观澜</span>
+      <span class="ds-note">--glow-md · 点亮的标题：只给一层柔光，不抢字形</span></div>
+    <div style="display:flex;align-items:center;gap:28px">
+      <span style="font-family:var(--font-display);font-size:44px;color:var(--color-paper);text-shadow:var(--glow-lg)">徐可斯</span>
+      <span class="ds-note">--glow-lg · 名字/火头：双层大半径，页面最高亮度</span></div>
+  </div>
+  <p class="ds-note">规则：辉光代替边框和分割线做层级；呼吸动效走伪元素 opacity/scale（--halo），禁止动画 box-shadow 本体。</p>
+</div></body>

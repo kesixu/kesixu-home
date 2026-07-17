@@ -1,0 +1,17 @@
+<!-- @dsCard group="Components" name="引信" subtitle="烧过的余烬红 → 火头烛金；穿过每盏灯的灯芯" -->
+<!doctype html><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<body><div class="ds-stage" style="position:relative;height:430px">
+  <svg width="70" height="430" style="position:absolute;left:40px" viewBox="0 0 70 430">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b33a1e"/><stop offset=".45" stop-color="#ffa94d"/><stop offset="1" stop-color="#ffd28a"/>
+    </linearGradient></defs>
+    <path d="M35 0 C 41 60 29 120 35 180 C 41 240 35 260 35 272" fill="none" stroke="url(#g)" stroke-width="1.5"
+          style="filter:drop-shadow(0 0 6px rgba(255,169,77,.65))"/>
+    <path d="M35 272 C 35 305 33 365 35 430" fill="none" stroke="var(--color-char)" stroke-width="1.5"/>
+  </svg>
+  <div style="position:absolute;left:73px;top:264px;width:5px;height:5px;border-radius:50%;background:var(--color-gold);
+       box-shadow:0 0 10px 3px rgba(255,210,138,.9),0 0 34px 12px rgba(255,107,53,.35)"></div>
+  <p class="ds-note" style="position:absolute;left:135px;top:236px;max-width:22em">
+    上段：烧过（--fuse-gradient，余烬红渐到烛金）；<br>下段：未燃（--color-char）。<br>
+    火头 = 金点 + --glow-sm 级双层光。<br>滚动拉动火头前进；路径必须精确穿过每个 .lamp-dot。</p>
+</div></body>
