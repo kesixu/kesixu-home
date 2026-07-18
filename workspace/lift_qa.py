@@ -201,8 +201,13 @@ with sync_playwright() as playwright:
             problems.append(f"hint {result['initial']['hint']}")
         if result["initial"]["hintOpacity"] < .9 or result["initial"]["nameOpacity"] < .2:
             problems.append("initial guide/name hidden")
-        if result["hintAfterScroll"] < .35 or result["hintAfterIgnite"] < .35:
-            problems.append(f"hint retires early {result['hintAfterScroll']}/{result['hintAfterIgnite']}")
+        if result["hintAfterScroll"] < .35:
+            problems.append(f"hint retires before ignition {result['hintAfterScroll']}")
+        if viewport[1] <= 720:
+            if result["hintAfterIgnite"] > .08:
+                problems.append(f"compact hint overlaps details {result['hintAfterIgnite']}")
+        elif result["hintAfterIgnite"] < .35:
+            problems.append(f"hint retires early {result['hintAfterIgnite']}")
         if result["hintAfterStory"] > .05:
             problems.append(f"hint remains after story {result['hintAfterStory']}")
         if result["initial"]["accessibleProjects"] != 4 or not result["initial"]["firstSecondary"].startswith("MatchPoint"):

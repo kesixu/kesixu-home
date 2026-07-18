@@ -176,6 +176,12 @@ a:focus-visible {
 .calligraphy-lockup {
   position: relative;
   isolation: isolate;
+  overflow: visible;
+  /* WebKit 不把 vertical-rl 子元素的横向行盒计入父级 intrinsic width。
+     显式留出 1.06em 行盒 + 四周 0.06em 墨迹/阴影出血区，避免 iOS 合成层裁笔。 */
+  font-size: var(--type-hero-name);
+  width: 1.18em;
+  padding: .06em;
 }
 
 .calligraphy-lockup::before {
@@ -277,10 +283,14 @@ a:focus-visible {
 }
 
 .name-seal i { font-style: normal; }
-}
 
 /* 横屏矮视口：竖排列装不下会折列倒序（斯可徐），改横排是叙事成立的降级 */
 @media (orientation: landscape) and (max-height: 500px) {
+  .calligraphy-lockup {
+    font-size: 58px;
+    width: auto;
+    padding: .08em .12em;
+  }
   .hero-name h1 {
     writing-mode: horizontal-tb;
     font-size: 58px;
@@ -941,6 +951,23 @@ a:focus-visible {
 
 .motion-pending #heroName,
 .fx #heroName { opacity: .42; }
+/* 开场先让姓名避开提示语；提示语熄灭后，GSAP 把 y 收回 0。
+   只改位置、不改字号，保证各品牌手机的字面尺度一致。 */
+@media (orientation: portrait) and (max-width: 540px) {
+  .fx #heroName { transform: translateY(54px); }
+}
+@media (orientation: portrait) and (max-height: 600px) {
+  .fx #heroName { transform: translateY(64px); }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .fx #heroName { transform: translateY(60px); }
+}
+@media (orientation: landscape) and (max-height: 360px) {
+  .fx #heroName { transform: translateY(76px); }
+}
+@media (orientation: landscape) and (max-height: 340px) {
+  .fx #heroName { transform: translateY(86px); }
+}
 @media (scripting: none) {
   .motion-pending #heroName { opacity: 1; }
 }

@@ -906,6 +906,7 @@
   /* ============================================================
      章一 · hero pinned 时间轴（scroll 即划火柴）
      ============================================================ */
+  var compactHero = window.matchMedia("(max-height: 720px)").matches;
   var heroTL = gsap.timeline({
     scrollTrigger: {
       trigger: "#hero",
@@ -917,14 +918,14 @@
         flame.setPhase(st.progress);
         flame.setActive(st.isActive && st.progress > .003 && st.progress < .997);
         document.documentElement.classList.toggle("match-lit", st.progress >= .31 && st.progress < .92);
-        document.documentElement.classList.toggle("story-entered", st.progress >= .92);
+        document.documentElement.classList.toggle("story-entered", st.progress >= (compactHero ? .58 : .92));
       },
       onToggle: function (st) { flame.setActive(st.isActive && st.progress > .003 && st.progress < .997); }
     }
   });
   heroTL
     .to("#whisper", { opacity: 0, y: -26, duration: 0.16 }, 0.13)
-    .fromTo("#heroName", { opacity: 0.42 }, { opacity: 1, duration: 0.26, ease: "none" }, 0.3)
+    .fromTo("#heroName", { opacity: 0.42 }, { opacity: 1, y: 0, duration: 0.26, ease: "none" }, 0.3)
     .fromTo(".hero-name h1 span", { opacity: 0.4, y: 12 },
       { opacity: 1, y: 0, stagger: 0.085, duration: 0.22, ease: "power1.out" }, 0.31)
     .from(".hero-name .latin, .hero-name .tagline, .hero-name .echo",
