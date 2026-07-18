@@ -40,7 +40,7 @@
 
 @font-face {
   font-family: "LXGW WenKai";
-  src: url("/fonts/wenkai-subset.woff2") format("woff2");
+  src: url("/fonts/wenkai-subset.woff2?v=18") format("woff2");
   font-weight: 400 600;
   font-display: swap;
 }

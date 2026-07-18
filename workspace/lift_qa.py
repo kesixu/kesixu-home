@@ -197,7 +197,7 @@ with sync_playwright() as playwright:
             problems.append(f"HTTP {result['http']}")
         if result["initial"]["overflow"] > 1:
             problems.append(f"overflow {result['initial']['overflow']}")
-        if "下滑" not in result["initial"]["hint"] or "看更多" not in result["initial"]["hint"]:
+        if "持续向下滑动" not in result["initial"]["hint"]:
             problems.append(f"hint {result['initial']['hint']}")
         if result["initial"]["hintOpacity"] < .9 or result["initial"]["nameOpacity"] < .2:
             problems.append("initial guide/name hidden")
