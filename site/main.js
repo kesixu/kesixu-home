@@ -33,7 +33,7 @@
   var reducedQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (reducedQuery.matches || !window.gsap || !window.ScrollTrigger) {
     // 基线：静态点亮态（与中途切 reduced 的终态保持一致）
-    document.querySelectorAll(".hero-lamp").forEach(function (el) { el.classList.add("lit"); });
+    document.querySelectorAll("[data-ignite]").forEach(function (el) { el.classList.add("lit"); });
     return;
   }
 
@@ -41,6 +41,7 @@
   ScrollTrigger.config({ ignoreMobileResize: true }); // 地址栏伸缩不触发 refresh
 
   var flame = null;
+  var fuseSpark = null;
 
   /* 拆掉全部演出、剥净内联样式，回到静态点亮态。
      用于：中途切 reduced-motion、初始化任何异常（渐进增强的执行点）。 */
@@ -50,7 +51,7 @@
       gsap.globalTimeline.clear();
       gsap.set("#heroName, #whisper, #scrollHint, .hero-name h1, .hero-name h1 span, .hero-name .latin, " +
         ".hero-name .tagline, .hero-name .echo, #about .line, #about .echo, #lamps h2, " +
-        ".chapter-sub, .hero-lamp, .sky-line, #sky .echo, #dipperStars .star, #dipperLines line, " +
+        ".chapter-sub, .rest-label, .hero-lamp, .rest-lamps li, .sky-line, #sky .echo, #dipperStars .star, #dipperLines line, " +
         "#ember > *, #fuseHead", { clearProps: "all" });
     } catch (e) { /* 清理路径自身绝不允许再抛 */ }
     // 这些是绕开 gsap 手设的内联样式，clearProps 管不到
@@ -59,8 +60,10 @@
       el.style.strokeDashoffset = "";
     });
     document.documentElement.classList.remove("fx");
+    document.documentElement.classList.remove("fuse-ready");
     if (flame) flame.setActive(false);
-    document.querySelectorAll(".hero-lamp").forEach(function (el) { el.classList.add("lit"); });
+    if (fuseSpark) fuseSpark.setActive(false);
+    document.querySelectorAll("[data-ignite]").forEach(function (el) { el.classList.add("lit"); });
   }
 
   /* 中途切到"减少动态"（老 WebKit 无 EventTarget 接口，走 addListener 兜底） */
@@ -71,17 +74,27 @@
   try { // ---- 动效初始化整体受保护：任何异常 → teardownToStatic() 静态可读 ----
   document.documentElement.classList.add("fx");
 
+  function retireScrollHint() {
+    if (window.scrollY < 7) return;
+    document.documentElement.classList.add("has-scrolled");
+    window.removeEventListener("scroll", retireScrollHint);
+  }
+  window.addEventListener("scroll", retireScrollHint, { passive: true });
+  retireScrollHint();
+
   /* ============================================================
      火柴与火焰（canvas 2D）
      ============================================================ */
-  var isMobile = window.matchMedia("(max-width: 768px)").matches;
+  // 横屏手机宽度常超过 768px，不能只用宽度判断，否则会误走桌面画质路径。
+  var isMobile = window.matchMedia("(any-pointer: coarse)").matches ||
+    window.matchMedia("(max-width: 768px)").matches;
 
   function FlameScene(canvas) {
     var ctx = canvas.getContext("2d");
     var dpr = 1, W = 0, H = 0;
     var phase = 0, active = false, raf = 0, last = 0;
     var parts = [], sparks = [];
-    var MAXP = isMobile ? 90 : 150;
+    var MAXP = isMobile ? 78 : 140;
     var nameEdge = 0; // 名字右缘（px），驻位锚定用；0 = 未测量
 
     // 预渲染光斑 sprite：金 / 琥珀 / 橙 / 烬红
@@ -98,9 +111,13 @@
     });
 
     function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      W = canvas.clientWidth; H = canvas.clientHeight;
-      canvas.width = W * dpr; canvas.height = H * dpr;
+      // 现代手机普遍是 3x 屏。旧版上限 2x 会被浏览器再放大 1.5 倍，
+      // 细长的火柴边缘因此发虚、看起来像“弯了”。粒子数量另行限流。
+      dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 3 : 2);
+      W = Math.max(1, Math.round(canvas.clientWidth));
+      H = Math.max(1, Math.round(canvas.clientHeight));
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
     resize();
@@ -108,6 +125,7 @@
     function lerp(a, b, t) { return a + (b - a) * t; }
     function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
     function seg(p, a, b) { return clamp01((p - a) / (b - a)); }
+    function smooth(v) { return v * v * (3 - 2 * v); }
 
     /* 火柴头位置/角度/火焰强度，全部是 phase 的纯函数（resize 免疫） */
     function matchState(p, t) {
@@ -116,14 +134,13 @@
       var eSt = seg(p, 0.15, 0.27);       // 划擦
       var eUp = seg(p, 0.27, 0.42);       // 起火，移向驻位
       var eOff = seg(p, 0.86, 1);         // 交棒退场
-      var ease = function (v) { return v * v * (3 - 2 * v); };
       if (p < 0.15) {
-        mx = lerp(W * 0.92, W * 0.66, ease(eIn));
-        my = lerp(H * 1.08, H * 0.64, ease(eIn));
+        mx = lerp(W * 0.92, W * 0.66, smooth(eIn));
+        my = lerp(H * 1.08, H * 0.64, smooth(eIn));
         ang = lerp(-0.9, -0.55, eIn);
       } else if (p < 0.27) {
-        mx = lerp(W * 0.66, W * 0.34, ease(eSt));
-        my = lerp(H * 0.64, H * 0.58, ease(eSt));
+        mx = lerp(W * 0.66, W * 0.34, smooth(eSt));
+        my = lerp(H * 0.64, H * 0.58, smooth(eSt));
         ang = lerp(-0.55, -0.35, eSt);
         inten = eSt * 0.25;
       } else {
@@ -131,15 +148,15 @@
         // 手机上 min() 仍取 0.72W（名字右缘 + 间距 ≈ 0.72W），行为不变
         var restX = Math.min(W * 0.72,
           (nameEdge > 0 ? nameEdge : W * 0.72) + Math.min(W * 0.08, 96));
-        mx = lerp(W * 0.34, restX, ease(eUp));
-        my = lerp(H * 0.58, H * 0.56, ease(eUp));
-        ang = lerp(-0.35, -1.45, ease(eUp));
-        inten = lerp(0.25, 1, ease(eUp));
+        mx = lerp(W * 0.34, restX, smooth(eUp));
+        my = lerp(H * 0.58, H * 0.56, smooth(eUp));
+        ang = lerp(-0.35, -1.45, smooth(eUp));
+        inten = lerp(0.25, 1, smooth(eUp));
         mx += Math.sin(t / 900) * 3 * eUp;
       }
       if (eOff > 0) {
-        mx = lerp(mx, W * 0.12, ease(eOff));
-        my = lerp(my, H * 1.02, ease(eOff));
+        mx = lerp(mx, W * 0.12, smooth(eOff));
+        my = lerp(my, H * 1.02, smooth(eOff));
         inten *= (1 - eOff * 0.75);
       }
       return { mx: mx, my: my, ang: ang, inten: inten };
@@ -194,20 +211,104 @@
       }
     }
 
+    // 擦火磷纸：只在“划”的瞬间显现，让动作在小屏上也一眼可读。
+    function drawStriker(p) {
+      var alpha = smooth(seg(p, 0.06, 0.13)) * (1 - smooth(seg(p, 0.29, 0.38)));
+      if (alpha < 0.002) return;
+      var ax = W * 0.70, ay = H * 0.648;
+      var bx = W * 0.30, by = H * 0.572;
+      var vx = bx - ax, vy = by - ay;
+      var vl = Math.hypot(vx, vy) || 1;
+      var nx = -vy / vl, ny = vx / vl;
+      var grit = ctx.createLinearGradient(ax, ay, bx, by);
+      grit.addColorStop(0, "rgba(82,54,35,0)");
+      grit.addColorStop(0.18, "rgba(116,73,43,.72)");
+      grit.addColorStop(0.76, "rgba(145,84,45,.58)");
+      grit.addColorStop(1, "rgba(82,54,35,0)");
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "rgba(34,23,17,.95)";
+      ctx.lineWidth = 6;
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+      ctx.strokeStyle = grit;
+      ctx.lineWidth = 2.2;
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+
+      // 规则种子制造不等距砂砾，避免排成“尺子”，同时不逐帧闪烁。
+      ctx.fillStyle = "rgba(255,177,94,.52)";
+      for (var gi = 0; gi < 34; gi++) {
+        var gt = ((gi * 37) % 101) / 100;
+        var jitter = Math.sin(gi * 12.9898) * 3.7;
+        var gx = ax + vx * gt + nx * jitter;
+        var gy = ay + vy * gt + ny * jitter;
+        var gr = 0.45 + (gi * 7 % 6) * 0.13;
+        ctx.beginPath(); ctx.arc(gx, gy, gr, 0, 6.2832); ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    // 分层绘制木梗、焦痕与椭圆火柴头；比单根圆线更接近真实比例。
+    function drawMatch(st) {
+      var len = Math.max(76, Math.min(112, Math.min(W, H) * 0.21));
+      var dx = Math.cos(st.ang), dy = Math.sin(st.ang);
+      var nx = -dy, ny = dx;
+      var hx = st.mx, hy = st.my;
+      var tx = hx - dx * len, ty = hy - dy * len;
+
+      ctx.save();
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "rgba(20,13,9,.96)";
+      ctx.lineWidth = 5.6;
+      ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(hx, hy); ctx.stroke();
+
+      var wood = ctx.createLinearGradient(tx, ty, hx, hy);
+      wood.addColorStop(0, "#3a2517");
+      wood.addColorStop(0.36, "#a76a36");
+      wood.addColorStop(0.78, "#75401f");
+      wood.addColorStop(1, "#23130e");
+      ctx.strokeStyle = wood;
+      ctx.lineWidth = 3.1;
+      ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(hx, hy); ctx.stroke();
+
+      // 木纤维高光让 3x 屏上的火柴仍有实体感。
+      ctx.strokeStyle = "rgba(255,199,126,.32)";
+      ctx.lineWidth = 0.75;
+      ctx.beginPath();
+      ctx.moveTo(tx + nx * 0.8, ty + ny * 0.8);
+      ctx.lineTo(hx - dx * 20 + nx * 0.8, hy - dy * 20 + ny * 0.8);
+      ctx.stroke();
+
+      // 靠近火柴头的焦黑段。
+      ctx.strokeStyle = st.inten > 0.08 ? "rgba(38,19,13,.96)" : "rgba(76,39,24,.94)";
+      ctx.lineWidth = 4.1;
+      ctx.beginPath();
+      ctx.moveTo(hx - dx * 18, hy - dy * 18);
+      ctx.lineTo(hx - dx * 3, hy - dy * 3);
+      ctx.stroke();
+
+      ctx.translate(hx, hy);
+      ctx.rotate(st.ang);
+      ctx.fillStyle = "#24120f";
+      ctx.beginPath(); ctx.ellipse(1.2, 0, 6.7, 5.0, 0, 0, 6.2832); ctx.fill();
+      ctx.fillStyle = st.inten > 0.05 ? "#9d4728" : "#603024";
+      ctx.beginPath(); ctx.ellipse(1.5, 0, 5.2, 3.7, 0, 0, 6.2832); ctx.fill();
+      if (st.inten > 0.05) {
+        ctx.globalAlpha = Math.min(0.85, 0.28 + st.inten * 0.56);
+        ctx.fillStyle = "#e28744";
+        ctx.beginPath(); ctx.ellipse(2.4, -0.5, 2.4, 1.55, 0, 0, 6.2832); ctx.fill();
+      }
+      ctx.restore();
+    }
+
     function draw(st, t) {
       ctx.clearRect(0, 0, W, H);
       ctx.globalCompositeOperation = "source-over";
+      drawStriker(phase);
+      drawMatch(st);
 
-      // 火柴本体
-      var len = Math.min(W, H) * 0.2;
       var hx = st.mx, hy = st.my;
-      var tx = hx - Math.cos(st.ang) * len, ty = hy - Math.sin(st.ang) * len;
-      ctx.lineCap = "round";
-      ctx.lineWidth = 3.6;
-      ctx.strokeStyle = "#31241b";
-      ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(hx, hy); ctx.stroke();
-      ctx.fillStyle = st.inten > 0.05 ? "#7a4a28" : "#402a1e";
-      ctx.beginPath(); ctx.arc(hx, hy, 4.4, 0, 6.2832); ctx.fill();
 
       // 发光层（多周期正弦叠出近似噪声的呼吸，比单一正弦更像真火）
       ctx.globalCompositeOperation = "lighter";
@@ -237,6 +338,12 @@
       for (i = 0; i < sparks.length; i++) {
         q = sparks[i]; f = q.life / q.ttl;
         ctx.globalAlpha = (1 - f) * 0.9;
+        ctx.strokeStyle = "rgba(255,196,112,.9)";
+        ctx.lineWidth = Math.max(0.6, q.size * 0.42);
+        ctx.beginPath();
+        ctx.moveTo(q.x - q.vx * 0.018, q.y - q.vy * 0.018);
+        ctx.lineTo(q.x, q.y);
+        ctx.stroke();
         var s2 = q.size * 2.4;
         ctx.drawImage(sprites[0], q.x - s2 / 2, q.y - s2 / 2, s2, s2);
       }
@@ -268,7 +375,150 @@
     };
   }
 
+  /* 小画布随 SVG 路径移动。所有粒子都在固定池里复用，避免滚动时制造垃圾。 */
+  function FuseSparkScene(canvas) {
+    var ctx = canvas.getContext("2d");
+    var size = isMobile ? 76 : 92;
+    var dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 2.5 : 2);
+    var center = size / 2;
+    var active = false, raf = 0, last = 0, angle = Math.PI / 2, velocity = 0, burst = 0;
+    var seed = 0x1f2e3d4c;
+    var particles = [];
+    var count = isMobile ? 22 : 34;
+
+    canvas.width = Math.round(size * dpr);
+    canvas.height = Math.round(size * dpr);
+    canvas.style.width = size + "px";
+    canvas.style.height = size + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    function random() {
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      return seed / 4294967296;
+    }
+
+    for (var i = 0; i < count; i++) {
+      particles.push({ x: 0, y: 0, vx: 0, vy: 0, life: 2, ttl: 1, hot: 0 });
+    }
+
+    function respawn(p, force) {
+      var back = angle + Math.PI;
+      var spread = (random() - 0.5) * 1.5;
+      var power = 20 + random() * (42 + velocity * 80 + force * 45);
+      p.x = center + (random() - 0.5) * 4;
+      p.y = center + (random() - 0.5) * 4;
+      p.vx = Math.cos(back + spread) * power + (random() - 0.5) * 18;
+      p.vy = Math.sin(back + spread) * power - 14 - random() * 28;
+      p.life = 0;
+      p.ttl = .22 + random() * .42;
+      p.hot = random();
+    }
+
+    function update(dt) {
+      var spawnChance = Math.min(1, dt * (18 + velocity * 95 + burst * 120));
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.life += dt;
+        if (p.life >= p.ttl) {
+          if (random() < spawnChance) respawn(p, burst);
+          continue;
+        }
+        p.vy += 52 * dt;
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+      }
+      burst = Math.max(0, burst - dt * 2.4);
+    }
+
+    function draw(now) {
+      ctx.clearRect(0, 0, size, size);
+
+      // 一缕薄烟，离开白热核心后才显出灰度。
+      ctx.save();
+      ctx.globalAlpha = .2 + Math.sin(now / 210) * .035;
+      ctx.strokeStyle = "rgba(138,131,120,.42)";
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.moveTo(center, center + 3);
+      ctx.bezierCurveTo(center - 7, center - 9, center + 11, center - 18, center + 2, center - 29);
+      ctx.stroke();
+      ctx.restore();
+
+      ctx.save();
+      ctx.globalCompositeOperation = "lighter";
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        if (p.life >= p.ttl) continue;
+        var fade = 1 - p.life / p.ttl;
+        ctx.globalAlpha = fade * (.42 + p.hot * .58);
+        ctx.strokeStyle = p.hot > .55 ? "#ffd28a" : "#ff6b35";
+        ctx.lineWidth = .55 + p.hot * .9;
+        ctx.beginPath();
+        ctx.moveTo(p.x - p.vx * .022, p.y - p.vy * .022);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      }
+
+      var flicker = 1 + Math.sin(now / 47) * .09 + Math.sin(now / 83) * .06;
+      var halo = ctx.createRadialGradient(center, center, 0, center, center, 24 * flicker);
+      halo.addColorStop(0, "rgba(255,232,177,.92)");
+      halo.addColorStop(.18, "rgba(255,169,77,.55)");
+      halo.addColorStop(.52, "rgba(255,107,53,.18)");
+      halo.addColorStop(1, "rgba(179,58,30,0)");
+      ctx.globalAlpha = .68 + Math.min(.28, velocity * .6 + burst * .16);
+      ctx.fillStyle = halo;
+      ctx.fillRect(center - 27, center - 27, 54, 54);
+
+      // 非对称白热火舌，朝行进方向的反向轻轻拖曳。
+      ctx.translate(center, center);
+      ctx.rotate(angle - Math.PI / 2);
+      ctx.globalAlpha = .96;
+      ctx.fillStyle = "#ff6b35";
+      ctx.beginPath();
+      ctx.moveTo(0, 7);
+      ctx.bezierCurveTo(-6, 2, -5 * flicker, -9, -1, -15 * flicker);
+      ctx.bezierCurveTo(2, -10, 7, 0, 0, 7);
+      ctx.fill();
+      ctx.fillStyle = "#fff3c7";
+      ctx.beginPath();
+      ctx.moveTo(0, 5);
+      ctx.bezierCurveTo(-2.5, 1, -2, -5, 0, -8 * flicker);
+      ctx.bezierCurveTo(2, -4, 3, 1, 0, 5);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function loop(now) {
+      if (!active) return;
+      var dt = Math.min(.05, Math.max(.001, (now - last) / 1000));
+      last = now;
+      update(dt);
+      draw(now);
+      raf = requestAnimationFrame(loop);
+    }
+
+    return {
+      setMotion: function (nextAngle, nextVelocity) {
+        angle = nextAngle;
+        velocity = Math.min(1, Math.max(0, nextVelocity));
+      },
+      ignite: function () {
+        burst = 1;
+        particles.forEach(function (p, index) { if (index % 2 === 0) respawn(p, 1); });
+      },
+      setActive: function (on) {
+        on = on && !document.hidden;
+        if (on === active) return;
+        active = on;
+        if (active) { last = performance.now(); raf = requestAnimationFrame(loop); }
+        else { cancelAnimationFrame(raf); ctx.clearRect(0, 0, size, size); }
+      },
+      resize: function () {}
+    };
+  }
+
   flame = FlameScene(document.getElementById("flame"));
+  fuseSpark = FuseSparkScene(document.getElementById("fuseSpark"));
 
   var nameEl = document.querySelector(".hero-name h1");
   function measureName() {
@@ -291,18 +541,23 @@
     }
   });
   heroTL
-    .to("#scrollHint", { opacity: 0, duration: 0.06 }, 0.02)
     .to("#whisper", { opacity: 0, y: -26, duration: 0.16 }, 0.13)
-    .fromTo("#heroName", { opacity: 0 }, { opacity: 1, duration: 0.26, ease: "none" }, 0.33)
-    .from(".hero-name h1 span", { opacity: 0, y: 26, stagger: 0.085, duration: 0.22, ease: "power1.out" }, 0.34)
+    .fromTo("#heroName", { opacity: 0.42 }, { opacity: 1, duration: 0.26, ease: "none" }, 0.3)
+    .fromTo(".hero-name h1 span", { opacity: 0.4, y: 12 },
+      { opacity: 1, y: 0, stagger: 0.085, duration: 0.22, ease: "power1.out" }, 0.31)
     .from(".hero-name .latin, .hero-name .tagline, .hero-name .echo",
       { opacity: 0, y: 18, stagger: 0.05, duration: 0.2, ease: "power1.out" }, 0.44)
     .to({}, { duration: 0.2 }); // 驻留
 
   var heroST = heroTL.scrollTrigger;
   document.addEventListener("visibilitychange", function () {
-    if (document.hidden) flame.setActive(false);
-    else flame.setActive(heroST && heroST.isActive);
+    if (document.hidden) {
+      flame.setActive(false);
+      fuseSpark.setActive(false);
+    } else {
+      flame.setActive(heroST && heroST.isActive);
+      fuseSpark.setActive(storyST && storyST.isActive);
+    }
   });
 
   /* ============================================================
@@ -314,80 +569,153 @@
   var fuseLit = document.getElementById("fuseLit");
   var fuseHead = document.getElementById("fuseHead");
   var fuseLen = 0;
+  var ignitionTargets = [];
+  var lastFuseProgress = 0;
+  var storyST = null;
 
   function buildFuse() {
     var H = story.scrollHeight;
-    var Wl = fuseSvg.clientWidth || 60;
-    // 几何约定：svg 宽 = gutter+20，灯芯中线 = gutter/2（与 .lamp-dot 的 CSS 对齐）
-    // 纵向向上多出 EXT，与 CSS #fuse{top:-90px; height:calc(100%+90px)} 1:1 对应
     var EXT = 90;
-    var x = (Wl - 20) / 2;
-    fuseSvg.setAttribute("viewBox", "0 -" + EXT + " " + Wl + " " + (H + EXT));
+    var storyW = story.clientWidth;
+    if (storyW < 1) storyW = 360;
 
-    var storyTop = story.getBoundingClientRect().top + window.scrollY;
-    var pins = [];
-    document.querySelectorAll(".hero-dot").forEach(function (d) {
-      var r = d.getBoundingClientRect();
-      pins.push(r.top + r.height / 2 + window.scrollY - storyTop);
+    fuseSvg.setAttribute("viewBox", "0 -" + EXT + " " + storyW + " " + (H + EXT));
+
+    var storyRect = story.getBoundingClientRect();
+    var storyTop = storyRect.top + window.scrollY;
+    var targets = [];
+    var minorIndex = 0;
+    document.querySelectorAll("[data-ignite]").forEach(function (el) {
+      var dot = el.querySelector(".hero-dot");
+      var rect = (dot || el).getBoundingClientRect();
+      var isMinor = el.matches(".rest-lamps li");
+      var minorFont = isMinor ? parseFloat(getComputedStyle(el).fontSize) : 0;
+      targets.push({
+        el: el,
+        x: isMinor ? rect.left - 8.5 - storyRect.left : rect.left + rect.width / 2 - storyRect.left,
+        y: isMinor ? rect.top + minorFont * 1.08 + 2.5 + window.scrollY - storyTop :
+          rect.top + rect.height / 2 + window.scrollY - storyTop,
+        minor: isMinor,
+        order: isMinor ? minorIndex++ : -1,
+        progress: 1
+      });
     });
-    var pts = [[x, -EXT]];
-    var y = 0, stepY = 300, k = 0;
-    var nextPin = 0;
-    function nearPin(yy) {
-      for (var j = 0; j < pins.length; j++) if (Math.abs(pins[j] - yy) < 140) return true;
-      return false;
-    }
-    while (y < H) {
-      y += stepY;
-      while (nextPin < pins.length && pins[nextPin] < y) {
-        pts.push([x, pins[nextPin]]); nextPin++;
-      }
-      if (y < H && !nearPin(y)) pts.push([x + Math.sin(++k * 1.7) * 6, y]);
-    }
-    while (nextPin < pins.length) { pts.push([x, pins[nextPin]]); nextPin++; }
-    pts.push([x, H]);
-    pts.sort(function (a, b) { return a[1] - b[1]; });
+    targets.sort(function (a, b) { return a.y - b.y; });
 
-    // Catmull-Rom → cubic
-    var d = "M" + pts[0][0].toFixed(1) + " " + pts[0][1].toFixed(1);
-    for (var i = 0; i < pts.length - 1; i++) {
-      var p0 = pts[Math.max(i - 1, 0)], p1 = pts[i], p2 = pts[i + 1],
-          p3 = pts[Math.min(i + 2, pts.length - 1)];
-      var c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
-      var c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
-      d += "C" + c1x.toFixed(1) + " " + c1y.toFixed(1) + " " +
-           c2x.toFixed(1) + " " + c2y.toFixed(1) + " " +
-           p2[0].toFixed(1) + " " + p2[1].toFixed(1);
+    // 自述段只给路线定节奏；灯火段的每个项目才是真正的点火锚点。
+    var anchors = [{ x: storyW * 0.09, y: -EXT }];
+    document.querySelectorAll("#about .line").forEach(function (line, index) {
+      var rect = line.getBoundingClientRect();
+      anchors.push({
+        x: storyW * (index % 2 === 0 ? 0.84 : 0.16),
+        y: rect.top + rect.height * 0.52 + window.scrollY - storyTop
+      });
+    });
+    targets.forEach(function (target, index) {
+      var previous = targets[index - 1];
+      if (previous && !previous.minor && !target.minor &&
+          target.y - previous.y > 150 && Math.abs(target.x - previous.x) < storyW * 0.08) {
+        // 手机端三盏灯芯同在左侧。中间轻轻向外舒展一次，既避开卡片，
+        // 又避免两灯之间退化成机械的垂直直线。
+        anchors.push({
+          x: Math.max(5, Math.min(previous.x, target.x) - Math.min(34, storyW * 0.075)),
+          y: previous.y + (target.y - previous.y) * 0.5
+        });
+      }
+      anchors.push({ x: target.x, y: target.y, target: target });
+    });
+    anchors.push({ x: storyW * 0.68, y: H });
+    anchors.sort(function (a, b) { return a.y - b.y; });
+
+    // 同高锚点会制造回钩。布局本身已把三张主卡纵向错开，此处仍保留
+    // 8px 安全间距，防字体替换或极矮视口把点压到同一水平线上。
+    for (var index = 1; index < anchors.length; index++) {
+      if (anchors[index].y <= anchors[index - 1].y + 8) {
+        anchors[index].y = anchors[index - 1].y + 8;
+        if (anchors[index].target) anchors[index].target.y = anchors[index].y;
+      }
     }
+
+    // 每个节点两侧都保持竖直切线：连接连续、舒展，不会出现 Catmull-Rom
+    // 在间距不均时的过冲，也不需要任何人为“小结”。
+    var d = "M" + anchors[0].x.toFixed(1) + " " + anchors[0].y.toFixed(1);
+    for (var i = 0; i < anchors.length - 1; i++) {
+      var from = anchors[i], to = anchors[i + 1];
+      var dy = Math.max(8, to.y - from.y);
+      var handle = Math.min(dy * 0.42, 260);
+      d += "C" + from.x.toFixed(1) + " " + (from.y + handle).toFixed(1) + " " +
+        to.x.toFixed(1) + " " + (to.y - handle).toFixed(1) + " " +
+        to.x.toFixed(1) + " " + to.y.toFixed(1);
+    }
+
     fuseBase.setAttribute("d", d);
     fuseLit.setAttribute("d", d);
     fuseLen = fuseLit.getTotalLength();
     fuseLit.style.strokeDasharray = fuseLen;
     fuseLit.style.strokeDashoffset = fuseLen;
+
+    // 曲线 y 严格单调，因此可按 y 二分求到达进度。旧版为每个目标扫描
+    // 1800 个点，低端手机首屏会重复执行约 1.6 万次 SVG 几何查询。
+    targets.forEach(function (target) {
+      var low = 0, high = fuseLen;
+      for (var step = 0; step < 18; step++) {
+        var middle = (low + high) * 0.5;
+        var point = fuseLit.getPointAtLength(middle);
+        if (point.y < target.y) low = middle;
+        else high = middle;
+      }
+      target.progress = ((low + high) * 0.5) / fuseLen;
+    });
+    ignitionTargets = targets.sort(function (a, b) { return a.progress - b.progress; });
   }
 
   var setHeadX = gsap.quickSetter(fuseHead, "x", "px");
   var setHeadY = gsap.quickSetter(fuseHead, "y", "px");
 
+  function igniteTarget(target) {
+    var el = target.el;
+    el.classList.add("lit");
+    el.classList.remove("is-igniting");
+    void el.offsetWidth;
+    el.classList.add("is-igniting");
+    clearTimeout(el._igniteTimer);
+    el._igniteTimer = setTimeout(function () { el.classList.remove("is-igniting"); }, 1450);
+    gsap.to(el, { opacity: 1, y: 0, duration: target.minor ? .7 : 1, ease: "power2.out", overwrite: true });
+    fuseSpark.ignite();
+  }
+
   function placeHead(progress) {
     if (!fuseLen) return;
-    var pt = fuseLit.getPointAtLength(fuseLen * progress);
+    var distance = fuseLen * progress;
+    var pt = fuseLit.getPointAtLength(distance);
+    var before = fuseLit.getPointAtLength(Math.max(0, distance - 3));
+    var after = fuseLit.getPointAtLength(Math.min(fuseLen, distance + 3));
+    var angle = Math.atan2(after.y - before.y, after.x - before.x);
+    var velocity = Math.min(1, Math.abs(progress - lastFuseProgress) * 95);
     setHeadX(pt.x);
     setHeadY(pt.y);
+    fuseSpark.setMotion(angle, velocity);
     fuseLit.style.strokeDashoffset = fuseLen * (1 - progress);
     var edge = Math.min(progress / 0.02, (1 - progress) / 0.02, 1);
     fuseHead.style.opacity = Math.max(0, Math.min(1, edge));
+    if (progress >= lastFuseProgress) {
+      ignitionTargets.forEach(function (target) {
+        if (target.progress > lastFuseProgress && target.progress <= progress + 0.001) igniteTarget(target);
+      });
+    }
+    lastFuseProgress = progress;
   }
 
   buildFuse();
   placeHead(0);
 
-  ScrollTrigger.create({
+  storyST = ScrollTrigger.create({
     trigger: "#story",
     start: "top 58%",
     end: "bottom 62%",
     scrub: 0.8,
-    onUpdate: function (st) { placeHead(st.progress); }
+    onUpdate: function (st) { placeHead(st.progress); },
+    onToggle: function (st) { fuseSpark.setActive(st.isActive); }
   });
 
   /* ---------- 章二 · 自述逐句点亮 ---------- */
@@ -399,19 +727,10 @@
   });
 
   /* ---------- 章三 · 标题与七盏灯（点过就不熄） ---------- */
-  gsap.utils.toArray("#lamps h2, .chapter-sub").forEach(function (el) {
+  gsap.utils.toArray("#lamps h2, .chapter-sub, .rest-label").forEach(function (el) {
     gsap.to(el, {
       opacity: 1, y: 0, duration: 1, ease: "power2.out",
       scrollTrigger: { trigger: el, start: "top 76%", once: true }
-    });
-  });
-  gsap.utils.toArray(".hero-lamp").forEach(function (el) {
-    ScrollTrigger.create({
-      trigger: el, start: "top 66%", once: true,
-      onEnter: function () {
-        el.classList.add("lit");
-        gsap.to(el, { opacity: 1, y: 0, duration: 1.05, ease: "power2.out" });
-      }
     });
   });
 
@@ -439,10 +758,10 @@
 
   /* ---------- 键盘兜底：Tab 进未点亮区域时立即点亮，焦点永不落在透明元素上 ---------- */
   document.getElementById("lamps").addEventListener("focusin", function (e) {
-    var lamp = e.target.closest(".hero-lamp");
+    var lamp = e.target.closest("[data-ignite]");
     if (lamp && !lamp.classList.contains("lit")) {
-      lamp.classList.add("lit");
-      gsap.to(lamp, { opacity: 1, y: 0, duration: 0.3, overwrite: true });
+      var target = ignitionTargets.find(function (item) { return item.el === lamp; });
+      if (target) igniteTarget(target);
     }
   });
   document.getElementById("ember").addEventListener("focusin", function () {
@@ -460,7 +779,10 @@
       try {
         flame.resize();
         measureName();
+        var currentProgress = storyST ? storyST.progress : lastFuseProgress;
         buildFuse();
+        lastFuseProgress = currentProgress;
+        placeHead(currentProgress);
         ScrollTrigger.refresh();
       } catch (e) { teardownToStatic(); }
     }, 280);
@@ -469,11 +791,15 @@
     document.fonts.ready.then(function () {
       try {
         measureName();
+        var currentProgress = storyST ? storyST.progress : lastFuseProgress;
         buildFuse();
+        lastFuseProgress = currentProgress;
+        placeHead(currentProgress);
         ScrollTrigger.refresh();
+        document.documentElement.classList.add("fuse-ready");
       } catch (e) { teardownToStatic(); }
     });
-  }
+  } else document.documentElement.classList.add("fuse-ready");
 
   } catch (err) { // ---- 动效初始化失败：降级为静态可读页 ----
     teardownToStatic();

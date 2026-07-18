@@ -14,8 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="canonical" href="https://kesixu.com/">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/wenkai-subset.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="/fonts/garamond-italic-subset.woff2" crossorigin>
-<link rel="stylesheet" href="/style.css?v=5">
+<link rel="stylesheet" href="/style.css?v=10">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"徐可斯","alternateName":"Kesi Xu","url":"https://kesixu.com/","sameAs":["https://github.com/kesixu"]}
 </script>
@@ -30,15 +29,14 @@
     <h1 lang="zh-CN" aria-label="徐可斯"><span aria-hidden="true">徐</span><span aria-hidden="true">可</span><span aria-hidden="true">斯</span></h1>
     <p class="latin" lang="en">Kesi&nbsp;Xu</p>
     <p class="tagline">格物于毫厘，点灯于长夜。</p>
-    <p class="echo">计算病理学博士，借 AI 之手，写有趣的代码。</p>
+    <p class="echo">计算机博士，计算病理学方向。借 AI 之手，写有趣的代码。</p>
   </div>
-  <p class="scroll-hint" id="scrollHint" aria-hidden="true"><span>往下，划。</span></p>
-  <div class="scroll-arrow" id="scrollArrow" aria-hidden="true"><span>↓</span></div>
+  <p class="scroll-hint" id="scrollHint" aria-hidden="true"><span>下滑</span><i></i></p>
 </header>
 
 <!-- 引信贯穿的主叙事 -->
 <main id="story">
-  <svg id="fuse" aria-hidden="true" preserveAspectRatio="none">
+  <svg id="fuse" aria-hidden="true" preserveAspectRatio="none" viewBox="0 -90 390 3000">
     <defs>
       <linearGradient id="fuseGrad" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#b33a1e"/>
@@ -49,44 +47,51 @@
     <path id="fuseBase" d="" fill="none"/>
     <path id="fuseLit" d="" fill="none" stroke="url(#fuseGrad)"/>
   </svg>
-  <div id="fuseHead" aria-hidden="true"></div>
+  <div id="fuseHead" aria-hidden="true"><canvas id="fuseSpark"></canvas></div>
 
   <!-- 章二 · 自述 -->
   <section id="about" class="chapter" aria-label="自述">
-    <p class="line">我学计算机，做计算病理——<br>显微镜下的世界，是另一种代码。</p>
-    <p class="line">写论文之余，最大的乐趣是<br>用 AI 搭东西：一个念头，一夜，一个产品。</p>
+    <p class="line">计算机博士，计算病理学方向。<br>显微镜下的世界，是我的另一种代码。</p>
+    <p class="line">论文之外，最爱写 web，借 AI 搭东西——<br>一个念头，一夜，一个产品。</p>
     <p class="line strong">我信小而亮的东西：<br>一灯点亮，能燃百灯。</p>
   </section>
 
   <!-- 章三 · 灯火 -->
   <section id="lamps" class="chapter" aria-label="灯火">
     <h2>灯火</h2>
-    <p class="chapter-sub">先燃两盏，再唤七星。</p>
+    <p class="chapter-sub">先燃三盏，再唤七星。</p>
 
-    <!-- 两盏主灯 -->
+    <!-- 三盏主灯 -->
     <div class="hero-lamps">
-      <a class="hero-lamp" href="https://yinian.kesixu.com" rel="noopener">
-        <img class="hero-logo" src="/assets/logos/yinian.png" alt="" width="48" height="48" loading="lazy">
+      <a class="hero-lamp" href="https://yinian.kesixu.com" rel="noopener" data-ignite>
+        <span class="hero-dot" aria-hidden="true"></span>
+        <img class="hero-logo" src="/assets/logos/yinian-128.webp" alt="" width="48" height="48" loading="lazy">
         <h3>一念起卦<span class="ext" aria-hidden="true">↗</span></h3>
-        <p class="lamp-desc">一位以易经为引、懂你心事的老友。先听你说，愿意了再郑重起一卦；卦锚住记忆，越用越懂你。</p>
+        <p class="lamp-desc">一位懂易经的老友。听你诉说，再以大衍筮法郑重起卦；卦象锚住记忆，三层人格引擎越用越懂你。学堂读易，吾身自观——念起即答。</p>
       </a>
-      <a class="hero-lamp" href="https://gym.kesixu.com" rel="noopener">
-        <img class="hero-logo" src="/assets/logos/tiefanwan.png" alt="" width="48" height="48" loading="lazy">
+      <a class="hero-lamp" href="https://gym.kesixu.com" rel="noopener" data-ignite>
+        <span class="hero-dot" aria-hidden="true"></span>
+        <img class="hero-logo" src="/assets/logos/tiefanwan-128.webp" alt="" width="48" height="48" loading="lazy">
         <h3>铁饭碗<span class="ext" aria-hidden="true">↗</span></h3>
-        <p class="lamp-desc">一句话，吃和练就入账。你的 AI 健康账本，教练铁子陪你估热量、盯目标、给下一步。</p>
+        <p class="lamp-desc">说一句，饮食与训练就入账。你的 AI 健康账本：铁子教练帮你估热量、算训练量、给下一步，干净利落。</p>
+      </a>
+      <a class="hero-lamp" href="https://ecowiki.kesixu.com" rel="noopener" data-ignite>
+        <span class="hero-dot" aria-hidden="true"></span>
+        <img class="hero-logo" src="/assets/logos/jingxing-128.webp" alt="" width="48" height="48" loading="lazy">
+        <h3>经史星图<span class="ext" aria-hidden="true">↗</span></h3>
+        <p class="lamp-desc">一张可点、可问、可追溯原典的世界经济史地图。3D 地球仪上拖动千年时间轴，AI 老师小贝引用 13 部中外经典作答——每个回答精确到原书段落。</p>
       </a>
     </div>
 
     <!-- 其余灯火 -->
     <p class="rest-label">其余灯火</p>
     <ul class="rest-lamps">
-      <li><strong>见微</strong> — 每天拂晓，把科学智能与生医信号读成三分钟晨报。</li>
-      <li><strong>杏林观澜</strong> — 前列腺癌智能电子病历，织检查、文献与随访为一图。</li>
-      <li><strong><a href="https://ecowiki.kesixu.com" rel="noopener">经史星图<span class="ext" aria-hidden="true">↗</span></a></strong> — 3D 地球仪上，纵览千年世界经济史。原典可查，段落可问。</li>
-      <li><strong>ThesisAtlas</strong> — 博士论文的交互式舆图，按图索骥，层层放大。</li>
-      <li><strong>取之有道</strong> — A 股智能投资情报看板，数据如灯，明察秋毫。</li>
-      <li><strong><a href="https://sportsmatchpoint.lovable.app" rel="noopener">MatchPoint<span class="ext" aria-hidden="true">↗</span></a></strong> — 联袂之作：一句话组局，剩下的交给智能。</li>
-      <li><strong>Conference Cockpit</strong> — 学术会议的私人驾驶舱，会前庙算、会中引路、会后致意。</li>
+      <li data-ignite><strong>见微</strong> — 每天拂晓，把科学智能与生医信号读成三分钟晨报。</li>
+      <li data-ignite><strong>杏林观澜</strong> — 前列腺癌智能电子病历，织检查、文献与随访为一图。</li>
+      <li data-ignite><strong>ThesisAtlas</strong> — 博士论文的交互式舆图，按图索骥，层层放大。</li>
+      <li data-ignite><strong>取之有道</strong> — A 股智能投资情报看板，数据如灯，明察秋毫。</li>
+      <li data-ignite><strong><a href="https://sportsmatchpoint.lovable.app" rel="noopener">MatchPoint<span class="ext" aria-hidden="true">↗</span></a></strong> — 联袂之作：一句话组局，剩下的交给智能。</li>
+      <li data-ignite><strong>Conference Cockpit</strong> — 学术会议的私人驾驶舱，会前庙算、会中引路、会后致意。</li>
     </ul>
   </section>
 </main>
@@ -133,6 +138,6 @@
 
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/main.js?v=5" defer></script>
+<script src="/main.js?v=10" defer></script>
 </body>
 </html>
