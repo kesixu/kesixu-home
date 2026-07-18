@@ -63,17 +63,23 @@ def inspect(browser_type, playwright, device_name):
       return {start:trigger.start, end:trigger.end};
     }
     """)
-    page.evaluate("y => scrollTo(0, y)", hero_trigger["start"] + (hero_trigger["end"] - hero_trigger["start"]) * .48)
+    page.evaluate("y => { scrollTo(0, y); ScrollTrigger.update(); }",
+                  hero_trigger["start"] + (hero_trigger["end"] - hero_trigger["start"]) * .48)
     page.wait_for_timeout(650)
     state["hintAfterIgnite"] = page.evaluate("+getComputedStyle(document.getElementById('scrollHint')).opacity")
-    page.evaluate("y => scrollTo(0, y)", hero_trigger["start"] + (hero_trigger["end"] - hero_trigger["start"]) * .62)
+    page.evaluate("y => { scrollTo(0, y); ScrollTrigger.update(); }",
+                  hero_trigger["start"] + (hero_trigger["end"] - hero_trigger["start"]) * .62)
     if state["viewport"]["height"] <= 720:
-        page.wait_for_function("+getComputedStyle(document.getElementById('scrollHint')).opacity < .08", timeout=2000)
+        # Use a fixed transition wait so the public site's strict CSP never needs
+        # to allow the string evaluation used internally by wait_for_function.
+        page.wait_for_timeout(1000)
     else:
         page.wait_for_timeout(650)
     state["hintAfterDetails"] = page.evaluate("+getComputedStyle(document.getElementById('scrollHint')).opacity")
     state["http"] = response.status if response else 0
-    state["console"] = console
+    # Snapshot the page's own messages before Playwright's screenshot helper
+    # injects its animation-suppression stylesheet under a strict public CSP.
+    state["console"] = list(console)
     slug = device_name.lower().replace(" ", "-").replace("(", "").replace(")", "")
     if device_name in ("iPhone SE", "iPhone 12 Mini", "iPhone 15 Pro Max landscape"):
         page.screenshot(path=CAPTURE_DIR / f"{browser_type.name}-{slug}.png")
