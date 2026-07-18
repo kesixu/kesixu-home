@@ -917,7 +917,7 @@ a:focus-visible {
 /* 开场先让姓名避开提示语；提示语熄灭后，GSAP 把 y 收回 0。
    只改位置、不改字号，保证各品牌手机的字面尺度一致。 */
 @media (orientation: portrait) and (max-width: 540px) {
-  .fx #heroName { transform: translateY(54px); }
+  .fx #heroName { transform: translateY(58px); }
 }
 @media (orientation: portrait) and (max-height: 600px) {
   .fx #heroName { transform: translateY(64px); }

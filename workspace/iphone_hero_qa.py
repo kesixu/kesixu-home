@@ -21,6 +21,17 @@ IPHONES = (
     "iPhone 15 Pro Max landscape",
 )
 
+ANDROIDS = (
+    "Galaxy S III",
+    "Galaxy S8",
+    "Galaxy S24",
+    "Galaxy A55",
+    "Pixel 5",
+    "Pixel 7",
+    "Galaxy S24 landscape",
+    "Pixel 7 landscape",
+)
+
 
 def inspect(browser_type, playwright, device_name):
     browser = browser_type.launch(headless=True)
@@ -50,9 +61,11 @@ def inspect(browser_type, playwright, device_name):
         lockup: rect('.calligraphy-lockup'),
         title: rect('.hero-name h1'),
         hint: rect('#scrollHint'),
+        nameText: h1.textContent.trim(),
         writingMode: getComputedStyle(h1).writingMode,
         fontSize: parseFloat(getComputedStyle(h1).fontSize),
-        fontReady: document.fonts.check('16px "LXGW WenKai"')
+        fontReady: document.fonts.status === 'loaded' &&
+          document.fonts.check('92px "LXGW WenKai"', '徐可斯')
       };
     }
     """)
@@ -76,12 +89,26 @@ def inspect(browser_type, playwright, device_name):
         page.wait_for_timeout(650)
     state["hintAfterDetails"] = page.evaluate("+getComputedStyle(document.getElementById('scrollHint')).opacity")
     state["http"] = response.status if response else 0
-    # Snapshot the page's own messages before Playwright's screenshot helper
-    # injects its animation-suppression stylesheet under a strict public CSP.
-    state["console"] = list(console)
     slug = device_name.lower().replace(" ", "-").replace("(", "").replace(")", "")
     if device_name in ("iPhone SE", "iPhone 12 Mini", "iPhone 15 Pro Max landscape"):
+        # Playwright may inject a temporary animation stylesheet while capturing;
+        # discard only messages produced by the helper itself.
+        page_console = list(console)
         page.screenshot(path=CAPTURE_DIR / f"{browser_type.name}-{slug}.png")
+        console[:] = page_console
+    # Native lazy-loading deliberately defers project logos until this section is
+    # near the viewport. Validate them only after reproducing that user journey.
+    page.locator(".hero-lamps").scroll_into_view_if_needed()
+    page.wait_for_timeout(700)
+    state["logos"] = page.evaluate(r"""
+    () => [...document.querySelectorAll('.hero-logo')].map(img => ({
+      src: img.currentSrc,
+      complete: img.complete,
+      naturalWidth: img.naturalWidth,
+      naturalHeight: img.naturalHeight
+    }))
+    """)
+    state["console"] = list(console)
     context.close()
     browser.close()
     return state
@@ -91,7 +118,8 @@ failed = False
 with sync_playwright() as playwright:
     for engine_name in ("chromium", "webkit"):
         browser_type = getattr(playwright, engine_name)
-        for device_name in IPHONES:
+        device_names = IPHONES + ANDROIDS if engine_name == "chromium" else IPHONES
+        for device_name in device_names:
             result = inspect(browser_type, playwright, device_name)
             problems = []
             landscape = device_name.endswith("landscape")
@@ -100,12 +128,22 @@ with sync_playwright() as playwright:
             hero = result["hero"]
             whisper = result["whisper"]
             hint = result["hint"]
+            center_delta = abs((lockup["left"] + lockup["right"]) / 2
+                               - result["viewport"]["width"] / 2)
             if result["http"] != 200:
                 problems.append(f"HTTP {result['http']}")
             if result["documentOverflow"] > 1:
                 problems.append(f"document overflow {result['documentOverflow']}")
             if not result["fontReady"]:
                 problems.append("WenKai not ready")
+            if result["nameText"] != "徐可斯":
+                problems.append(f"name text {result['nameText']!r}")
+            if center_delta > 1:
+                problems.append(f"name off center {center_delta:.2f}px")
+            if len(result["logos"]) != 3 or any(
+                    not logo["complete"] or logo["naturalWidth"] < 128
+                    or logo["naturalHeight"] < 128 for logo in result["logos"]):
+                problems.append(f"project logos {result['logos']}")
             if lockup["width"] + 1 < title["width"]:
                 problems.append(f"zero/narrow lockup {lockup['width']:.2f} < title {title['width']:.2f}")
             if title["left"] < hero["left"] + 4 or title["right"] > hero["right"] - 4:
@@ -129,6 +167,7 @@ with sync_playwright() as playwright:
             print(engine_name, device_name,
                   f"{result['viewport']['width']}x{result['viewport']['height']}",
                   f"lock={lockup['width']:.1f} title={title['width']:.1f}",
+                  f"centerΔ={center_delta:.2f}px",
                   result["writingMode"], "PASS" if not problems else "FAIL")
             for problem in problems:
                 print("  -", problem)
