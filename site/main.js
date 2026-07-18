@@ -379,7 +379,7 @@
   function FuseSparkScene(canvas) {
     var ctx = canvas.getContext("2d");
     var size = isMobile ? 76 : 92;
-    var dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 2.5 : 2);
+    var dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 3 : 2);
     var center = size / 2;
     var active = false, raf = 0, last = 0, angle = Math.PI / 2, velocity = 0, burst = 0;
     var seed = 0x1f2e3d4c;
@@ -433,14 +433,20 @@
     function draw(now) {
       ctx.clearRect(0, 0, size, size);
 
-      // 一缕薄烟，离开白热核心后才显出灰度。
+      // 两缕不同相位的薄烟，离开白热核心后才显出灰度。
       ctx.save();
-      ctx.globalAlpha = .2 + Math.sin(now / 210) * .035;
-      ctx.strokeStyle = "rgba(138,131,120,.42)";
-      ctx.lineWidth = 1.1;
+      ctx.globalAlpha = .17 + Math.sin(now / 210) * .025;
+      ctx.strokeStyle = "rgba(138,131,120,.38)";
+      ctx.lineWidth = .9;
       ctx.beginPath();
       ctx.moveTo(center, center + 3);
-      ctx.bezierCurveTo(center - 7, center - 9, center + 11, center - 18, center + 2, center - 29);
+      ctx.bezierCurveTo(center - 8, center - 8, center + 10, center - 18, center + 1, center - 31);
+      ctx.stroke();
+      ctx.globalAlpha *= .55;
+      ctx.lineWidth = .55;
+      ctx.beginPath();
+      ctx.moveTo(center + 2, center);
+      ctx.bezierCurveTo(center + 9, center - 11, center - 6, center - 20, center + 4, center - 36);
       ctx.stroke();
       ctx.restore();
 
@@ -452,38 +458,68 @@
         var fade = 1 - p.life / p.ttl;
         ctx.globalAlpha = fade * (.42 + p.hot * .58);
         ctx.strokeStyle = p.hot > .55 ? "#ffd28a" : "#ff6b35";
-        ctx.lineWidth = .55 + p.hot * .9;
+        ctx.lineWidth = 1.25 + p.hot * 1.3;
         ctx.beginPath();
-        ctx.moveTo(p.x - p.vx * .022, p.y - p.vy * .022);
+        ctx.moveTo(p.x - p.vx * .026, p.y - p.vy * .026);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+        ctx.globalAlpha = fade * (.62 + p.hot * .38);
+        ctx.strokeStyle = p.hot > .4 ? "#fff3c7" : "#ffa94d";
+        ctx.lineWidth = .38 + p.hot * .55;
+        ctx.beginPath();
+        ctx.moveTo(p.x - p.vx * .018, p.y - p.vy * .018);
         ctx.lineTo(p.x, p.y);
         ctx.stroke();
       }
 
       var flicker = 1 + Math.sin(now / 47) * .09 + Math.sin(now / 83) * .06;
-      var halo = ctx.createRadialGradient(center, center, 0, center, center, 24 * flicker);
-      halo.addColorStop(0, "rgba(255,232,177,.92)");
-      halo.addColorStop(.18, "rgba(255,169,77,.55)");
-      halo.addColorStop(.52, "rgba(255,107,53,.18)");
+      var outer = ctx.createRadialGradient(center - 2, center + 2, 1, center, center, 34 * flicker);
+      outer.addColorStop(0, "rgba(255,210,138,.55)");
+      outer.addColorStop(.24, "rgba(255,169,77,.28)");
+      outer.addColorStop(.58, "rgba(255,107,53,.09)");
+      outer.addColorStop(1, "rgba(179,58,30,0)");
+      ctx.globalAlpha = .62 + Math.min(.3, velocity * .52 + burst * .18);
+      ctx.fillStyle = outer;
+      ctx.fillRect(center - 38, center - 38, 76, 76);
+
+      var halo = ctx.createRadialGradient(center - 1, center, 0, center, center, 19 * flicker);
+      halo.addColorStop(0, "rgba(255,248,226,.98)");
+      halo.addColorStop(.16, "rgba(255,210,138,.82)");
+      halo.addColorStop(.46, "rgba(255,107,53,.29)");
       halo.addColorStop(1, "rgba(179,58,30,0)");
-      ctx.globalAlpha = .68 + Math.min(.28, velocity * .6 + burst * .16);
+      ctx.globalAlpha = .82;
       ctx.fillStyle = halo;
-      ctx.fillRect(center - 27, center - 27, 54, 54);
+      ctx.fillRect(center - 23, center - 23, 46, 46);
 
       // 非对称白热火舌，朝行进方向的反向轻轻拖曳。
       ctx.translate(center, center);
       ctx.rotate(angle - Math.PI / 2);
-      ctx.globalAlpha = .96;
+      ctx.globalAlpha = .72;
+      ctx.fillStyle = "#b33a1e";
+      ctx.beginPath();
+      ctx.moveTo(0, 9);
+      ctx.bezierCurveTo(-8, 3, -7 * flicker, -11, -1, -19 * flicker);
+      ctx.bezierCurveTo(3, -13, 9, 1, 0, 9);
+      ctx.fill();
+      ctx.globalAlpha = .98;
       ctx.fillStyle = "#ff6b35";
       ctx.beginPath();
       ctx.moveTo(0, 7);
       ctx.bezierCurveTo(-6, 2, -5 * flicker, -9, -1, -15 * flicker);
       ctx.bezierCurveTo(2, -10, 7, 0, 0, 7);
       ctx.fill();
-      ctx.fillStyle = "#fff3c7";
+      ctx.fillStyle = "#ffd28a";
       ctx.beginPath();
       ctx.moveTo(0, 5);
-      ctx.bezierCurveTo(-2.5, 1, -2, -5, 0, -8 * flicker);
-      ctx.bezierCurveTo(2, -4, 3, 1, 0, 5);
+      ctx.bezierCurveTo(-3, 1, -2.5, -6, 0, -10 * flicker);
+      ctx.bezierCurveTo(2.4, -5, 3.5, 1, 0, 5);
+      ctx.fill();
+      ctx.globalAlpha = .92;
+      ctx.fillStyle = "#fff3c7";
+      ctx.beginPath();
+      ctx.moveTo(0, 3.8);
+      ctx.bezierCurveTo(-1.4, .5, -1.1, -3.5, .2, -6.2 * flicker);
+      ctx.bezierCurveTo(1.4, -2.8, 1.7, .8, 0, 3.8);
       ctx.fill();
       ctx.restore();
     }
@@ -706,17 +742,20 @@
     lastFuseProgress = progress;
   }
 
-  buildFuse();
-  placeHead(0);
-
-  storyST = ScrollTrigger.create({
-    trigger: "#story",
-    start: "top 58%",
-    end: "bottom 62%",
-    scrub: 0.8,
-    onUpdate: function (st) { placeHead(st.progress); },
-    onToggle: function (st) { fuseSpark.setActive(st.isActive); }
-  });
+  function startFuse() {
+    if (storyST) return;
+    buildFuse();
+    placeHead(0);
+    storyST = ScrollTrigger.create({
+      trigger: "#story",
+      start: "top 58%",
+      end: "bottom 62%",
+      scrub: 0.8,
+      onUpdate: function (st) { placeHead(st.progress); },
+      onToggle: function (st) { fuseSpark.setActive(st.isActive); }
+    });
+    document.documentElement.classList.add("fuse-ready");
+  }
 
   /* ---------- 章二 · 自述逐句点亮 ---------- */
   gsap.utils.toArray("#about .line, #about .echo").forEach(function (el) {
@@ -779,27 +818,26 @@
       try {
         flame.resize();
         measureName();
-        var currentProgress = storyST ? storyST.progress : lastFuseProgress;
-        buildFuse();
-        lastFuseProgress = currentProgress;
-        placeHead(currentProgress);
+        if (storyST) {
+          var currentProgress = storyST.progress;
+          buildFuse();
+          lastFuseProgress = currentProgress;
+          placeHead(currentProgress);
+        }
         ScrollTrigger.refresh();
       } catch (e) { teardownToStatic(); }
     }, 280);
   });
+  function finishFontLayout() {
+    try {
+      measureName();
+      startFuse();
+      ScrollTrigger.refresh();
+    } catch (e) { teardownToStatic(); }
+  }
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(function () {
-      try {
-        measureName();
-        var currentProgress = storyST ? storyST.progress : lastFuseProgress;
-        buildFuse();
-        lastFuseProgress = currentProgress;
-        placeHead(currentProgress);
-        ScrollTrigger.refresh();
-        document.documentElement.classList.add("fuse-ready");
-      } catch (e) { teardownToStatic(); }
-    });
-  } else document.documentElement.classList.add("fuse-ready");
+    document.fonts.ready.then(finishFontLayout);
+  } else finishFontLayout();
 
   } catch (err) { // ---- 动效初始化失败：降级为静态可读页 ----
     teardownToStatic();
