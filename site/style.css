@@ -248,42 +248,6 @@ a:focus-visible {
 .hero-name h1 span:nth-child(2) { transform: translateX(2px) rotate(-.9deg) scale(.985); }
 .hero-name h1 span:nth-child(3) { transform: translateX(-1px) rotate(.45deg) scale(1.025); }
 
-.name-seal {
-  position: absolute;
-  right: -20px;
-  bottom: 14px;
-  width: 29px;
-  height: 29px;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  place-items: center;
-  border: 1px solid rgba(179, 58, 30, .92);
-  background: rgba(179, 58, 30, .14);
-  box-shadow:
-    inset 0 0 0 2px rgba(13, 11, 9, .68),
-    inset 0 0 0 3px rgba(179, 58, 30, .45),
-    0 0 12px rgba(255, 107, 53, .14),
-    8px 10px 20px rgba(0, 0, 0, .44);
-  color: #d75b36;
-  font-family: var(--display);
-  font-size: 9px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 1;
-  transform: rotate(-2.4deg);
-  opacity: .84;
-}
-
-.name-seal::after {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  border: 1px solid rgba(179, 58, 30, .34);
-  clip-path: polygon(0 0, 92% 0, 100% 12%, 100% 100%, 8% 100%, 0 88%);
-}
-
-.name-seal i { font-style: normal; }
-
 /* 横屏矮视口：竖排列装不下会折列倒序（斯可徐），改横排是叙事成立的降级 */
 @media (orientation: landscape) and (max-height: 500px) {
   .calligraphy-lockup {
@@ -296,7 +260,6 @@ a:focus-visible {
     font-size: 58px;
     letter-spacing: .14em;
   }
-  .name-seal { right: -15px; bottom: -10px; }
   .hero-name { gap: 10px; }
 }
 

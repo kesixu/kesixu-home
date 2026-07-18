@@ -49,7 +49,6 @@ def inspect(browser_type, playwright, device_name):
         whisper: rect('#whisper'),
         lockup: rect('.calligraphy-lockup'),
         title: rect('.hero-name h1'),
-        seal: rect('.name-seal'),
         hint: rect('#scrollHint'),
         writingMode: getComputedStyle(h1).writingMode,
         fontSize: parseFloat(getComputedStyle(h1).fontSize),
