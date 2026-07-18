@@ -62,6 +62,7 @@ def inspect(browser_type, playwright, device_name):
         title: rect('.hero-name h1'),
         hint: rect('#scrollHint'),
         nameText: h1.textContent.trim(),
+        nameTextureContent: getComputedStyle(h1.querySelector('span'), '::after').content,
         writingMode: getComputedStyle(h1).writingMode,
         fontSize: parseFloat(getComputedStyle(h1).fontSize),
         fontReady: document.fonts.status === 'loaded' &&
@@ -138,6 +139,8 @@ with sync_playwright() as playwright:
                 problems.append("WenKai not ready")
             if result["nameText"] != "徐可斯":
                 problems.append(f"name text {result['nameText']!r}")
+            if result["nameTextureContent"] not in ("none", "normal"):
+                problems.append(f"name texture layer {result['nameTextureContent']}")
             if center_delta > 1:
                 problems.append(f"name off center {center_delta:.2f}px")
             if len(result["logos"]) != 3 or any(

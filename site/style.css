@@ -228,22 +228,6 @@ a:focus-visible {
   transform-origin: 52% 54%;
 }
 
-/* 细碎墨眼只落在笔画内部，模拟宣纸上略带飞白的楷书墨迹。 */
-.hero-name h1 span::after {
-  content: attr(data-char);
-  position: absolute;
-  inset: 0;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  background:
-    radial-gradient(circle at 30% 24%, rgba(13, 11, 9, .66) 0 .6px, transparent 1.25px) 0 0 / 8px 11px,
-    radial-gradient(circle at 68% 66%, rgba(13, 11, 9, .46) 0 .55px, transparent 1.15px) 2px 1px / 11px 9px;
-  -webkit-background-clip: text;
-  background-clip: text;
-  opacity: .36;
-  transform: translate(.5px, .4px);
-}
-
 .hero-name h1 span:nth-child(1) { transform: translateX(-2px) rotate(.7deg) scale(1.015); }
 .hero-name h1 span:nth-child(2) { transform: translateX(2px) rotate(-.9deg) scale(.985); }
 .hero-name h1 span:nth-child(3) { transform: translateX(-1px) rotate(.45deg) scale(1.025); }
