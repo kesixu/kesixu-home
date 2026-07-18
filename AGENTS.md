@@ -5,7 +5,7 @@
 
 ## 这是什么
 
-kesixu.com 根域名的个人主页《划亮》：黑暗中划亮一根火柴 → 火焰化作引信随滚动游走 → 逐盏点亮七个产品 → 收束成星图 → 灯留着（联系方式）。故事型单页，手机竖屏优先。
+kesixu.com 根域名的个人主页《划亮》：黑暗中划亮一根火柴 → 火焰化作引信随滚动游走 → 逐盏点亮九个产品 → 燎原成星图 → 灯留着（联系方式）。故事型单页，手机竖屏优先。
 
 ## 设计宪法（改样式前必读）
 
@@ -34,7 +34,7 @@ kesixu.com 根域名的个人主页《划亮》：黑暗中划亮一根火柴 �
 content/copy.md        文案唯一事实源（含红线清单）
 site/index.html        单页全部结构（内容在 DOM，SEO 可见）
 site/style.css         全部样式（CSS 变量在 :root）
-site/main.js           火柴 canvas + 引信 SVG + ScrollTrigger 编排
+site/main.js           自适应画质策略 + 三块 canvas + 引信 SVG + ScrollTrigger 编排
 site/vendor/           gsap.min.js + ScrollTrigger.min.js（3.15.0，勿升级除非有理由）
 site/fonts/            子集化 woff2（由 tools/subset-fonts.sh 生成，勿手改）
 tools/subset-fonts.sh  从 index.html 提取全部文字重新子集化
@@ -55,5 +55,7 @@ workspace/shots/       Playwright 截图（gitignored）
 
 - no-build 三件套是刻意的：十年不腐、view-source 即真相、对 agent 最友好。
 - GSAP 而非 CSS scroll-driven animations：微信 X5/UC 老内核不支持后者，大陆访客是一等公民。
+- Canvas 2D 而非 Three.js/WebGPU：本页只有二维火光与粒子，原生画布在 iOS/Android/X5 上路径统一、体积最小；`createMotionProfile()` 以 60/45/30 FPS 和物理像素上限分档，持续慢帧再自动降一级。
+- 全屏 canvas 禁止直接照搬设备 DPR；统一用 `effectiveDpr()` 按 CSS 面积计算像素预算。画布在进度 0、离屏、后台标签页时必须停帧。
 - Lenis 刻意不用于手机（原生滚动神圣不可侵犯）；桌面暂也未引入，够丝滑了再说。
 - 产品卡不放子域名链接是安全决策（私有应用零导流），不是疏忽。

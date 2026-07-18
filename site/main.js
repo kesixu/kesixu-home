@@ -15,6 +15,7 @@
   var field = document.getElementById("skyField");
   if (field) {
     var NS = "http://www.w3.org/2000/svg";
+    var fieldFragment = document.createDocumentFragment();
     for (var i = 0; i < 46; i++) {
       // 伪随机但可复现：黄金角散布
       var a = i * 2.399963, r0 = 16 + (i * 97 % 100) * 4.7;
@@ -26,11 +27,14 @@
       c.setAttribute("cy", cy.toFixed(1));
       c.setAttribute("r", (0.5 + (i * 37 % 10) / 12).toFixed(2));
       c.setAttribute("opacity", (0.12 + (i * 53 % 10) / 45).toFixed(3));
-      field.appendChild(c);
+      fieldFragment.appendChild(c);
     }
+    field.appendChild(fieldFragment);
   }
 
   var reducedQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  function bootMotion() {
+  document.documentElement.classList.remove("motion-pending");
   if (reducedQuery.matches || !window.gsap || !window.ScrollTrigger) {
     // 基线：静态点亮态（与中途切 reduced 的终态保持一致）
     document.querySelectorAll("[data-ignite]").forEach(function (el) { el.classList.add("lit"); });
@@ -64,6 +68,7 @@
     document.documentElement.classList.remove("fuse-ready");
     document.documentElement.classList.remove("match-lit");
     document.documentElement.classList.remove("story-entered");
+    document.documentElement.classList.remove("motion-pending");
     if (flame) flame.setActive(false);
     if (fuseSpark) fuseSpark.setActive(false);
     if (wildfire) wildfire.setActive(false);
@@ -85,12 +90,75 @@
   var isMobile = window.matchMedia("(any-pointer: coarse)").matches ||
     window.matchMedia("(max-width: 768px)").matches;
 
+  /* 一套画质预算统领三块 canvas。它只在本地做判断，不记录、不上传设备信息。
+     maxPixels 是全屏画布的物理像素上限，比单纯限制 DPR 更能覆盖折叠屏与长屏。 */
+  function createMotionProfile() {
+    var tiers = {
+      high: {
+        name: "high", fps: 60, maxPixels: 1600000, dpr: 2.25,
+        wildfireParticles: 96, flameLanes: 21, fireSamples: 34,
+        matchParticles: 128, matchRate: 104, sparkParticles: 34, sparkBurst: 4
+      },
+      balanced: {
+        name: "balanced", fps: 45, maxPixels: 720000, dpr: 1.85,
+        wildfireParticles: 68, flameLanes: 16, fireSamples: 27,
+        matchParticles: 78, matchRate: 66, sparkParticles: 24, sparkBurst: 2
+      },
+      eco: {
+        name: "eco", fps: 30, maxPixels: 420000, dpr: 1.5,
+        wildfireParticles: 42, flameLanes: 11, fireSamples: 20,
+        matchParticles: 48, matchRate: 43, sparkParticles: 16, sparkBurst: 1
+      }
+    };
+    var queryTier = "";
+    try { queryTier = new URLSearchParams(location.search).get("motion") || ""; } catch (e) { /* 老内核 */ }
+    var forced = Object.prototype.hasOwnProperty.call(tiers, queryTier);
+    var cores = navigator.hardwareConcurrency || 6;
+    var memory = navigator.deviceMemory || 0;
+    var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var saveData = !!(connection && connection.saveData);
+    var name;
+    if (forced) name = queryTier;
+    else if (saveData || cores <= 4 || (memory && memory <= 4)) name = "eco";
+    else if (!isMobile || (cores >= 8 && memory >= 8)) name = "high";
+    else name = "balanced";
+
+    var profile = {};
+    function expose() {
+      document.documentElement.dataset.motionTier = profile.name;
+      document.documentElement.dataset.motionFps = String(profile.fps);
+      document.documentElement.dataset.motionPixels = String(profile.maxPixels);
+    }
+    function apply(next) {
+      var source = tiers[next];
+      Object.keys(source).forEach(function (key) { profile[key] = source[key]; });
+      expose();
+    }
+    profile.forced = forced;
+    profile.effectiveDpr = function (width, height) {
+      var area = Math.max(1, width * height);
+      return Math.min(window.devicePixelRatio || 1, profile.dpr, Math.sqrt(profile.maxPixels / area));
+    };
+    profile.degrade = function () {
+      if (forced || profile.name === "eco") return false;
+      apply(profile.name === "high" ? "balanced" : "eco");
+      document.documentElement.dataset.motionDegraded = "true";
+      return true;
+    };
+    apply(name);
+    return profile;
+  }
+
+  var motionProfile = createMotionProfile();
+
   function FlameScene(canvas) {
     var ctx = canvas.getContext("2d");
     var dpr = 1, W = 0, H = 0;
     var phase = 0, active = false, raf = 0, last = 0;
     var parts = [], sparks = [];
-    var MAXP = isMobile ? 78 : 140;
+    var MAXP = motionProfile.matchParticles;
+    var frameInterval = 1000 / motionProfile.fps;
+    var lastPaint = 0;
     var nameEdge = 0; // 名字右缘（px），驻位锚定用；0 = 未测量
 
     // 预渲染光斑 sprite：金 / 琥珀 / 橙 / 烬红
@@ -109,9 +177,9 @@
     function resize() {
       // 现代手机普遍是 3x 屏。旧版上限 2x 会被浏览器再放大 1.5 倍，
       // 细长的火柴边缘因此发虚、看起来像“弯了”。粒子数量另行限流。
-      dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 3 : 2);
       W = Math.max(1, Math.round(canvas.clientWidth));
       H = Math.max(1, Math.round(canvas.clientHeight));
+      dpr = motionProfile.effectiveDpr(W, H);
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -160,7 +228,7 @@
 
     function spawn(st, dt, t) {
       // 火焰粒子
-      var rate = st.inten * (isMobile ? 62 : 110);
+      var rate = st.inten * motionProfile.matchRate;
       var n = rate * dt;
       if (Math.random() < n % 1) n++;
       for (var i = 0; i < Math.floor(n) && parts.length < MAXP; i++) {
@@ -177,7 +245,7 @@
       // 划擦火花
       var p = phase;
       if (p > 0.16 && p < 0.3) {
-        for (var j = 0; j < (isMobile ? 2 : 4); j++) {
+        for (var j = 0; j < motionProfile.sparkBurst; j++) {
           if (sparks.length > 60) break;
           sparks.push({
             x: st.mx, y: st.my,
@@ -348,7 +416,9 @@
 
     function loop(now) {
       if (!active) return;
+      if (now - lastPaint < frameInterval) { raf = requestAnimationFrame(loop); return; }
       var dt = Math.min((now - last) / 1000, 0.05); last = now;
+      lastPaint = now;
       var st = matchState(phase, now);
       spawn(st, dt, now);
       step(dt, now);
@@ -363,7 +433,7 @@
         on = on && !document.hidden;
         if (on === active) return;
         active = on;
-        if (active) { last = performance.now(); raf = requestAnimationFrame(loop); }
+        if (active) { last = lastPaint = performance.now() - frameInterval; raf = requestAnimationFrame(loop); }
         else { cancelAnimationFrame(raf); ctx.clearRect(0, 0, W, H); parts.length = sparks.length = 0; }
       },
       resize: resize,
@@ -375,12 +445,14 @@
   function FuseSparkScene(canvas) {
     var ctx = canvas.getContext("2d");
     var size = isMobile ? 76 : 92;
-    var dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 3 : 2);
+    var dpr = Math.min(window.devicePixelRatio || 1, motionProfile.dpr);
     var center = size / 2;
-    var active = false, raf = 0, last = 0, angle = Math.PI / 2, velocity = 0, burst = 0;
+    var active = false, raf = 0, last = 0, lastPaint = 0;
+    var frameInterval = 1000 / motionProfile.fps;
+    var angle = Math.PI / 2, velocity = 0, burst = 0;
     var seed = 0x1f2e3d4c;
     var particles = [];
-    var count = isMobile ? 22 : 34;
+    var count = motionProfile.sparkParticles;
 
     canvas.width = Math.round(size * dpr);
     canvas.height = Math.round(size * dpr);
@@ -522,8 +594,10 @@
 
     function loop(now) {
       if (!active) return;
+      if (now - lastPaint < frameInterval) { raf = requestAnimationFrame(loop); return; }
       var dt = Math.min(.05, Math.max(.001, (now - last) / 1000));
       last = now;
+      lastPaint = now;
       update(dt);
       draw(now);
       raf = requestAnimationFrame(loop);
@@ -542,7 +616,7 @@
         on = on && !document.hidden;
         if (on === active) return;
         active = on;
-        if (active) { last = performance.now(); raf = requestAnimationFrame(loop); }
+        if (active) { last = lastPaint = performance.now() - frameInterval; raf = requestAnimationFrame(loop); }
         else { cancelAnimationFrame(raf); ctx.clearRect(0, 0, size, size); }
       },
       resize: function () {}
@@ -560,10 +634,13 @@
     ];
     var targets = [];
     var particles = [];
-    var phase = 0, active = false, raf = 0;
+    var phase = 0, active = false, raf = 0, lastPaint = 0;
+    var frameInterval = 1000 / motionProfile.fps;
+    var renderAverage = 0, slowFrames = 0, degradedThisRun = false;
     var W = 1, H = 1, dpr = 1, groundY = 1;
+    var fireOuter = null, fireInner = null, glowSprite = null;
     var seed = 0x7a11f17e;
-    var count = isMobile ? 68 : 96;
+    var count = 96; // 固定最大池；各画质档只遍历自己的前 N 颗，不在帧中分配对象。
 
     function random() {
       seed = (seed * 1664525 + 1013904223) >>> 0;
@@ -587,11 +664,34 @@
     function resize() {
       W = Math.max(1, Math.round(canvas.clientWidth));
       H = Math.max(1, Math.round(canvas.clientHeight));
-      dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 2.5 : 2);
+      dpr = motionProfile.effectiveDpr(W, H);
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       groundY = H * .69;
+
+      // 渐变只在 resize 时创建；逐帧只复用 paint，避免动画中制造垃圾。
+      fireOuter = ctx.createLinearGradient(0, groundY - H * .17, 0, groundY + 4);
+      fireOuter.addColorStop(0, "rgba(179,58,30,0)");
+      fireOuter.addColorStop(.38, "rgba(179,58,30,.58)");
+      fireOuter.addColorStop(.78, "rgba(255,107,53,.82)");
+      fireOuter.addColorStop(1, "rgba(255,169,77,.94)");
+      fireInner = ctx.createLinearGradient(0, groundY - H * .11, 0, groundY + 3);
+      fireInner.addColorStop(0, "rgba(255,107,53,0)");
+      fireInner.addColorStop(.45, "rgba(255,107,53,.72)");
+      fireInner.addColorStop(.82, "rgba(255,210,138,.92)");
+      fireInner.addColorStop(1, "rgba(242,236,225,.96)");
+
+      glowSprite = document.createElement("canvas");
+      glowSprite.width = 256; glowSprite.height = 96;
+      var glowCtx = glowSprite.getContext("2d");
+      var glow = glowCtx.createRadialGradient(128, 72, 0, 128, 72, 124);
+      glow.addColorStop(0, "rgba(255,210,138,.42)");
+      glow.addColorStop(.3, "rgba(255,107,53,.23)");
+      glow.addColorStop(.67, "rgba(179,58,30,.1)");
+      glow.addColorStop(1, "rgba(179,58,30,0)");
+      glowCtx.fillStyle = glow;
+      glowCtx.fillRect(0, 0, 256, 96);
 
       var skyRect = sky.getBoundingClientRect();
       var dipperRect = dipper.getBoundingClientRect();
@@ -601,6 +701,96 @@
           y: dipperRect.top - skyRect.top + point[1] / 520 * dipperRect.height
         };
       });
+    }
+
+    function curtainPoints(now, left, right, scale, phaseOffset) {
+      var points = [];
+      var samples = motionProfile.fireSamples;
+      var width = Math.max(1, right - left);
+      for (var index = 0; index < samples; index++) {
+        var t = index / (samples - 1);
+        var edge = Math.pow(Math.sin(Math.PI * t), .42);
+        var wave = Math.sin(now / 127 + index * 1.71 + phaseOffset) * .5 +
+          Math.sin(now / 71 - index * 2.37 + phaseOffset * .7) * .3 +
+          Math.sin(index * 5.13 + phaseOffset) * .2;
+        var spike = Math.pow(Math.max(0, Math.sin(index * 2.91 + phaseOffset * 1.3)), 5) * 22;
+        var height = (15 + (wave + 1) * 13 + spike) * edge * scale;
+        points.push({ x: left + width * t, y: groundY - height });
+      }
+      return points;
+    }
+
+    function fillCurtain(points, paint, alpha) {
+      if (!points.length || alpha <= .001) return;
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = paint;
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, groundY + 4);
+      ctx.lineTo(points[0].x, points[0].y);
+      for (var i = 1; i < points.length; i++) {
+        var previous = points[i - 1];
+        var current = points[i];
+        ctx.quadraticCurveTo(previous.x, previous.y,
+          (previous.x + current.x) * .5, (previous.y + current.y) * .5);
+      }
+      var lastPoint = points[points.length - 1];
+      ctx.quadraticCurveTo(lastPoint.x, lastPoint.y, lastPoint.x, groundY + 4);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawFireFront(now, spread, fireFade) {
+      if (spread <= 0 || fireFade <= .001) return;
+      var radius = W * (.035 + spread * .54);
+      var left = W * .5 - radius;
+      var right = W * .5 + radius;
+
+      ctx.globalAlpha = fireFade;
+      ctx.globalCompositeOperation = "source-over";
+      ctx.drawImage(glowSprite, left - radius * .13, groundY - H * .13,
+        radius * 2.26, H * .22);
+
+      // 一圈贴地扩散的白热波：先于火幕抵达两侧，给“点燃大地”一个明确瞬间。
+      var wave = smooth(seg(phase, .055, .29));
+      var waveFade = (1 - smooth(seg(phase, .28, .5))) * fireFade;
+      if (wave > .001 && waveFade > .001) {
+        ctx.globalAlpha = waveFade * .58;
+        ctx.strokeStyle = "#ffd28a";
+        ctx.lineWidth = .6 + (1 - wave) * 1.2;
+        ctx.beginPath();
+        ctx.ellipse(W * .5, groundY + 1, radius * (1.02 + wave * .08), 3 + wave * 4, 0, Math.PI, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // 两层连续火幕是主体；二十余个采样点合并成两个 path，成本远低于逐火苗绘制。
+      fillCurtain(curtainPoints(now, left, right, 1.34, .7), fireOuter, fireFade * .76);
+      fillCurtain(curtainPoints(now, left, right, .72, 2.8), fireInner, fireFade * .78);
+
+      ctx.lineCap = "round";
+      ctx.globalAlpha = fireFade * (.42 + spread * .32);
+      ctx.strokeStyle = "#ffa94d";
+      ctx.lineWidth = .8;
+      ctx.beginPath(); ctx.moveTo(left, groundY + 1); ctx.lineTo(right, groundY + 1); ctx.stroke();
+      ctx.globalAlpha = fireFade * .22;
+      ctx.strokeStyle = "#ffd28a";
+      ctx.lineWidth = 2.4;
+      ctx.beginPath(); ctx.moveTo(left + radius * .08, groundY + 2); ctx.lineTo(right - radius * .08, groundY + 2); ctx.stroke();
+
+      // 稀疏的高火舌只负责节奏与剪影，不再排成一行“齿”。
+      ctx.globalCompositeOperation = "lighter";
+      var flameCount = motionProfile.flameLanes;
+      for (var f = 0; f < flameCount; f++) {
+        var laneJitter = Math.sin((f + 1) * 12.9898) * .31;
+        var fx = W * (f + .5 + laneJitter) / flameCount;
+        var distance = Math.abs(fx - W * .5);
+        var reach = clamp01((radius - distance) / Math.max(1, W * .12));
+        if (reach <= .02) continue;
+        var noise = Math.sin(now / 74 + f * 2.17) * 3.4 + Math.sin(now / 43 + f) * 1.7;
+        var fh = (18 + (f * 17 % 34)) * reach * (1 + Math.sin(now / 113 + f) * .16);
+        var rootLift = Math.sin(f * 4.3) * 4 + Math.cos(f * 1.91) * 2;
+        var flameWidth = 4.2 + ((f * 7) % 6);
+        drawFlame(fx, groundY + rootLift, fh, flameWidth, noise, fireFade * reach * .86);
+      }
     }
 
     function drawFlame(x, y, height, width, flicker, alpha) {
@@ -635,38 +825,18 @@
 
       var spread = smooth(seg(phase, .025, .38));
       var fireFade = 1 - smooth(seg(phase, .48, .76));
-      if (spread > 0 && fireFade > .001) {
-        var radius = W * (.05 + spread * .57);
-        var glow = ctx.createRadialGradient(W * .5, groundY, 0, W * .5, groundY, Math.max(1, radius));
-        glow.addColorStop(0, "rgba(255,210,138,.34)");
-        glow.addColorStop(.34, "rgba(255,107,53,.18)");
-        glow.addColorStop(1, "rgba(179,58,30,0)");
-        ctx.globalAlpha = fireFade;
-        ctx.fillStyle = glow;
-        ctx.fillRect(W * .5 - radius, groundY - H * .18, radius * 2, H * .25);
-
-        var flameCount = isMobile ? 15 : 21;
-        for (var f = 0; f < flameCount; f++) {
-          var laneJitter = Math.sin((f + 1) * 12.9898) * .29;
-          var fx = W * (f + .5 + laneJitter) / flameCount;
-          var distance = Math.abs(fx - W * .5);
-          var reach = clamp01((radius - distance) / Math.max(1, W * .12));
-          if (reach <= 0) continue;
-          var noise = Math.sin(now / 74 + f * 2.17) * 3 + Math.sin(now / 43 + f) * 1.5;
-          var fh = (15 + (f * 17 % 29)) * reach * (1 + Math.sin(now / 113 + f) * .13);
-          var rootLift = Math.sin(f * 4.3) * 4 + Math.cos(f * 1.91) * 2;
-          var flameWidth = 4.5 + ((f * 7) % 6);
-          drawFlame(fx, groundY + rootLift, fh, flameWidth, noise, fireFade * reach);
-        }
-      }
+      drawFireFront(now, spread, fireFade);
 
       var settleFade = 1 - smooth(seg(phase, .86, .98));
-      particles.forEach(function (particle, index) {
+      var activeParticles = Math.min(particles.length, motionProfile.wildfireParticles);
+      for (var index = 0; index < activeParticles; index++) {
+        var particle = particles[index];
         var raw = seg(phase, particle.start, particle.start + particle.duration);
-        if (raw <= 0 || settleFade <= 0) return;
+        if (raw <= 0 || settleFade <= 0) continue;
         var t = smooth(raw);
         var target = targets[index % targets.length] || { x: W * .5, y: H * .25 };
-        var sx = W * .5 + (particle.rx - .5) * W * .18;
+        var sourceSpread = smooth(seg(particle.start, .08, .43));
+        var sx = W * .5 + (particle.rx - .5) * W * (.22 + sourceSpread * .72);
         var sy = groundY + (particle.ry - .5) * 12;
         var arc = Math.sin(Math.PI * t) * H * (.14 + particle.ry * .18);
         var x = lerp(sx, target.x, t) + particle.bend * W * .28 * Math.sin(Math.PI * t);
@@ -683,13 +853,25 @@
         ctx.globalAlpha = alpha;
         ctx.fillStyle = t > .72 ? "#f2ece1" : particle.hot > .5 ? "#ffd28a" : "#ffa94d";
         ctx.beginPath(); ctx.arc(x, y, particle.size * (1 - t * .38), 0, Math.PI * 2); ctx.fill();
-      });
+      }
       ctx.restore();
     }
 
     function loop(now) {
       if (!active) return;
+      if (now - lastPaint < frameInterval) { raf = requestAnimationFrame(loop); return; }
+      lastPaint = now;
+      var renderStart = performance.now();
       draw(now);
+      var cost = performance.now() - renderStart;
+      renderAverage = renderAverage ? renderAverage * .88 + cost * .12 : cost;
+      var costLimit = Math.min(13, frameInterval * .52);
+      slowFrames = renderAverage > costLimit ? slowFrames + 1 : Math.max(0, slowFrames - 2);
+      if (!degradedThisRun && slowFrames > 18 && motionProfile.degrade()) {
+        degradedThisRun = true;
+        frameInterval = 1000 / motionProfile.fps;
+        resize();
+      }
       raf = requestAnimationFrame(loop);
     }
 
@@ -700,7 +882,11 @@
         on = on && !document.hidden;
         if (on === active) return;
         active = on;
-        if (active) raf = requestAnimationFrame(loop);
+        if (active) {
+          lastPaint = performance.now() - frameInterval;
+          renderAverage = 0; slowFrames = 0; degradedThisRun = false;
+          raf = requestAnimationFrame(loop);
+        }
         else { cancelAnimationFrame(raf); ctx.clearRect(0, 0, W, H); }
       },
       resize: function () { resize(); draw(performance.now()); }
@@ -729,10 +915,11 @@
       scrub: 0.7,
       onUpdate: function (st) {
         flame.setPhase(st.progress);
+        flame.setActive(st.isActive && st.progress > .003 && st.progress < .997);
         document.documentElement.classList.toggle("match-lit", st.progress >= .31 && st.progress < .92);
         document.documentElement.classList.toggle("story-entered", st.progress >= .92);
       },
-      onToggle: function (st) { flame.setActive(st.isActive); }
+      onToggle: function (st) { flame.setActive(st.isActive && st.progress > .003 && st.progress < .997); }
     }
   });
   heroTL
@@ -752,7 +939,7 @@
       fuseSpark.setActive(false);
       wildfire.setActive(false);
     } else {
-      flame.setActive(heroST && heroST.isActive);
+      flame.setActive(heroST && heroST.isActive && heroST.progress > .003 && heroST.progress < .997);
       fuseSpark.setActive(storyST && storyST.isActive);
       wildfire.setActive(skyST && skyST.isActive);
     }
@@ -1020,7 +1207,6 @@
     try {
       measureName();
       startFuse();
-      ScrollTrigger.refresh();
     } catch (e) { teardownToStatic(); }
   }
   if (document.fonts && document.fonts.ready) {
@@ -1030,4 +1216,9 @@
   } catch (err) { // ---- 动效初始化失败：降级为静态可读页 ----
     teardownToStatic();
   }
+  }
+
+  // defer 脚本完成后先提交首屏，再初始化路径测量与动画系统。
+  // rAF 内再投递 task，避免初始化占住本轮首次绘制。
+  requestAnimationFrame(function () { setTimeout(bootMotion, 0); });
 })();

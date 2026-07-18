@@ -78,7 +78,11 @@ def run_motion(playwright, width, height):
       lockedProjects: document.querySelectorAll('.rest-lamps [data-locked]').length,
       lockIcons: document.querySelectorAll('.project-lock').length,
       constellationStars: document.querySelectorAll('#dipperStars .star').length,
-      coreStars: document.querySelectorAll('#dipperStars .star.core').length
+      coreStars: document.querySelectorAll('#dipperStars .star.core').length,
+      motionTier: document.documentElement.dataset.motionTier || '',
+      motionFps: +(document.documentElement.dataset.motionFps || 0),
+      motionPixels: +(document.documentElement.dataset.motionPixels || 0),
+      wildfirePixels: document.getElementById('wildfire').width * document.getElementById('wildfire').height
     })
     """)
     if width == 390:
@@ -207,6 +211,10 @@ with sync_playwright() as playwright:
             problems.append(f"locks {result['initial']['lockedProjects']}/{result['initial']['lockIcons']}")
         if result["initial"]["constellationStars"] != 9 or result["initial"]["coreStars"] != 3:
             problems.append(f"stars {result['initial']['constellationStars']}/{result['initial']['coreStars']}")
+        if result["initial"]["motionTier"] not in ("high", "balanced", "eco") or result["initial"]["motionFps"] not in (30, 45, 60):
+            problems.append(f"motion profile {result['initial']['motionTier']}/{result['initial']['motionFps']}")
+        if result["initial"]["motionPixels"] <= 0 or result["initial"]["wildfirePixels"] > result["initial"]["motionPixels"] * 1.01:
+            problems.append(f"canvas budget {result['initial']['wildfirePixels']}/{result['initial']['motionPixels']}")
         if result["mainAnchorMax"] > 2:
             problems.append(f"anchor miss {result['mainAnchorMax']:.2f}")
         if result["lit"] != 9:

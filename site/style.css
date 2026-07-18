@@ -939,7 +939,11 @@ a:focus-visible {
    所有初始隐藏只允许写在这里；基线永远完整可读。
    ------------------------------------------------------------ */
 
+.motion-pending #heroName,
 .fx #heroName { opacity: .42; }
+@media (scripting: none) {
+  .motion-pending #heroName { opacity: 1; }
+}
 .fx #fuse { visibility: hidden; opacity: 0; }
 .fx.fuse-ready #fuse { visibility: visible; opacity: 1; transition: opacity .55s ease; }
 .fx #about .line,
