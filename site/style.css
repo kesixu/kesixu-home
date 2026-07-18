@@ -173,6 +173,23 @@ a:focus-visible {
   padding-left: max(24px, env(safe-area-inset-left));
 }
 
+.calligraphy-lockup {
+  position: relative;
+  isolation: isolate;
+}
+
+.calligraphy-lockup::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -12% -52%;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 68% 48%, rgba(255, 210, 138, .13), rgba(255, 107, 53, .045) 38%, transparent 70%);
+  opacity: .72;
+  transform: rotate(-3deg);
+}
+
 .hero-name h1 {
   writing-mode: vertical-rl;
   font-family: var(--display);
@@ -181,11 +198,85 @@ a:focus-visible {
   line-height: 1.06;
   letter-spacing: .1em;
   color: var(--paper);
-  text-shadow:
-    0 1px 0 rgba(255, 248, 226, .18),
-    0 0 18px rgba(255, 210, 138, .28),
-    0 0 58px rgba(255, 107, 53, .17),
-    12px 24px 52px rgba(0, 0, 0, .62);
+  font-synthesis: none;
+}
+
+.hero-name h1 span {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background:
+    linear-gradient(94deg,
+      var(--smoke) 0%,
+      #c9c0b3 27%,
+      var(--paper) 52%,
+      var(--gold) 76%,
+      #a58b6a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 248, 226, .13))
+    drop-shadow(0 0 13px rgba(255, 169, 77, .2))
+    drop-shadow(10px 18px 20px rgba(0, 0, 0, .52));
+  transform-origin: 52% 54%;
+}
+
+/* 细碎墨眼只落在笔画内部，模拟宣纸上略带飞白的楷书墨迹。 */
+.hero-name h1 span::after {
+  content: attr(data-char);
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(13, 11, 9, .66) 0 .6px, transparent 1.25px) 0 0 / 8px 11px,
+    radial-gradient(circle at 68% 66%, rgba(13, 11, 9, .46) 0 .55px, transparent 1.15px) 2px 1px / 11px 9px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: .36;
+  transform: translate(.5px, .4px);
+}
+
+.hero-name h1 span:nth-child(1) { transform: translateX(-2px) rotate(.7deg) scale(1.015); }
+.hero-name h1 span:nth-child(2) { transform: translateX(2px) rotate(-.9deg) scale(.985); }
+.hero-name h1 span:nth-child(3) { transform: translateX(-1px) rotate(.45deg) scale(1.025); }
+
+.name-seal {
+  position: absolute;
+  right: -20px;
+  bottom: 14px;
+  width: 29px;
+  height: 29px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  place-items: center;
+  border: 1px solid rgba(179, 58, 30, .92);
+  background: rgba(179, 58, 30, .14);
+  box-shadow:
+    inset 0 0 0 2px rgba(13, 11, 9, .68),
+    inset 0 0 0 3px rgba(179, 58, 30, .45),
+    0 0 12px rgba(255, 107, 53, .14),
+    8px 10px 20px rgba(0, 0, 0, .44);
+  color: #d75b36;
+  font-family: var(--display);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1;
+  transform: rotate(-2.4deg);
+  opacity: .84;
+}
+
+.name-seal::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(179, 58, 30, .34);
+  clip-path: polygon(0 0, 92% 0, 100% 12%, 100% 100%, 8% 100%, 0 88%);
+}
+
+.name-seal i { font-style: normal; }
 }
 
 /* 横屏矮视口：竖排列装不下会折列倒序（斯可徐），改横排是叙事成立的降级 */
@@ -195,6 +286,7 @@ a:focus-visible {
     font-size: 58px;
     letter-spacing: .14em;
   }
+  .name-seal { right: -15px; bottom: -10px; }
   .hero-name { gap: 10px; }
 }
 
