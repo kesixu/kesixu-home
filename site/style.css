@@ -316,20 +316,39 @@ a:focus-visible {
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--display);
-  font-size: 15px;
-  letter-spacing: .5em;
-  text-indent: .5em;
+  font-size: 13px;
+  letter-spacing: .34em;
+  text-indent: .34em;
   color: var(--smoke);
   text-align: center;
   transition: opacity .5s ease, transform .5s ease;
+}
+.scroll-hint span small {
+  display: block;
+  margin-top: 2px;
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: .22em;
+  text-indent: .22em;
+  opacity: .62;
 }
 .scroll-hint i {
   position: relative;
   display: block;
   width: 1px;
-  height: 42px;
-  margin: 12px auto 0;
+  height: 30px;
+  margin: 8px auto 0;
   background: linear-gradient(to bottom, rgba(255,169,77,.12), rgba(255,169,77,.72), transparent);
+}
+.scroll-hint i b {
+  position: absolute;
+  left: -3px;
+  bottom: 5px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid rgba(255, 210, 138, .68);
+  border-bottom: 1px solid rgba(255, 210, 138, .68);
+  transform: rotate(45deg);
 }
 .scroll-hint i::after {
   content: "";
@@ -342,7 +361,11 @@ a:focus-visible {
   background: var(--gold);
   box-shadow: 0 0 8px 2px rgba(255,210,138,.78), 0 0 20px 5px rgba(255,107,53,.22);
 }
-.has-scrolled .scroll-hint { opacity: 0 !important; transform: translate(-50%, 12px); pointer-events: none; }
+.match-lit .scroll-hint {
+  color: #b7aa98;
+  text-shadow: 0 0 16px rgba(255, 169, 77, .14);
+}
+.story-entered .scroll-hint { opacity: 0 !important; transform: translate(-50%, 12px); pointer-events: none; }
 
 /* 小屏不压缩叙事，只收紧空白，确保火柴、姓名、手势提示互不相撞。 */
 @media (max-height: 720px) and (orientation: portrait) {
@@ -353,7 +376,7 @@ a:focus-visible {
   .hero-name { gap: 10px; padding-top: 5svh; }
   .hero-name .tagline { line-height: 1.75; }
   .scroll-hint { bottom: calc(10px + env(safe-area-inset-bottom)); }
-  .scroll-hint i { height: 28px; margin-top: 8px; }
+  .scroll-hint i { height: 24px; margin-top: 6px; }
 }
 
 /* ------------------------------------------------------------
@@ -682,6 +705,46 @@ a:focus-visible {
 }
 .rest-lamps a:hover { text-decoration: underline; }
 
+.project-lock {
+  position: relative;
+  display: inline-block;
+  width: 11px;
+  height: 9px;
+  margin-left: .28em;
+  border: 1px solid rgba(138, 131, 120, .62);
+  border-radius: 2px;
+  vertical-align: .02em;
+  color: var(--smoke);
+  box-shadow: inset 0 0 5px rgba(255,169,77,.04), 0 0 9px rgba(0,0,0,.28);
+  opacity: .72;
+}
+.project-lock::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: -6px;
+  width: 5px;
+  height: 6px;
+  border: 1px solid currentColor;
+  border-bottom: 0;
+  border-radius: 5px 5px 0 0;
+}
+.project-lock i {
+  position: absolute;
+  left: 4px;
+  top: 3px;
+  width: 2px;
+  height: 3px;
+  border-radius: 50% 50% 1px 1px;
+  background: currentColor;
+  box-shadow: 0 0 5px rgba(255,169,77,.16);
+}
+.rest-lamps li.lit .project-lock {
+  color: #b29b7f;
+  border-color: rgba(255,169,77,.34);
+  box-shadow: inset 0 0 6px rgba(255,107,53,.055), 0 0 10px rgba(255,107,53,.08);
+}
+
 /* ── 手机堆叠 ── */
 @media (max-width: 540px) {
   .hero-lamps { grid-template-columns: 1fr; }
@@ -705,6 +768,13 @@ a:focus-visible {
   position: relative;
 }
 
+.fx #sky {
+  min-height: 100vh;
+  min-height: 100svh;
+  height: 100vh;
+  height: 100svh;
+}
+
 #sky::before {
   content: "";
   position: absolute;
@@ -716,7 +786,16 @@ a:focus-visible {
   opacity: .9;
 }
 
-#sky > * { position: relative; z-index: 1; }
+#sky > * { position: relative; z-index: 2; }
+
+#wildfire {
+  position: absolute !important;
+  inset: 0;
+  z-index: 1 !important;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 
 #dipper {
   width: min(86vw, 560px);
@@ -728,6 +807,10 @@ a:focus-visible {
   stroke-width: .6;
   opacity: .4;
 }
+#dipperLines .core-line {
+  stroke: #a68a62;
+  stroke-width: .8;
+}
 
 #dipperStars circle {
   fill: var(--gold);
@@ -738,6 +821,14 @@ a:focus-visible {
   fill: var(--smoke);
   letter-spacing: .08em;
 }
+#dipperStars .core text {
+  fill: #cbb58f;
+  font-size: 12.5px;
+}
+#dipperStars a { cursor: pointer; }
+#dipperStars a:hover .star text,
+#dipperStars a:focus .star text { fill: var(--gold); }
+#dipperStars a:focus { outline: none; }
 #dipperStars .bright circle {
   filter:
     drop-shadow(0 0 2px rgba(255, 244, 213, .96))
@@ -862,6 +953,7 @@ a:focus-visible {
 .fx #sky .echo { opacity: 0; }
 .fx #dipperStars .star { opacity: 0; }
 .fx #dipperLines line { opacity: 0; }
+.fx #skyField circle { opacity: 0; }
 .fx #ember > * { opacity: 0; transform: translateY(20px); }
 .fx #fuseHead { opacity: 1; }
 .fx:not(.fuse-ready) #fuseHead { visibility: hidden; }
@@ -884,7 +976,7 @@ a:focus-visible {
     0%   { opacity: 0; transform: translateY(0) scale(.6); }
     18%  { opacity: 1; }
     76%  { opacity: .9; }
-    100% { opacity: 0; transform: translateY(37px) scale(.3); }
+    100% { opacity: 0; transform: translateY(24px) scale(.3); }
   }
   @keyframes ember-breathe {
     0%, 100% { opacity: .5; transform: scale(.88); }
@@ -895,7 +987,7 @@ a:focus-visible {
 /* 打印：给一个体面的静态版本 */
 @media print {
   body { background: #fff; color: #111; }
-  #flame, #fuse, #fuseHead, .scroll-hint { display: none; }
+  #flame, #fuse, #fuseHead, #wildfire, .scroll-hint { display: none; }
 }
 
 /* ── 主灯 Logo ── */

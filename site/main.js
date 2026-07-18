@@ -1,4 +1,4 @@
-/* 《划亮》main.js — 编排：火柴(canvas) → 引信(SVG) → 七盏灯 → 星图 → 余烬
+/* 《划亮》main.js — 编排：火柴(canvas) → 引信(SVG) → 九盏灯 → 燎原成星 → 余烬
    纪律：只动 transform/opacity；canvas 离屏即停；reduced-motion 全静态。 */
 (function () {
   "use strict";
@@ -42,6 +42,7 @@
 
   var flame = null;
   var fuseSpark = null;
+  var wildfire = null;
 
   /* 拆掉全部演出、剥净内联样式，回到静态点亮态。
      用于：中途切 reduced-motion、初始化任何异常（渐进增强的执行点）。 */
@@ -52,7 +53,7 @@
       gsap.set("#heroName, #whisper, #scrollHint, .hero-name h1, .hero-name h1 span, .hero-name .latin, " +
         ".hero-name .tagline, .hero-name .echo, #about .line, #about .echo, #lamps h2, " +
         ".chapter-sub, .rest-label, .hero-lamp, .rest-lamps li, .sky-line, #sky .echo, #dipperStars .star, #dipperLines line, " +
-        "#ember > *, #fuseHead", { clearProps: "all" });
+        "#skyField circle, #wildfire, #ember > *, #fuseHead", { clearProps: "all" });
     } catch (e) { /* 清理路径自身绝不允许再抛 */ }
     // 这些是绕开 gsap 手设的内联样式，clearProps 管不到
     document.querySelectorAll("#dipperLines line, #fuseLit").forEach(function (el) {
@@ -61,8 +62,11 @@
     });
     document.documentElement.classList.remove("fx");
     document.documentElement.classList.remove("fuse-ready");
+    document.documentElement.classList.remove("match-lit");
+    document.documentElement.classList.remove("story-entered");
     if (flame) flame.setActive(false);
     if (fuseSpark) fuseSpark.setActive(false);
+    if (wildfire) wildfire.setActive(false);
     document.querySelectorAll("[data-ignite]").forEach(function (el) { el.classList.add("lit"); });
   }
 
@@ -73,14 +77,6 @@
 
   try { // ---- 动效初始化整体受保护：任何异常 → teardownToStatic() 静态可读 ----
   document.documentElement.classList.add("fx");
-
-  function retireScrollHint() {
-    if (window.scrollY < 7) return;
-    document.documentElement.classList.add("has-scrolled");
-    window.removeEventListener("scroll", retireScrollHint);
-  }
-  window.addEventListener("scroll", retireScrollHint, { passive: true });
-  retireScrollHint();
 
   /* ============================================================
      火柴与火焰（canvas 2D）
@@ -553,8 +549,167 @@
     };
   }
 
+  /* 燎原转场：固定种子粒子从火线升空，并精确落到九颗项目星的位置。 */
+  function WildfireScene(canvas) {
+    var ctx = canvas.getContext("2d");
+    var dipper = document.getElementById("dipper");
+    var sky = document.getElementById("sky");
+    var starView = [
+      [66, 108], [178, 66], [294, 118], [330, 216], [270, 286],
+      [166, 250], [50, 306], [106, 406], [258, 388]
+    ];
+    var targets = [];
+    var particles = [];
+    var phase = 0, active = false, raf = 0;
+    var W = 1, H = 1, dpr = 1, groundY = 1;
+    var seed = 0x7a11f17e;
+    var count = isMobile ? 68 : 96;
+
+    function random() {
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      return seed / 4294967296;
+    }
+    for (var i = 0; i < count; i++) {
+      particles.push({
+        rx: random(), ry: random(), bend: random() - .5,
+        start: .12 + random() * .31,
+        duration: .34 + random() * .24,
+        size: .6 + random() * 1.7,
+        hot: random()
+      });
+    }
+
+    function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+    function seg(v, a, b) { return clamp01((v - a) / (b - a)); }
+    function smooth(v) { return v * v * (3 - 2 * v); }
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function resize() {
+      W = Math.max(1, Math.round(canvas.clientWidth));
+      H = Math.max(1, Math.round(canvas.clientHeight));
+      dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 2.5 : 2);
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      groundY = H * .69;
+
+      var skyRect = sky.getBoundingClientRect();
+      var dipperRect = dipper.getBoundingClientRect();
+      targets = starView.map(function (point) {
+        return {
+          x: dipperRect.left - skyRect.left + point[0] / 360 * dipperRect.width,
+          y: dipperRect.top - skyRect.top + point[1] / 520 * dipperRect.height
+        };
+      });
+    }
+
+    function drawFlame(x, y, height, width, flicker, alpha) {
+      ctx.globalAlpha = alpha * .48;
+      ctx.fillStyle = "#b33a1e";
+      ctx.beginPath();
+      ctx.moveTo(x - width, y + 2);
+      ctx.bezierCurveTo(x - width * .7, y - height * .34, x - width * .15 + flicker, y - height * .78, x, y - height);
+      ctx.bezierCurveTo(x + width * .38, y - height * .68, x + width, y - height * .2, x + width, y + 2);
+      ctx.closePath(); ctx.fill();
+      ctx.globalAlpha = alpha * .72;
+      ctx.fillStyle = "#ff6b35";
+      ctx.beginPath();
+      ctx.moveTo(x - width * .48, y + 1);
+      ctx.bezierCurveTo(x - width * .25, y - height * .3, x + flicker * .42, y - height * .62, x + width * .05, y - height * .76);
+      ctx.bezierCurveTo(x + width * .44, y - height * .4, x + width * .5, y - height * .16, x + width * .46, y + 1);
+      ctx.closePath(); ctx.fill();
+      ctx.globalAlpha = alpha * .8;
+      ctx.fillStyle = "#ffd28a";
+      ctx.beginPath();
+      ctx.moveTo(x - width * .16, y);
+      ctx.quadraticCurveTo(x - width * .08, y - height * .28, x + flicker * .18, y - height * .48);
+      ctx.quadraticCurveTo(x + width * .2, y - height * .19, x + width * .18, y);
+      ctx.closePath(); ctx.fill();
+    }
+
+    function draw(now) {
+      ctx.clearRect(0, 0, W, H);
+      if (phase <= .001 || phase >= .995) return;
+      ctx.save();
+      ctx.globalCompositeOperation = "lighter";
+
+      var spread = smooth(seg(phase, .025, .38));
+      var fireFade = 1 - smooth(seg(phase, .48, .76));
+      if (spread > 0 && fireFade > .001) {
+        var radius = W * (.05 + spread * .57);
+        var glow = ctx.createRadialGradient(W * .5, groundY, 0, W * .5, groundY, Math.max(1, radius));
+        glow.addColorStop(0, "rgba(255,210,138,.34)");
+        glow.addColorStop(.34, "rgba(255,107,53,.18)");
+        glow.addColorStop(1, "rgba(179,58,30,0)");
+        ctx.globalAlpha = fireFade;
+        ctx.fillStyle = glow;
+        ctx.fillRect(W * .5 - radius, groundY - H * .18, radius * 2, H * .25);
+
+        var flameCount = isMobile ? 15 : 21;
+        for (var f = 0; f < flameCount; f++) {
+          var laneJitter = Math.sin((f + 1) * 12.9898) * .29;
+          var fx = W * (f + .5 + laneJitter) / flameCount;
+          var distance = Math.abs(fx - W * .5);
+          var reach = clamp01((radius - distance) / Math.max(1, W * .12));
+          if (reach <= 0) continue;
+          var noise = Math.sin(now / 74 + f * 2.17) * 3 + Math.sin(now / 43 + f) * 1.5;
+          var fh = (15 + (f * 17 % 29)) * reach * (1 + Math.sin(now / 113 + f) * .13);
+          var rootLift = Math.sin(f * 4.3) * 4 + Math.cos(f * 1.91) * 2;
+          var flameWidth = 4.5 + ((f * 7) % 6);
+          drawFlame(fx, groundY + rootLift, fh, flameWidth, noise, fireFade * reach);
+        }
+      }
+
+      var settleFade = 1 - smooth(seg(phase, .86, .98));
+      particles.forEach(function (particle, index) {
+        var raw = seg(phase, particle.start, particle.start + particle.duration);
+        if (raw <= 0 || settleFade <= 0) return;
+        var t = smooth(raw);
+        var target = targets[index % targets.length] || { x: W * .5, y: H * .25 };
+        var sx = W * .5 + (particle.rx - .5) * W * .18;
+        var sy = groundY + (particle.ry - .5) * 12;
+        var arc = Math.sin(Math.PI * t) * H * (.14 + particle.ry * .18);
+        var x = lerp(sx, target.x, t) + particle.bend * W * .28 * Math.sin(Math.PI * t);
+        var y = lerp(sy, target.y, t) - arc;
+        var previousT = Math.max(0, t - .026);
+        var px = lerp(sx, target.x, previousT) + particle.bend * W * .28 * Math.sin(Math.PI * previousT);
+        var py = lerp(sy, target.y, previousT) - Math.sin(Math.PI * previousT) * H * (.14 + particle.ry * .18);
+        var born = smooth(seg(raw, 0, .12));
+        var alpha = born * settleFade * (.28 + particle.hot * .7);
+        ctx.globalAlpha = alpha * .42;
+        ctx.strokeStyle = particle.hot > .55 ? "#ffd28a" : "#ff6b35";
+        ctx.lineWidth = .5 + particle.size * .55;
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(x, y); ctx.stroke();
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = t > .72 ? "#f2ece1" : particle.hot > .5 ? "#ffd28a" : "#ffa94d";
+        ctx.beginPath(); ctx.arc(x, y, particle.size * (1 - t * .38), 0, Math.PI * 2); ctx.fill();
+      });
+      ctx.restore();
+    }
+
+    function loop(now) {
+      if (!active) return;
+      draw(now);
+      raf = requestAnimationFrame(loop);
+    }
+
+    resize();
+    return {
+      setPhase: function (value) { phase = clamp01(value); if (!active) draw(performance.now()); },
+      setActive: function (on) {
+        on = on && !document.hidden;
+        if (on === active) return;
+        active = on;
+        if (active) raf = requestAnimationFrame(loop);
+        else { cancelAnimationFrame(raf); ctx.clearRect(0, 0, W, H); }
+      },
+      resize: function () { resize(); draw(performance.now()); }
+    };
+  }
+
   flame = FlameScene(document.getElementById("flame"));
   fuseSpark = FuseSparkScene(document.getElementById("fuseSpark"));
+  wildfire = WildfireScene(document.getElementById("wildfire"));
 
   var nameEl = document.querySelector(".hero-name h1");
   function measureName() {
@@ -572,7 +727,11 @@
       end: "+=230%",
       pin: true,
       scrub: 0.7,
-      onUpdate: function (st) { flame.setPhase(st.progress); },
+      onUpdate: function (st) {
+        flame.setPhase(st.progress);
+        document.documentElement.classList.toggle("match-lit", st.progress >= .31 && st.progress < .92);
+        document.documentElement.classList.toggle("story-entered", st.progress >= .92);
+      },
       onToggle: function (st) { flame.setActive(st.isActive); }
     }
   });
@@ -586,13 +745,16 @@
     .to({}, { duration: 0.2 }); // 驻留
 
   var heroST = heroTL.scrollTrigger;
+  var skyST = null;
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) {
       flame.setActive(false);
       fuseSpark.setActive(false);
+      wildfire.setActive(false);
     } else {
       flame.setActive(heroST && heroST.isActive);
       fuseSpark.setActive(storyST && storyST.isActive);
+      wildfire.setActive(skyST && skyST.isActive);
     }
   });
 
@@ -773,7 +935,7 @@
     });
   });
 
-  /* ---------- 章四 · 星图：连线自绘，星辰次第亮 ---------- */
+  /* ---------- 章四 · 燎原成星：火线、升烬、九星与连线共用一条滚动时间线 ---------- */
   var dipLines = gsap.utils.toArray("#dipperLines line");
   dipLines.forEach(function (ln) {
     var L = Math.hypot(ln.x2.baseVal.value - ln.x1.baseVal.value,
@@ -781,13 +943,38 @@
     ln.style.strokeDasharray = L;
     ln.style.strokeDashoffset = L;
   });
-  gsap.timeline({
-    scrollTrigger: { trigger: "#sky", start: "top 62%", once: true }
-  })
-    .to("#dipperStars .star", { opacity: 1, duration: 0.7, stagger: 0.16, ease: "power1.out" }, 0)
-    .to(dipLines, { strokeDashoffset: 0, opacity: 0.4, duration: 0.9, stagger: 0.14, ease: "power1.inOut" }, 0.25)
-    .to(".sky-line", { opacity: 1, duration: 1.2 }, 1.1)
-    .to("#sky .echo", { opacity: 1, duration: 1.2 }, 1.35);
+  var skyTL = gsap.timeline({
+    scrollTrigger: {
+      id: "sky-transition",
+      trigger: "#sky",
+      start: "top top",
+      end: "+=175%",
+      pin: true,
+      scrub: .72,
+      anticipatePin: 1,
+      onRefresh: function () { wildfire.resize(); },
+      onUpdate: function (st) { wildfire.setPhase(st.progress); },
+      onToggle: function (st) { wildfire.setActive(st.isActive); }
+    }
+  });
+  skyST = skyTL.scrollTrigger;
+  skyTL
+    .to({}, { duration: .48 })
+    .to("#dipperStars .star", {
+      opacity: 1, duration: .2, stagger: .034, ease: "power2.out"
+    }, .5)
+    .to(dipLines, {
+      strokeDashoffset: 0, opacity: function (index, line) {
+        return line.classList.contains("core-line") ? .66 : .4;
+      }, duration: .34, stagger: .045, ease: "power1.inOut"
+    }, .58)
+    .to("#skyField circle", {
+      opacity: function (index) { return .12 + (index * 53 % 10) / 45; },
+      duration: .32, stagger: { amount: .22, from: "random" }, ease: "power1.out"
+    }, .62)
+    .to("#wildfire", { opacity: 0, duration: .25, ease: "power1.out" }, .9)
+    .to(".sky-line", { opacity: 1, duration: .34, ease: "power1.out" }, .94)
+    .to("#sky .echo", { opacity: 1, duration: .3, ease: "power1.out" }, 1.08);
 
   /* ---------- 章五 · 余烬 ---------- */
   gsap.to("#ember > *", {
@@ -817,6 +1004,7 @@
       lastW = w; lastH = h;
       try {
         flame.resize();
+        wildfire.resize();
         measureName();
         if (storyST) {
           var currentProgress = storyST.progress;

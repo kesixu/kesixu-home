@@ -72,7 +72,13 @@ def run_motion(playwright, width, height):
       hint: document.getElementById('scrollHint').innerText.trim(),
       hintOpacity: +getComputedStyle(document.getElementById('scrollHint')).opacity,
       nameOpacity: +getComputedStyle(document.getElementById('heroName')).opacity,
-      cellularCode: document.documentElement.innerHTML.includes('cellMotifs')
+      cellularCode: document.documentElement.innerHTML.includes('cellMotifs'),
+      accessibleProjects: document.querySelectorAll('.hero-lamp[href], .rest-lamps a').length,
+      firstSecondary: document.querySelector('.rest-lamps li')?.textContent.trim() || '',
+      lockedProjects: document.querySelectorAll('.rest-lamps [data-locked]').length,
+      lockIcons: document.querySelectorAll('.project-lock').length,
+      constellationStars: document.querySelectorAll('#dipperStars .star').length,
+      coreStars: document.querySelectorAll('#dipperStars .star.core').length
     })
     """)
     if width == 390:
@@ -80,11 +86,24 @@ def run_motion(playwright, width, height):
     page.evaluate("scrollTo(0, 18)")
     page.wait_for_timeout(650)
     hint_after_scroll = page.evaluate("+getComputedStyle(document.getElementById('scrollHint')).opacity")
+    hero_trigger = page.evaluate(r"""
+    () => {
+      const trigger = ScrollTrigger.getAll().find(item => item.trigger?.id === 'hero');
+      return {start: trigger.start, end: trigger.end};
+    }
+    """)
+    page.evaluate("top => scrollTo(0, top)", hero_trigger["start"] + (hero_trigger["end"] - hero_trigger["start"]) * .62)
+    page.wait_for_timeout(800)
+    hint_after_ignite = page.evaluate("+getComputedStyle(document.getElementById('scrollHint')).opacity")
+    page.evaluate("top => scrollTo(0, top)", hero_trigger["end"] + 12)
+    page.wait_for_timeout(700)
+    hint_after_story = page.evaluate("+getComputedStyle(document.getElementById('scrollHint')).opacity")
 
     route = route_progress(page)
     main_route = route[:3]
     ignition_order = []
     spark_bytes = 0
+    wildfire_bytes = 0
 
     if width in (390, 1440):
         trigger = page.evaluate(r"""
@@ -104,6 +123,20 @@ def run_motion(playwright, width, height):
                 if width == 390:
                     page.screenshot(path=CAPTURE_DIR / f"home-ignite-{index + 1}.png")
 
+        sky_trigger = page.evaluate(r"""
+        () => {
+          const trigger = ScrollTrigger.getById('sky-transition');
+          return trigger ? {start: trigger.start, end: trigger.end} : null;
+        }
+        """)
+        if sky_trigger:
+            sky_y = sky_trigger["start"] + (sky_trigger["end"] - sky_trigger["start"]) * .46
+            page.evaluate("top => scrollTo(0, top)", sky_y)
+            page.wait_for_timeout(1100)
+            wildfire_bytes = page.evaluate("document.getElementById('wildfire')?.toDataURL().length || 0")
+            if width == 390:
+                page.screenshot(path=CAPTURE_DIR / "home-wildfire.png")
+
     page.evaluate("scrollTo(0, document.documentElement.scrollHeight)")
     page.wait_for_timeout(1600)
     final_lit = page.locator("[data-ignite].lit").count()
@@ -113,9 +146,12 @@ def run_motion(playwright, width, height):
         "http": response.status if response else 0,
         "initial": initial,
         "hintAfterScroll": hint_after_scroll,
+        "hintAfterIgnite": hint_after_ignite,
+        "hintAfterStory": hint_after_story,
         "route": route,
         "mainAnchorMax": max(item["distance"] for item in main_route),
         "sparkBytes": spark_bytes,
+        "wildfireBytes": wildfire_bytes,
         "lit": final_lit,
         "ignitionOrder": ignition_order,
         "console": console,
@@ -138,6 +174,8 @@ def run_fallback(playwright, reduced=False, no_js=False):
     () => ({
       overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
       visibleProjects: [...document.querySelectorAll('[data-ignite]')].filter(el => +getComputedStyle(el).opacity > .95).length,
+      visibleStars: [...document.querySelectorAll('#dipperStars .star')].filter(el => +getComputedStyle(el).opacity > .95).length,
+      lockIcons: document.querySelectorAll('.project-lock').length,
       fuseOpacity: +getComputedStyle(document.getElementById('fuseHead')).opacity,
       fx: document.documentElement.classList.contains('fx')
     })
@@ -155,29 +193,39 @@ with sync_playwright() as playwright:
             problems.append(f"HTTP {result['http']}")
         if result["initial"]["overflow"] > 1:
             problems.append(f"overflow {result['initial']['overflow']}")
-        if result["initial"]["hint"] != "下滑":
+        if "下滑" not in result["initial"]["hint"] or "看更多" not in result["initial"]["hint"]:
             problems.append(f"hint {result['initial']['hint']}")
         if result["initial"]["hintOpacity"] < .9 or result["initial"]["nameOpacity"] < .2:
             problems.append("initial guide/name hidden")
-        if result["hintAfterScroll"] > .05:
-            problems.append(f"hint remains {result['hintAfterScroll']}")
+        if result["hintAfterScroll"] < .35 or result["hintAfterIgnite"] < .35:
+            problems.append(f"hint retires early {result['hintAfterScroll']}/{result['hintAfterIgnite']}")
+        if result["hintAfterStory"] > .05:
+            problems.append(f"hint remains after story {result['hintAfterStory']}")
+        if result["initial"]["accessibleProjects"] != 4 or not result["initial"]["firstSecondary"].startswith("MatchPoint"):
+            problems.append("accessible project order")
+        if result["initial"]["lockedProjects"] != 5 or result["initial"]["lockIcons"] != 5:
+            problems.append(f"locks {result['initial']['lockedProjects']}/{result['initial']['lockIcons']}")
+        if result["initial"]["constellationStars"] != 9 or result["initial"]["coreStars"] != 3:
+            problems.append(f"stars {result['initial']['constellationStars']}/{result['initial']['coreStars']}")
         if result["mainAnchorMax"] > 2:
             problems.append(f"anchor miss {result['mainAnchorMax']:.2f}")
         if result["lit"] != 9:
             problems.append(f"lit {result['lit']}/9")
         if viewport[0] in (390, 1440) and result["sparkBytes"] < 1000:
             problems.append(f"empty spark {result['sparkBytes']}")
+        if viewport[0] in (390, 1440) and result["wildfireBytes"] < 1000:
+            problems.append(f"empty wildfire {result['wildfireBytes']}")
         if result["console"]:
             problems.append("console " + " | ".join(result["console"]))
         if result["external"]:
             problems.append("external " + " | ".join(result["external"]))
         failed |= bool(problems)
-        print(f"{result['viewport']} anchors={result['mainAnchorMax']:.2f} spark={result['sparkBytes']} lit={result['lit']}/9 " + ("PASS" if not problems else "FAIL " + "; ".join(problems)))
+        print(f"{result['viewport']} anchors={result['mainAnchorMax']:.2f} spark={result['sparkBytes']} wildfire={result['wildfireBytes']} lit={result['lit']}/9 " + ("PASS" if not problems else "FAIL " + "; ".join(problems)))
 
     reduced = run_fallback(playwright, reduced=True)
     no_js = run_fallback(playwright, no_js=True)
-    reduced_ok = reduced["visibleProjects"] == 9 and not reduced["fx"] and reduced["overflow"] <= 1
-    no_js_ok = no_js["visibleProjects"] == 9 and not no_js["fx"] and no_js["overflow"] <= 1
+    reduced_ok = reduced["visibleProjects"] == 9 and reduced["visibleStars"] == 9 and reduced["lockIcons"] == 5 and not reduced["fx"] and reduced["overflow"] <= 1
+    no_js_ok = no_js["visibleProjects"] == 9 and no_js["visibleStars"] == 9 and no_js["lockIcons"] == 5 and not no_js["fx"] and no_js["overflow"] <= 1
     failed |= not reduced_ok or not no_js_ok
     print(f"reduced-motion {reduced} {'PASS' if reduced_ok else 'FAIL'}")
     print(f"no-js {no_js} {'PASS' if no_js_ok else 'FAIL'}")
