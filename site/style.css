@@ -188,13 +188,15 @@ a:focus-visible {
   content: "";
   position: absolute;
   z-index: -1;
-  inset: -12% -52%;
+  inset: -14% -58%;
   pointer-events: none;
-  /* 环境光贴着火柴驻位（右侧中段）偏移，随距离二段衰减 */
+  /* 环境光 = 火柴驻位（右侧中段）的两级泛光：贴字的暖核 + 远处大半径衰减。
+     光只出现在受光侧，左侧留给黑暗，字才像被单一火源照出来的。 */
   background:
-    radial-gradient(ellipse at 76% 50%, rgba(255, 210, 138, .16), rgba(255, 107, 53, .05) 40%, transparent 70%);
-  opacity: .72;
-  transform: rotate(-3deg);
+    radial-gradient(closest-side at 82% 52%, rgba(255, 226, 166, .20), rgba(255, 169, 77, .07) 52%, transparent 78%),
+    radial-gradient(ellipse at 74% 50%, rgba(255, 138, 66, .07), transparent 66%);
+  opacity: .8;
+  transform: rotate(-2deg);
 }
 
 .hero-name h1 {
@@ -213,50 +215,52 @@ a:focus-visible {
   display: inline-block;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  background:
-    linear-gradient(94deg,
-      var(--smoke) 0%,
-      #c9c0b3 27%,
-      var(--paper) 52%,
-      var(--gold) 76%,
-      #a58b6a 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  /* 光影物理：光源是驻停在名字右侧的那根火柴。因此右缘是暖色
-     受光边，投影落向左下、离光越远越长越虚。text-shadow 而非
-     filter:drop-shadow —— 后者在 WebKit 里对 background-clip:text
-     + transform 元素会新建合成层，真机上偶发裁字；text-shadow
-     不建层，老 WebKit / 微信 X5 也稳定。模糊收在 12px 内，
-     避免相邻字的阴影互相糊叠。 */
-  text-shadow:
-    1px 0 0 rgba(255, 220, 160, .2),
-    2px 0 9px rgba(255, 169, 77, .13),
-    -6px 9px 11px rgba(0, 0, 0, .46);
+  /* 光影物理：唯一光源是驻停在名字右侧中段的火柴。
+     受光全部交给填充渐变本身（右缘最亮、向左衰减入暗），
+     text-shadow 只留两层：一层零偏移的暖晕（不产生字形复影），
+     一层大模糊低透明的软投影，方向与火源严格相对。
+     此前右缘的 1–3px 亮色字形拷贝会在笔画间读成"重影"，已弃用。
+     text-shadow 而非 filter:drop-shadow —— 后者在 WebKit 里对
+     background-clip:text + transform 元素会新建合成层，真机上偶发
+     裁字；text-shadow 不建层，老 WebKit / 微信 X5 也稳定。 */
   transform-origin: 52% 54%;
 }
 
-/* 火焰驻位在名字右侧中段：「可」离火最近，受光最强、投影最短；
-   「徐」「斯」渐远，投影拉长、亮边转弱。 */
+/* 火焰驻位在名字右侧中段：「可」正对火，受光最强、投影最短最实；
+   「徐」在火上方——光从右下来，影子投向左上；
+   「斯」在火下方——光从右上来，影子投向左下。
+   三个投影呈放射状背向同一点，光源才可信。 */
 .hero-name h1 span:nth-child(1) {
+  background: linear-gradient(118deg,
+    #5f594e 0%, #978d7a 30%, #d8cfbd 58%, #f0dfc0 84%, #ffe4b4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
   transform: translateX(-2px) rotate(.7deg) scale(1.015);
   text-shadow:
-    1px 1px 0 rgba(255, 220, 160, .14),
-    2px 1px 9px rgba(255, 169, 77, .09),
-    -7px 10px 12px rgba(0, 0, 0, .42);
+    0 0 30px rgba(255, 169, 77, .12),
+    -9px -7px 20px rgba(0, 0, 0, .34);
 }
 .hero-name h1 span:nth-child(2) {
+  background: linear-gradient(92deg,
+    #6b6457 0%, #b0a58e 26%, var(--paper) 52%, #ffe0ab 80%, #fff1d3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
   transform: translateX(2px) rotate(-.9deg) scale(.985);
   text-shadow:
-    1.5px 0 0 rgba(255, 228, 176, .3),
-    3px 0 10px rgba(255, 177, 94, .18),
-    -5px 8px 9px rgba(0, 0, 0, .5);
+    0 0 26px rgba(255, 177, 94, .17),
+    -11px -1px 14px rgba(0, 0, 0, .44);
 }
 .hero-name h1 span:nth-child(3) {
+  background: linear-gradient(66deg,
+    #625c50 0%, #a29883 30%, #e2d8c4 58%, #f6ddae 84%, #ffe9c2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
   transform: translateX(-1px) rotate(.45deg) scale(1.025);
   text-shadow:
-    1px -1px 0 rgba(255, 220, 160, .18),
-    2px -1px 9px rgba(255, 169, 77, .11),
-    -6px 8px 11px rgba(0, 0, 0, .44);
+    0 0 28px rgba(255, 169, 77, .14),
+    -10px 6px 17px rgba(0, 0, 0, .38);
 }
 
 /* 横屏矮视口：竖排列装不下会折列倒序（斯可徐），改横排是叙事成立的降级 */
@@ -402,7 +406,9 @@ a:focus-visible {
 }
 
 #fuseHead {
-  --spark-size: 92px;
+  /* 画布要给火星留足飞行余量：火星射程 ~70px，92px 画布会在方形
+     边界处凭空消失。火焰头本体仍画在中心，只有余量变大。 */
+  --spark-size: 184px;
   position: absolute;
   top: 0;
   left: 0;
@@ -415,7 +421,7 @@ a:focus-visible {
 #fuseSpark { display: block; width: 100%; height: 100%; }
 
 @media (max-width: 768px), (any-pointer: coarse) {
-  #fuseHead { --spark-size: 76px; }
+  #fuseHead { --spark-size: 152px; }
 }
 
 /* ------------------------------------------------------------
@@ -965,6 +971,15 @@ a:focus-visible {
 
 @media (prefers-reduced-motion: no-preference) {
   /* 动画放在内层：外层透明度归 GSAP 管，两者互不打架。 */
+  /* 火光不是恒定的：环境光晕以多拍不均的节奏轻微呼吸（只动 opacity） */
+  .match-lit .calligraphy-lockup::before { animation: name-light-flicker 4.6s ease-in-out infinite; }
+  @keyframes name-light-flicker {
+    0%, 100% { opacity: .8; }
+    23%      { opacity: .68; }
+    41%      { opacity: .86; }
+    58%      { opacity: .74; }
+    79%      { opacity: .9; }
+  }
   .scroll-hint span { display: inline-block; animation: hint-pulse 2.8s ease-in-out infinite; }
   .scroll-hint i::after { animation: hint-ember 1.9s cubic-bezier(.42,0,.58,1) infinite; }
   .ember-dot::after { animation: ember-breathe 4.4s ease-in-out infinite; }

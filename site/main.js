@@ -96,17 +96,17 @@
     var tiers = {
       high: {
         name: "high", fps: 60, maxPixels: 1600000, dpr: 2.25,
-        wildfireParticles: 96, flameLanes: 21, fireSamples: 34,
+        wildfireParticles: 96, fireCell: 4, fireSamples: 34,
         matchParticles: 128, matchRate: 104, sparkParticles: 34, sparkBurst: 4
       },
       balanced: {
         name: "balanced", fps: 45, maxPixels: 720000, dpr: 1.85,
-        wildfireParticles: 68, flameLanes: 16, fireSamples: 27,
+        wildfireParticles: 68, fireCell: 5, fireSamples: 27,
         matchParticles: 78, matchRate: 66, sparkParticles: 24, sparkBurst: 2
       },
       eco: {
         name: "eco", fps: 30, maxPixels: 420000, dpr: 1.5,
-        wildfireParticles: 42, flameLanes: 11, fireSamples: 20,
+        wildfireParticles: 42, fireCell: 7, fireSamples: 20,
         matchParticles: 48, matchRate: 43, sparkParticles: 16, sparkBurst: 1
       }
     };
@@ -441,10 +441,12 @@
     };
   }
 
-  /* 小画布随 SVG 路径移动。所有粒子都在固定池里复用，避免滚动时制造垃圾。 */
+  /* 小画布随 SVG 路径移动。所有粒子都在固定池里复用，避免滚动时制造垃圾。
+     画布边长≈火星最大射程的两倍：火星必须在画布内自然烧尽，
+     不能撞上看不见的方形边界凭空消失。 */
   function FuseSparkScene(canvas) {
     var ctx = canvas.getContext("2d");
-    var size = isMobile ? 76 : 92;
+    var size = isMobile ? 152 : 184;
     var dpr = Math.min(window.devicePixelRatio || 1, motionProfile.dpr);
     var center = size / 2;
     var active = false, raf = 0, last = 0, lastPaint = 0;
@@ -452,12 +454,13 @@
     var angle = Math.PI / 2, velocity = 0, burst = 0;
     var seed = 0x1f2e3d4c;
     var particles = [];
-    var count = motionProfile.sparkParticles;
+    var count = Math.round(motionProfile.sparkParticles * 1.5);
 
     canvas.width = Math.round(size * dpr);
     canvas.height = Math.round(size * dpr);
     canvas.style.width = size + "px";
     canvas.style.height = size + "px";
+    canvas.parentElement.style.setProperty("--spark-size", size + "px");
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     function random() {
@@ -466,28 +469,34 @@
     }
 
     for (var i = 0; i < count; i++) {
-      particles.push({ x: 0, y: 0, vx: 0, vy: 0, life: 2, ttl: 1, hot: 0 });
+      particles.push({ x: 0, y: 0, vx: 0, vy: 0, life: 2, ttl: 1, hot: 0, g: 0, drag: 0, ph: 0 });
     }
 
     function respawn(p, force) {
       var back = angle + Math.PI;
-      var spread = (random() - 0.5) * 1.5;
+      var spread = (random() - 0.5) * 1.6;
       // 分叉火星：少数以更大初速、更短寿命弹出，落点更散——
       // 真实火花不是均匀喷雾，而是几缕突然蹿出的亮线。
-      p.fork = random() < .18;
-      var power = 20 + random() * (42 + velocity * 80 + force * 45);
-      if (p.fork) power *= 1.6;
+      p.fork = random() < .16;
+      var power = 26 + random() * (58 + velocity * 120 + force * 70);
+      if (p.fork) power *= 1.7;
       p.x = center + (random() - 0.5) * 4;
       p.y = center + (random() - 0.5) * 4;
-      p.vx = Math.cos(back + spread) * power + (random() - 0.5) * 18;
-      p.vy = Math.sin(back + spread) * power - 14 - random() * 28;
+      p.vx = Math.cos(back + spread) * power + (random() - 0.5) * 22;
+      p.vy = Math.sin(back + spread) * power - 16 - random() * 34;
       p.life = 0;
-      p.ttl = (p.fork ? .16 : .22) + random() * .42;
-      p.hot = p.fork ? .7 + random() * .3 : random();
+      p.ttl = (p.fork ? .2 : .3) + random() * .5;
+      p.hot = p.fork ? .7 + random() * .3 : .25 + random() * .75;
+      // 每颗火星有自己的质量感：重力/空气阻力小幅离散，
+      // 弹道才不会整齐得像喷泉。
+      p.g = 190 + random() * 130;
+      p.drag = 1.3 + random() * 1.4;
+      p.ph = random() * 6.28;
     }
 
     function update(dt) {
-      var spawnChance = Math.min(1, dt * (18 + velocity * 95 + burst * 120));
+      var spawnChance = Math.min(1, dt * (20 + velocity * 110 + burst * 130));
+      var damp;
       for (var i = 0; i < particles.length; i++) {
         var p = particles[i];
         p.life += dt;
@@ -495,7 +504,11 @@
           if (random() < spawnChance) respawn(p, burst);
           continue;
         }
-        p.vy += 68 * dt;
+        p.vy += p.g * dt;
+        damp = 1 - p.drag * dt;
+        if (damp < 0) damp = 0;
+        p.vx *= damp;
+        p.vy *= damp;
         p.x += p.vx * dt;
         p.y += p.vy * dt;
       }
@@ -527,19 +540,24 @@
       for (var i = 0; i < particles.length; i++) {
         var p = particles[i];
         if (p.life >= p.ttl) continue;
-        var fade = 1 - p.life / p.ttl;
-        ctx.globalAlpha = fade * (.42 + p.hot * .58);
-        ctx.strokeStyle = p.hot > .55 ? "#ffd28a" : "#ff6b35";
+        var f = p.life / p.ttl;
+        var fade = 1 - f;
+        // 温度随燃烧衰减：白金 → 琥珀 → 橙 → 烬红，越飞越暗越红。
+        var temp = p.hot * (1 - f * .78);
+        // 临终溅闪：燃尽前亮度不再平滑衰减，而是断续地抖灭。
+        var sputter = f > .68 ? .45 + .55 * Math.abs(Math.sin(p.life * 58 + p.ph)) : 1;
+        ctx.globalAlpha = fade * sputter * (.42 + p.hot * .58);
+        ctx.strokeStyle = temp > .5 ? "#ffd28a" : temp > .26 ? "#ff8a45" : "#b33a1e";
         ctx.lineWidth = 1.25 + p.hot * 1.3;
         ctx.beginPath();
-        ctx.moveTo(p.x - p.vx * .026, p.y - p.vy * .026);
+        ctx.moveTo(p.x - p.vx * .03, p.y - p.vy * .03);
         ctx.lineTo(p.x, p.y);
         ctx.stroke();
-        ctx.globalAlpha = fade * (.62 + p.hot * .38);
-        ctx.strokeStyle = p.hot > .4 ? "#fff3c7" : "#ffa94d";
+        ctx.globalAlpha = fade * sputter * (.62 + p.hot * .38);
+        ctx.strokeStyle = temp > .38 ? "#fff3c7" : "#ffa94d";
         ctx.lineWidth = .38 + p.hot * .55;
         ctx.beginPath();
-        ctx.moveTo(p.x - p.vx * .018, p.y - p.vy * .018);
+        ctx.moveTo(p.x - p.vx * .02, p.y - p.vy * .02);
         ctx.lineTo(p.x, p.y);
         ctx.stroke();
         // 最热的分叉火星末端闪出一枚十字光斑，像镁屑烧断的一瞬。
@@ -654,8 +672,20 @@
     var frameInterval = 1000 / motionProfile.fps;
     var renderAverage = 0, slowFrames = 0, degradedThisRun = false;
     var W = 1, H = 1, dpr = 1, groundY = 1;
-    var fireOuter = null, fireInner = null, glowSprite = null;
+    var glowSprite = null;
     var impactHeadSprite = null, impactBurstSprite = null;
+    /* —— 火体：Doom-fire 式热度场 ——
+       低分辨率胞元网格：火床逐行向上传热，随机衰减 + 随机侧漂；
+       放大回屏幕（浏览器双线性平滑）就是连续舔动的火舌。
+       网格总量 < 2 万胞元、整型运算，比逐苗贝塞尔便宜一个量级，
+       而火焰的湍流质感来自算法本身，不靠手调。 */
+    var FIRE_LEVELS = 48;
+    var fireC = 0, fireR = 0, fireCell = 6, fireBandH = 0;
+    var fireHeat = null, fireSmooth = null, fireImg = null, firePix = null;
+    var fireCanvas = null, fireCtx = null;
+    var fireScaleCanvas = null, fireScaleCtx = null; // 中间 3x 放大层：两次双线性 ≈ 双三次，去掉胞元方块感
+    var firePal = null;
+    var fireAcc = 0, fireAlive = false;
     var seed = 0x7a11f17e;
     var count = 96; // 固定最大池；各画质档只遍历自己的前 N 颗，不在帧中分配对象。
     var coreCount = starView.length; // 前 9 颗是"专属"火星——每颗星只认自己那一颗
@@ -670,7 +700,8 @@
         rx: random(), ry: random(), bend: random() - .5,
         // 专属火星走收紧的节奏（错落但有序），背景火星保持自由随机——
         // 这样九星依次落位可读，飞舞的碎火星仍然像野火一样杂乱。
-        start: core ? .08 + i * .022 : .12 + random() * .31,
+        // 起飞不早于撞击点燃（FALL_END=.085）：火星只能从火里升起。
+        start: core ? .1 + i * .022 : .14 + random() * .3,
         duration: core ? .22 + (i % 3) * .03 : .34 + random() * .24,
         size: (core ? 1.1 : .6) + random() * 1.7,
         hot: core ? .78 + random() * .22 : random()
@@ -707,28 +738,42 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       groundY = H * .69;
 
-      // 渐变只在 resize 时创建；逐帧只复用 paint，避免动画中制造垃圾。
-      fireOuter = ctx.createLinearGradient(0, groundY - H * .17, 0, groundY + 4);
-      fireOuter.addColorStop(0, "rgba(179,58,30,0)");
-      fireOuter.addColorStop(.38, "rgba(179,58,30,.58)");
-      fireOuter.addColorStop(.78, "rgba(255,107,53,.82)");
-      fireOuter.addColorStop(1, "rgba(255,169,77,.94)");
-      fireInner = ctx.createLinearGradient(0, groundY - H * .11, 0, groundY + 3);
-      fireInner.addColorStop(0, "rgba(255,107,53,0)");
-      fireInner.addColorStop(.45, "rgba(255,107,53,.72)");
-      fireInner.addColorStop(.82, "rgba(255,210,138,.92)");
-      fireInner.addColorStop(1, "rgba(242,236,225,.96)");
+      // 热度场随视口重建（旋转/大改尺寸才走到这里，火在一秒内重新长起）。
+      fireCell = motionProfile.fireCell || 6;
+      fireBandH = Math.round(H * .34);
+      fireC = Math.max(12, Math.ceil(W / fireCell) + 2);
+      fireR = Math.max(12, Math.ceil(fireBandH / fireCell));
+      fireHeat = new Uint8Array(fireC * fireR);
+      fireSmooth = new Uint8Array(fireC * fireR);
+      fireCanvas = document.createElement("canvas");
+      fireCanvas.width = fireC;
+      fireCanvas.height = fireR;
+      fireCtx = fireCanvas.getContext("2d");
+      fireImg = fireCtx.createImageData(fireC, fireR);
+      firePix = new Uint32Array(fireImg.data.buffer);
+      fireScaleCanvas = document.createElement("canvas");
+      fireScaleCanvas.width = fireC * 3;
+      fireScaleCanvas.height = fireR * 3;
+      fireScaleCtx = fireScaleCanvas.getContext("2d");
+      if (!firePal) buildFirePalette();
 
+      // 径向渐变必须完整落在画布内：半径超出画布会在贴图四边留下
+      // 肉眼可见的硬直线（曾经的"半透明矩形"就是它）。先画一个
+      // 完整的软圆，再由 drawImage 的非等比拉伸压成扁椭圆。
       glowSprite = document.createElement("canvas");
       glowSprite.width = 256; glowSprite.height = 96;
       var glowCtx = glowSprite.getContext("2d");
-      var glow = glowCtx.createRadialGradient(128, 72, 0, 128, 72, 124);
+      glowCtx.save();
+      glowCtx.translate(128, 52);
+      glowCtx.scale(2.9, 1);
+      var glow = glowCtx.createRadialGradient(0, 0, 0, 0, 0, 43);
       glow.addColorStop(0, "rgba(255,210,138,.42)");
       glow.addColorStop(.3, "rgba(255,107,53,.23)");
       glow.addColorStop(.67, "rgba(179,58,30,.1)");
       glow.addColorStop(1, "rgba(179,58,30,0)");
       glowCtx.fillStyle = glow;
-      glowCtx.fillRect(0, 0, 256, 96);
+      glowCtx.fillRect(-44, -44, 88, 88);
+      glowCtx.restore();
 
       // 坠落火花与撞地闪光同属"渐变只在 resize 建、逐帧只 drawImage"纪律。
       impactHeadSprite = document.createElement("canvas");
@@ -761,61 +806,107 @@
       });
     }
 
-    function curtainPoints(now, left, right, scale, phaseOffset) {
-      var points = [];
-      var samples = motionProfile.fireSamples;
-      var width = Math.max(1, right - left);
-      for (var index = 0; index < samples; index++) {
-        var t = index / (samples - 1);
-        var edge = Math.pow(Math.sin(Math.PI * t), .42);
-        var x = left + width * t;
-        // 值噪声轮廓：一层慢涌动 + 一层快抖动 + 稀疏尖峰。
-        // 以世界坐标 x 采样（而非序号），火幕扩张时轮廓保持连贯。
-        var slow = noise1(x * .016 - now * .00082 + phaseOffset * 7.3);
-        var fast = noise1(x * .052 + now * .0014 + phaseOffset * 3.1);
-        var spike = Math.pow(noise1(x * .03 + phaseOffset * 11 - now * .0006), 5) * 38;
-        var height = (11 + slow * 26 + fast * 9 + spike) * edge * scale;
-        points.push({ x: x, y: groundY - height });
+    /* 调色板严格走宪法火焰光谱：透明烬红 → flame → amber → gold → 纸白热。
+       用 Uint8ClampedArray 铺字节再以 Uint32 视图读取，天然匹配平台端序。 */
+    function buildFirePalette() {
+      var stops = [
+        [0.00, 179, 58, 30, 0],
+        [0.13, 179, 58, 30, 58],
+        [0.36, 255, 107, 53, 148],
+        [0.60, 255, 169, 77, 205],
+        [0.81, 255, 210, 138, 235],
+        [1.00, 255, 243, 199, 252]
+      ];
+      var bytes = new Uint8ClampedArray(FIRE_LEVELS * 4);
+      for (var l = 0; l < FIRE_LEVELS; l++) {
+        var t = l / (FIRE_LEVELS - 1), a = stops[0], b = stops[stops.length - 1];
+        for (var s = 0; s < stops.length - 1; s++) {
+          if (t >= stops[s][0] && t <= stops[s + 1][0]) { a = stops[s]; b = stops[s + 1]; break; }
+        }
+        var f = (t - a[0]) / Math.max(1e-6, b[0] - a[0]);
+        bytes[l * 4]     = a[1] + (b[1] - a[1]) * f;
+        bytes[l * 4 + 1] = a[2] + (b[2] - a[2]) * f;
+        bytes[l * 4 + 2] = a[3] + (b[3] - a[3]) * f;
+        bytes[l * 4 + 3] = l === 0 ? 0 : a[4] + (b[4] - a[4]) * f;
       }
-      return points;
+      firePal = new Uint32Array(bytes.buffer);
     }
 
-    function fillCurtain(points, paint, alpha) {
-      if (!points.length || alpha <= .001) return;
-      ctx.globalAlpha = alpha;
-      ctx.fillStyle = paint;
-      ctx.beginPath();
-      ctx.moveTo(points[0].x, groundY + 4);
-      ctx.lineTo(points[0].x, points[0].y);
-      for (var i = 1; i < points.length; i++) {
-        var previous = points[i - 1];
-        var current = points[i];
-        ctx.quadraticCurveTo(previous.x, previous.y,
-          (previous.x + current.x) * .5, (previous.y + current.y) * .5);
+    /* 火床播种：只在当前火线半径内注入热量，边缘二段衰减 + 噪声呼吸，
+       火就从落点向两侧"长"出去，而不是整条同时亮起。 */
+    function fireSeedRow(now, spread, fireFade) {
+      var radC = (W * (.03 + spread * .55)) / fireCell;
+      var cx = fireC * .5;
+      var base = (fireR - 1) * fireC;
+      for (var x = 0; x < fireC; x++) {
+        var d = Math.abs(x - cx);
+        var h = 0;
+        if (d < radC && fireFade > .003) {
+          var edge = Math.pow(Math.max(0, 1 - d / Math.max(1, radC)), .5);
+          var n = .58 + noise1(x * .53 + now * .0016) * .55;
+          h = (FIRE_LEVELS - 1) * edge * fireFade * n;
+          if (h > FIRE_LEVELS - 1) h = FIRE_LEVELS - 1;
+        }
+        fireHeat[base + x] = h;
       }
-      var lastPoint = points[points.length - 1];
-      ctx.quadraticCurveTo(lastPoint.x, lastPoint.y, lastPoint.x, groundY + 4);
-      ctx.closePath();
-      ctx.fill();
     }
 
-    function drawFireFront(now, spread, fireFade) {
-      if (spread <= 0 || fireFade <= .001) return;
+    /* 热量上传一步：每个胞元从正下方取热，随机衰减 0–2 级并随机左右
+       漂移一格——湍流、火舌分叉、明暗抖动全部来自这三个随机比特。
+       cool>0 时额外衰减，火在退场段自然塌矮而不是被拉走。 */
+    function fireStep(cool) {
+      for (var y = 1; y < fireR; y++) {
+        var src = y * fireC, dst = src - fireC;
+        for (var x = 0; x < fireC; x++) {
+          var h = fireHeat[src + x];
+          if (!h) { fireHeat[dst + x] = 0; continue; }
+          seed = (seed * 1664525 + 1013904223) >>> 0;
+          var r = seed >>> 24;
+          var decay = r & 3;
+          var nx = x + ((r >> 2) % 3) - 1;
+          if (nx < 0) nx = 0; else if (nx >= fireC) nx = fireC - 1;
+          h -= decay + cool;
+          fireHeat[dst + nx] = h > 0 ? h : 0;
+        }
+      }
+    }
+
+    /* 撞击瞬间在落点浇一团白热：火不是凭空出现，是被火星砸出来的。 */
+    function fireSplash() {
+      var cx = Math.round(fireC * .5);
+      var rows = Math.min(fireR - 1, 7);
+      for (var y = 0; y <= rows; y++) {
+        var row = (fireR - 1 - y) * fireC;
+        var half = Math.max(1, Math.round(6.5 - y * .7));
+        for (var x = cx - half; x <= cx + half; x++) {
+          if (x < 0 || x >= fireC) continue;
+          seed = (seed * 1664525 + 1013904223) >>> 0;
+          fireHeat[row + x] = FIRE_LEVELS - 1 - (seed >>> 29);
+        }
+      }
+      fireAlive = true;
+    }
+
+    function drawFireFront(now, spread, fireFade, dt) {
+      if (phase < FALL_END - .012 && !fireAlive) return;
       var radius = W * (.035 + spread * .54);
       var left = W * .5 - radius;
       var right = W * .5 + radius;
 
       // 地面光晕随火线半径等比生长（勿按屏高拉伸：初期半径小时
       // 会被抻成一根带硬边的竖柱）。
-      ctx.globalAlpha = fireFade * (.35 + spread * .65);
-      ctx.globalCompositeOperation = "source-over";
-      var glowW = radius * 2.5;
-      var glowH = Math.max(40, radius * .95);
-      ctx.drawImage(glowSprite, W * .5 - glowW / 2, groundY - glowH * .72, glowW, glowH);
+      if (spread > 0 && fireFade > .001) {
+        ctx.globalAlpha = fireFade * (.35 + spread * .65);
+        ctx.globalCompositeOperation = "source-over";
+        var glowW = radius * 2.5;
+        var glowH = Math.max(40, radius * .95);
+        ctx.drawImage(glowSprite, W * .5 - glowW / 2, groundY - glowH * .72, glowW, glowH);
+      }
+      ctx.globalCompositeOperation = "lighter";
 
-      // 一圈贴地扩散的白热波：先于火幕抵达两侧，给“点燃大地”一个明确瞬间。
-      var wave = smooth(seg(phase, .055, .29));
-      var waveFade = (1 - smooth(seg(phase, .28, .5))) * fireFade;
+      // 一圈贴地扩散的白热波：先于火幕抵达两侧，给"点燃大地"一个明确瞬间。
+      var wave = smooth(seg(phase, FALL_END, .3));
+      var waveFade = (1 - smooth(seg(phase, .3, .52))) * fireFade;
       if (wave > .001 && waveFade > .001) {
         ctx.globalAlpha = waveFade * .58;
         ctx.strokeStyle = "#ffd28a";
@@ -825,81 +916,88 @@
         ctx.stroke();
       }
 
-      // 两层连续火幕是主体；二十余个采样点合并成两个 path，成本远低于逐火苗绘制。
-      fillCurtain(curtainPoints(now, left, right, 1.34, .7), fireOuter, fireFade * .76);
-      fillCurtain(curtainPoints(now, left, right, .72, 2.8), fireInner, fireFade * .78);
-
-      ctx.lineCap = "round";
-      ctx.globalAlpha = fireFade * (.42 + spread * .32);
-      ctx.strokeStyle = "#ffa94d";
-      ctx.lineWidth = .8;
-      ctx.beginPath(); ctx.moveTo(left, groundY + 1); ctx.lineTo(right, groundY + 1); ctx.stroke();
-
-      // 余烬火床：贴地忽明忽暗的炭火斑。只点亮噪声峰值处，
-      // 留出暗隙才像烧透的柴，不能糊成一条白带。
-      ctx.globalCompositeOperation = "lighter";
-      var bedSamples = motionProfile.fireSamples;
-      for (var b = 0; b < bedSamples; b++) {
-        var bt = b / (bedSamples - 1);
-        var bx = left + (right - left) * bt;
-        var glowN = noise1(bx * .05 + now * .0007);
-        if (glowN < .3) continue;
-        var bedEdge = Math.pow(Math.sin(Math.PI * bt), .6);
-        ctx.globalAlpha = fireFade * bedEdge * (.05 + (glowN - .3) * .5);
-        ctx.fillStyle = glowN > .72 ? "#ffd28a" : "#ff6b35";
-        ctx.fillRect(bx - 2.2, groundY + .5, 4.4, 2);
+      // —— 火体：固定 30Hz 推进热度场，帧率高低不改火的脾气 ——
+      fireAcc += dt;
+      var cool = fireFade > .55 ? 0 : fireFade > .18 ? 1 : 3;
+      var stepped = 0;
+      while (fireAcc >= 1 / 30 && stepped < 3) {
+        fireSeedRow(now, spread, fireFade);
+        fireStep(cool);
+        fireAcc -= 1 / 30;
+        stepped++;
+      }
+      if (stepped) {
+        // 渲染前对热度场做一遍十字核平滑（只写渲染副本，不回写模拟场：
+        // 回写会把湍流磨成层流）。逐胞元的椒盐噪声是模拟的生命力，
+        // 但直接上屏会读成马赛克——平滑只给眼睛，不给物理。
+        var anyHeat = 0, x, y, row, idx;
+        for (y = 0; y < fireR; y++) {
+          row = y * fireC;
+          for (x = 0; x < fireC; x++) {
+            idx = row + x;
+            var sum = fireHeat[idx] * 12 +
+              (x > 0 ? fireHeat[idx - 1] : 0) +
+              (x < fireC - 1 ? fireHeat[idx + 1] : 0) +
+              (y > 0 ? fireHeat[idx - fireC] : 0) +
+              (y < fireR - 1 ? fireHeat[idx + fireC] : 0);
+            fireSmooth[idx] = sum >> 4;
+          }
+        }
+        for (var i = 0; i < fireSmooth.length; i++) {
+          var lv = fireSmooth[i];
+          firePix[i] = firePal[lv];
+          anyHeat |= fireHeat[i];
+        }
+        fireAlive = !!anyHeat;
+        fireCtx.putImageData(fireImg, 0, 0);
+        // 先 3x 中转再上屏：两次双线性叠出近似双三次的柔化，
+        // 单次直接放大会在低热度边缘留下清晰的胞元方块。
+        fireScaleCtx.clearRect(0, 0, fireScaleCanvas.width, fireScaleCanvas.height);
+        fireScaleCtx.drawImage(fireCanvas, 0, 0, fireScaleCanvas.width, fireScaleCanvas.height);
+      }
+      if (fireAlive) {
+        ctx.globalAlpha = Math.min(1, .3 + spread * 3);
+        ctx.drawImage(fireScaleCanvas,
+          -fireCell, groundY + fireCell * 1.4 - fireR * fireCell,
+          fireC * fireCell, fireR * fireCell);
       }
 
-      // 稀疏的高火舌：位置、身高、摇摆全走噪声，不再排成一行"齿"。
-      var flameCount = motionProfile.flameLanes;
-      for (var f = 0; f < flameCount; f++) {
-        var laneJitter = (noise1(f * 3.17) - .5) * .62;
-        var fx = W * (f + .5 + laneJitter) / flameCount;
-        var distance = Math.abs(fx - W * .5);
-        var reach = clamp01((radius - distance) / Math.max(1, W * .12));
-        if (reach <= .02) continue;
-        var sway = (noise1(f * 7.7 + now * .0011) - .5) * 8;
-        var fh = (16 + noise1(f * 5.3) * 30) * reach * (.72 + noise1(f * 1.9 + now * .0016) * .56);
-        var rootLift = Math.sin(f * 4.3) * 4 + Math.cos(f * 1.91) * 2;
-        var flameWidth = 4.2 + noise1(f * 9.1) * 5;
-        drawFlame(fx, groundY + rootLift, fh, flameWidth, sway, fireFade * reach * .86);
+      if (fireFade > .001 && spread > 0) {
+        ctx.lineCap = "round";
+        ctx.globalAlpha = fireFade * (.4 + spread * .3);
+        ctx.strokeStyle = "#ffa94d";
+        ctx.lineWidth = .8;
+        ctx.beginPath(); ctx.moveTo(left, groundY + 1); ctx.lineTo(right, groundY + 1); ctx.stroke();
+
+        // 余烬火床：贴地忽明忽暗的炭火斑。只点亮噪声峰值处，
+        // 留出暗隙才像烧透的柴，不能糊成一条白带。
+        var bedSamples = motionProfile.fireSamples;
+        for (var b = 0; b < bedSamples; b++) {
+          var bt = b / (bedSamples - 1);
+          var bx = left + (right - left) * bt;
+          var glowN = noise1(bx * .05 + now * .0007);
+          if (glowN < .3) continue;
+          var bedEdge = Math.pow(Math.sin(Math.PI * bt), .6);
+          ctx.globalAlpha = fireFade * bedEdge * (.05 + (glowN - .3) * .5);
+          ctx.fillStyle = glowN > .72 ? "#ffd28a" : "#ff6b35";
+          ctx.fillRect(bx - 2.2, groundY + .5, 4.4, 2);
+        }
       }
     }
 
-    function drawFlame(x, y, height, width, flicker, alpha) {
-      ctx.globalAlpha = alpha * .48;
-      ctx.fillStyle = "#b33a1e";
-      ctx.beginPath();
-      ctx.moveTo(x - width, y + 2);
-      ctx.bezierCurveTo(x - width * .7, y - height * .34, x - width * .15 + flicker, y - height * .78, x, y - height);
-      ctx.bezierCurveTo(x + width * .38, y - height * .68, x + width, y - height * .2, x + width, y + 2);
-      ctx.closePath(); ctx.fill();
-      ctx.globalAlpha = alpha * .72;
-      ctx.fillStyle = "#ff6b35";
-      ctx.beginPath();
-      ctx.moveTo(x - width * .48, y + 1);
-      ctx.bezierCurveTo(x - width * .25, y - height * .3, x + flicker * .42, y - height * .62, x + width * .05, y - height * .76);
-      ctx.bezierCurveTo(x + width * .44, y - height * .4, x + width * .5, y - height * .16, x + width * .46, y + 1);
-      ctx.closePath(); ctx.fill();
-      ctx.globalAlpha = alpha * .8;
-      ctx.fillStyle = "#ffd28a";
-      ctx.beginPath();
-      ctx.moveTo(x - width * .16, y);
-      ctx.quadraticCurveTo(x - width * .08, y - height * .28, x + flicker * .18, y - height * .48);
-      ctx.quadraticCurveTo(x + width * .2, y - height * .19, x + width * .18, y);
-      ctx.closePath(); ctx.fill();
-    }
-
-    var FALL_END = .055;
+    var FALL_END = .085;
 
     /* 坠落主轨迹：纯 phase 函数（scrub 可逆、resize 免疫）。
-       从引信收笔的偏右上方入画，加速坠向地心，带一丝渐弱的横向摇摆。 */
+       引信在上一章右下收笔，火星从偏右上方入画：纵向平方加速
+       （自由落体），横向被余风缓缓推回屏心，颤动随速度增大而消失
+       ——快到看不见摆动，才有"坠"的重量。 */
     function sparkPos(t) {
-      var e = t * t * (.4 + t * .6);
-      var sway = Math.sin(t * 9.4) * W * .014 * (1 - t);
+      var e = t * t * (.36 + .64 * t);
+      var settle = 1 - t;
+      var flutter = Math.sin(t * 7.2) * W * .012 * settle * settle;
       return {
-        x: W * .64 + (W * .5 - W * .64) * smooth(t) + sway,
-        y: lerp(-H * .06, groundY, e)
+        x: W * .66 + (W * .5 - W * .66) * smooth(t) + flutter,
+        y: -H * .07 + (groundY + H * .07) * e
       };
     }
 
@@ -922,14 +1020,18 @@
     function fireBurst() {
       for (var i = 0; i < burstP.length; i++) {
         var p = burstP[i];
-        var a = -Math.PI * (.14 + random() * .72);
-        var power = 70 + random() * 190;
-        p.x = W * .5 + (random() - .5) * 8;
+        // 迸溅不是均匀半球：多数贴地低角度掠出，少数近乎竖直蹿高，
+        // 和真实溅射的角度分布一致。
+        var low = random() < .68;
+        var a = low ? -Math.PI * (.06 + random() * .3) : -Math.PI * (.36 + random() * .28);
+        if (random() < .5) a = -Math.PI - a; // 镜像到左侧
+        var power = low ? 110 + random() * 240 : 70 + random() * 150;
+        p.x = W * .5 + (random() - .5) * 10;
         p.y = groundY - random() * 3;
         p.vx = Math.cos(a) * power;
         p.vy = Math.sin(a) * power;
         p.life = 0;
-        p.ttl = .35 + random() * .45;
+        p.ttl = .3 + random() * .5;
         p.hot = .4 + random() * .6;
       }
     }
@@ -988,53 +1090,88 @@
       ctx.globalAlpha = 1;
     }
 
-    /* 坠落 → 撞击 → 点燃：先落体（拖尾余烬一路脱落），触地瞬间
-       白热闪光 + 贴地冲击环 + 一轮迸溅，火幕随后才从落点生长。 */
+    /* 坠落 → 撞击 → 点燃：燃屑翻滚着加速落体，拖出三段递暗的速度
+       残影、一路脱落微火星；触地瞬间白热闪光 + 竖直光柱 + 双冲击环
+       + 一轮迸溅，同时向热度场浇入白热——火是被砸出来的。 */
     function drawFallingSpark(now, dt) {
       if (phase < FALL_END * .5) burstFired = false;
-      if (phase >= FALL_END + .07) return;
+      if (phase >= FALL_END + .11) return;
       var t = clamp01(phase / FALL_END);
 
       if (t > 0 && t < 1) {
         var p = sparkPos(t);
-        var q = sparkPos(Math.max(0, t - .05));
-        spawnTrail(p.x, p.y, dt);
+        spawnTrail(p.x, p.y, dt * (.6 + t * 1.2));
 
-        // 速度方向上的长残影：近头白热、远端烬红
-        var streak = ctx.createLinearGradient(q.x, q.y, p.x, p.y);
-        streak.addColorStop(0, "rgba(179,58,30,0)");
-        streak.addColorStop(.55, "rgba(255,169,77,.5)");
-        streak.addColorStop(1, "rgba(255,248,226,.95)");
-        ctx.globalAlpha = .9;
-        ctx.strokeStyle = streak;
+        // 三段递暗残影：越旧的段越细越暗，速度被画成一条渐隐的尾
         ctx.lineCap = "round";
-        ctx.lineWidth = 2 + t * 1.6;
-        ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+        for (var k = 2; k >= 0; k--) {
+          var tb = t - .017 * k;
+          var ta = t - .017 * (k + 1);
+          if (tb <= 0) continue;
+          if (ta < 0) ta = 0;
+          var a1 = sparkPos(ta), b1 = sparkPos(tb);
+          var streak = ctx.createLinearGradient(a1.x, a1.y, b1.x, b1.y);
+          streak.addColorStop(0, "rgba(179,58,30,0)");
+          streak.addColorStop(1, k === 0 ? "rgba(255,248,226,.95)" :
+            k === 1 ? "rgba(255,169,77,.5)" : "rgba(255,107,53,.22)");
+          ctx.globalAlpha = .92 - k * .28;
+          ctx.strokeStyle = streak;
+          ctx.lineWidth = (2.2 + t * 2) * (1 - k * .26);
+          ctx.beginPath(); ctx.moveTo(a1.x, a1.y); ctx.lineTo(b1.x, b1.y); ctx.stroke();
+        }
 
-        var headSize = 20 + t * 10 + Math.sin(now / 53) * 2.5;
-        ctx.globalAlpha = 1;
+        // 翻滚的燃屑：白热主核 + 绕核旋转的碎亮片——坠落有了自转轴，
+        // 亮度随速度攀升（压缩空气加热的错觉）。
+        var headSize = (16 + t * 15) * (1 + Math.sin(now / 53) * .08);
+        ctx.globalAlpha = .82 + t * .18;
         ctx.drawImage(impactHeadSprite, p.x - headSize / 2, p.y - headSize / 2, headSize, headSize);
+        var tumble = t * 24;
+        var ox = Math.cos(tumble) * 3.4 * (1 - t * .55);
+        var oy = Math.sin(tumble) * 2.4;
+        ctx.fillStyle = "#fff3c7";
+        ctx.globalAlpha = .85;
+        ctx.beginPath(); ctx.arc(p.x + ox, p.y + oy, 1.4 + t * 1.1, 0, 6.2832); ctx.fill();
+        ctx.fillStyle = "#ffd28a";
+        ctx.globalAlpha = .55;
+        ctx.beginPath(); ctx.arc(p.x - ox * .7, p.y - oy * .7, 1 + t * .8, 0, 6.2832); ctx.fill();
       }
 
-      if (phase >= FALL_END && !burstFired) { burstFired = true; fireBurst(); }
+      if (phase >= FALL_END && !burstFired) { burstFired = true; fireBurst(); fireSplash(); }
 
-      var flashRise = smooth(seg(phase, FALL_END - .006, FALL_END + .008));
-      var flashFall = 1 - smooth(seg(phase, FALL_END + .008, FALL_END + .055));
+      // 撞击白闪：快起慢收；同时一根短命的竖直光柱把能量"立"起来
+      var flashRise = smooth(seg(phase, FALL_END - .005, FALL_END + .009));
+      var flashFall = 1 - smooth(seg(phase, FALL_END + .009, FALL_END + .06));
       var flashAlpha = flashRise * flashFall;
       if (flashAlpha > .01) {
-        var burstSize = W * .2;
+        var burstSize = W * .24;
         ctx.globalAlpha = flashAlpha;
         ctx.drawImage(impactBurstSprite, W * .5 - burstSize / 2, groundY - burstSize / 2, burstSize, burstSize);
+        // 光柱用径向 sprite 竖向拉伸：四周自带柔边，不能用硬边矩形
+        var beamH = H * .3, beamW = W * .085;
+        ctx.globalAlpha = flashAlpha * .55;
+        ctx.drawImage(impactHeadSprite,
+          W * .5 - beamW / 2, groundY - beamH * .82, beamW, beamH);
       }
 
-      var ringT = seg(phase, FALL_END, FALL_END + .06);
+      // 双冲击环：快环亮而窄，慢环暗而宽，贴地展开
+      var ringT = seg(phase, FALL_END, FALL_END + .05);
       if (ringT > 0 && ringT < 1) {
-        var rx = W * .02 + smooth(ringT) * W * .17;
-        ctx.globalAlpha = (1 - ringT) * .6;
+        var rx = W * .02 + smooth(ringT) * W * .18;
+        ctx.globalAlpha = (1 - ringT) * .65;
         ctx.strokeStyle = "#ffd28a";
-        ctx.lineWidth = 1.4 - ringT;
+        ctx.lineWidth = 1.6 - ringT;
         ctx.beginPath();
-        ctx.ellipse(W * .5, groundY + 1, rx, rx * .17, 0, 0, 6.2832);
+        ctx.ellipse(W * .5, groundY + 1, rx, rx * .16, 0, 0, 6.2832);
+        ctx.stroke();
+      }
+      var ring2 = seg(phase, FALL_END + .012, FALL_END + .1);
+      if (ring2 > 0 && ring2 < 1) {
+        var rx2 = W * .03 + smooth(ring2) * W * .13;
+        ctx.globalAlpha = (1 - ring2) * .3;
+        ctx.strokeStyle = "#ff8a45";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.ellipse(W * .5, groundY + 1.5, rx2, rx2 * .14, 0, 0, 6.2832);
         ctx.stroke();
       }
       ctx.globalAlpha = 1;
@@ -1049,11 +1186,11 @@
       ctx.globalCompositeOperation = "lighter";
 
       drawFallingSpark(now, dt);
-      if (phase < .3) { stepPools(dt); drawPools(); }
+      if (phase < .34) { stepPools(dt); drawPools(); }
 
-      var spread = smooth(seg(phase, .06, .40));
-      var fireFade = 1 - smooth(seg(phase, .48, .76));
-      drawFireFront(now, spread, fireFade);
+      var spread = smooth(seg(phase, FALL_END, .43));
+      var fireFade = 1 - smooth(seg(phase, .5, .78));
+      drawFireFront(now, spread, fireFade, dt);
 
       var settleFade = 1 - smooth(seg(phase, .86, .98));
       var activeParticles = Math.min(particles.length, motionProfile.wildfireParticles);
@@ -1063,7 +1200,7 @@
         if (raw <= 0 || settleFade <= 0) continue;
         var t = smooth(raw);
         var target = targets[index % targets.length] || { x: W * .5, y: H * .25 };
-        var sourceSpread = smooth(seg(particle.start, .08, .43));
+        var sourceSpread = smooth(seg(particle.start, .1, .45));
         var sx = W * .5 + (particle.rx - .5) * W * (.22 + sourceSpread * .72);
         var sy = groundY + (particle.ry - .5) * 12;
         var arc = Math.sin(Math.PI * t) * H * (.14 + particle.ry * .18);
@@ -1120,7 +1257,14 @@
           renderAverage = 0; slowFrames = 0; degradedThisRun = false;
           raf = requestAnimationFrame(loop);
         }
-        else { cancelAnimationFrame(raf); ctx.clearRect(0, 0, W, H); }
+        else {
+          cancelAnimationFrame(raf);
+          ctx.clearRect(0, 0, W, H);
+          // 离屏即停也即冷：热度场清零，回到本幕时火从落点重新长起
+          if (fireHeat) fireHeat.fill(0);
+          fireAlive = false;
+          fireAcc = 0;
+        }
       },
       resize: function () { resize(); draw(performance.now()); }
     };
@@ -1207,18 +1351,26 @@
 
     var storyRect = story.getBoundingClientRect();
     var storyTop = storyRect.top + window.scrollY;
+    // 未揭示元素带着 .fx 的 translateY(24–30px) 预位移被测量，会让灯芯
+    // 目标点系统性偏低——火花头因此"擦过"灯芯下方。测量时扣掉当前
+    // y 位移，得到揭示完成（y=0）后的真实落点。
+    function settledLift(el) {
+      var y = parseFloat(gsap.getProperty(el, "y"));
+      return isNaN(y) ? 0 : y;
+    }
     var targets = [];
     var minorIndex = 0;
     document.querySelectorAll("[data-ignite]").forEach(function (el) {
       var dot = el.querySelector(".hero-dot");
       var rect = (dot || el).getBoundingClientRect();
+      var lift = settledLift(el);
       var isMinor = el.matches(".rest-lamps li");
       var minorFont = isMinor ? parseFloat(getComputedStyle(el).fontSize) : 0;
       targets.push({
         el: el,
         x: isMinor ? rect.left - 8.5 - storyRect.left : rect.left + rect.width / 2 - storyRect.left,
-        y: isMinor ? rect.top + minorFont * 1.08 + 2.5 + window.scrollY - storyTop :
-          rect.top + rect.height / 2 + window.scrollY - storyTop,
+        y: isMinor ? rect.top + minorFont * 1.08 + 2.5 - lift + window.scrollY - storyTop :
+          rect.top + rect.height / 2 - lift + window.scrollY - storyTop,
         minor: isMinor,
         order: isMinor ? minorIndex++ : -1,
         progress: 1
@@ -1232,7 +1384,7 @@
       var rect = line.getBoundingClientRect();
       anchors.push({
         x: storyW * (index % 2 === 0 ? 0.84 : 0.16),
-        y: rect.top + rect.height * 0.52 + window.scrollY - storyTop
+        y: rect.top + rect.height * 0.52 - settledLift(line) + window.scrollY - storyTop
       });
     });
     targets.forEach(function (target, index) {
