@@ -1024,6 +1024,66 @@ a:focus-visible {
   }
 }
 
+/* ------------------------------------------------------------
+   桌面补全层 —— 仅 ≥1024px（且非横屏矮视口）生效。
+   手机与平板竖屏规则零改动；叙事纪律不变（黑屋、单光源、
+   scroll 唯一输入），桌面只是把同一幕布撑到相称的尺度。
+   min-height 门槛与 760 档一致：横屏手机永远走手机布局。
+   ------------------------------------------------------------ */
+@media (min-width: 1024px) and (min-height: 501px) {
+  /* 主叙事列从手机柱拓成桌面卷轴；引信路径按新几何自动重建 */
+  #story { max-width: 920px; }
+
+  .hero-lamps { gap: clamp(22px, 2.2vw, 30px); }
+
+  .rest-label { margin-bottom: 3vh; }
+  .rest-lamps li {
+    font-size: 15.5px;
+    line-height: 2.05;
+    padding-top: .3em;
+    padding-bottom: .3em;
+  }
+
+  /* 联系方式在桌面横排一行，余烬居中构图更稳 */
+  .reach { flex-direction: row; justify-content: center; gap: 52px; }
+
+  /* 星图撑到桌面尺度（SVG 等比，星名随之放大） */
+  #dipper { width: min(58vw, 640px); }
+
+  /* 滚动条融进黑屋（仅桌面有常驻滚动条） */
+  html { scrollbar-color: #2e261c #0d0b09; scrollbar-width: thin; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #0d0b09; }
+  ::-webkit-scrollbar-thumb {
+    background: #2a2019;
+    border-radius: 5px;
+    border: 2px solid #0d0b09;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #4a3a28; }
+}
+
+/* 大桌面（27"+）：字阶整体上一档，画幅同步加宽 */
+@media (min-width: 1680px) and (min-height: 501px) {
+  :root {
+    --type-whisper: 28px;
+    --type-hero-name: 168px;
+    --type-latin: 23px;
+    --type-tagline: 20px;
+    --type-echo: 16px;
+    --type-about: 40px;
+    --type-section: 60px;
+    --type-sub: 19px;
+    --type-card-title: 32px;
+    --type-card-body: 16px;
+    --type-meta: 15.5px;
+    --type-sky: 38px;
+    --type-keep: 44px;
+  }
+  #story { max-width: 1010px; }
+  #dipper { width: min(50vw, 720px); }
+  .rest-lamps li { font-size: 16px; }
+}
+
 /* 打印：给一个体面的静态版本 */
 @media print {
   body { background: #fff; color: #111; }
