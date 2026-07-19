@@ -244,11 +244,16 @@ a:focus-visible {
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
+  /* WebKit 出血区：background-clip:text 的填充只画在 border box 以内，
+     文楷「可/斯」的右侧钩笔墨水越出 em 框 → iPhone 上右缘被齐边裁掉
+     （Blink 照画溢出墨水，安卓因此正常）。左右各 .1em、上下各 .05em
+     的 padding 把可绘制区扩到墨水之外，等量负 margin 抵消布局影响。 */
+  padding: .05em .1em;
+  margin: -.05em -.1em;
   /* 光影物理：唯一光源是驻停在名字右侧中段的火柴。
      受光全部交给填充渐变本身（右缘最亮、向左衰减入暗）。
-     span 自身一律不带 text-shadow —— 影子与暖晕全部在
-     .calligraphy-lockup::after 底稿层（见上），字形层保持纯净，
-     右缘不可能再被任何投影/光晕盖住。 */
+     span 自身一律不带 text-shadow —— 影子与暖晕全部在 h1::before
+     底稿层（见上），字形层保持纯净，右缘不可能再被任何投影盖住。 */
   transform-origin: 52% 54%;
 }
 
