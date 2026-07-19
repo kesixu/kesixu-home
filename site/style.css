@@ -178,10 +178,10 @@ a:focus-visible {
   isolation: isolate;
   overflow: visible;
   /* WebKit 不把 vertical-rl 子元素的横向行盒计入父级 intrinsic width。
-     显式留出 1.06em 行盒 + 四周 0.06em 墨迹/阴影出血区，避免 iOS 合成层裁笔。 */
+     显式留出 1.16em 行盒 + 四周 0.11em 墨迹/阴影出血区，避免 iOS 合成层裁笔。 */
   font-size: var(--type-hero-name);
-  width: 1.18em;
-  padding: .06em;
+  width: 1.38em;
+  padding: .11em;
 }
 
 .calligraphy-lockup::before {
@@ -221,10 +221,14 @@ a:focus-visible {
       #a58b6a 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  filter:
-    drop-shadow(0 1px 0 rgba(255, 248, 226, .13))
-    drop-shadow(0 0 13px rgba(255, 169, 77, .2))
-    drop-shadow(10px 18px 20px rgba(0, 0, 0, .52));
+  /* text-shadow 而非 filter:drop-shadow —— 后者在 WebKit 里对
+     background-clip:text + transform 元素会新建合成层，真机上
+     偶发把阴影甚至字形本身裁在图层边界内；text-shadow 不建层，
+     老 WeKit / 微信 X5 也稳定支持。 */
+  text-shadow:
+    0 1px 0 rgba(255, 248, 226, .13),
+    0 0 13px rgba(255, 169, 77, .2),
+    10px 18px 20px rgba(0, 0, 0, .52);
   transform-origin: 52% 54%;
 }
 
