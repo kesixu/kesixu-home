@@ -14,7 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="canonical" href="https://kesixu.com/">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/wenkai-subset.woff2?v=18" crossorigin>
-<link rel="stylesheet" href="/style.css?v=28">
+<link rel="stylesheet" href="/style.css?v=29">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"徐可斯","alternateName":"Kesi Xu","url":"https://kesixu.com/","sameAs":["https://github.com/kesixu"]}
 </script>
@@ -27,9 +27,27 @@
   <p class="whisper" id="whisper">长夜未央，<em class="echo">先取一根火柴</em></p>
   <div class="hero-name" id="heroName">
     <div class="calligraphy-lockup">
-      <!-- 双层结构：span=变换/动画载体，i=渐变填充载体。真机 iOS 上
-           background-clip:text 与 transform 同元素会被合成层裁字，必须分离 -->
-      <h1 lang="zh-CN" aria-label="徐可斯"><span data-char="徐" aria-hidden="true"><i>徐</i></span><span data-char="可" aria-hidden="true"><i>可</i></span><span data-char="斯" aria-hidden="true"><i>斯</i></span></h1>
+      <!-- 字形渲染走 SVG 渐变填充（万内核一致，真机 iOS 对
+           background-clip:text 的合成层裁字从机制上不存在）。
+           span 内保留透明真实字符撑排版/影子底稿/动画，SVG 只负责上色。 -->
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+        <linearGradient id="nameGradXu" x1="6%" y1="27%" x2="94%" y2="74%">
+          <stop offset="0" stop-color="#5f594e"/><stop offset=".3" stop-color="#978d7a"/>
+          <stop offset=".58" stop-color="#d8cfbd"/><stop offset=".84" stop-color="#f0dfc0"/>
+          <stop offset="1" stop-color="#ffe4b4"/>
+        </linearGradient>
+        <linearGradient id="nameGradKe" x1="2%" y1="48%" x2="98%" y2="52%">
+          <stop offset="0" stop-color="#6b6457"/><stop offset=".26" stop-color="#b0a58e"/>
+          <stop offset=".52" stop-color="#f2ece1"/><stop offset=".8" stop-color="#ffe0ab"/>
+          <stop offset="1" stop-color="#fff1d3"/>
+        </linearGradient>
+        <linearGradient id="nameGradSi" x1="9%" y1="70%" x2="91%" y2="30%">
+          <stop offset="0" stop-color="#625c50"/><stop offset=".3" stop-color="#a29883"/>
+          <stop offset=".58" stop-color="#e2d8c4"/><stop offset=".84" stop-color="#f6ddae"/>
+          <stop offset="1" stop-color="#ffe9c2"/>
+        </linearGradient>
+      </defs></svg>
+      <h1 lang="zh-CN" aria-label="徐可斯"><span data-char="徐" aria-hidden="true">徐<svg class="glyph-fill" viewBox="0 0 100 100"><text x="50" y="50" fill="url(#nameGradXu)">徐</text></svg></span><span data-char="可" aria-hidden="true">可<svg class="glyph-fill" viewBox="0 0 100 100"><text x="50" y="50" fill="url(#nameGradKe)">可</text></svg></span><span data-char="斯" aria-hidden="true">斯<svg class="glyph-fill" viewBox="0 0 100 100"><text x="50" y="50" fill="url(#nameGradSi)">斯</text></svg></span></h1>
     </div>
     <p class="latin" lang="en">Kesi&nbsp;Xu</p>
     <p class="tagline">格物于毫厘，点灯于长夜</p>
