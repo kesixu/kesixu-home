@@ -14,7 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="canonical" href="https://kesixu.com/">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/wenkai-subset.woff2?v=18" crossorigin>
-<link rel="stylesheet" href="/style.css?v=27">
+<link rel="stylesheet" href="/style.css?v=28">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"徐可斯","alternateName":"Kesi Xu","url":"https://kesixu.com/","sameAs":["https://github.com/kesixu"]}
 </script>
@@ -27,7 +27,9 @@
   <p class="whisper" id="whisper">长夜未央，<em class="echo">先取一根火柴</em></p>
   <div class="hero-name" id="heroName">
     <div class="calligraphy-lockup">
-      <h1 lang="zh-CN" aria-label="徐可斯"><span data-char="徐" aria-hidden="true">徐</span><span data-char="可" aria-hidden="true">可</span><span data-char="斯" aria-hidden="true">斯</span></h1>
+      <!-- 双层结构：span=变换/动画载体，i=渐变填充载体。真机 iOS 上
+           background-clip:text 与 transform 同元素会被合成层裁字，必须分离 -->
+      <h1 lang="zh-CN" aria-label="徐可斯"><span data-char="徐" aria-hidden="true"><i>徐</i></span><span data-char="可" aria-hidden="true"><i>可</i></span><span data-char="斯" aria-hidden="true"><i>斯</i></span></h1>
     </div>
     <p class="latin" lang="en">Kesi&nbsp;Xu</p>
     <p class="tagline">格物于毫厘，点灯于长夜</p>

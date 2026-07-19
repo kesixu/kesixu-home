@@ -237,50 +237,55 @@ a:focus-visible {
     -7px 7px 26px rgba(0, 0, 0, .2);
 }
 
+/* 双层分工（真机 iOS 关键）：
+   span —— 只做书法微变换 + GSAP 滚动动画的载体，自身不带任何
+           background-clip:text。真机 WebKit 会给带 transform/动画的
+           元素建合成层，若该元素同时是 clip:text 填充载体，层栅格化
+           会按盒边把字形填充裁掉（安卓 Blink 无此行为）。
+   i    —— 只做渐变填充载体，永不被变换，CoreText 走普通文本栅格化。
+           出血 padding + 等量负 margin：把可绘制区扩到钩笔墨水之外。
+   光影物理：唯一光源是名字右侧的火柴，受光交给填充渐变（右缘最亮）；
+   影子与暖晕全部在 h1::before 底稿层，字形层永不被投影覆盖。 */
 .hero-name h1 span {
   position: relative;
   display: inline-block;
+  transform-origin: 52% 54%;
+}
+.hero-name h1 span i {
+  display: inline-block;
+  font-style: normal;
   color: transparent;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  /* WebKit 出血区：background-clip:text 的填充只画在 border box 以内，
-     文楷「可/斯」的右侧钩笔墨水越出 em 框 → iPhone 上右缘被齐边裁掉
-     （Blink 照画溢出墨水，安卓因此正常）。左右各 .1em、上下各 .05em
-     的 padding 把可绘制区扩到墨水之外，等量负 margin 抵消布局影响。 */
-  padding: .05em .1em;
-  margin: -.05em -.1em;
-  /* 光影物理：唯一光源是驻停在名字右侧中段的火柴。
-     受光全部交给填充渐变本身（右缘最亮、向左衰减入暗）。
-     span 自身一律不带 text-shadow —— 影子与暖晕全部在 h1::before
-     底稿层（见上），字形层保持纯净，右缘不可能再被任何投影盖住。 */
-  transform-origin: 52% 54%;
+  padding: .05em .12em;
+  margin: -.05em -.12em;
 }
 
 /* 火焰驻位在名字右侧中段：「可」正对火，受光最强、投影最短最实；
    「徐」在火上方——光从右下来，影子投向左上；
    「斯」在火下方——光从右上来，影子投向左下。
    三个投影呈放射状背向同一点，光源才可信。 */
-.hero-name h1 span:nth-child(1) {
+.hero-name h1 span:nth-child(1) { transform: translateX(-2px) rotate(.7deg) scale(1.015); }
+.hero-name h1 span:nth-child(2) { transform: translateX(2px) rotate(-.9deg) scale(.985); }
+.hero-name h1 span:nth-child(3) { transform: translateX(-1px) rotate(.45deg) scale(1.025); }
+.hero-name h1 span:nth-child(1) i {
   background: linear-gradient(118deg,
     #5f594e 0%, #978d7a 30%, #d8cfbd 58%, #f0dfc0 84%, #ffe4b4 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  transform: translateX(-2px) rotate(.7deg) scale(1.015);
 }
-.hero-name h1 span:nth-child(2) {
+.hero-name h1 span:nth-child(2) i {
   background: linear-gradient(92deg,
     #6b6457 0%, #b0a58e 26%, var(--paper) 52%, #ffe0ab 80%, #fff1d3 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  transform: translateX(2px) rotate(-.9deg) scale(.985);
 }
-.hero-name h1 span:nth-child(3) {
+.hero-name h1 span:nth-child(3) i {
   background: linear-gradient(66deg,
     #625c50 0%, #a29883 30%, #e2d8c4 58%, #f6ddae 84%, #ffe9c2 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  transform: translateX(-1px) rotate(.45deg) scale(1.025);
 }
 
 /* 横屏矮视口：竖排列装不下会折列倒序（斯可徐），改横排是叙事成立的降级 */
