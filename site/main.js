@@ -472,14 +472,18 @@
     function respawn(p, force) {
       var back = angle + Math.PI;
       var spread = (random() - 0.5) * 1.5;
+      // 分叉火星：少数以更大初速、更短寿命弹出，落点更散——
+      // 真实火花不是均匀喷雾，而是几缕突然蹿出的亮线。
+      p.fork = random() < .18;
       var power = 20 + random() * (42 + velocity * 80 + force * 45);
+      if (p.fork) power *= 1.6;
       p.x = center + (random() - 0.5) * 4;
       p.y = center + (random() - 0.5) * 4;
       p.vx = Math.cos(back + spread) * power + (random() - 0.5) * 18;
       p.vy = Math.sin(back + spread) * power - 14 - random() * 28;
       p.life = 0;
-      p.ttl = .22 + random() * .42;
-      p.hot = random();
+      p.ttl = (p.fork ? .16 : .22) + random() * .42;
+      p.hot = p.fork ? .7 + random() * .3 : random();
     }
 
     function update(dt) {
@@ -491,7 +495,7 @@
           if (random() < spawnChance) respawn(p, burst);
           continue;
         }
-        p.vy += 52 * dt;
+        p.vy += 68 * dt;
         p.x += p.vx * dt;
         p.y += p.vy * dt;
       }
@@ -538,10 +542,22 @@
         ctx.moveTo(p.x - p.vx * .018, p.y - p.vy * .018);
         ctx.lineTo(p.x, p.y);
         ctx.stroke();
+        // 最热的分叉火星末端闪出一枚十字光斑，像镁屑烧断的一瞬。
+        if (p.fork && p.hot > .82 && fade > .3) {
+          ctx.globalAlpha = fade * .9;
+          ctx.strokeStyle = "#fff3c7";
+          ctx.lineWidth = .5;
+          ctx.beginPath();
+          ctx.moveTo(p.x - 2.6, p.y); ctx.lineTo(p.x + 2.6, p.y);
+          ctx.moveTo(p.x, p.y - 2.6); ctx.lineTo(p.x, p.y + 2.6);
+          ctx.stroke();
+        }
       }
 
+      // 光晕与火舌全部严格以画布中心为轴——头部必须精确压在引信曲线上，
+      // 此前渐变圆心的手工偏移会让火花看起来脱线。
       var flicker = 1 + Math.sin(now / 47) * .09 + Math.sin(now / 83) * .06;
-      var outer = ctx.createRadialGradient(center - 2, center + 2, 1, center, center, 34 * flicker);
+      var outer = ctx.createRadialGradient(center, center, 1, center, center, 34 * flicker);
       outer.addColorStop(0, "rgba(255,210,138,.55)");
       outer.addColorStop(.24, "rgba(255,169,77,.28)");
       outer.addColorStop(.58, "rgba(255,107,53,.09)");
@@ -550,7 +566,7 @@
       ctx.fillStyle = outer;
       ctx.fillRect(center - 38, center - 38, 76, 76);
 
-      var halo = ctx.createRadialGradient(center - 1, center, 0, center, center, 19 * flicker);
+      var halo = ctx.createRadialGradient(center, center, 0, center, center, 19 * flicker);
       halo.addColorStop(0, "rgba(255,248,226,.98)");
       halo.addColorStop(.16, "rgba(255,210,138,.82)");
       halo.addColorStop(.46, "rgba(255,107,53,.29)");
@@ -559,35 +575,35 @@
       ctx.fillStyle = halo;
       ctx.fillRect(center - 23, center - 23, 46, 46);
 
-      // 非对称白热火舌，朝行进方向的反向轻轻拖曳。
+      // 白热火舌沿行进反方向拖曳；左右镜像对称，尖端锁在轴线上。
       ctx.translate(center, center);
       ctx.rotate(angle - Math.PI / 2);
       ctx.globalAlpha = .72;
       ctx.fillStyle = "#b33a1e";
       ctx.beginPath();
       ctx.moveTo(0, 9);
-      ctx.bezierCurveTo(-8, 3, -7 * flicker, -11, -1, -19 * flicker);
-      ctx.bezierCurveTo(3, -13, 9, 1, 0, 9);
+      ctx.bezierCurveTo(-7, 3, -6 * flicker, -11, 0, -19 * flicker);
+      ctx.bezierCurveTo(6 * flicker, -11, 7, 3, 0, 9);
       ctx.fill();
       ctx.globalAlpha = .98;
       ctx.fillStyle = "#ff6b35";
       ctx.beginPath();
       ctx.moveTo(0, 7);
-      ctx.bezierCurveTo(-6, 2, -5 * flicker, -9, -1, -15 * flicker);
-      ctx.bezierCurveTo(2, -10, 7, 0, 0, 7);
+      ctx.bezierCurveTo(-5, 2, -4.5 * flicker, -9, 0, -15 * flicker);
+      ctx.bezierCurveTo(4.5 * flicker, -9, 5, 2, 0, 7);
       ctx.fill();
       ctx.fillStyle = "#ffd28a";
       ctx.beginPath();
       ctx.moveTo(0, 5);
-      ctx.bezierCurveTo(-3, 1, -2.5, -6, 0, -10 * flicker);
-      ctx.bezierCurveTo(2.4, -5, 3.5, 1, 0, 5);
+      ctx.bezierCurveTo(-2.8, 1, -2.4, -6, 0, -10 * flicker);
+      ctx.bezierCurveTo(2.4, -6, 2.8, 1, 0, 5);
       ctx.fill();
       ctx.globalAlpha = .92;
       ctx.fillStyle = "#fff3c7";
       ctx.beginPath();
       ctx.moveTo(0, 3.8);
-      ctx.bezierCurveTo(-1.4, .5, -1.1, -3.5, .2, -6.2 * flicker);
-      ctx.bezierCurveTo(1.4, -2.8, 1.7, .8, 0, 3.8);
+      ctx.bezierCurveTo(-1.3, .5, -1, -3.5, 0, -6.2 * flicker);
+      ctx.bezierCurveTo(1, -3.5, 1.3, .5, 0, 3.8);
       ctx.fill();
       ctx.restore();
     }
@@ -662,6 +678,20 @@
     }
     // 每颗专属火星的落位进度，供 DOM 侧同步对应那颗星的淡入时机。
     var starArrival = particles.slice(0, coreCount).map(function (p) { return p.start + p.duration; });
+
+    /* 一维值噪声：火幕轮廓、火床明暗、火舌摇摆的唯一随机源。
+       确定性纯函数，帧内零分配。 */
+    function hash1(n) { var s = Math.sin(n * 127.1) * 43758.5453; return s - Math.floor(s); }
+    function noise1(x) {
+      var i = Math.floor(x), f = x - i, u = f * f * (3 - 2 * f);
+      return hash1(i) + (hash1(i + 1) - hash1(i)) * u;
+    }
+
+    /* 坠落拖尾与撞击迸溅的两个小粒子池（复用对象，帧内零分配）。 */
+    var trailP = [], burstP = [];
+    for (var ti = 0; ti < 26; ti++) trailP.push({ x: 0, y: 0, vx: 0, vy: 0, life: 9, ttl: 1, hot: 0 });
+    for (var bi = 0; bi < 22; bi++) burstP.push({ x: 0, y: 0, vx: 0, vy: 0, life: 9, ttl: 1, hot: 0 });
+    var lastNow = 0, burstFired = false, trailAcc = 0;
 
     function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
     function seg(v, a, b) { return clamp01((v - a) / (b - a)); }
@@ -738,12 +768,14 @@
       for (var index = 0; index < samples; index++) {
         var t = index / (samples - 1);
         var edge = Math.pow(Math.sin(Math.PI * t), .42);
-        var wave = Math.sin(now / 127 + index * 1.71 + phaseOffset) * .5 +
-          Math.sin(now / 71 - index * 2.37 + phaseOffset * .7) * .3 +
-          Math.sin(index * 5.13 + phaseOffset) * .2;
-        var spike = Math.pow(Math.max(0, Math.sin(index * 2.91 + phaseOffset * 1.3)), 5) * 22;
-        var height = (15 + (wave + 1) * 13 + spike) * edge * scale;
-        points.push({ x: left + width * t, y: groundY - height });
+        var x = left + width * t;
+        // 值噪声轮廓：一层慢涌动 + 一层快抖动 + 稀疏尖峰。
+        // 以世界坐标 x 采样（而非序号），火幕扩张时轮廓保持连贯。
+        var slow = noise1(x * .016 - now * .00082 + phaseOffset * 7.3);
+        var fast = noise1(x * .052 + now * .0014 + phaseOffset * 3.1);
+        var spike = Math.pow(noise1(x * .03 + phaseOffset * 11 - now * .0006), 5) * 38;
+        var height = (11 + slow * 26 + fast * 9 + spike) * edge * scale;
+        points.push({ x: x, y: groundY - height });
       }
       return points;
     }
@@ -773,10 +805,13 @@
       var left = W * .5 - radius;
       var right = W * .5 + radius;
 
-      ctx.globalAlpha = fireFade;
+      // 地面光晕随火线半径等比生长（勿按屏高拉伸：初期半径小时
+      // 会被抻成一根带硬边的竖柱）。
+      ctx.globalAlpha = fireFade * (.35 + spread * .65);
       ctx.globalCompositeOperation = "source-over";
-      ctx.drawImage(glowSprite, left - radius * .13, groundY - H * .13,
-        radius * 2.26, H * .22);
+      var glowW = radius * 2.5;
+      var glowH = Math.max(40, radius * .95);
+      ctx.drawImage(glowSprite, W * .5 - glowW / 2, groundY - glowH * .72, glowW, glowH);
 
       // 一圈贴地扩散的白热波：先于火幕抵达两侧，给“点燃大地”一个明确瞬间。
       var wave = smooth(seg(phase, .055, .29));
@@ -799,25 +834,35 @@
       ctx.strokeStyle = "#ffa94d";
       ctx.lineWidth = .8;
       ctx.beginPath(); ctx.moveTo(left, groundY + 1); ctx.lineTo(right, groundY + 1); ctx.stroke();
-      ctx.globalAlpha = fireFade * .22;
-      ctx.strokeStyle = "#ffd28a";
-      ctx.lineWidth = 2.4;
-      ctx.beginPath(); ctx.moveTo(left + radius * .08, groundY + 2); ctx.lineTo(right - radius * .08, groundY + 2); ctx.stroke();
 
-      // 稀疏的高火舌只负责节奏与剪影，不再排成一行“齿”。
+      // 余烬火床：贴地忽明忽暗的炭火斑。只点亮噪声峰值处，
+      // 留出暗隙才像烧透的柴，不能糊成一条白带。
       ctx.globalCompositeOperation = "lighter";
+      var bedSamples = motionProfile.fireSamples;
+      for (var b = 0; b < bedSamples; b++) {
+        var bt = b / (bedSamples - 1);
+        var bx = left + (right - left) * bt;
+        var glowN = noise1(bx * .05 + now * .0007);
+        if (glowN < .3) continue;
+        var bedEdge = Math.pow(Math.sin(Math.PI * bt), .6);
+        ctx.globalAlpha = fireFade * bedEdge * (.05 + (glowN - .3) * .5);
+        ctx.fillStyle = glowN > .72 ? "#ffd28a" : "#ff6b35";
+        ctx.fillRect(bx - 2.2, groundY + .5, 4.4, 2);
+      }
+
+      // 稀疏的高火舌：位置、身高、摇摆全走噪声，不再排成一行"齿"。
       var flameCount = motionProfile.flameLanes;
       for (var f = 0; f < flameCount; f++) {
-        var laneJitter = Math.sin((f + 1) * 12.9898) * .31;
+        var laneJitter = (noise1(f * 3.17) - .5) * .62;
         var fx = W * (f + .5 + laneJitter) / flameCount;
         var distance = Math.abs(fx - W * .5);
         var reach = clamp01((radius - distance) / Math.max(1, W * .12));
         if (reach <= .02) continue;
-        var noise = Math.sin(now / 74 + f * 2.17) * 3.4 + Math.sin(now / 43 + f) * 1.7;
-        var fh = (18 + (f * 17 % 34)) * reach * (1 + Math.sin(now / 113 + f) * .16);
+        var sway = (noise1(f * 7.7 + now * .0011) - .5) * 8;
+        var fh = (16 + noise1(f * 5.3) * 30) * reach * (.72 + noise1(f * 1.9 + now * .0016) * .56);
         var rootLift = Math.sin(f * 4.3) * 4 + Math.cos(f * 1.91) * 2;
-        var flameWidth = 4.2 + ((f * 7) % 6);
-        drawFlame(fx, groundY + rootLift, fh, flameWidth, noise, fireFade * reach * .86);
+        var flameWidth = 4.2 + noise1(f * 9.1) * 5;
+        drawFlame(fx, groundY + rootLift, fh, flameWidth, sway, fireFade * reach * .86);
       }
     }
 
@@ -845,48 +890,166 @@
       ctx.closePath(); ctx.fill();
     }
 
-    // 引信最后一粒火花坠入大地：先落体，触地炸开一小团白热，
-    // 火幕随后才从同一落点生长——把"点燃"变成看得见的因果，而非凭空生出。
-    function drawImpactSpark(now) {
-      var fallEnd = .058;
-      if (phase >= fallEnd + .07) return;
-      var fallT = clamp01(phase / fallEnd);
-      var eased = fallT * fallT; // 越落越快，模拟重力
-      var sx = W * .5 + Math.sin(fallT * 3.1) * W * .015;
-      var sy = lerp(H * .16, groundY, eased);
+    var FALL_END = .055;
 
-      if (fallT < 1) {
-        var prevT = Math.max(0, fallT - .1);
-        var psy = lerp(H * .16, groundY, prevT * prevT);
-        ctx.globalAlpha = .82;
-        ctx.strokeStyle = "#ffd28a";
-        ctx.lineWidth = 1.4;
-        ctx.beginPath(); ctx.moveTo(sx, psy); ctx.lineTo(sx, sy); ctx.stroke();
+    /* 坠落主轨迹：纯 phase 函数（scrub 可逆、resize 免疫）。
+       从引信收笔的偏右上方入画，加速坠向地心，带一丝渐弱的横向摇摆。 */
+    function sparkPos(t) {
+      var e = t * t * (.4 + t * .6);
+      var sway = Math.sin(t * 9.4) * W * .014 * (1 - t);
+      return {
+        x: W * .64 + (W * .5 - W * .64) * smooth(t) + sway,
+        y: lerp(-H * .06, groundY, e)
+      };
+    }
 
-        var headSize = 22;
+    function spawnTrail(x, y, dt) {
+      trailAcc = Math.min(trailAcc + dt * 45, 3);
+      for (var i = 0; i < trailP.length && trailAcc >= 1; i++) {
+        var p = trailP[i];
+        if (p.life < p.ttl) continue;
+        trailAcc -= 1;
+        p.x = x + (random() - .5) * 5;
+        p.y = y + (random() - .5) * 5;
+        p.vx = (random() - .5) * 46;
+        p.vy = -8 - random() * 30;
+        p.life = 0;
+        p.ttl = .3 + random() * .4;
+        p.hot = random();
+      }
+    }
+
+    function fireBurst() {
+      for (var i = 0; i < burstP.length; i++) {
+        var p = burstP[i];
+        var a = -Math.PI * (.14 + random() * .72);
+        var power = 70 + random() * 190;
+        p.x = W * .5 + (random() - .5) * 8;
+        p.y = groundY - random() * 3;
+        p.vx = Math.cos(a) * power;
+        p.vy = Math.sin(a) * power;
+        p.life = 0;
+        p.ttl = .35 + random() * .45;
+        p.hot = .4 + random() * .6;
+      }
+    }
+
+    function stepPools(dt) {
+      var i, p;
+      for (i = 0; i < trailP.length; i++) {
+        p = trailP[i];
+        if (p.life >= p.ttl) continue;
+        p.life += dt;
+        p.vy += 150 * dt;
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+      }
+      for (i = 0; i < burstP.length; i++) {
+        p = burstP[i];
+        if (p.life >= p.ttl) continue;
+        p.life += dt;
+        p.vy += 320 * dt;
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        // 贴地小弹跳：迸溅的火星不是穿地，是砸地又跃起
+        if (p.y > groundY + 2) { p.y = groundY + 2; p.vy *= -.35; p.vx *= .7; }
+      }
+    }
+
+    function drawPools() {
+      var i, p, fade;
+      for (i = 0; i < trailP.length; i++) {
+        p = trailP[i];
+        if (p.life >= p.ttl) continue;
+        fade = 1 - p.life / p.ttl;
+        ctx.globalAlpha = fade * (.3 + p.hot * .6);
+        ctx.strokeStyle = p.hot > .6 ? "#ffd28a" : "#ffa94d";
+        ctx.lineWidth = .6 + p.hot * .9;
+        ctx.beginPath();
+        ctx.moveTo(p.x - p.vx * .02, p.y - p.vy * .02);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      }
+      for (i = 0; i < burstP.length; i++) {
+        p = burstP[i];
+        if (p.life >= p.ttl) continue;
+        fade = 1 - p.life / p.ttl;
+        ctx.globalAlpha = fade * (.4 + p.hot * .6);
+        ctx.strokeStyle = p.hot > .55 ? "#fff3c7" : "#ff6b35";
+        ctx.lineWidth = .7 + p.hot * 1.1;
+        ctx.beginPath();
+        ctx.moveTo(p.x - p.vx * .016, p.y - p.vy * .016);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+        ctx.globalAlpha = fade * .85;
+        ctx.fillStyle = "#ffd28a";
+        ctx.beginPath(); ctx.arc(p.x, p.y, .9 + p.hot * 1.1, 0, 6.2832); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    /* 坠落 → 撞击 → 点燃：先落体（拖尾余烬一路脱落），触地瞬间
+       白热闪光 + 贴地冲击环 + 一轮迸溅，火幕随后才从落点生长。 */
+    function drawFallingSpark(now, dt) {
+      if (phase < FALL_END * .5) burstFired = false;
+      if (phase >= FALL_END + .07) return;
+      var t = clamp01(phase / FALL_END);
+
+      if (t > 0 && t < 1) {
+        var p = sparkPos(t);
+        var q = sparkPos(Math.max(0, t - .05));
+        spawnTrail(p.x, p.y, dt);
+
+        // 速度方向上的长残影：近头白热、远端烬红
+        var streak = ctx.createLinearGradient(q.x, q.y, p.x, p.y);
+        streak.addColorStop(0, "rgba(179,58,30,0)");
+        streak.addColorStop(.55, "rgba(255,169,77,.5)");
+        streak.addColorStop(1, "rgba(255,248,226,.95)");
+        ctx.globalAlpha = .9;
+        ctx.strokeStyle = streak;
+        ctx.lineCap = "round";
+        ctx.lineWidth = 2 + t * 1.6;
+        ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+
+        var headSize = 20 + t * 10 + Math.sin(now / 53) * 2.5;
         ctx.globalAlpha = 1;
-        ctx.drawImage(impactHeadSprite, sx - headSize / 2, sy - headSize / 2, headSize, headSize);
+        ctx.drawImage(impactHeadSprite, p.x - headSize / 2, p.y - headSize / 2, headSize, headSize);
       }
 
-      // 撞地闪光：快起、慢落的一次亮爆，先于火幕生长。
-      var flashRise = smooth(seg(phase, fallEnd - .008, fallEnd + .006));
-      var flashFall = 1 - smooth(seg(phase, fallEnd + .006, fallEnd + .07));
+      if (phase >= FALL_END && !burstFired) { burstFired = true; fireBurst(); }
+
+      var flashRise = smooth(seg(phase, FALL_END - .006, FALL_END + .008));
+      var flashFall = 1 - smooth(seg(phase, FALL_END + .008, FALL_END + .055));
       var flashAlpha = flashRise * flashFall;
       if (flashAlpha > .01) {
-        var burstSize = W * .18;
+        var burstSize = W * .2;
         ctx.globalAlpha = flashAlpha;
         ctx.drawImage(impactBurstSprite, W * .5 - burstSize / 2, groundY - burstSize / 2, burstSize, burstSize);
+      }
+
+      var ringT = seg(phase, FALL_END, FALL_END + .06);
+      if (ringT > 0 && ringT < 1) {
+        var rx = W * .02 + smooth(ringT) * W * .17;
+        ctx.globalAlpha = (1 - ringT) * .6;
+        ctx.strokeStyle = "#ffd28a";
+        ctx.lineWidth = 1.4 - ringT;
+        ctx.beginPath();
+        ctx.ellipse(W * .5, groundY + 1, rx, rx * .17, 0, 0, 6.2832);
+        ctx.stroke();
       }
       ctx.globalAlpha = 1;
     }
 
     function draw(now) {
       ctx.clearRect(0, 0, W, H);
-      if (phase <= .001 || phase >= .995) return;
+      if (phase <= .001 || phase >= .995) { lastNow = now; return; }
+      var dt = Math.min(.05, Math.max(0, (now - lastNow) / 1000));
+      lastNow = now;
       ctx.save();
       ctx.globalCompositeOperation = "lighter";
 
-      drawImpactSpark(now);
+      drawFallingSpark(now, dt);
+      if (phase < .3) { stepPools(dt); drawPools(); }
 
       var spread = smooth(seg(phase, .06, .40));
       var fireFade = 1 - smooth(seg(phase, .48, .76));
@@ -1036,6 +1199,11 @@
     if (storyW < 1) storyW = 360;
 
     fuseSvg.setAttribute("viewBox", "0 -" + EXT + " " + storyW + " " + (H + EXT));
+    // CSS 的 calc(100%+90px) 会跟随 #story 实时高度，而 viewBox 是本次
+    // 构建的快照——两者一旦分家，路径被拉伸而 getPointAtLength 不知情，
+    // 火花头就会脱离曲线。把渲染尺寸钉死在 viewBox 单位上，1:1 永不缩放。
+    fuseSvg.style.width = storyW + "px";
+    fuseSvg.style.height = (H + EXT) + "px";
 
     var storyRect = story.getBoundingClientRect();
     var storyTop = storyRect.top + window.scrollY;

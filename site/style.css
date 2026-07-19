@@ -190,8 +190,9 @@ a:focus-visible {
   z-index: -1;
   inset: -12% -52%;
   pointer-events: none;
+  /* 环境光贴着火柴驻位（右侧中段）偏移，随距离二段衰减 */
   background:
-    radial-gradient(ellipse at 68% 48%, rgba(255, 210, 138, .13), rgba(255, 107, 53, .045) 38%, transparent 70%);
+    radial-gradient(ellipse at 76% 50%, rgba(255, 210, 138, .16), rgba(255, 107, 53, .05) 40%, transparent 70%);
   opacity: .72;
   transform: rotate(-3deg);
 }
@@ -221,20 +222,42 @@ a:focus-visible {
       #a58b6a 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  /* text-shadow 而非 filter:drop-shadow —— 后者在 WebKit 里对
-     background-clip:text + transform 元素会新建合成层，真机上
-     偶发把阴影甚至字形本身裁在图层边界内；text-shadow 不建层，
-     老 WeKit / 微信 X5 也稳定支持。 */
+  /* 光影物理：光源是驻停在名字右侧的那根火柴。因此右缘是暖色
+     受光边，投影落向左下、离光越远越长越虚。text-shadow 而非
+     filter:drop-shadow —— 后者在 WebKit 里对 background-clip:text
+     + transform 元素会新建合成层，真机上偶发裁字；text-shadow
+     不建层，老 WebKit / 微信 X5 也稳定。模糊收在 12px 内，
+     避免相邻字的阴影互相糊叠。 */
   text-shadow:
-    0 1px 0 rgba(255, 248, 226, .13),
-    0 0 13px rgba(255, 169, 77, .2),
-    10px 18px 20px rgba(0, 0, 0, .52);
+    1px 0 0 rgba(255, 220, 160, .2),
+    2px 0 9px rgba(255, 169, 77, .13),
+    -6px 9px 11px rgba(0, 0, 0, .46);
   transform-origin: 52% 54%;
 }
 
-.hero-name h1 span:nth-child(1) { transform: translateX(-2px) rotate(.7deg) scale(1.015); }
-.hero-name h1 span:nth-child(2) { transform: translateX(2px) rotate(-.9deg) scale(.985); }
-.hero-name h1 span:nth-child(3) { transform: translateX(-1px) rotate(.45deg) scale(1.025); }
+/* 火焰驻位在名字右侧中段：「可」离火最近，受光最强、投影最短；
+   「徐」「斯」渐远，投影拉长、亮边转弱。 */
+.hero-name h1 span:nth-child(1) {
+  transform: translateX(-2px) rotate(.7deg) scale(1.015);
+  text-shadow:
+    1px 1px 0 rgba(255, 220, 160, .14),
+    2px 1px 9px rgba(255, 169, 77, .09),
+    -7px 10px 12px rgba(0, 0, 0, .42);
+}
+.hero-name h1 span:nth-child(2) {
+  transform: translateX(2px) rotate(-.9deg) scale(.985);
+  text-shadow:
+    1.5px 0 0 rgba(255, 228, 176, .3),
+    3px 0 10px rgba(255, 177, 94, .18),
+    -5px 8px 9px rgba(0, 0, 0, .5);
+}
+.hero-name h1 span:nth-child(3) {
+  transform: translateX(-1px) rotate(.45deg) scale(1.025);
+  text-shadow:
+    1px -1px 0 rgba(255, 220, 160, .18),
+    2px -1px 9px rgba(255, 169, 77, .11),
+    -6px 8px 11px rgba(0, 0, 0, .44);
+}
 
 /* 横屏矮视口：竖排列装不下会折列倒序（斯可徐），改横排是叙事成立的降级 */
 @media (orientation: landscape) and (max-height: 500px) {
