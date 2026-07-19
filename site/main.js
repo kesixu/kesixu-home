@@ -639,22 +639,29 @@
     var renderAverage = 0, slowFrames = 0, degradedThisRun = false;
     var W = 1, H = 1, dpr = 1, groundY = 1;
     var fireOuter = null, fireInner = null, glowSprite = null;
+    var impactHeadSprite = null, impactBurstSprite = null;
     var seed = 0x7a11f17e;
     var count = 96; // 固定最大池；各画质档只遍历自己的前 N 颗，不在帧中分配对象。
+    var coreCount = starView.length; // 前 9 颗是"专属"火星——每颗星只认自己那一颗
 
     function random() {
       seed = (seed * 1664525 + 1013904223) >>> 0;
       return seed / 4294967296;
     }
     for (var i = 0; i < count; i++) {
+      var core = i < coreCount;
       particles.push({
         rx: random(), ry: random(), bend: random() - .5,
-        start: .12 + random() * .31,
-        duration: .34 + random() * .24,
-        size: .6 + random() * 1.7,
-        hot: random()
+        // 专属火星走收紧的节奏（错落但有序），背景火星保持自由随机——
+        // 这样九星依次落位可读，飞舞的碎火星仍然像野火一样杂乱。
+        start: core ? .08 + i * .022 : .12 + random() * .31,
+        duration: core ? .22 + (i % 3) * .03 : .34 + random() * .24,
+        size: (core ? 1.1 : .6) + random() * 1.7,
+        hot: core ? .78 + random() * .22 : random()
       });
     }
+    // 每颗专属火星的落位进度，供 DOM 侧同步对应那颗星的淡入时机。
+    var starArrival = particles.slice(0, coreCount).map(function (p) { return p.start + p.duration; });
 
     function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
     function seg(v, a, b) { return clamp01((v - a) / (b - a)); }
@@ -692,6 +699,27 @@
       glow.addColorStop(1, "rgba(179,58,30,0)");
       glowCtx.fillStyle = glow;
       glowCtx.fillRect(0, 0, 256, 96);
+
+      // 坠落火花与撞地闪光同属"渐变只在 resize 建、逐帧只 drawImage"纪律。
+      impactHeadSprite = document.createElement("canvas");
+      impactHeadSprite.width = impactHeadSprite.height = 64;
+      var headCtx = impactHeadSprite.getContext("2d");
+      var headGlow = headCtx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      headGlow.addColorStop(0, "rgba(255,248,226,.95)");
+      headGlow.addColorStop(.4, "rgba(255,169,77,.55)");
+      headGlow.addColorStop(1, "rgba(255,107,53,0)");
+      headCtx.fillStyle = headGlow;
+      headCtx.fillRect(0, 0, 64, 64);
+
+      impactBurstSprite = document.createElement("canvas");
+      impactBurstSprite.width = impactBurstSprite.height = 128;
+      var burstCtx = impactBurstSprite.getContext("2d");
+      var burstGlow = burstCtx.createRadialGradient(64, 64, 0, 64, 64, 64);
+      burstGlow.addColorStop(0, "rgba(255,248,226,.92)");
+      burstGlow.addColorStop(.5, "rgba(255,169,77,.42)");
+      burstGlow.addColorStop(1, "rgba(255,107,53,0)");
+      burstCtx.fillStyle = burstGlow;
+      burstCtx.fillRect(0, 0, 128, 128);
 
       var skyRect = sky.getBoundingClientRect();
       var dipperRect = dipper.getBoundingClientRect();
@@ -817,13 +845,50 @@
       ctx.closePath(); ctx.fill();
     }
 
+    // 引信最后一粒火花坠入大地：先落体，触地炸开一小团白热，
+    // 火幕随后才从同一落点生长——把"点燃"变成看得见的因果，而非凭空生出。
+    function drawImpactSpark(now) {
+      var fallEnd = .058;
+      if (phase >= fallEnd + .07) return;
+      var fallT = clamp01(phase / fallEnd);
+      var eased = fallT * fallT; // 越落越快，模拟重力
+      var sx = W * .5 + Math.sin(fallT * 3.1) * W * .015;
+      var sy = lerp(H * .16, groundY, eased);
+
+      if (fallT < 1) {
+        var prevT = Math.max(0, fallT - .1);
+        var psy = lerp(H * .16, groundY, prevT * prevT);
+        ctx.globalAlpha = .82;
+        ctx.strokeStyle = "#ffd28a";
+        ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.moveTo(sx, psy); ctx.lineTo(sx, sy); ctx.stroke();
+
+        var headSize = 22;
+        ctx.globalAlpha = 1;
+        ctx.drawImage(impactHeadSprite, sx - headSize / 2, sy - headSize / 2, headSize, headSize);
+      }
+
+      // 撞地闪光：快起、慢落的一次亮爆，先于火幕生长。
+      var flashRise = smooth(seg(phase, fallEnd - .008, fallEnd + .006));
+      var flashFall = 1 - smooth(seg(phase, fallEnd + .006, fallEnd + .07));
+      var flashAlpha = flashRise * flashFall;
+      if (flashAlpha > .01) {
+        var burstSize = W * .18;
+        ctx.globalAlpha = flashAlpha;
+        ctx.drawImage(impactBurstSprite, W * .5 - burstSize / 2, groundY - burstSize / 2, burstSize, burstSize);
+      }
+      ctx.globalAlpha = 1;
+    }
+
     function draw(now) {
       ctx.clearRect(0, 0, W, H);
       if (phase <= .001 || phase >= .995) return;
       ctx.save();
       ctx.globalCompositeOperation = "lighter";
 
-      var spread = smooth(seg(phase, .025, .38));
+      drawImpactSpark(now);
+
+      var spread = smooth(seg(phase, .06, .40));
       var fireFade = 1 - smooth(seg(phase, .48, .76));
       drawFireFront(now, spread, fireFade);
 
@@ -878,6 +943,11 @@
     resize();
     return {
       setPhase: function (value) { phase = clamp01(value); if (!active) draw(performance.now()); },
+      // 供 DOM 侧查询：某颗星的专属火星落位到几成，星就该亮到几成。
+      getStarOpacity: function (index, progress) {
+        var arrival = starArrival[index] || .5;
+        return smooth(clamp01((progress - arrival) / .06));
+      },
       setActive: function (on) {
         on = on && !document.hidden;
         if (on === active) return;
@@ -1131,6 +1201,13 @@
     ln.style.strokeDasharray = L;
     ln.style.strokeDashoffset = L;
   });
+  // 九星不再走固定 stagger：每颗星的淡入进度直接查询它那颗专属火星
+  // 在 canvas 里真实落位到几成（wildfire.getStarOpacity），星火同源、同一因果。
+  var starSetters = gsap.utils.toArray("#dipperStars .star").map(function (el) {
+    return gsap.quickSetter(el, "opacity");
+  });
+  // 时间线位置直接用 0–1 表示整段 pin 的滚动进度（而非任意"秒数"再被 scrub
+  // 换算一道），星星之外的元素也按这把尺子排布，不会再有两套刻度互相打架。
   var skyTL = gsap.timeline({
     scrollTrigger: {
       id: "sky-transition",
@@ -1141,28 +1218,29 @@
       scrub: .72,
       anticipatePin: 1,
       onRefresh: function () { wildfire.resize(); },
-      onUpdate: function (st) { wildfire.setPhase(st.progress); },
+      onUpdate: function (st) {
+        wildfire.setPhase(st.progress);
+        starSetters.forEach(function (setOpacity, index) {
+          setOpacity(wildfire.getStarOpacity(index, st.progress));
+        });
+      },
       onToggle: function (st) { wildfire.setActive(st.isActive); }
     }
   });
   skyST = skyTL.scrollTrigger;
   skyTL
-    .to({}, { duration: .48 })
-    .to("#dipperStars .star", {
-      opacity: 1, duration: .2, stagger: .034, ease: "power2.out"
-    }, .5)
     .to(dipLines, {
       strokeDashoffset: 0, opacity: function (index, line) {
         return line.classList.contains("core-line") ? .66 : .4;
-      }, duration: .34, stagger: .045, ease: "power1.inOut"
+      }, duration: .14, stagger: .018, ease: "power1.inOut"
     }, .58)
     .to("#skyField circle", {
       opacity: function (index) { return .12 + (index * 53 % 10) / 45; },
-      duration: .32, stagger: { amount: .22, from: "random" }, ease: "power1.out"
-    }, .62)
-    .to("#wildfire", { opacity: 0, duration: .25, ease: "power1.out" }, .9)
-    .to(".sky-line", { opacity: 1, duration: .34, ease: "power1.out" }, .94)
-    .to("#sky .echo", { opacity: 1, duration: .3, ease: "power1.out" }, 1.08);
+      duration: .12, stagger: { amount: .08, from: "random" }, ease: "power1.out"
+    }, .64)
+    .to("#wildfire", { opacity: 0, duration: .07, ease: "power1.out" }, .86)
+    .to(".sky-line", { opacity: 1, duration: .07, ease: "power1.out" }, .9)
+    .to("#sky .echo", { opacity: 1, duration: .05, ease: "power1.out" }, .95);
 
   /* ---------- 章五 · 余烬 ---------- */
   gsap.to("#ember > *", {
