@@ -68,6 +68,7 @@
     document.documentElement.classList.remove("fuse-ready");
     document.documentElement.classList.remove("match-lit");
     document.documentElement.classList.remove("story-entered");
+    document.documentElement.classList.remove("hint-gone");
     document.documentElement.classList.remove("motion-pending");
     if (flame) flame.setActive(false);
     if (fuseSpark) fuseSpark.setActive(false);
@@ -1299,6 +1300,10 @@
         flame.setActive(st.isActive && st.progress > .003 && st.progress < .997);
         document.documentElement.classList.toggle("match-lit", st.progress >= .31 && st.progress < .92);
         document.documentElement.classList.toggle("story-entered", st.progress >= (compactHero ? .58 : .92));
+        // 上滑提示单向闩锁：一旦滑离首屏，本次访问永不再现
+        if (st.progress >= (compactHero ? .58 : .92)) {
+          document.documentElement.classList.add("hint-gone");
+        }
       },
       onToggle: function (st) { flame.setActive(st.isActive && st.progress > .003 && st.progress < .997); }
     }
