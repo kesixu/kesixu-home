@@ -208,10 +208,13 @@
         ang = lerp(-0.55, -0.35, eSt);
         inten = eSt * 0.25;
       } else {
-        // 驻位在名字右侧：像举着火柴照亮名字。宽屏时收拢到名字右缘附近，
-        // 手机上 min() 仍取 0.72W（名字右缘 + 间距 ≈ 0.72W），行为不变
-        var restX = Math.min(W * 0.72,
-          (nameEdge > 0 ? nameEdge : W * 0.72) + Math.min(W * 0.08, 96));
+        // 驻位在名字右侧：像举着火柴照亮名字。必须始终停在名字右缘
+        // "外侧"——旧的 0.72W 钳制在名字右移/宽字号时会把火柴白热核
+        // 按在字形右缘正后方，亮斑吃掉右缘对比度（视觉上=遮挡）。
+        // 现在只封屏幕右缘：右缘 + ≥28px 间距，放不下才贴屏边。
+        var restX = Math.min(W - 30,
+          (nameEdge > 0 ? nameEdge + Math.max(28, Math.min(W * 0.08, 96))
+                        : W * 0.72));
         mx = lerp(W * 0.34, restX, smooth(eUp));
         my = lerp(H * 0.58, H * 0.56, smooth(eUp));
         ang = lerp(-0.35, -1.45, smooth(eUp));

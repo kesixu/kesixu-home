@@ -170,7 +170,9 @@ a:focus-visible {
   gap: 18px;
   text-align: center;
   padding-right: max(24px, env(safe-area-inset-right));
-  padding-left: max(24px, env(safe-area-inset-left));
+  /* 名字居中偏右：左侧多给一点 padding，内容自然右移 */
+  padding-left: max(40px, env(safe-area-inset-left));
+  z-index: 10;
 }
 
 .calligraphy-lockup {
@@ -178,10 +180,11 @@ a:focus-visible {
   isolation: isolate;
   overflow: visible;
   /* WebKit 不把 vertical-rl 子元素的横向行盒计入父级 intrinsic width。
-     显式留出 1.16em 行盒 + 四周 0.11em 墨迹/阴影出血区，避免 iOS 合成层裁笔。 */
+     显式留出 1.16em 行盒 + 四周 0.16em 出血区；再加 0.34em 给右侧
+     Scale(1.025) + rotate + text-shadow 的溢出笔画。 */
   font-size: var(--type-hero-name);
-  width: 1.38em;
-  padding: .11em;
+  width: 1.82em;
+  padding: .16em;
 }
 
 .calligraphy-lockup::before {
@@ -200,6 +203,8 @@ a:focus-visible {
 }
 
 .hero-name h1 {
+  position: relative;
+  z-index: 1; /* 字形永远压在两层伪元素（环境光/影子底稿）之上 */
   writing-mode: vertical-rl;
   font-family: var(--display);
   font-weight: 500;
@@ -210,6 +215,28 @@ a:focus-visible {
   font-synthesis: none;
 }
 
+/* 影子底稿：三个字的投影与暖晕全部搬到字形层"下面"的同文本复制层。
+   根因：竖排 1.06 行高 + 逐字旋转/缩放让相邻字框重叠，而 text-shadow
+   跟随各自 span 的层叠上下文按 DOM 顺序绘制——「斯」的软影会糊在
+   「可」的右下笔画上（右缘正是渐变最亮处，深色糊斑格外扎眼）。
+   底稿必须挂在 h1 自己的 ::before 上：正交排版流里 h1 是 shrink-to-fit
+   且行盒贴自身右缘，挂在外层 lockup 的全宽伪元素会整体右漂出"鬼影"；
+   h1::before 盒子与字形行严格重合，字体/字号/排版方向全部继承
+   （横屏降级自动跟随），z-index:-1 让它永远垫在所有笔画之下。 */
+.hero-name h1::before {
+  content: "徐可斯";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  color: transparent;
+  text-shadow:
+    0 0 30px rgba(255, 169, 77, .14),
+    -10px 1px 17px rgba(0, 0, 0, .4),
+    -7px -5px 26px rgba(0, 0, 0, .2),
+    -7px 7px 26px rgba(0, 0, 0, .2);
+}
+
 .hero-name h1 span {
   position: relative;
   display: inline-block;
@@ -218,13 +245,10 @@ a:focus-visible {
   -webkit-background-clip: text;
   background-clip: text;
   /* 光影物理：唯一光源是驻停在名字右侧中段的火柴。
-     受光全部交给填充渐变本身（右缘最亮、向左衰减入暗），
-     text-shadow 只留两层：一层零偏移的暖晕（不产生字形复影），
-     一层大模糊低透明的软投影，方向与火源严格相对。
-     此前右缘的 1–3px 亮色字形拷贝会在笔画间读成"重影"，已弃用。
-     text-shadow 而非 filter:drop-shadow —— 后者在 WebKit 里对
-     background-clip:text + transform 元素会新建合成层，真机上偶发
-     裁字；text-shadow 不建层，老 WebKit / 微信 X5 也稳定。 */
+     受光全部交给填充渐变本身（右缘最亮、向左衰减入暗）。
+     span 自身一律不带 text-shadow —— 影子与暖晕全部在
+     .calligraphy-lockup::after 底稿层（见上），字形层保持纯净，
+     右缘不可能再被任何投影/光晕盖住。 */
   transform-origin: 52% 54%;
 }
 
@@ -238,9 +262,6 @@ a:focus-visible {
   -webkit-background-clip: text;
   background-clip: text;
   transform: translateX(-2px) rotate(.7deg) scale(1.015);
-  text-shadow:
-    0 0 30px rgba(255, 169, 77, .12),
-    -9px -7px 20px rgba(0, 0, 0, .34);
 }
 .hero-name h1 span:nth-child(2) {
   background: linear-gradient(92deg,
@@ -248,9 +269,6 @@ a:focus-visible {
   -webkit-background-clip: text;
   background-clip: text;
   transform: translateX(2px) rotate(-.9deg) scale(.985);
-  text-shadow:
-    0 0 26px rgba(255, 177, 94, .17),
-    -11px -1px 14px rgba(0, 0, 0, .44);
 }
 .hero-name h1 span:nth-child(3) {
   background: linear-gradient(66deg,
@@ -258,9 +276,6 @@ a:focus-visible {
   -webkit-background-clip: text;
   background-clip: text;
   transform: translateX(-1px) rotate(.45deg) scale(1.025);
-  text-shadow:
-    0 0 28px rgba(255, 169, 77, .14),
-    -10px 6px 17px rgba(0, 0, 0, .38);
 }
 
 /* 横屏矮视口：竖排列装不下会折列倒序（斯可徐），改横排是叙事成立的降级 */
