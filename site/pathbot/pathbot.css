@@ -148,9 +148,16 @@ html.no-fx .rv { opacity: 1; transform: none; }
 .pb-band-legend li {
   display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 12px;
   font-size: .7rem; letter-spacing: 1px; color: var(--gray-light);
+  transition: opacity .25s;
+}
+/* 图例联动:悬停聚焦一类,其余退后;色线加粗示意计数强调 */
+@media (hover: hover) {
+  .pb-band-legend ul:hover li { opacity: .35; }
+  .pb-band-legend ul li:hover { opacity: 1; color: var(--light); }
+  .pb-band-legend li:hover i { height: 4px; }
 }
 .pb-band-legend li b { color: var(--light); font-weight: 500; font-variant-numeric: tabular-nums; }
-.pb-band-legend li i { display: block; height: 2px; background: currentColor; }
+.pb-band-legend li i { display: block; height: 2px; background: currentColor; transition: height .25s; }
 .lg-conn i { color: var(--c-conn); } .lg-neo i { color: var(--c-neo); }
 .lg-inf i { color: var(--c-inf); } .lg-epi i { color: var(--c-epi); }
 .lg-oth i { color: var(--c-oth); } .lg-dead i { color: var(--c-dead); }
@@ -299,7 +306,7 @@ html.no-fx .pb-chat-row { opacity: 1; }
 @media (min-width: 760px) {
   .pb-band-inner { grid-template-columns: 1fr minmax(280px, 340px); align-items: end; }
   .pb-band-legend ul { grid-template-columns: 1fr; gap: 14px; }
-  .pb-row { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 72px; align-items: center; }
+  .pb-row { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 72px; align-items: start; } /* 顶对齐,编辑网格式克制 */
   .pb-foot-cols { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 991px) {
