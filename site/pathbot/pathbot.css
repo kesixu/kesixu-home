@@ -13,13 +13,14 @@
   --gray-light: #aaa;
   --gray-medium: #777;
   --dark: #111516;
-  --link: #C75B25;
+  --link: #D2712F; /* 比 noetik 原值提亮一档:小字号下对比度 5.6:1,留足 AA 余量 */
   --hair: rgba(232, 226, 218, .16);
   --hair-soft: rgba(232, 226, 218, .09);
-  /* 判决/图例(产品真实色) */
+  /* 判决色(品牌) + 图例六色:以品牌绿/黄/橙为基准重画的自定义家族,
+     语义分工不变(绿结缔/红肿瘤/蓝炎症/橙上皮/黄其他/灰死亡),数值全部手调 */
   --pass: #1BCE71; --warn: #FCFA0A; --refuse: #FF205F;
-  --c-conn: #22c55e; --c-neo: #ef4444; --c-inf: #3b82f6;
-  --c-epi: #f97316; --c-oth: #facc15; --c-dead: #6b7280;
+  --c-conn: #23C173; --c-neo: #E0435C; --c-inf: #5C7EE6;
+  --c-epi: #D2712F; --c-oth: #E2CE4A; --c-dead: #777;
   --grot: "PB Grot", "PB Sans", Arial, sans-serif;
   --mono: "PB Mono", "PB Sans", ui-monospace, "SF Mono", Menlo, monospace; /* PB Sans 兜 β/κ/CJK */
   --gutter: clamp(24px, 6vw, 100px);
@@ -155,6 +156,37 @@ html.no-fx .rv { opacity: 1; transform: none; }
 .lg-oth i { color: var(--c-oth); } .lg-dead i { color: var(--c-dead); }
 .pb-legend-note { font-size: .7rem; letter-spacing: 2px; color: var(--gray-medium); }
 
+/* ── 会诊对话:终端式逐字打出,hairline 行,无气泡 ── */
+.pb-chat { margin-top: 44px; max-width: 760px; border-top: 1px solid var(--hair); }
+.pb-chat-row {
+  display: grid; grid-template-columns: 6.5em 1fr; gap: 18px;
+  padding: 18px 0; border-bottom: 1px solid var(--hair-soft);
+}
+.pb-chat-role {
+  font-family: var(--mono); font-size: .7rem; font-weight: 500;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gray-medium); padding-top: .35em;
+}
+.pb-chat-row.is-bot .pb-chat-role { color: var(--pass); }
+.pb-chat-msg {
+  font-family: var(--mono); font-size: .95rem; line-height: 1.9;
+  color: var(--light); min-height: 1.9em;
+}
+.pb-chat-row:not(.is-bot) .pb-chat-msg { color: var(--gray-light); }
+html.fx .pb-chat-row { opacity: 0; }
+html.fx .pb-chat-row.shown { opacity: 1; transition: opacity .3s; }
+html.no-fx .pb-chat-row { opacity: 1; }
+.pb-caret {
+  display: inline-block; width: .55em; height: 1.05em;
+  background: var(--pass); vertical-align: -.12em; margin-left: 2px;
+  animation: pb-blink 1.05s steps(1) infinite;
+}
+@keyframes pb-blink { 50% { opacity: 0; } }
+@media (max-width: 479px) {
+  .pb-chat-row { grid-template-columns: 1fr; gap: 6px; padding: 15px 0; }
+  .pb-chat-msg { font-size: .9rem; }
+}
+
 /* ── 章节:noetik 的巨幅垂直留白 ── */
 .pb-sec { max-width: var(--colw); margin: 0 auto; padding: clamp(100px, 20vh, 260px) var(--gutter) 0; }
 .pb-edit { max-width: 900px; }
@@ -239,8 +271,7 @@ html.no-fx .rv { opacity: 1; transform: none; }
 
 /* ── 送检 ── */
 .pb-access .pb-mailrow { margin-top: 40px; }
-.pb-access .pb-mailrow a { border-color: var(--link); color: var(--link); }
-.pb-access .pb-mailrow a:hover { background: var(--link); color: var(--black); }
+/* 按钮无彩色例外,与 noetik 全站一致 */
 .pb-access-note {
   margin-top: 26px;
   font-family: var(--mono); font-size: .7rem; letter-spacing: 2px;

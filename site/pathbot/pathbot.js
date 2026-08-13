@@ -18,14 +18,23 @@
     document.querySelectorAll("[data-en]").forEach(function (el) {
       swapEls.push({ el: el, zh: el.textContent, en: el.getAttribute("data-en") });
     });
+    // 大标题带 <em> 高亮,整行按 HTML 交换
+    document.querySelectorAll("[data-en-html]").forEach(function (el) {
+      swapEls.push({ el: el, zh: el.innerHTML, en: el.getAttribute("data-en-html"), html: true });
+    });
     return swapEls;
   }
   function setLang(lang) {
-    collectSwap().forEach(function (it) { it.el.textContent = lang === "en" ? it.en : it.zh; });
+    if (window.pbChatFinish) window.pbChatFinish();
+    collectSwap().forEach(function (it) {
+      var v = lang === "en" ? it.en : it.zh;
+      if (it.html) it.el.innerHTML = v; else it.el.textContent = v;
+    });
     doc.setAttribute("lang", lang === "en" ? "en" : "zh-CN");
     langBtn.textContent = lang === "en" ? "中" : "EN";
     try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
   }
+  collectSwap();  // 开机即快照原文,防打字动画污染缓存
   var saved = null;
   try { saved = localStorage.getItem(LANG_KEY); } catch (e) {}
   if (saved === "en") setLang("en");
@@ -76,10 +85,10 @@
       var target = parseInt(el.dataset.count, 10);
       var obj = { v: 0 };
       ScrollTrigger.create({
-        trigger: el, start: "top 88%", once: true,
+        trigger: el, start: "top 92%", once: true,
         onEnter: function () {
           gsap.to(obj, {
-            v: target, duration: 1.6, ease: "power3.out",
+            v: target, duration: 0.9, ease: "power3.out",
             onUpdate: function () { el.textContent = Math.round(obj.v); }
           });
         }
@@ -101,9 +110,9 @@
     /* ── 仪表注入 + 数值 ── */
     gsap.utils.toArray(".pb-meter-bar").forEach(function (bar) {
       ScrollTrigger.create({
-        trigger: bar, start: "top 86%", once: true,
+        trigger: bar, start: "top 94%", once: true,
         onEnter: function () {
-          gsap.to(bar, { width: bar.dataset.fill + "%", duration: 1.4, ease: "power3.out" });
+          gsap.to(bar, { width: bar.dataset.fill + "%", duration: 0.9, ease: "power3.out" });
         }
       });
     });
@@ -111,15 +120,71 @@
       var target = parseFloat(el.dataset.mval);
       var obj = { v: 0 };
       ScrollTrigger.create({
-        trigger: el, start: "top 86%", once: true,
+        trigger: el, start: "top 94%", once: true,
         onEnter: function () {
           gsap.to(obj, {
-            v: target, duration: 1.4, ease: "power3.out",
+            v: target, duration: 0.9, ease: "power3.out",
             onUpdate: function () { el.textContent = obj.v.toFixed(2); }
           });
         }
       });
     });
+
+    /* ── 会诊对话:医生行整行现,PathBot 行逐字打出 ── */
+    (function chat() {
+      var box = document.getElementById("pb-chat");
+      if (!box) return;
+      var rows = gsap.utils.toArray(box.querySelectorAll(".pb-chat-row"));
+      var timers = [];
+      var done = false;
+      function finishAll() {
+        if (done) return;
+        done = true;
+        timers.forEach(clearTimeout);
+        rows.forEach(function (r) {
+          r.classList.add("shown");
+          var m = r.querySelector(".pb-chat-msg");
+          if (m.dataset.full != null) { m.textContent = m.dataset.full; delete m.dataset.full; }
+          var c = m.querySelector(".pb-caret");
+          if (c) c.remove();
+        });
+      }
+      window.pbChatFinish = finishAll;   // 语言切换前先收尾,防止半行文本被快照
+      function typeRow(i) {
+        if (done || i >= rows.length) { done = true; return; }
+        var row = rows[i];
+        var msg = row.querySelector(".pb-chat-msg");
+        row.classList.add("shown");
+        if (!row.classList.contains("is-bot")) {
+          timers.push(setTimeout(function () { typeRow(i + 1); }, 620));
+          return;
+        }
+        var full = msg.textContent;
+        msg.dataset.full = full;
+        msg.textContent = "";
+        var caret = document.createElement("i");
+        caret.className = "pb-caret";
+        msg.appendChild(caret);
+        var n = 0;
+        (function tick() {
+          if (done) return;
+          n += 1 + (full.length > 60 ? 1 : 0);      // 长句双倍速
+          if (n >= full.length) {
+            msg.textContent = full;
+            delete msg.dataset.full;
+            timers.push(setTimeout(function () { typeRow(i + 1); }, 480));
+            return;
+          }
+          msg.textContent = full.slice(0, n);
+          msg.appendChild(caret);
+          timers.push(setTimeout(tick, 24));
+        })();
+      }
+      ScrollTrigger.create({
+        trigger: box, start: "top 78%", once: true,
+        onEnter: function () { typeRow(0); }
+      });
+    })();
 
     /* ── 判决轮换:纯换字换色,不弹跳 ── */
     var chip = document.getElementById("pb-vchip");

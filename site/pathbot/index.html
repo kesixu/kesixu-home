@@ -14,7 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/hanken-200.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/nsans-300.woff2" crossorigin>
-<link rel="stylesheet" href="/pathbot/pathbot.css?v=6">
+<link rel="stylesheet" href="/pathbot/pathbot.css?v=8">
 </head>
 <body>
 
@@ -31,10 +31,10 @@
 <header class="pb-hero" data-scene="0">
   <p class="pb-eyebrow mono rv" data-en="A PATHOLOGY CONSULTATION, CONDUCTED HONESTLY">一场诚实进行的病理会诊</p>
   <h1 class="pb-h0">
-    <span class="ln">会说<em>「不知道」</em>的</span>
-    <span class="ln">病理 AI</span>
+    <span class="ln" data-en-html="The pathology AI">会说<em>「不知道」</em>的</span>
+    <span class="ln" data-en-html="that says &lt;em&gt;&amp;#8220;I don&amp;#8217;t know.&amp;#8221;&lt;/em&gt;">病理 AI</span>
   </h1>
-  <p class="pb-h0-en ln mono" aria-hidden="true">The pathology AI that knows when to say "I don't know."</p>
+  <p class="pb-h0-en ln mono" aria-hidden="true" data-en="会说「不知道」的病理 AI">The pathology AI that knows when to say "I don't know."</p>
   <p class="pb-hero-sub rv" data-en="A copilot for pathologists and clinical research — one instruction, from whole-slide image to a citable report. When evidence runs out, it says so, in writing.">面向病理医生与临床研究的会诊助手——一句话，从全切片到可溯源的报告。证据不足时，它白纸黑字地说明。</p>
   <div class="pb-hero-cta rv">
     <a class="pb-pill" href="#exhibit-a"><span data-en="Watch the real demo">观看真实演示</span><i class="pb-chev" aria-hidden="true">›</i></a>
@@ -62,6 +62,22 @@
       </ul>
       <p class="pb-legend-note mono" data-en="TUMOR-STROMA RATIO 0.346">肿瘤间质比 0.346</p>
     </aside>
+  </div>
+</section>
+
+<!-- ═══ 附件 B · 会诊对话(演示改编,逐字打出) ═══ -->
+<section class="pb-sec" id="consult" data-scene="1.5">
+  <div class="pb-edit rv">
+    <p class="pb-eyebrow mono" data-en="EXHIBIT B · CONSULT TRANSCRIPT, ADAPTED FROM THE DEMO">附件 B · 会诊对话 · 演示改编</p>
+    <h2 data-en="Submit a case like talking to a colleague.">像和同事说话一样，送检。</h2>
+  </div>
+  <div class="pb-chat rv" id="pb-chat" aria-label="会诊对话示例">
+    <div class="pb-chat-row"><span class="pb-chat-role" data-en="DOCTOR">医生</span><p class="pb-chat-msg" data-en="Can you read this colon H&amp;E?">这张结肠 H&amp;E，能看吗？</p></div>
+    <div class="pb-chat-row is-bot"><span class="pb-chat-role" data-en="PATHBOT">PathBot</span><p class="pb-chat-msg" data-en="SlideTriage: PROCEED — file intact, tissue coverage OK, stain H&amp;E, within the competence table.">SlideTriage：PROCEED——文件完整，组织覆盖合格，H&amp;E 染色，在能力表之内。</p></div>
+    <div class="pb-chat-row"><span class="pb-chat-role" data-en="DOCTOR">医生</span><p class="pb-chat-msg" data-en="Count the nuclei and give me the tumor-stroma ratio.">数一数细胞核，给我肿瘤间质比。</p></div>
+    <div class="pb-chat-row is-bot"><span class="pb-chat-role" data-en="PATHBOT">PathBot</span><p class="pb-chat-msg" data-en="HoVerNet done: 2,147 nuclei — neoplastic 617, connective 1,168. Tumor-stroma ratio 0.346. Report drafted, citations attached.">HoVerNet 已跑完：2,147 核——肿瘤 617、结缔 1,168。肿瘤间质比 0.346。报告已成稿，引用随附。</p></div>
+    <div class="pb-chat-row"><span class="pb-chat-role" data-en="DOCTOR">医生</span><p class="pb-chat-msg" data-en="And an out-of-scope skin slide?">那域外的皮肤切片呢？</p></div>
+    <div class="pb-chat-row is-bot"><span class="pb-chat-role" data-en="PATHBOT">PathBot</span><p class="pb-chat-msg" data-en="REFUSE — outside the declared competence table. I don't guess.">REFUSE——超出声明的能力表。我不猜。</p></div>
   </div>
 </section>
 
@@ -142,7 +158,7 @@
 <!-- ═══ 附件 B · 今日在运行 ═══ -->
 <section class="pb-sec" id="live" data-scene="5">
   <div class="pb-edit rv">
-    <p class="pb-eyebrow mono" data-en="EXHIBIT B · LIVE CAPTURE">附件 B · 实时截取</p>
+    <p class="pb-eyebrow mono" data-en="EXHIBIT C · LIVE CAPTURE">附件 C · 实时截取</p>
     <h2 data-en="This is it, running today.">这是它，今天正在运行。</h2>
     <p data-en="Captured from the live instance: CMU-1 in the deep-zoom viewer, trust engine armed, token-gated.">摄于正在运行的实例：CMU-1 载入深缩放阅片器，信任引擎在位，令牌制访问。</p>
   </div>
@@ -190,7 +206,7 @@
   <ul class="pb-cap pb-cap-dim rv">
     <li><span data-en="A research preview, not an approved medical device; all results require review by a qualified pathologist.">研究预览，非获批医疗器械；一切结果须由执业病理医生复核。</span></li>
     <li><span data-en="The trust-mechanism paper, Trust as Trajectory, is under anonymous review.">信任机制论文《Trust as Trajectory》处于匿名评审中。</span></li>
-    <li><span data-en="The evidence base is an open seed; no claim of clinical validation before pathologist review completes.">循证库为开放种子；病理专家复核完成前，不宣称"经临床验证"。</span></li>
+    <li><span data-en="The evidence base is an open seed; no claim of clinical validation before pathologist review completes.">循证库为开放种子；病理专家复核完成前，不宣称「经临床验证」。</span></li>
   </ul>
 </section>
 
@@ -221,6 +237,6 @@
 
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/pathbot/pathbot.js?v=5" defer></script>
+<script src="/pathbot/pathbot.js?v=7" defer></script>
 </body>
 </html>
