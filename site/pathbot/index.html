@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PathBot · 会说"不知道"的病理 AI</title>
+<meta name="description" content="PathBot：面向病理医生与临床研究的 AI 助手。先验片、再作答;判决四态可审计;每一条循证依据都溯源到原文。研究预览。">
+<meta name="theme-color" content="#0d0b09">
+<meta property="og:title" content="PathBot · 会说“不知道”的病理 AI">
+<meta property="og:description" content="先验片、再作答;判决可审计;循证可溯源。答不准,宁交白卷。">
+<meta property="og:url" content="https://kesixu.com/pathbot/">
+<link rel="canonical" href="https://kesixu.com/pathbot/">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/wenkai-subset.woff2?v=21" crossorigin>
+<link rel="stylesheet" href="/pathbot/pathbot.css?v=1">
+</head>
+<body>
+
+<header class="pb-hero">
+  <a class="pb-home" href="/">← kesixu.com · 划亮</a>
+  <div class="pb-mark" aria-hidden="true">
+    <svg viewBox="0 0 96 96" width="76" height="76">
+      <rect x="6" y="6" width="84" height="84" rx="20" fill="#16110d" stroke="#3a2f24" stroke-width="1.5"/>
+      <rect x="22" y="34" width="52" height="30" rx="4" fill="none" stroke="#c9bfae" stroke-width="2" transform="rotate(-6 48 49)"/>
+      <circle cx="42" cy="47" r="7.5" fill="#8b7dde" fill-opacity=".92"/>
+      <circle cx="55" cy="52" r="4.5" fill="#b84a66" fill-opacity=".8"/>
+      <path d="M62 26 a22 22 0 0 1 12 19" fill="none" stroke="#ffa94d" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M67 30 l3.5 3.5 L77 26" fill="none" stroke="#ffd28a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h1>PathBot</h1>
+  <p class="pb-tag">会说"不知道"的病理 AI</p>
+  <p class="pb-sub">面向病理医生与临床研究的 AI 助手——先验片、再作答；<br>判决四态可审计，每一条循证依据都溯源到原文。</p>
+  <p class="pb-status"><span class="pb-pill">研究预览 · Research Preview</span><span class="pb-pill pb-pill-dim">体验入口整备中</span></p>
+</header>
+
+<main class="pb-main">
+  <section class="pb-sec">
+    <h2>为什么"可信"</h2>
+    <p class="pb-lead">大多数医疗 AI 演示的是"什么都能答"。PathBot 花了最多的功夫做相反的事：<b>在不该答的时候，把"不知道"说清楚</b>。信任引擎独立于大模型之外，是一层看得见代码、跑得了测试、可以被审计的机制，而不是提示词里的一句客套。</p>
+  </section>
+
+  <section class="pb-sec">
+    <h2>三道闸，一条链</h2>
+    <div class="pb-cards">
+      <article class="pb-card">
+        <p class="pb-card-no">闸 一 · 执行之前</p>
+        <h3>先验片，再作答</h3>
+        <p>切片一进来先过分诊闸门：文件是否完整、组织覆盖率够不够、染色与组织类型是否在能力范围内。三种裁定——<b>通过 / 谨慎 / 拒绝</b>。超出能力边界的片子，它直接说"这张我不该看"。</p>
+      </article>
+      <article class="pb-card">
+        <p class="pb-card-no">闸 二 · 执行之中</p>
+        <h3>过程可审计的四态判决</h3>
+        <p>每一步工具调用都对照临床指南流程图核验（流程符合度 β），再用反事实探针检查模型是否真的忠于证据（证据忠实度 κ）——不信模型的自我报告，只看它的行为。最终给出四态判决：<b>确信 / 异常标记 / 不确定 / 升级人工</b>。</p>
+      </article>
+      <article class="pb-card">
+        <p class="pb-card-no">闸 三 · 证据本身</p>
+        <h3>循证溯源，缺引用不加载</h3>
+        <p>诊断推理依赖的每一条似然比证据，都带着 PubMed / PMC 原文引用，点开可查；<b>知识库加载器遇到缺引用的条目会直接拒绝启动</b>。证据库目前覆盖乳腺与结直肠两个领域最深，以"开放种子"形式持续扩充，欢迎病理专家参与复核。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="pb-sec pb-story">
+    <h2>一次"交白卷"的成绩</h2>
+    <p class="pb-lead">在一次域外盲测中，面对 20 例超出训练分布的病例，PathBot 的信任引擎把 <b>20 例全部判为"不确定"</b>——尽管底层模型硬答也能对九成。它选择了宁可承认不确定，也不装出自信。<br><span class="pb-dim">对医疗 AI 而言，我们认为这比一个漂亮的准确率更重要。</span></p>
+  </section>
+
+  <section class="pb-sec">
+    <h2>能力面</h2>
+    <ul class="pb-list">
+      <li><b>全切片影像（WSI）原生支持</b>——基于华威大学 TIA Centre 的 TIAtoolbox：.svs / .ndpi / .mrxs / .tiff / .dcm 等主流格式，深度缩放阅片。</li>
+      <li><b>真模型，不是贴图</b>——细胞核检测·分割·分类（HoVerNet 系 / KongNet）、组织分类与分割、H&amp;E 直接预测基因突变线索（MSI / BRAF / TP53）等病理专用预训练模型。</li>
+      <li><b>临床阈值哨兵</b>——PD-L1 TPS、Ki-67、HER2、Allred 等真实决策阈值的边界预警。如实说明：计数目前由使用者提供，AI 负责核对阈值与边界风险，<b>不是"自动读片打分"</b>。</li>
+      <li><b>报告可导出</b>——Markdown / PDF 报告自动附带完整审计信息与免责声明。</li>
+      <li><b>支持本地私有化部署</b>——默认本地模型模式下，数据不出机器；亦可按需接入云端模型（此时数据会离开本机，页面如实相告）。</li>
+    </ul>
+  </section>
+
+  <section class="pb-sec pb-honest">
+    <h2>边界，先说清楚</h2>
+    <blockquote class="pb-disclaimer">
+      <p lang="en">RESEARCH USE ONLY. This software has not been cleared or approved by any regulatory authority (FDA, CE-IVD) for clinical diagnostic use. Results must be reviewed and validated by a qualified pathologist. Not a substitute for professional medical judgment.</p>
+      <footer>—— 软件源码内置的免责声明，逐字原文</footer>
+    </blockquote>
+    <ul class="pb-list pb-list-dim">
+      <li>这是研究预览，不是获批医疗器械；一切结果须由执业病理医生复核。</li>
+      <li>信任机制的理论基础已成文（《Trust as Trajectory》），目前处于匿名评审中。</li>
+      <li>循证知识库以开放种子发布，正在邀请病理专家共同复核——这一步没完成之前，我们不会宣称"经临床验证"。</li>
+    </ul>
+  </section>
+
+  <section class="pb-sec pb-cta">
+    <h2>想看它工作？</h2>
+    <p>体验入口正在整备（访问控制与服务稳定性达标后开放）。研究合作、内测申请或索取演示：</p>
+    <p class="pb-mailrow"><a class="pb-btn" href="mailto:email@kesixu.com?subject=PathBot%20%E5%86%85%E6%B5%8B%2F%E5%90%88%E4%BD%9C">来信 · email [at] kesixu.com</a></p>
+  </section>
+</main>
+
+<footer class="pb-foot">
+  <p>PathBot · 华威大学 TIA Centre 研究项目 · © 2026 徐可斯</p>
+  <p>此页无追踪、无埋点、无第三方——一砖一瓦，皆是手作</p>
+</footer>
+
+</body>
+</html>

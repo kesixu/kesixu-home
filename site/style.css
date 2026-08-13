@@ -43,7 +43,7 @@
 
 @font-face {
   font-family: "LXGW WenKai";
-  src: url("/fonts/wenkai-subset.woff2?v=20") format("woff2");
+  src: url("/fonts/wenkai-subset.woff2?v=21") format("woff2");
   font-weight: 400 600;
   font-display: swap;
 }
@@ -504,10 +504,13 @@ a:focus-visible {
 
 @media (min-width: 760px) {
   .hero-lamps {
-    grid-template-columns: 1fr 1fr 1fr;
+    /* 四盏主灯:2×2,右列下沉,保留瀑布错落的气口 */
+    grid-template-columns: 1fr 1fr;
+    max-width: 880px;
+    margin-left: auto;
+    margin-right: auto;
   }
-  .hero-lamp:nth-child(2) { margin-top: clamp(72px, 7vw, 104px); }
-  .hero-lamp:nth-child(3) { margin-top: clamp(144px, 14vw, 208px); }
+  .hero-lamp:nth-child(even) { margin-top: clamp(72px, 7vw, 104px); }
 }
 
 /* 手机横屏虽有足够宽度，却没有三列长文所需的垂直呼吸；堆叠也让引信
