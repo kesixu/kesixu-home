@@ -292,6 +292,10 @@ html.no-fx .pb-bub-row { opacity: 1; }
 /* ── 大图:裸放 + .7rem 图注(noetik figure-caption) ── */
 .pb-frame { margin-top: 44px; }
 .pb-frame img, .pb-frame video { display: block; width: 100%; height: auto; }
+/* 实拍两联:对话竖栏 + 深缩放方图,等高排布 */
+.pb-duo { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 18px; }
+.pb-duo img { display: block; width: 100%; height: auto; }
+@media (min-width: 760px) { .pb-duo { grid-template-columns: 1fr 1.62fr; align-items: start; } }
 .pb-frame figcaption {
   margin-top: 12px;
   font-family: var(--mono); font-size: .7rem; letter-spacing: 2px;

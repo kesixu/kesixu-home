@@ -14,7 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="/pathbot/assets/icon.svg">
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/hanken-200.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/misans-300.woff2" crossorigin>
-<link rel="stylesheet" href="/pathbot/pathbot.css?v=11">
+<link rel="stylesheet" href="/pathbot/pathbot.css?v=12">
 </head>
 <body>
 
@@ -203,12 +203,15 @@
   <div class="pb-edit rv">
     <p class="pb-eyebrow mono" data-en="RUNNING, RIGHT NOW">今天，它开着</p>
     <h2 data-en="Not a concept render. It's live.">不是概念图。它现在就开着。</h2>
-    <p data-en="Screenshotted from the live instance: a slide in the deep-zoom viewer, trust engine on duty, token at the door.">这张图截自线上实例：切片躺在阅片器里，信任引擎在岗，进门要令牌。</p>
+    <p data-en="Everything below is a real capture: detections actually computed, replies actually written — 3.79s a turn. Token at the door.">下面全是实拍：检测标注是真跑出来的，中文回复是真答的，3.79 秒一条。进门要令牌。</p>
   </div>
   <figure class="pb-frame rv">
-    <img src="/pathbot/media/live-viewer.webp" alt="PathBot 实时界面:左侧深色阅片器载入 CMU-1 切片,右侧暖纸色对话栏" loading="lazy" width="1440" height="900">
-    <figcaption class="mono" data-en="LIVE · 2026-08-13 · RESEARCH USE ONLY">实时 · 2026-08-13 · 仅供研究</figcaption>
+    <img src="/pathbot/media/gallery-analysis.webp" alt="PathBot 实拍:阅片器上叠加 2147 个细胞核的彩色检测标注,右侧对话栏输出中文临床分析" loading="lazy" width="2560" height="1600">
   </figure>
+  <div class="pb-duo rv">
+    <img src="/pathbot/media/gallery-chat.webp" alt="实拍对话:中文提问后 3.79 秒收到含元数据表格与置信度徽章的真实回复" loading="lazy" width="864" height="1400">
+    <img src="/pathbot/media/gallery-zoom.webp" alt="实拍深缩放:细胞核形态与染色质纹理清晰可辨" loading="lazy" width="1600" height="1600">
+  </div>
 </section>
 
 <!-- ═══ 完整会诊实录 ═══ -->
@@ -219,7 +222,6 @@
   </div>
   <figure class="pb-frame rv">
     <video src="/pathbot/media/promo-full.mp4" poster="/pathbot/media/hero-poster.jpg" controls playsinline preload="none"></video>
-    <figcaption class="mono" data-en="PRODUCT DEMO 3'12&quot; · REAL UI + TRUST ENGINE EXPLAINER">产品演示 3'12" · 真实界面 + 信任引擎图解</figcaption>
   </figure>
 </section>
 
