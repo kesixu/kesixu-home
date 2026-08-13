@@ -1432,7 +1432,9 @@
     }
     var targets = [];
     var minorIndex = 0;
-    document.querySelectorAll("[data-ignite]").forEach(function (el) {
+    // 只认 #story 之内的点火锚点。2026-08-13 教训:页脚简历按钮误挂 data-ignite,
+    // 被这里捞进锚点集后引信被拉长到页脚,火花头相对滚动超速、甩出视线。
+    document.querySelectorAll("#story [data-ignite]").forEach(function (el) {
       var dot = el.querySelector(".hero-dot");
       var rect = (dot || el).getBoundingClientRect();
       var lift = settledLift(el);
