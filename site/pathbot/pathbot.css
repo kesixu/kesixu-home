@@ -76,7 +76,7 @@ html.no-fx .rv { opacity: 1; transform: none; }
   min-width: 44px; min-height: 40px;
   background: none; border: none; cursor: pointer;
   color: var(--gray-light); font-family: var(--mono);
-  font-size: .8rem; letter-spacing: 1px;
+  font-size: .95rem; font-weight: 500; letter-spacing: 1px;
   transition: color .25s;
 }
 .pb-lang:hover { color: var(--light); }
@@ -274,6 +274,10 @@ html.no-fx .pb-bub-row { opacity: 1; }
 .pb-verdict .v-warn { color: var(--warn); }
 .pb-verdict .v-indet { color: var(--gray-light); }
 .pb-verdict .v-esc { color: var(--refuse); }
+.pb-verdict-rule {
+  margin-top: 10px; text-align: right;
+  font-size: .62rem; letter-spacing: 1px; color: var(--gray-medium);
+}
 
 .pb-cite-claim { font-family: var(--grot); font-weight: 300; font-size: 1.35rem; line-height: 2.1rem; color: var(--light); }
 .pb-cite-lr { color: var(--warn); font-size: .85rem; margin: 12px 0 16px; letter-spacing: 1px; }
@@ -358,6 +362,9 @@ html.no-fx .pb-bub-row { opacity: 1; }
 }
 @media (max-width: 767px) {
   body { font-size: 1.125rem; line-height: 2.125rem; }
+  .pb-sec { padding-top: clamp(72px, 12vh, 140px); }
+  .pb-band { padding-top: clamp(64px, 10vh, 120px); }
+  .pb-foot { margin-top: clamp(72px, 12vh, 150px); }
   .pb-h0 { font-size: 2.75rem; line-height: 3.5rem; }
   .pb-edit h2 { font-size: 1.75rem; line-height: 2.75rem; }
   .pb-hero-sub { font-size: 1.125rem; line-height: 2.125rem; }

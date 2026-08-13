@@ -135,7 +135,7 @@
         trigger: ".pb-triage", start: "top 82%", once: true,
         onEnter: function () {
           gsap.to(triageRows, { opacity: 1, x: 0, duration: .55, stagger: .16, ease: "power2.out" });
-          gsap.to(verdictWords, { opacity: 1, duration: .3, stagger: .16, delay: .4, ease: "none" });
+          gsap.to(verdictWords, { opacity: 1, duration: .25, stagger: .16, delay: .12, ease: "none" });
         }
       });
     }
@@ -150,16 +150,10 @@
       });
     });
     gsap.utils.toArray("[data-mval]").forEach(function (el) {
-      var target = parseFloat(el.dataset.mval);
-      var obj = { v: 0 };
+      // 数值与判决词必须永远同帧一致:不做逐帧计数,入场即落定
       ScrollTrigger.create({
         trigger: el, start: "top 94%", once: true,
-        onEnter: function () {
-          gsap.to(obj, {
-            v: target, duration: 0.9, ease: "power3.out",
-            onUpdate: function () { el.textContent = obj.v.toFixed(2); }
-          });
-        }
+        onEnter: function () { el.textContent = parseFloat(el.dataset.mval).toFixed(2); }
       });
     });
 

@@ -14,7 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="/pathbot/assets/icon.svg">
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/hanken-200.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/misans-300.woff2" crossorigin>
-<link rel="stylesheet" href="/pathbot/pathbot.css?v=13">
+<link rel="stylesheet" href="/pathbot/pathbot.css?v=14">
 </head>
 <body>
 
@@ -128,7 +128,7 @@
 <section class="pb-sec" data-scene="2">
   <div class="pb-edit rv">
     <h2 data-en="Every other medical AI demo shows off what it can answer. This one puts the work into when it must not.">别的医疗 AI 都在演示什么都能答。这一个，功夫全花在什么时候不答。</h2>
-    <p data-en="The trust engine runs outside the language model: code you can read, tests you can run, 107 automated checks on duty. Not a polite line buried in a prompt.">管住它的那套信任引擎，在大模型外面单独跑：代码看得见，测试跑得动，107 项自动化检查盯着。不是在提示词里写句「请谨慎回答」就完事。</p>
+    <p data-en="The trust engine runs outside the language model: 107 automated checks on duty, and the code, tests and audit trails all ship with the beta — ask and you can read every line. Not a polite line buried in a prompt.">管住它的那套信任引擎，在大模型外面单独跑：107 项自动化检查盯着；代码、测试、审计轨迹都随内测开放，来信就能逐行翻。不是在提示词里写句「请谨慎回答」就完事。</p>
   </div>
 </section>
 
@@ -167,6 +167,7 @@
         <div class="pb-meter"><span>β</span><span class="pb-meter-track"><i class="pb-meter-bar" id="pb-bar-b" data-fill="82"></i></span><b id="pb-val-b" data-mval="0.82">0.00</b></div>
         <div class="pb-meter"><span>κ</span><span class="pb-meter-track"><i class="pb-meter-bar" id="pb-bar-k" data-fill="74"></i></span><b id="pb-val-k" data-mval="0.74">0.00</b></div>
         <p class="pb-verdict"><span id="pb-vchip" class="v-pass">CONFIDENT</span></p>
+        <p class="pb-verdict-rule" data-en="Rule of thumb: both high → CONFIDENT · both low → INDETERMINATE · κ collapses alone → ESCALATE">判决口径：双高 → CONFIDENT · 双低 → INDETERMINATE · κ 独崩 → ESCALATE</p>
       </div>
     </figure>
   </div>
@@ -175,12 +176,12 @@
     <div class="pb-row-copy">
       <p class="pb-eyebrow mono" data-en="STEP 03 · THE EVIDENCE ITSELF">第三步 · 证据本身</p>
       <h3 data-en="Citations, or it doesn't load.">缺引用，就不加载。</h3>
-      <p data-en="Every likelihood ratio links to a PubMed / PMC source you can open; anything uncited simply won't load. The whole base is published openly, waiting for pathologists to pick it apart.">证据库里每一条，都挂着能点开的 PubMed 原文；没有引用的条目，加载器直接不收。整个库公开放出，就等病理专家来一条条挑毛病。</p>
+      <p data-en="Every likelihood ratio links to a PubMed / PMC source you can open; anything uncited simply won't load. The full base ships with the beta — write in and pick it apart, entry by entry.">证据库里每一条，都挂着能点开的 PubMed 原文；没有引用的条目，加载器直接不收。整个库随内测开放，来信即取，欢迎一条条挑毛病。</p>
     </div>
     <figure class="pb-row-viz" aria-hidden="true">
       <div class="pb-card pb-cite">
         <p class="pb-viz-cap mono" data-en="EVIDENCE">循证条目</p>
-        <p class="pb-cite-claim">E-cadherin(−) → 浸润性小叶癌</p>
+        <p class="pb-cite-claim" data-en="E-cadherin(−) → invasive lobular carcinoma">E-cadherin(−) → 浸润性小叶癌</p>
         <p class="pb-cite-lr mono">LR = 38.3<i class="pb-cite-note" data-en="— this one finding multiplies the odds ~38×">——这一条证据,把诊断几率放大约 38 倍</i></p>
         <p class="pb-cite-src mono"><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3681051/" target="_blank" rel="noopener">Pai et al. 2013 · PMC3681051 <i class="pb-chev">›</i></a></p>
       </div>
@@ -249,7 +250,7 @@
   </blockquote>
   <ul class="pb-cap pb-cap-dim rv">
     <li><span data-en="This is a research preview, not an approved medical device. Every result needs a pathologist's sign-off.">现在是研究预览，不是获批的医疗器械。所有结果都得病理医生把关。</span></li>
-    <li><span data-en="The trust mechanism is written up as a paper, currently under anonymous review.">背后那套信任机制写成了论文，正在匿名评审。</span></li>
+    <li><span data-en="The trust mechanism is written up as a paper, under anonymous review — it goes public the day review ends.">背后那套信任机制写成了论文，正在匿名评审——评审一结束就公开。</span></li>
     <li><span data-en="The evidence base is still under expert review — until that finishes, it makes no claim of clinical validation.">证据库还在等专家复核。复核完之前，不说「经临床验证」这四个字。</span></li>
   </ul>
 </section>
@@ -281,6 +282,6 @@
 
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/pathbot/pathbot.js?v=10" defer></script>
+<script src="/pathbot/pathbot.js?v=11" defer></script>
 </body>
 </html>
