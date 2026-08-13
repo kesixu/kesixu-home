@@ -5,29 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PathBot · 会说"不知道"的病理 AI</title>
 <meta name="description" content="PathBot：面向病理医生与临床研究的 AI 会诊助手。先验片、再作答;判决四态可审计;每条循证依据溯源到原文。研究预览,内测运行中。">
-<meta name="theme-color" content="#F3EEE2">
+<meta name="theme-color" content="#000000">
 <meta property="og:title" content="PathBot · 会说“不知道”的病理 AI">
 <meta property="og:description" content="一场诚实的会诊:先验片、再作答;判决可审计;循证可溯源。">
 <meta property="og:url" content="https://kesixu.com/pathbot/">
 <meta property="og:image" content="https://kesixu.com/pathbot/media/hero-poster.jpg">
 <link rel="canonical" href="https://kesixu.com/pathbot/">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-<link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/ss4-300.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/nssc-620.woff2" crossorigin>
-<link rel="stylesheet" href="/pathbot/pathbot.css?v=5">
+<link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/hanken-200.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/nsans-300.woff2" crossorigin>
+<link rel="stylesheet" href="/pathbot/pathbot.css?v=6">
 </head>
 <body>
 
-<!-- 案卷墨线:左缘随滚动书写,索引点领路(JS 驱动) -->
-<div class="pb-caseline" aria-hidden="true">
-  <i class="pb-caseline-track"></i>
-  <i class="pb-caseline-ink" id="pb-ink"></i>
-  <b class="pb-caseline-dot" id="pb-dot"></b>
-</div>
-
 <nav class="pb-nav" id="pb-nav">
   <a class="pb-nav-home" href="/" data-en="← kesixu.com">← 划亮</a>
-  <span class="pb-wordmark">PathBot<em class="mono" data-en="CONSULT NO. PB-2026-001">会诊案卷 · PB-2026-001</em></span>
+  <span class="pb-wordmark">PATHBOT</span>
   <div class="pb-nav-right">
     <button class="pb-lang mono" id="pb-lang" type="button" aria-label="Switch language / 切换语言">EN</button>
     <a class="pb-nav-cta" href="#access" data-en="Request access">申请内测</a>
@@ -46,10 +39,6 @@
   <div class="pb-hero-cta rv">
     <a class="pb-pill" href="#exhibit-a"><span data-en="Watch the real demo">观看真实演示</span><i class="pb-chev" aria-hidden="true">›</i></a>
     <a class="pb-pill pb-pill-ghost" href="#access"><span data-en="Submit a case">送检咨询</span><i class="pb-chev" aria-hidden="true">›</i></a>
-  </div>
-  <div class="pb-intake rv" aria-hidden="true">
-    <span class="pb-intake-slide"><i></i>CMU-1-Small-Region.svs</span>
-    <span class="pb-stamp pb-stamp-intake mono" id="pb-stamp-intake" data-en="ACCEPTED">受 理</span>
   </div>
 </header>
 
@@ -79,7 +68,7 @@
 <!-- ═══ 立场 ═══ -->
 <section class="pb-sec" data-scene="2">
   <div class="pb-edit rv">
-    <h2 data-en="Most medical AI demos show what it can answer. We spent our effort on the opposite.">大多数医疗 AI 演示"什么都能答"。我们把功夫花在了相反的事上。</h2>
+    <h2 data-en="Most medical AI demos show what it can answer. We spent our effort on the opposite.">大多数医疗 AI 演示「什么都能答」。我们把功夫花在了相反的事上。</h2>
     <p data-en="The trust engine is independent of the language model — a layer you can read, test and audit, backed by 107 automated checks. Not a polite line in a prompt.">信任引擎独立于大模型之外——看得见代码、跑得了测试、可以被审计，背后站着 107 项自动化测试。不是提示词里的一句客套。</p>
   </div>
 </section>
@@ -127,7 +116,7 @@
     <div class="pb-row-copy">
       <p class="pb-eyebrow mono" data-en="STEP 03 · THE EVIDENCE ITSELF">第三步 · 证据本身</p>
       <h3 data-en="Citations, or it doesn't load.">缺引用，就不加载。</h3>
-      <p data-en="Every likelihood ratio carries a PubMed / PMC citation you can open; the loader refuses uncited entries. The evidence base ships as an open seed — pathologists are invited to re-validate it.">每条似然比证据都带可打开的 PubMed / PMC 原文引用；加载器拒绝无引用条目。证据库以"开放种子"发布，邀请病理专家共同复核。</p>
+      <p data-en="Every likelihood ratio carries a PubMed / PMC citation you can open; the loader refuses uncited entries. The evidence base ships as an open seed — pathologists are invited to re-validate it.">每条似然比证据都带可打开的 PubMed / PMC 原文引用；加载器拒绝无引用条目。证据库以「开放种子」发布，邀请病理专家共同复核。</p>
     </div>
     <figure class="pb-row-viz" aria-hidden="true">
       <div class="pb-card pb-cite">
@@ -145,7 +134,7 @@
   <div class="pb-edit rv">
     <p class="pb-eyebrow mono" data-en="CASE LOG · OUT-OF-DISTRIBUTION BLIND TEST">判读记录 · 域外盲测</p>
     <p class="pb-blank-big"><b class="mono" data-count="20">0</b><span class="mono">/20</span></p>
-    <h2 data-en="All twenty declared INDETERMINATE — though guessing would have scored ninety percent.">20 例全部如实判"不确定"——尽管硬猜也能对九成。</h2>
+    <h2 data-en="All twenty declared INDETERMINATE — though guessing would have scored ninety percent.">20 例全部如实判「不确定」——尽管硬猜也能对九成。</h2>
     <p data-en="It chose the blank sheet over false confidence. For medical AI, that matters more than a pretty accuracy number.">它选择交白卷，而不是装出自信。对医疗 AI，这比漂亮的准确率更重要。</p>
   </div>
 </section>
@@ -183,7 +172,7 @@
   <ul class="pb-cap rv">
     <li><b data-en="Imaging foundation">影像底座</b><span data-en="TIAtoolbox 2.0 (TIA Centre, University of Warwick) · OpenSlide deep zoom · .svs .ndpi .mrxs .dcm and more">华威大学 TIA Centre · TIAtoolbox 2.0 · OpenSlide 深度缩放 · .svs .ndpi .mrxs .dcm 等主流格式</span></li>
     <li><b data-en="Pathology-native models">病理专用模型</b><span data-en="HoVerNet family / KongNet nuclei detection–segmentation–classification · tissue classification &amp; segmentation · mutation cues from H&amp;E (MSI / BRAF / TP53)">HoVerNet 系 / KongNet 细胞核检测·分割·分类 · 组织分类与分割 · H&amp;E 直接预测基因突变线索（MSI / BRAF / TP53）</span></li>
-    <li><b data-en="Clinical threshold sentinel">临床阈值哨兵</b><span data-en="PD-L1 TPS, Ki-67, HER2, Allred boundary alerts. Honestly: counts come from the user; the AI checks thresholds and boundary risk — it does not auto-score slides.">PD-L1 TPS、Ki-67、HER2、Allred 边界预警。如实说明：计数由使用者提供，AI 核对阈值与边界风险——不是"自动读片打分"。</span></li>
+    <li><b data-en="Clinical threshold sentinel">临床阈值哨兵</b><span data-en="PD-L1 TPS, Ki-67, HER2, Allred boundary alerts. Honestly: counts come from the user; the AI checks thresholds and boundary risk — it does not auto-score slides.">PD-L1 TPS、Ki-67、HER2、Allred 边界预警。如实说明：计数由使用者提供，AI 核对阈值与边界风险——不是「自动读片打分」。</span></li>
     <li><b data-en="Private by default">默认私有化</b><span data-en="Local-model mode keeps data on the machine; cloud providers are optional and disclosed in the UI when active.">默认本地模式数据不出机器；云端模型为可选项，启用时界面如实相告。</span></li>
   </ul>
 </section>
@@ -197,7 +186,6 @@
   <blockquote class="pb-disc rv">
     <p class="mono" lang="en">RESEARCH USE ONLY. This software has not been cleared or approved by any regulatory authority (FDA, CE-IVD) for clinical diagnostic use. Results must be reviewed and validated by a qualified pathologist. Not a substitute for professional medical judgment.</p>
     <footer data-en="— Built-in disclaimer, quoted verbatim from source code">—— 软件源码内置免责声明，逐字原文</footer>
-    <span class="pb-stamp pb-stamp-disc mono" aria-hidden="true">RESEARCH<br>USE ONLY</span>
   </blockquote>
   <ul class="pb-cap pb-cap-dim rv">
     <li><span data-en="A research preview, not an approved medical device; all results require review by a qualified pathologist.">研究预览，非获批医疗器械；一切结果须由执业病理医生复核。</span></li>
@@ -233,6 +221,6 @@
 
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/pathbot/pathbot.js?v=4" defer></script>
+<script src="/pathbot/pathbot.js?v=5" defer></script>
 </body>
 </html>
