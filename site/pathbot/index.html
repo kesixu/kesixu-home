@@ -11,16 +11,16 @@
 <meta property="og:url" content="https://kesixu.com/pathbot/">
 <meta property="og:image" content="https://kesixu.com/pathbot/media/hero-poster.jpg">
 <link rel="canonical" href="https://kesixu.com/pathbot/">
-<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="/pathbot/assets/icon.svg">
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/hanken-200.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/nsans-300.woff2" crossorigin>
-<link rel="stylesheet" href="/pathbot/pathbot.css?v=9">
+<link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/misans-300.woff2" crossorigin>
+<link rel="stylesheet" href="/pathbot/pathbot.css?v=11">
 </head>
 <body>
 
 <nav class="pb-nav" id="pb-nav">
   <a class="pb-nav-home" href="/" data-en="← kesixu.com">← 划亮</a>
-  <span class="pb-wordmark">PATHBOT</span>
+  <span class="pb-wordmark"><img src="/pathbot/assets/icon.svg" alt="" class="pb-logo" width="26" height="26">PATHBOT</span>
   <div class="pb-nav-right">
     <button class="pb-lang mono" id="pb-lang" type="button" aria-label="Switch language / 切换语言">EN</button>
     <a class="pb-nav-cta" href="#access" data-en="Request access">申请内测</a>
@@ -29,22 +29,36 @@
 
 <!-- ═══ 开卷 · 宣言 ═══ -->
 <header class="pb-hero" data-scene="0">
-  <p class="pb-eyebrow mono rv" data-en="A PATHOLOGY CONSULTATION, CONDUCTED HONESTLY">一场诚实进行的病理会诊</p>
+  <p class="pb-eyebrow mono rv" data-en="A PATHOLOGY CONSULTATION, CONDUCTED HONESTLY">一场诚实的病理会诊</p>
   <h1 class="pb-h0">
     <span class="ln" data-en-html="The pathology AI">会说<em>「不知道」</em>的</span>
     <span class="ln" data-en-html="that says &lt;em&gt;&amp;#8220;I don&amp;#8217;t know.&amp;#8221;&lt;/em&gt;">病理 AI</span>
   </h1>
   <p class="pb-h0-en ln mono" aria-hidden="true" data-en="会说「不知道」的病理 AI">The pathology AI that knows when to say "I don't know."</p>
-  <p class="pb-hero-sub rv" data-en="A copilot for pathologists and clinical research — one instruction, from whole-slide image to a citable report. When evidence runs out, it says so, in writing.">面向病理医生与临床研究的会诊助手——一句话，从全切片到可溯源的报告。证据不足时，它白纸黑字地说明。</p>
+  <p class="pb-hero-sub rv" data-en="Built for pathologists and clinical researchers. One instruction takes a whole slide all the way to a cited report — and when the evidence runs out, it says so, in writing.">给病理医生和临床研究者用的 AI 助手。一句话下单，它从整张切片一路做到带文献引用的报告。证据不够的时候，它会白纸黑字告诉你：这个我判断不了。</p>
   <div class="pb-hero-cta rv">
     <a class="pb-pill" href="#exhibit-a"><span data-en="Watch the real demo">观看真实演示</span><i class="pb-chev" aria-hidden="true">›</i></a>
-    <a class="pb-pill pb-pill-ghost" href="#access"><span data-en="Submit a case">送检咨询</span><i class="pb-chev" aria-hidden="true">›</i></a>
+    <a class="pb-pill pb-pill-ghost" href="#access"><span data-en="Hand it a slide">递一张片子试试</span><i class="pb-chev" aria-hidden="true">›</i></a>
   </div>
 </header>
 
+<!-- ═══ 为什么做它:痛点 → 答案 ═══ -->
+<section class="pb-sec" id="why" data-scene="0.5">
+  <div class="pb-edit rv">
+    <p class="pb-eyebrow mono" data-en="WHY THIS EXISTS">为什么做它</p>
+    <h2 data-en="Diagnoses get signed. Today's medical AI answers everything — and no one dares let it near the signature.">诊断书是要签字的。现在的医疗 AI 什么都敢答，却没人敢让它靠近签字栏。</h2>
+    <p data-en="An overconfident model creates work instead of saving it: every unsourced claim is something the pathologist has to re-check by hand. PathBot flips the order — it proves where it fails first, so you know exactly where it can be used.">过度自信的模型不省事，反而添事：它每写一句没有出处的结论，医生就得亲手再查一遍。PathBot 把顺序倒过来——先证明自己哪里不行，你才知道它哪里真的行。</p>
+  </div>
+  <ul class="pb-why-strip rv" aria-label="三个立身之本">
+    <li><b data-en="Triage before answers">先验片，再作答</b><span data-en="Out-of-scope slides are refused at the door">超纲的片子，进门就拒</span></li>
+    <li><b data-en="Every verdict auditable">每个判决可审计</b><span data-en="Scored against CAP/WHO graphs, trail saved">对照 CAP/WHO 打分，轨迹全留</span></li>
+    <li><b data-en="Every claim cited">每条结论有出处</b><span data-en="PubMed-linked evidence, or it won't load">证据挂着 PubMed，没引用不加载</span></li>
+  </ul>
+</section>
+
 <!-- ═══ 附件 A · 真实录屏 ═══ -->
 <section class="pb-band" id="exhibit-a" data-scene="1" aria-label="附件A:真实界面录屏">
-  <p class="pb-exhibit mono rv" data-en="EXHIBIT A · REAL SCREEN RECORDING">附件 A · 真实界面录屏</p>
+  <p class="pb-exhibit mono rv" data-en="REAL UI · UNCUT RECORDING">真实界面 · 未剪辑录屏</p>
   <div class="pb-band-inner rv">
     <div class="pb-band-media">
       <video id="pb-heroloop" src="/pathbot/media/hero-loop.mp4" poster="/pathbot/media/hero-poster.jpg"
@@ -65,27 +79,56 @@
   </div>
 </section>
 
-<!-- ═══ 附件 B · 会诊对话(演示改编,逐字打出) ═══ -->
+<!-- ═══ 会诊对话:气泡剧场,五组一来一往=五个主打功能 ═══ -->
 <section class="pb-sec" id="consult" data-scene="1.5">
   <div class="pb-edit rv">
-    <p class="pb-eyebrow mono" data-en="EXHIBIT B · CONSULT TRANSCRIPT, ADAPTED FROM THE DEMO">附件 B · 会诊对话 · 演示改编</p>
-    <h2 data-en="Submit a case like talking to a colleague.">像和同事说话一样，送检。</h2>
+    <p class="pb-eyebrow mono" data-en="A CONSULT, LIVE">会诊对话</p>
+    <h2 data-en="Hand over a slide the way you'd ask a colleague.">递片子，就像跟同事搭话。</h2>
   </div>
-  <div class="pb-chat rv" id="pb-chat" aria-label="会诊对话示例">
-    <div class="pb-chat-row"><span class="pb-chat-role" data-en="DOCTOR">医生</span><p class="pb-chat-msg" data-en="Can you read this colon H&amp;E?">这张结肠 H&amp;E，能看吗？</p></div>
-    <div class="pb-chat-row is-bot"><span class="pb-chat-role" data-en="PATHBOT">PathBot</span><p class="pb-chat-msg" data-en="SlideTriage: PROCEED — file intact, tissue coverage OK, stain H&amp;E, within the competence table.">SlideTriage：PROCEED——文件完整，组织覆盖合格，H&amp;E 染色，在能力表之内。</p></div>
-    <div class="pb-chat-row"><span class="pb-chat-role" data-en="DOCTOR">医生</span><p class="pb-chat-msg" data-en="Count the nuclei and give me the tumor-stroma ratio.">数一数细胞核，给我肿瘤间质比。</p></div>
-    <div class="pb-chat-row is-bot"><span class="pb-chat-role" data-en="PATHBOT">PathBot</span><p class="pb-chat-msg" data-en="HoVerNet done: 2,147 nuclei — neoplastic 617, connective 1,168. Tumor-stroma ratio 0.346. Report drafted, citations attached.">HoVerNet 已跑完：2,147 核——肿瘤 617、结缔 1,168。肿瘤间质比 0.346。报告已成稿，引用随附。</p></div>
-    <div class="pb-chat-row"><span class="pb-chat-role" data-en="DOCTOR">医生</span><p class="pb-chat-msg" data-en="And an out-of-scope skin slide?">那域外的皮肤切片呢？</p></div>
-    <div class="pb-chat-row is-bot"><span class="pb-chat-role" data-en="PATHBOT">PathBot</span><p class="pb-chat-msg" data-en="REFUSE — outside the declared competence table. I don't guess.">REFUSE——超出声明的能力表。我不猜。</p></div>
+  <div class="pb-chat" id="pb-chat" aria-label="会诊对话演示">
+    <div class="pb-bub-row from-doc"><p class="pb-bub" data-en="Take a look at this colon biopsy?">这张结肠活检，帮我看一眼。</p></div>
+    <div class="pb-bub-row from-bot">
+      <div class="pb-bub-col">
+        <p class="pb-bub" data-en="On it. Triage first: file intact, tissue coverage OK, H&amp;E stain, colon is inside my competence table — PROCEED.">收到。先验片：文件完整，组织覆盖合格，H&amp;E 染色，结肠在能力表内——PROCEED，可以看。</p>
+        <p class="pb-bub-tag mono" data-en="GATE 01 · TRIAGE BEFORE ANSWERS">第一道闸 · 先验片，不硬答</p>
+      </div>
+    </div>
+    <div class="pb-bub-row from-doc"><p class="pb-bub" data-en="What's the tumor-stroma ratio?">肿瘤间质比多少？</p></div>
+    <div class="pb-bub-row from-bot">
+      <div class="pb-bub-col">
+        <p class="pb-bub" data-en="Counted: 2,147 nuclei — tumor 617, stroma 1,168. TSR 0.346. Every number has coordinates; the report links back to the pixels.">数完了：2,147 个核，肿瘤 617、间质 1,168，TSR 0.346。每个数都带坐标，报告里能点回原图。</p>
+        <p class="pb-bub-tag mono" data-en="ONE ASK · WHOLE SLIDE TO NUMBERS">一句话，从整张切片到定量</p>
+      </div>
+    </div>
+    <div class="pb-bub-row from-doc"><p class="pb-bub" data-en="How much should I trust that?">这个结果，我能信几分？</p></div>
+    <div class="pb-bub-row from-bot">
+      <div class="pb-bub-col">
+        <p class="pb-bub" data-en="Process conformance β 0.82, evidence faithfulness κ 0.74 — verdict CONFIDENT. The full audit trail is saved, recheck it any time.">流程符合度 β 0.82，证据忠实度 κ 0.74，判 CONFIDENT。整条审计轨迹都留着，随时复查。</p>
+        <p class="pb-bub-tag mono" data-en="EVERY VERDICT AUDITABLE">判决可审计，不靠感觉</p>
+      </div>
+    </div>
+    <div class="pb-bub-row from-doc"><p class="pb-bub" data-en="PD-L1: I count 220 tumor cells, 55 positive.">PD-L1 我数了 220 个肿瘤细胞，55 个阳性。</p></div>
+    <div class="pb-bub-row from-bot">
+      <div class="pb-bub-col">
+        <p class="pb-bub" data-en="TPS 25% — right on the reporting line. Suggest recounting ten more cells before you sign. Citation attached.">TPS 25%，正好压在报告线上——落笔前建议再核 10 个细胞。文献依据已附。</p>
+        <p class="pb-bub-tag mono" data-en="THRESHOLD SENTINEL · IT WARNS, YOU SIGN">阈值哨兵 · 只提醒，不代签</p>
+      </div>
+    </div>
+    <div class="pb-bub-row from-doc"><p class="pb-bub" data-en="One more — a skin slide, while you're at it?">手头还有张皮肤的，顺便看了？</p></div>
+    <div class="pb-bub-row from-bot">
+      <div class="pb-bub-col">
+        <p class="pb-bub" data-en="REFUSE. Skin is outside my declared competence — I don't guess.">REFUSE。皮肤不在我声明的能力表里——我不猜。</p>
+        <p class="pb-bub-tag mono" data-en="IT CAN SAY NO · THAT'S WHY YOU CAN TRUST IT">会拒绝，才可信</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ═══ 立场 ═══ -->
 <section class="pb-sec" data-scene="2">
   <div class="pb-edit rv">
-    <h2 data-en="Most medical AI demos show what it can answer. We spent our effort on the opposite.">大多数医疗 AI 演示「什么都能答」。我们把功夫花在了相反的事上。</h2>
-    <p data-en="The trust engine is independent of the language model — a layer you can read, test and audit, backed by 107 automated checks. Not a polite line in a prompt.">信任引擎独立于大模型之外——看得见代码、跑得了测试、可以被审计，背后站着 107 项自动化测试。不是提示词里的一句客套。</p>
+    <h2 data-en="Every other medical AI demo shows off what it can answer. This one puts the work into when it must not.">别的医疗 AI 都在演示什么都能答。这一个，功夫全花在什么时候不答。</h2>
+    <p data-en="The trust engine runs outside the language model: code you can read, tests you can run, 107 automated checks on duty. Not a polite line buried in a prompt.">管住它的那套信任引擎，在大模型外面单独跑：代码看得见，测试跑得动，107 项自动化检查盯着。不是在提示词里写句「请谨慎回答」就完事。</p>
   </div>
 </section>
 
@@ -93,14 +136,14 @@
 <section class="pb-sec" id="gates" data-scene="3">
   <div class="pb-edit rv">
     <p class="pb-eyebrow mono" data-en="CONSULT PROCEDURE">会诊程序</p>
-    <h2 data-en="Three gates, in order.">三道闸，按序进行。</h2>
+    <h2 data-en="Three gates, one at a time.">三道闸，一道一道过。</h2>
   </div>
 
   <div class="pb-row rv">
     <div class="pb-row-copy">
       <p class="pb-eyebrow mono" data-en="STEP 01 · BEFORE EXECUTION">第一步 · 执行之前</p>
       <h3 data-en="Triage first. Refuse what it shouldn't read.">先验片。不该看的，直接拒绝。</h3>
-      <p data-en="File integrity, tissue coverage, stain and tissue type against a declared competence table — three rulings. Out of scope means out, stated plainly.">文件完整性、组织覆盖率、染色与组织类型对照能力表——三种裁定。超出能力范围的切片，明说不看。</p>
+      <p data-en="Before anything runs, three checks: is the file intact, is there enough tissue, are the stain and organ inside its declared competence. If not, it says no — plainly.">收到片子先查三样：文件坏没坏，组织够不够，染色和部位在不在它的能力范围。不在，就明说不看。</p>
     </div>
     <figure class="pb-row-viz" aria-hidden="true">
       <div class="pb-card pb-triage mono">
@@ -115,8 +158,8 @@
   <div class="pb-row rv">
     <div class="pb-row-copy">
       <p class="pb-eyebrow mono" data-en="STEP 02 · DURING EXECUTION">第二步 · 执行之中</p>
-      <h3 data-en="Every step audited. Four verdicts, none of them vibes.">每一步受审。判决四态，不靠感觉。</h3>
-      <p data-en="Tool calls are checked against CAP/WHO guideline graphs (process conformance β); counterfactual probes test whether the model is faithful to its evidence (κ) — behaviour, not self-report.">工具调用对照 CAP/WHO 指南流程图核验（流程符合度 β）；反事实探针检验模型是否忠于证据（忠实度 κ）——只看行为，不信自我报告。</p>
+      <h3 data-en="Every step it takes is graded. Four verdicts, none of them vibes.">它干活的每一步，都有另一双眼睛打分。</h3>
+      <p data-en="Every tool call is scored against CAP/WHO guideline graphs (β); counterfactual probes test whether it actually used the evidence (κ). Judged on behaviour, never on its own word.">每次调工具，都对照 CAP/WHO 指南流程图打分（β）；再用反事实探针试它是不是真看了证据（κ）。只看它做了什么，不听它自己说。</p>
     </div>
     <figure class="pb-row-viz" aria-hidden="true">
       <div class="pb-card pb-cofact mono">
@@ -132,7 +175,7 @@
     <div class="pb-row-copy">
       <p class="pb-eyebrow mono" data-en="STEP 03 · THE EVIDENCE ITSELF">第三步 · 证据本身</p>
       <h3 data-en="Citations, or it doesn't load.">缺引用，就不加载。</h3>
-      <p data-en="Every likelihood ratio carries a PubMed / PMC citation you can open; the loader refuses uncited entries. The evidence base ships as an open seed — pathologists are invited to re-validate it.">每条似然比证据都带可打开的 PubMed / PMC 原文引用；加载器拒绝无引用条目。证据库以「开放种子」发布，邀请病理专家共同复核。</p>
+      <p data-en="Every likelihood ratio links to a PubMed / PMC source you can open; anything uncited simply won't load. The whole base is published openly, waiting for pathologists to pick it apart.">证据库里每一条，都挂着能点开的 PubMed 原文；没有引用的条目，加载器直接不收。整个库公开放出，就等病理专家来一条条挑毛病。</p>
     </div>
     <figure class="pb-row-viz" aria-hidden="true">
       <div class="pb-card pb-cite">
@@ -148,19 +191,19 @@
 <!-- ═══ 判读记录 · 20/20 ═══ -->
 <section class="pb-sec pb-blank" data-scene="4">
   <div class="pb-edit rv">
-    <p class="pb-eyebrow mono" data-en="CASE LOG · OUT-OF-DISTRIBUTION BLIND TEST">判读记录 · 域外盲测</p>
+    <p class="pb-eyebrow mono" data-en="OUT-OF-DISTRIBUTION BLIND TEST">域外盲测</p>
     <p class="pb-blank-big"><b class="mono" data-count="20">0</b><span class="mono">/20</span></p>
-    <h2 data-en="All twenty declared INDETERMINATE — though guessing would have scored ninety percent.">20 例全部如实判「不确定」——尽管硬猜也能对九成。</h2>
-    <p data-en="It chose the blank sheet over false confidence. For medical AI, that matters more than a pretty accuracy number.">它选择交白卷，而不是装出自信。对医疗 AI，这比漂亮的准确率更重要。</p>
+    <h2 data-en="Twenty slides it had never seen. Twenty times it said &quot;indeterminate&quot; — even though blind guessing would have scored ninety percent.">20 张没见过的片子，它 20 次都答「不确定」——哪怕闭着眼猜，也能蒙对九成。</h2>
+    <p data-en="It would rather hand in a blank sheet than fake confidence. In medical AI, that beats a pretty accuracy number.">它宁可交白卷，也不装懂。做医疗 AI，这比一个好看的准确率值钱得多。</p>
   </div>
 </section>
 
 <!-- ═══ 附件 B · 今日在运行 ═══ -->
 <section class="pb-sec" id="live" data-scene="5">
   <div class="pb-edit rv">
-    <p class="pb-eyebrow mono" data-en="EXHIBIT C · LIVE CAPTURE">附件 C · 实时截取</p>
-    <h2 data-en="This is it, running today.">这是它，今天正在运行。</h2>
-    <p data-en="Captured from the live instance: CMU-1 in the deep-zoom viewer, trust engine armed, token-gated.">摄于正在运行的实例：CMU-1 载入深缩放阅片器，信任引擎在位，令牌制访问。</p>
+    <p class="pb-eyebrow mono" data-en="RUNNING, RIGHT NOW">今天，它开着</p>
+    <h2 data-en="Not a concept render. It's live.">不是概念图。它现在就开着。</h2>
+    <p data-en="Screenshotted from the live instance: a slide in the deep-zoom viewer, trust engine on duty, token at the door.">这张图截自线上实例：切片躺在阅片器里，信任引擎在岗，进门要令牌。</p>
   </div>
   <figure class="pb-frame rv">
     <img src="/pathbot/media/live-viewer.webp" alt="PathBot 实时界面:左侧深色阅片器载入 CMU-1 切片,右侧暖纸色对话栏" loading="lazy" width="1440" height="900">
@@ -172,7 +215,7 @@
 <section class="pb-sec" id="demo" data-scene="6">
   <div class="pb-edit rv">
     <p class="pb-eyebrow mono" data-en="FULL RECORDING">完整实录</p>
-    <h2 data-en="Three minutes, end to end.">三分钟，完整走一遍。</h2>
+    <h2 data-en="Three minutes, end to end.">三分钟，从头到尾走一遍。</h2>
   </div>
   <figure class="pb-frame rv">
     <video src="/pathbot/media/promo-full.mp4" poster="/pathbot/media/hero-poster.jpg" controls playsinline preload="none"></video>
@@ -183,41 +226,40 @@
 <!-- ═══ 能力 ═══ -->
 <section class="pb-sec" id="cap" data-scene="7">
   <div class="pb-edit rv">
-    <h2 data-en="Real models on real slides.">真模型，跑在真切片上。</h2>
+    <h2 data-en="Real models, on real slides.">真模型，跑真切片。</h2>
   </div>
   <ul class="pb-cap rv">
-    <li><b data-en="Imaging foundation">影像底座</b><span data-en="TIAtoolbox 2.0 (TIA Centre, University of Warwick) · OpenSlide deep zoom · .svs .ndpi .mrxs .dcm and more">华威大学 TIA Centre · TIAtoolbox 2.0 · OpenSlide 深度缩放 · .svs .ndpi .mrxs .dcm 等主流格式</span></li>
-    <li><b data-en="Pathology-native models">病理专用模型</b><span data-en="HoVerNet family / KongNet nuclei detection–segmentation–classification · tissue classification &amp; segmentation · mutation cues from H&amp;E (MSI / BRAF / TP53)">HoVerNet 系 / KongNet 细胞核检测·分割·分类 · 组织分类与分割 · H&amp;E 直接预测基因突变线索（MSI / BRAF / TP53）</span></li>
-    <li><b data-en="Clinical threshold sentinel">临床阈值哨兵</b><span data-en="PD-L1 TPS, Ki-67, HER2, Allred boundary alerts. Honestly: counts come from the user; the AI checks thresholds and boundary risk — it does not auto-score slides.">PD-L1 TPS、Ki-67、HER2、Allred 边界预警。如实说明：计数由使用者提供，AI 核对阈值与边界风险——不是「自动读片打分」。</span></li>
-    <li><b data-en="Private by default">默认私有化</b><span data-en="Local-model mode keeps data on the machine; cloud providers are optional and disclosed in the UI when active.">默认本地模式数据不出机器；云端模型为可选项，启用时界面如实相告。</span></li>
+    <li><b data-en="Imaging foundation">影像底座</b><span data-en="TIAtoolbox + OpenSlide deep zoom — .svs, .ndpi, .mrxs, .dcm all open straight away">TIAtoolbox 加 OpenSlide，主流全切片格式直接开：.svs、.ndpi、.mrxs、.dcm 都行</span></li>
+    <li><b data-en="Pathology-native models">病理专用模型</b><span data-en="HoVerNet and KongNet count, segment and classify nuclei; tissue typing; even mutation cues straight from H&amp;E (MSI / BRAF / TP53)">HoVerNet、KongNet 这些病理老手：数核、分割、分类，还能从 H&amp;E 里直接找基因突变的线索（MSI / BRAF / TP53）</span></li>
+    <li><b data-en="PD-L1, Ki-67, HER2 and Allred threshold alerts. To be clear: you do the counting; it checks the cut-offs and how close you are to one. It does not score slides for you.">PD-L1、Ki-67、HER2、Allred 的阈值预警。话说在前面：数是你数的，它帮你核对够不够线、离线有多近——它不替你打分。</span></li>
+    <li><b data-en="Private by default">默认私有</b><span data-en="Everything runs on your own machine by default — data never leaves. Cloud models are optional, and the UI says so whenever one is on.">默认全在本机跑，数据不出门。想用云端模型也行，开了它会明说。</span></li>
   </ul>
 </section>
 
 <!-- ═══ 意见书 · 限制条款 ═══ -->
 <section class="pb-sec" id="honest" data-scene="8">
   <div class="pb-edit rv">
-    <p class="pb-eyebrow mono" data-en="CONSULT LETTER · LIMITATIONS">会诊意见书 · 限制条款</p>
-    <h2 data-en="The boundary, stated first.">边界，先说清楚。</h2>
+    <p class="pb-eyebrow mono" data-en="THE FINE PRINT, UP FRONT">丑话说在前面</p>
+    <h2 data-en="What it can do, and what it must not.">能做什么，不能做什么。</h2>
   </div>
   <blockquote class="pb-disc rv">
     <p class="mono" lang="en">RESEARCH USE ONLY. This software has not been cleared or approved by any regulatory authority (FDA, CE-IVD) for clinical diagnostic use. Results must be reviewed and validated by a qualified pathologist. Not a substitute for professional medical judgment.</p>
-    <footer data-en="— Built-in disclaimer, quoted verbatim from source code">—— 软件源码内置免责声明，逐字原文</footer>
   </blockquote>
   <ul class="pb-cap pb-cap-dim rv">
-    <li><span data-en="A research preview, not an approved medical device; all results require review by a qualified pathologist.">研究预览，非获批医疗器械；一切结果须由执业病理医生复核。</span></li>
-    <li><span data-en="The trust-mechanism paper, Trust as Trajectory, is under anonymous review.">信任机制论文《Trust as Trajectory》处于匿名评审中。</span></li>
-    <li><span data-en="The evidence base is an open seed; no claim of clinical validation before pathologist review completes.">循证库为开放种子；病理专家复核完成前，不宣称「经临床验证」。</span></li>
+    <li><span data-en="This is a research preview, not an approved medical device. Every result needs a pathologist's sign-off.">现在是研究预览，不是获批的医疗器械。所有结果都得病理医生把关。</span></li>
+    <li><span data-en="The trust mechanism is written up as a paper, currently under anonymous review.">背后那套信任机制写成了论文，正在匿名评审。</span></li>
+    <li><span data-en="The evidence base is still under expert review — until that finishes, it makes no claim of clinical validation.">证据库还在等专家复核。复核完之前，不说「经临床验证」这四个字。</span></li>
   </ul>
 </section>
 
 <!-- ═══ 送检 ═══ -->
 <section class="pb-sec pb-access" id="access" data-scene="9">
   <div class="pb-edit rv">
-    <p class="pb-eyebrow mono" data-en="SUBMIT A CASE">送检咨询</p>
-    <h2 data-en="Want it to read a slide for you?">想让它为你看一张片子？</h2>
-    <p data-en="Private beta is live behind two gates (domain password + API token). Research collaboration, beta access, or a full walkthrough:">内测已上线，双闸保护（域名口令 + API 令牌）。研究合作 / 内测申请 / 索取完整演示：</p>
+    <p class="pb-eyebrow mono" data-en="HAND IT A SLIDE">递片子</p>
+    <h2 data-en="Got a slide you want read?">手上有片子想试？</h2>
+    <p data-en="The private beta is up, behind two locks: a site password and an API token. For collaboration, access, or a full walkthrough — just write:">内测已经开了，门上两道锁：站点口令，加 API 令牌。想合作、想试用、想看完整演示，来信就行：</p>
     <p class="pb-mailrow"><a class="pb-pill" href="mailto:email@kesixu.com?subject=PathBot%20Access"><span data-en="Write to email [at] kesixu.com">来信 · email [at] kesixu.com</span><i class="pb-chev" aria-hidden="true">›</i></a></p>
-    <p class="pb-access-note mono" data-en="BETA RUNNING · TOKEN-GATED · SELF-HEALING SERVICE">内测运行中 · 令牌制 · 服务自愈守护</p>
+    <p class="pb-access-note mono" data-en="PRIVATE BETA · RUNNING">BETA · 内测运行中</p>
   </div>
 </section>
 
@@ -225,18 +267,18 @@
   <div class="pb-foot-cols">
     <div>
       <p class="pb-foot-h mono">PATHBOT</p>
-      <p data-en="A research project at the TIA Centre, University of Warwick.">华威大学 TIA Centre 研究项目</p>
+      <p data-en="Designed and built by Kesi Xu.">徐可斯，一个人做的。</p>
     </div>
     <div>
       <p class="pb-foot-h mono" data-en="CONTACT">联系</p>
       <p><a href="mailto:email@kesixu.com">email [at] kesixu.com</a><br><a href="/" data-en="kesixu.com — the lamp room">kesixu.com · 划亮</a></p>
     </div>
   </div>
-  <p class="pb-foot-fine" data-en="No tracking, no third parties. All video and screenshots are real product recordings. © 2026 Kesi Xu">此页无追踪、无第三方。视频与截图均为真实产品录制。© 2026 徐可斯</p>
+  <p class="pb-foot-fine" data-en="No tracking, no third parties. Every video and screenshot is the real product. © 2026 Kesi Xu">页面没有追踪，没有第三方。视频和截图，全是真实产品。© 2026 徐可斯</p>
 </footer>
 
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/pathbot/pathbot.js?v=7" defer></script>
+<script src="/pathbot/pathbot.js?v=9" defer></script>
 </body>
 </html>

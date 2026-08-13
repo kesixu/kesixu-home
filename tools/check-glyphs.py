@@ -8,7 +8,7 @@ from fontTools.ttLib import TTFont
 PAGES = {
     "site/index.html": ["site/fonts/wenkai-subset.woff2"],
     "site/pathbot/index.html": [
-        "site/pathbot/fonts/nsans-300.woff2", "site/pathbot/fonts/nsans-500.woff2",
+        "site/pathbot/fonts/misans-200.woff2", "site/pathbot/fonts/misans-300.woff2", "site/pathbot/fonts/misans-500.woff2",
         "site/pathbot/fonts/hanken-200.woff2", "site/pathbot/fonts/plexmono-300.woff2",
     ],
 }

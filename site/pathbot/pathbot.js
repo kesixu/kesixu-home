@@ -72,17 +72,41 @@
     gsap.set(lines, { yPercent: 110 });
     gsap.to(lines, { yPercent: 0, duration: 1, ease: "power4.out", stagger: .1, delay: .15 });
 
-    /* ── 通用揭示:安静淡入 ── */
+    /* ── 通用揭示:安静淡入;完成后打 seen,眉线自绘 ── */
     gsap.utils.toArray(".rv").forEach(function (el) {
       gsap.to(el, {
         opacity: 1, y: 0, duration: .8, ease: "power2.out",
-        scrollTrigger: { trigger: el, start: "top 85%", once: true }
+        scrollTrigger: { trigger: el, start: "top 85%", once: true },
+        onComplete: function () { el.classList.add("seen"); }
       });
     });
 
-    /* ── 数字滚动 ── */
+    /* ── 英雄录屏:滚动中极缓的呼吸缩放 ── */
+    var hv = document.getElementById("pb-heroloop");
+    if (hv) {
+      gsap.fromTo(hv, { scale: 1.045 }, {
+        scale: 1, ease: "none",
+        scrollTrigger: { trigger: hv, start: "top bottom", end: "bottom top", scrub: .6 }
+      });
+    }
+
+    /* ── 桌面按钮磁吸:指针靠近轻轻贴过来 ── */
+    if (matchMedia("(pointer: fine)").matches) {
+      gsap.utils.toArray(".pb-pill, .pb-nav-cta").forEach(function (btn) {
+        btn.addEventListener("pointermove", function (e) {
+          var r = btn.getBoundingClientRect();
+          var dx = (e.clientX - r.left - r.width / 2) / r.width;
+          var dy = (e.clientY - r.top - r.height / 2) / r.height;
+          btn.style.translate = (dx * 6).toFixed(1) + "px " + (dy * 4).toFixed(1) + "px";
+        });
+        btn.addEventListener("pointerleave", function () { btn.style.translate = "0px 0px"; });
+      });
+    }
+
+    /* ── 数字滚动;20/20 大数字带弹性放大(页面的重音) ── */
     gsap.utils.toArray("[data-count]").forEach(function (el) {
       var target = parseInt(el.dataset.count, 10);
+      var big = !!el.closest(".pb-blank-big");
       var obj = { v: 0 };
       ScrollTrigger.create({
         trigger: el, start: "top 92%", once: true,
@@ -91,18 +115,27 @@
             v: target, duration: 0.9, ease: "power3.out",
             onUpdate: function () { el.textContent = Math.round(obj.v); }
           });
+          if (big) {
+            gsap.fromTo(el, { scale: .8, transformOrigin: "left 80%" },
+              { scale: 1, duration: .9, ease: "back.out(1.4)" });
+            var den = el.parentElement.querySelector("span");
+            if (den) gsap.fromTo(den, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: .5, delay: .55 });
+          }
         }
       });
     });
 
-    /* ── 分诊三行判决词:顺次淡现 ── */
+    /* ── 分诊三行:行自右滑入,判决词随后亮起 ── */
+    var triageRows = gsap.utils.toArray(".pb-triage-row");
     var verdictWords = gsap.utils.toArray(".pb-stamp-s");
-    if (verdictWords.length) {
+    if (triageRows.length) {
+      gsap.set(triageRows, { opacity: 0, x: 18 });
       gsap.set(verdictWords, { opacity: 0 });
       ScrollTrigger.create({
         trigger: ".pb-triage", start: "top 82%", once: true,
         onEnter: function () {
-          gsap.to(verdictWords, { opacity: 1, duration: .3, stagger: .25, ease: "none" });
+          gsap.to(triageRows, { opacity: 1, x: 0, duration: .55, stagger: .16, ease: "power2.out" });
+          gsap.to(verdictWords, { opacity: 1, duration: .3, stagger: .16, delay: .4, ease: "none" });
         }
       });
     }
@@ -130,59 +163,69 @@
       });
     });
 
-    /* ── 会诊对话:医生行整行现,PathBot 行逐字打出 ── */
+    /* ── 会诊对话:气泡剧场。医生泡弹出→打字点→PathBot 泡展开 ── */
     (function chat() {
       var box = document.getElementById("pb-chat");
       if (!box) return;
-      var rows = gsap.utils.toArray(box.querySelectorAll(".pb-chat-row"));
+      var rows = gsap.utils.toArray(box.querySelectorAll(".pb-bub-row"));
       var timers = [];
       var done = false;
+      function springIn(el, d) {
+        gsap.fromTo(el, { opacity: 0, y: 16, scale: .96 },
+          { opacity: 1, y: 0, scale: 1, duration: d || .5, ease: "back.out(1.5)", overwrite: true });
+      }
       function finishAll() {
         if (done) return;
         done = true;
         timers.forEach(clearTimeout);
         rows.forEach(function (r) {
-          r.classList.add("shown");
-          var m = r.querySelector(".pb-chat-msg");
-          if (m.dataset.full != null) { m.textContent = m.dataset.full; delete m.dataset.full; }
-          var c = m.querySelector(".pb-caret");
-          if (c) c.remove();
+          gsap.set(r, { opacity: 1, y: 0, scale: 1 });
+          var dots = r.querySelector(".pb-dots");
+          if (dots && r.dataset.msg != null) {
+            r.querySelector(".pb-bub").textContent = r.dataset.msg;
+            delete r.dataset.msg;
+          }
+          var tag = r.querySelector(".pb-bub-tag");
+          if (tag) gsap.set(tag, { opacity: 1 });
         });
       }
-      window.pbChatFinish = finishAll;   // 语言切换前先收尾,防止半行文本被快照
-      function typeRow(i) {
+      window.pbChatFinish = finishAll;
+      function playRow(i) {
         if (done || i >= rows.length) { done = true; return; }
         var row = rows[i];
-        var msg = row.querySelector(".pb-chat-msg");
-        row.classList.add("shown");
-        if (!row.classList.contains("is-bot")) {
-          timers.push(setTimeout(function () { typeRow(i + 1); }, 620));
+        var bub = row.querySelector(".pb-bub");
+        var tag = row.querySelector(".pb-bub-tag");
+        if (!row.classList.contains("from-bot")) {
+          springIn(row);
+          timers.push(setTimeout(function () { playRow(i + 1); }, 560));
           return;
         }
-        var full = msg.textContent;
-        msg.dataset.full = full;
-        msg.textContent = "";
-        var caret = document.createElement("i");
-        caret.className = "pb-caret";
-        msg.appendChild(caret);
-        var n = 0;
-        (function tick() {
+        // PathBot:先以打字点现身,再换正文,标签最后浮现
+        var msg = bub.textContent;
+        row.dataset.msg = msg;
+        bub.textContent = "";
+        var dots = document.createElement("span");
+        dots.className = "pb-dots";
+        dots.innerHTML = "<i></i><i></i><i></i>";
+        bub.appendChild(dots);
+        if (tag) gsap.set(tag, { opacity: 0 });
+        springIn(row);
+        timers.push(setTimeout(function () {
           if (done) return;
-          n += 1 + (full.length > 60 ? 1 : 0);      // 长句双倍速
-          if (n >= full.length) {
-            msg.textContent = full;
-            delete msg.dataset.full;
-            timers.push(setTimeout(function () { typeRow(i + 1); }, 480));
-            return;
+          delete row.dataset.msg;
+          bub.textContent = msg;
+          springIn(bub, .4);
+          if (tag) gsap.to(tag, { opacity: 1, duration: .4, delay: .25 });
+          if (msg.indexOf("REFUSE") === 0) {
+            gsap.fromTo(bub, { textShadow: "0 0 22px rgba(255,32,95,.9)" },
+              { textShadow: "0 0 0px rgba(255,32,95,0)", duration: 1.5, ease: "power2.out" });
           }
-          msg.textContent = full.slice(0, n);
-          msg.appendChild(caret);
-          timers.push(setTimeout(tick, 24));
-        })();
+          timers.push(setTimeout(function () { playRow(i + 1); }, 640));
+        }, 820));
       }
       ScrollTrigger.create({
         trigger: box, start: "top 78%", once: true,
-        onEnter: function () { typeRow(0); }
+        onEnter: function () { playRow(0); }
       });
     })();
 

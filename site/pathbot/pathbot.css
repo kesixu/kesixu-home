@@ -29,8 +29,9 @@
 @font-face { font-family: "PB Grot"; src: url("/pathbot/fonts/hanken-200.woff2") format("woff2"); font-weight: 200; font-display: swap; }
 @font-face { font-family: "PB Grot"; src: url("/pathbot/fonts/hanken-300.woff2") format("woff2"); font-weight: 300 400; font-display: swap; }
 @font-face { font-family: "PB Grot"; src: url("/pathbot/fonts/hanken-500.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
-@font-face { font-family: "PB Sans"; src: url("/pathbot/fonts/nsans-300.woff2") format("woff2"); font-weight: 200 400; font-display: swap; }
-@font-face { font-family: "PB Sans"; src: url("/pathbot/fonts/nsans-500.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
+@font-face { font-family: "PB Sans"; src: url("/pathbot/fonts/misans-200.woff2") format("woff2"); font-weight: 200; font-display: swap; }
+@font-face { font-family: "PB Sans"; src: url("/pathbot/fonts/misans-300.woff2") format("woff2"); font-weight: 300 400; font-display: swap; }
+@font-face { font-family: "PB Sans"; src: url("/pathbot/fonts/misans-500.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
 @font-face { font-family: "PB Mono"; src: url("/pathbot/fonts/plexmono-300.woff2") format("woff2"); font-weight: 300 400; font-display: swap; }
 @font-face { font-family: "PB Mono"; src: url("/pathbot/fonts/plexmono-500.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
 
@@ -68,7 +69,8 @@ html.no-fx .rv { opacity: 1; transform: none; }
 }
 .pb-nav-home { color: var(--gray-light); min-height: 40px; display: inline-flex; align-items: center; }
 .pb-nav-home:hover { color: var(--light); }
-.pb-wordmark { letter-spacing: 3px; font-weight: 400; white-space: nowrap; }
+.pb-wordmark { letter-spacing: 3px; font-weight: 400; white-space: nowrap; display: inline-flex; align-items: center; gap: 10px; }
+.pb-logo { display: block; width: 26px; height: 26px; }
 .pb-nav-right { display: flex; align-items: center; gap: 14px; }
 .pb-lang {
   min-width: 44px; min-height: 40px;
@@ -95,6 +97,13 @@ html.no-fx .rv { opacity: 1; transform: none; }
   letter-spacing: 2px; text-transform: uppercase;
   color: var(--gray-light); margin-bottom: 28px;
 }
+/* 眉线:揭示完成后自左向右画出 */
+.pb-eyebrow::before {
+  content: ""; display: inline-block; vertical-align: middle;
+  width: 0; height: 1px; margin-right: 0; background: var(--gray-medium);
+  transition: width .7s cubic-bezier(.4, 0, .2, 1) .1s, margin-right .7s cubic-bezier(.4, 0, .2, 1) .1s;
+}
+.seen .pb-eyebrow::before, .pb-eyebrow.seen::before { width: 34px; margin-right: 12px; }
 .pb-h0 {
   font-weight: 200; letter-spacing: -.03em;
   font-size: 6.5rem; line-height: 1.12;
@@ -163,35 +172,60 @@ html.no-fx .rv { opacity: 1; transform: none; }
 .lg-oth i { color: var(--c-oth); } .lg-dead i { color: var(--c-dead); }
 .pb-legend-note { font-size: .7rem; letter-spacing: 2px; color: var(--gray-medium); }
 
-/* ── 会诊对话:终端式逐字打出,hairline 行,无气泡 ── */
-.pb-chat { margin-top: 44px; max-width: 760px; border-top: 1px solid var(--hair); }
-.pb-chat-row {
-  display: grid; grid-template-columns: 6.5em 1fr; gap: 18px;
-  padding: 18px 0; border-bottom: 1px solid var(--hair-soft);
+/* ── 会诊对话:气泡剧场。医生右、PathBot 左,打字点先行 ── */
+.pb-chat { margin-top: 44px; max-width: 720px; }
+.pb-bub-row { display: flex; margin: 16px 0; }
+.pb-bub-row.from-doc { justify-content: flex-end; }
+.pb-bub-col { max-width: 82%; }
+.pb-bub {
+  display: inline-block; max-width: 100%;
+  padding: 13px 20px; border-radius: 22px;
+  font-size: 1.08rem; line-height: 1.85; font-weight: 300;
 }
-.pb-chat-role {
-  font-family: var(--mono); font-size: .7rem; font-weight: 500;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: var(--gray-medium); padding-top: .35em;
+.from-doc .pb-bub {
+  background: var(--light); color: #14120E;
+  border-bottom-right-radius: 6px; max-width: 78%;
 }
-.pb-chat-row.is-bot .pb-chat-role { color: var(--pass); }
-.pb-chat-msg {
-  font-family: var(--mono); font-size: .95rem; line-height: 1.9;
-  color: var(--light); min-height: 1.9em;
+.from-bot .pb-bub {
+  background: #14181E; border: 1px solid var(--hair-soft);
+  color: var(--light); border-bottom-left-radius: 6px;
 }
-.pb-chat-row:not(.is-bot) .pb-chat-msg { color: var(--gray-light); }
-html.fx .pb-chat-row { opacity: 0; }
-html.fx .pb-chat-row.shown { opacity: 1; transition: opacity .3s; }
-html.no-fx .pb-chat-row { opacity: 1; }
-.pb-caret {
-  display: inline-block; width: .55em; height: 1.05em;
-  background: var(--pass); vertical-align: -.12em; margin-left: 2px;
-  animation: pb-blink 1.05s steps(1) infinite;
+.pb-bub-tag {
+  margin: 9px 0 0 8px;
+  font-size: .68rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--pass);
 }
-@keyframes pb-blink { 50% { opacity: 0; } }
+html.fx .pb-bub-row { opacity: 0; }
+html.no-fx .pb-bub-row { opacity: 1; }
+/* 打字点:对话语言的原生动效 */
+.pb-dots { display: inline-flex; gap: 6px; align-items: center; height: 1.3em; }
+.pb-dots i {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--gray-light); display: inline-block;
+  animation: pb-dot 1s ease-in-out infinite;
+}
+.pb-dots i:nth-child(2) { animation-delay: .16s; }
+.pb-dots i:nth-child(3) { animation-delay: .32s; }
+@keyframes pb-dot { 40% { transform: translateY(-5px); opacity: 1; } 80% { opacity: .45; } }
 @media (max-width: 479px) {
-  .pb-chat-row { grid-template-columns: 1fr; gap: 6px; padding: 15px 0; }
-  .pb-chat-msg { font-size: .9rem; }
+  .pb-bub { font-size: .98rem; padding: 11px 16px; }
+  .pb-bub-col { max-width: 92%; }
+  .from-doc .pb-bub { max-width: 88%; }
+}
+
+/* ── 三支柱条:hairline 顶线三列 ── */
+.pb-why-strip {
+  list-style: none; margin-top: clamp(48px, 8vh, 84px);
+  display: grid; grid-template-columns: 1fr; gap: 0;
+}
+.pb-why-strip li {
+  border-top: 1px solid var(--hair); padding: 22px 0;
+  display: grid; gap: 4px;
+}
+.pb-why-strip b { font-weight: 500; font-size: 1.15rem; color: var(--light); }
+.pb-why-strip span { font-size: .95rem; color: var(--gray-light); }
+@media (min-width: 760px) {
+  .pb-why-strip { grid-template-columns: repeat(3, 1fr); gap: 40px; }
 }
 
 /* ── 章节:noetik 的巨幅垂直留白 ── */
