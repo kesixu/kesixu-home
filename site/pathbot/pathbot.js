@@ -191,7 +191,7 @@
         var tag = row.querySelector(".pb-bub-tag");
         if (!row.classList.contains("from-bot")) {
           springIn(row);
-          timers.push(setTimeout(function () { playRow(i + 1); }, 560));
+          timers.push(setTimeout(function () { playRow(i + 1); }, 380));
           return;
         }
         // PathBot:先以打字点现身,再换正文,标签最后浮现
@@ -214,11 +214,11 @@
             gsap.fromTo(bub, { textShadow: "0 0 22px rgba(255,32,95,.9)" },
               { textShadow: "0 0 0px rgba(255,32,95,0)", duration: 1.5, ease: "power2.out" });
           }
-          timers.push(setTimeout(function () { playRow(i + 1); }, 640));
-        }, 820));
+          timers.push(setTimeout(function () { playRow(i + 1); }, 400));
+        }, 520));
       }
       ScrollTrigger.create({
-        trigger: box, start: "top 78%", once: true,
+        trigger: box, start: "top 88%", once: true,
         onEnter: function () { playRow(0); }
       });
     })();
@@ -239,8 +239,8 @@
         if (document.hidden) return;
         ci = (ci + 1) % CASES.length;
         var cs = CASES[ci];
-        gsap.to(barB, { width: cs.b * 100 + "%", duration: .7, ease: "power2.out" });
-        gsap.to(barK, { width: cs.k * 100 + "%", duration: .7, ease: "power2.out" });
+        gsap.to(barB, { width: cs.b * 100 + "%", duration: .35, ease: "power2.out" });
+        gsap.to(barK, { width: cs.k * 100 + "%", duration: .35, ease: "power2.out" });
         valB.textContent = cs.b.toFixed(2);
         valK.textContent = cs.k.toFixed(2);
         chip.textContent = cs.w;

@@ -14,7 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="/pathbot/assets/icon.svg">
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/hanken-200.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/misans-300.woff2" crossorigin>
-<link rel="stylesheet" href="/pathbot/pathbot.css?v=14">
+<link rel="stylesheet" href="/pathbot/pathbot.css?v=15">
 </head>
 <body>
 
@@ -74,7 +74,7 @@
         <li class="lg-oth"><i></i><span data-en="Other">其他</span><b>28</b></li>
         <li class="lg-dead"><i></i><span data-en="Dead">死亡</span><b>14</b></li>
       </ul>
-      <p class="pb-legend-note mono" data-en="TUMOR-STROMA RATIO 0.346 · TUMOR ÷ STROMA COUNT">肿瘤间质比 0.346 · 肿瘤核数 ÷ 间质核数</p>
+      <p class="pb-legend-note mono" data-en="TUMOR-STROMA RATIO 0.346 · TUMOR ÷ (TUMOR + STROMA)">肿瘤间质比 0.346 · 肿瘤 ÷（肿瘤＋间质）</p>
     </aside>
   </div>
 </section>
@@ -167,7 +167,7 @@
         <div class="pb-meter"><span>β</span><span class="pb-meter-track"><i class="pb-meter-bar" id="pb-bar-b" data-fill="82"></i></span><b id="pb-val-b" data-mval="0.82">0.00</b></div>
         <div class="pb-meter"><span>κ</span><span class="pb-meter-track"><i class="pb-meter-bar" id="pb-bar-k" data-fill="74"></i></span><b id="pb-val-k" data-mval="0.74">0.00</b></div>
         <p class="pb-verdict"><span id="pb-vchip" class="v-pass">CONFIDENT</span></p>
-        <p class="pb-verdict-rule" data-en="Rule of thumb: both high → CONFIDENT · both low → INDETERMINATE · κ collapses alone → ESCALATE">判决口径：双高 → CONFIDENT · 双低 → INDETERMINATE · κ 独崩 → ESCALATE</p>
+        <p class="pb-verdict-rule" data-en="Rule of thumb: both high → CONFIDENT · local drift → ANOMALY FLAG · both low → INDETERMINATE · κ collapses alone → ESCALATE">判决口径：双高 → CONFIDENT · 局部偏离 → ANOMALY FLAG · 双低 → INDETERMINATE · κ 独崩 → ESCALATE</p>
       </div>
     </figure>
   </div>
@@ -207,11 +207,11 @@
     <p data-en="Everything below is a real capture: detections actually computed, replies actually written — 3.79s a turn. Token at the door.">下面全是实拍：检测标注是真跑出来的，中文回复是真答的，3.79 秒一条。进门要令牌。</p>
   </div>
   <figure class="pb-frame rv">
-    <img src="/pathbot/media/gallery-analysis.webp" alt="PathBot 实拍:阅片器上叠加 2147 个细胞核的彩色检测标注,右侧对话栏输出中文临床分析" loading="lazy" width="2560" height="1600">
+    <a href="/pathbot/media/gallery-analysis.webp" target="_blank" rel="noopener"><img src="/pathbot/media/gallery-analysis.webp" alt="PathBot 实拍:阅片器上叠加 2147 个细胞核的彩色检测标注,右侧对话栏输出中文临床分析" loading="lazy" width="2560" height="1600"></a>
   </figure>
   <div class="pb-duo rv">
-    <img src="/pathbot/media/gallery-chat.webp" alt="实拍对话:中文提问后 3.79 秒收到含元数据表格与置信度徽章的真实回复" loading="lazy" width="864" height="1400">
-    <img src="/pathbot/media/gallery-zoom.webp" alt="实拍深缩放:细胞核形态与染色质纹理清晰可辨" loading="lazy" width="1600" height="1600">
+    <a href="/pathbot/media/gallery-chat.webp" target="_blank" rel="noopener"><img src="/pathbot/media/gallery-chat.webp" alt="实拍对话:中文提问后 3.79 秒收到含元数据表格与置信度徽章的真实回复" loading="lazy" width="864" height="1400"></a>
+    <a href="/pathbot/media/gallery-zoom.webp" target="_blank" rel="noopener"><img src="/pathbot/media/gallery-zoom.webp" alt="实拍深缩放:细胞核形态与染色质纹理清晰可辨" loading="lazy" width="1600" height="1600"></a>
   </div>
 </section>
 
@@ -255,6 +255,19 @@
   </ul>
 </section>
 
+<!-- ═══ 路线:现在到哪一步 ═══ -->
+<section class="pb-sec" id="road" data-scene="8.5">
+  <div class="pb-edit rv">
+    <p class="pb-eyebrow mono" data-en="WHERE IT STANDS">现在到哪一步</p>
+    <h2 data-en="One person, three honest steps.">一个人，三步走，不吹进度。</h2>
+  </div>
+  <ul class="pb-cap pb-road rv">
+    <li><b class="mono">01 · <span data-en="NOW">现在</span></b><span data-en="Research preview, invite-only beta. The trust engine, the models and the audit trail all run today.">研究预览，邀请制内测。信任引擎、模型、审计轨迹今天都在跑。</span></li>
+    <li><b class="mono">02 · <span data-en="NEXT">下一步</span></b><span data-en="Paper through review and published; evidence base re-validated entry by entry with pathologists.">论文过评审即公开；证据库和病理专家一条条复核完。</span></li>
+    <li><b class="mono">03 · <span data-en="THEN">然后</span></b><span data-en="Pre-clinical research pilots with labs and departments — that conversation starts with an email below.">和实验室、科室做临床前研究试点——这一步，从下面这封邮件开始谈。</span></li>
+  </ul>
+</section>
+
 <!-- ═══ 送检 ═══ -->
 <section class="pb-sec pb-access" id="access" data-scene="9">
   <div class="pb-edit rv">
@@ -282,6 +295,6 @@
 
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/pathbot/pathbot.js?v=11" defer></script>
+<script src="/pathbot/pathbot.js?v=12" defer></script>
 </body>
 </html>

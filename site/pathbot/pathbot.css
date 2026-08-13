@@ -315,6 +315,8 @@ html.no-fx .pb-bub-row { opacity: 1; }
 .pb-cap li b { font-weight: 300; font-size: 1.35rem; line-height: 2rem; color: var(--light); }
 .pb-cap li span { color: var(--gray-light); font-size: 1.1rem; line-height: 1.9rem; }
 .pb-cap-dim li { padding: 16px 0; }
+.pb-road li b { font-family: var(--mono); font-size: .8rem; letter-spacing: 2px; color: var(--pass); }
+.pb-frame a, .pb-duo a { display: block; cursor: zoom-in; }
 
 /* ── 免责:noetik text-legal 素净 ── */
 .pb-disc { margin-top: 40px; border-top: 1px solid var(--hair); padding-top: 26px; max-width: 760px; }
