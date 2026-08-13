@@ -277,6 +277,9 @@ html.no-fx .pb-bub-row { opacity: 1; }
 
 .pb-cite-claim { font-family: var(--grot); font-weight: 300; font-size: 1.35rem; line-height: 2.1rem; color: var(--light); }
 .pb-cite-lr { color: var(--warn); font-size: .85rem; margin: 12px 0 16px; letter-spacing: 1px; }
+.pb-cite-note { display: block; font-style: normal; color: var(--gray-light); font-size: .72rem; margin-top: 6px; letter-spacing: .5px; }
+.pb-cite-src a { color: var(--link); transition: color .25s; display: inline-block; padding-block: 8px; margin-block: -8px; }
+.pb-cite-src a:hover { color: var(--light); }
 .pb-cite-src { border-top: 1px solid var(--hair-soft); padding-top: 14px; font-size: .8rem; letter-spacing: 1px; color: var(--link); }
 .pb-cite-src .pb-chev { color: var(--link); }
 

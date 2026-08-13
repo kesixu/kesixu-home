@@ -14,12 +14,12 @@
 <link rel="icon" type="image/svg+xml" href="/pathbot/assets/icon.svg">
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/hanken-200.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/misans-300.woff2" crossorigin>
-<link rel="stylesheet" href="/pathbot/pathbot.css?v=12">
+<link rel="stylesheet" href="/pathbot/pathbot.css?v=13">
 </head>
 <body>
 
 <nav class="pb-nav" id="pb-nav">
-  <a class="pb-nav-home" href="/" data-en="← kesixu.com">← 划亮</a>
+  <a class="pb-nav-home" href="/" data-en="← kesixu.com">← kesixu.com</a>
   <span class="pb-wordmark"><img src="/pathbot/assets/icon.svg" alt="" class="pb-logo" width="26" height="26">PATHBOT</span>
   <div class="pb-nav-right">
     <button class="pb-lang mono" id="pb-lang" type="button" aria-label="Switch language / 切换语言">EN</button>
@@ -74,7 +74,7 @@
         <li class="lg-oth"><i></i><span data-en="Other">其他</span><b>28</b></li>
         <li class="lg-dead"><i></i><span data-en="Dead">死亡</span><b>14</b></li>
       </ul>
-      <p class="pb-legend-note mono" data-en="TUMOR-STROMA RATIO 0.346">肿瘤间质比 0.346</p>
+      <p class="pb-legend-note mono" data-en="TUMOR-STROMA RATIO 0.346 · TUMOR ÷ STROMA COUNT">肿瘤间质比 0.346 · 肿瘤核数 ÷ 间质核数</p>
     </aside>
   </div>
 </section>
@@ -164,8 +164,8 @@
     <figure class="pb-row-viz" aria-hidden="true">
       <div class="pb-card pb-cofact mono">
         <p class="pb-viz-cap" data-en="COFACT VERDICT">CoFaCT 判决</p>
-        <div class="pb-meter"><span>β</span><span class="pb-meter-track"><i class="pb-meter-bar" data-fill="82"></i></span><b data-mval="0.82">0.00</b></div>
-        <div class="pb-meter"><span>κ</span><span class="pb-meter-track"><i class="pb-meter-bar" data-fill="74"></i></span><b data-mval="0.74">0.00</b></div>
+        <div class="pb-meter"><span>β</span><span class="pb-meter-track"><i class="pb-meter-bar" id="pb-bar-b" data-fill="82"></i></span><b id="pb-val-b" data-mval="0.82">0.00</b></div>
+        <div class="pb-meter"><span>κ</span><span class="pb-meter-track"><i class="pb-meter-bar" id="pb-bar-k" data-fill="74"></i></span><b id="pb-val-k" data-mval="0.74">0.00</b></div>
         <p class="pb-verdict"><span id="pb-vchip" class="v-pass">CONFIDENT</span></p>
       </div>
     </figure>
@@ -181,8 +181,8 @@
       <div class="pb-card pb-cite">
         <p class="pb-viz-cap mono" data-en="EVIDENCE">循证条目</p>
         <p class="pb-cite-claim">E-cadherin(−) → 浸润性小叶癌</p>
-        <p class="pb-cite-lr mono">LR = 38.3</p>
-        <p class="pb-cite-src mono">Pai et al. 2013 · PMC3681051 <i class="pb-chev">›</i></p>
+        <p class="pb-cite-lr mono">LR = 38.3<i class="pb-cite-note" data-en="— this one finding multiplies the odds ~38×">——这一条证据,把诊断几率放大约 38 倍</i></p>
+        <p class="pb-cite-src mono"><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3681051/" target="_blank" rel="noopener">Pai et al. 2013 · PMC3681051 <i class="pb-chev">›</i></a></p>
       </div>
     </figure>
   </div>
@@ -194,7 +194,7 @@
     <p class="pb-eyebrow mono" data-en="OUT-OF-DISTRIBUTION BLIND TEST">域外盲测</p>
     <p class="pb-blank-big"><b class="mono" data-count="20">0</b><span class="mono">/20</span></p>
     <h2 data-en="Twenty slides it had never seen. Twenty times it said &quot;indeterminate&quot; — even though blind guessing would have scored ninety percent.">20 张没见过的片子，它 20 次都答「不确定」——哪怕闭着眼猜，也能蒙对九成。</h2>
-    <p data-en="It would rather hand in a blank sheet than fake confidence. In medical AI, that beats a pretty accuracy number.">它宁可交白卷，也不装懂。做医疗 AI，这比一个好看的准确率值钱得多。</p>
+    <p data-en="It would rather hand in a blank sheet than fake confidence. Twenty cases is a small sample — but zero guesses. In medical AI, that beats a pretty accuracy number.">它宁可交白卷，也不装懂。二十例不算大样本，但一题都没蒙——做医疗 AI，这比好看的准确率值钱得多。</p>
   </div>
 </section>
 
@@ -233,7 +233,7 @@
   <ul class="pb-cap rv">
     <li><b data-en="Imaging foundation">影像底座</b><span data-en="TIAtoolbox + OpenSlide deep zoom — .svs, .ndpi, .mrxs, .dcm all open straight away">TIAtoolbox 加 OpenSlide，主流全切片格式直接开：.svs、.ndpi、.mrxs、.dcm 都行</span></li>
     <li><b data-en="Pathology-native models">病理专用模型</b><span data-en="HoVerNet and KongNet count, segment and classify nuclei; tissue typing; even mutation cues straight from H&amp;E (MSI / BRAF / TP53)">HoVerNet、KongNet 这些病理老手：数核、分割、分类，还能从 H&amp;E 里直接找基因突变的线索（MSI / BRAF / TP53）</span></li>
-    <li><b data-en="PD-L1, Ki-67, HER2 and Allred threshold alerts. To be clear: you do the counting; it checks the cut-offs and how close you are to one. It does not score slides for you.">PD-L1、Ki-67、HER2、Allred 的阈值预警。话说在前面：数是你数的，它帮你核对够不够线、离线有多近——它不替你打分。</span></li>
+    <li><b data-en="Clinical threshold sentinel">临床阈值哨兵</b><span data-en="PD-L1, Ki-67, HER2 and Allred threshold alerts. To be clear: you do the counting; it checks the cut-offs and how close you are to one. It does not score slides for you.">PD-L1、Ki-67、HER2、Allred 的阈值预警。话说在前面：数是你数的，它帮你核对够不够线、离线有多近——它不替你打分。</span></li>
     <li><b data-en="Private by default">默认私有</b><span data-en="Everything runs on your own machine by default — data never leaves. Cloud models are optional, and the UI says so whenever one is on.">默认全在本机跑，数据不出门。想用云端模型也行，开了它会明说。</span></li>
   </ul>
 </section>
@@ -273,7 +273,7 @@
     </div>
     <div>
       <p class="pb-foot-h mono" data-en="CONTACT">联系</p>
-      <p><a href="mailto:email@kesixu.com">email [at] kesixu.com</a><br><a href="/" data-en="kesixu.com — the lamp room">kesixu.com · 划亮</a></p>
+      <p><a href="mailto:email@kesixu.com">email [at] kesixu.com</a><br><a href="/" data-en="kesixu.com — more of my work">kesixu.com · 我的其他作品</a></p>
     </div>
   </div>
   <p class="pb-foot-fine" data-en="No tracking, no third parties. Every video and screenshot is the real product. © 2026 Kesi Xu">页面没有追踪，没有第三方。视频和截图，全是真实产品。© 2026 徐可斯</p>
@@ -281,6 +281,6 @@
 
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/pathbot/pathbot.js?v=9" defer></script>
+<script src="/pathbot/pathbot.js?v=10" defer></script>
 </body>
 </html>

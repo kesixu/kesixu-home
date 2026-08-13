@@ -76,7 +76,7 @@
     gsap.utils.toArray(".rv").forEach(function (el) {
       gsap.to(el, {
         opacity: 1, y: 0, duration: .8, ease: "power2.out",
-        scrollTrigger: { trigger: el, start: "top 85%", once: true },
+        scrollTrigger: { trigger: el, start: "top 105%", once: true },
         onComplete: function () { el.classList.add("seen"); }
       });
     });
@@ -112,7 +112,7 @@
         trigger: el, start: "top 92%", once: true,
         onEnter: function () {
           gsap.to(obj, {
-            v: target, duration: 0.9, ease: "power3.out",
+            v: target, duration: 0.5, ease: "power3.out",
             onUpdate: function () { el.textContent = Math.round(obj.v); }
           });
           if (big) {
@@ -229,18 +229,31 @@
       });
     })();
 
-    /* ── 判决轮换:纯换字换色,不弹跳 ── */
+    /* ── CoFaCT 循环:数值、注条、判决词同步换"病例",不再各说各话 ── */
     var chip = document.getElementById("pb-vchip");
-    if (chip) {
-      var STATES = [["CONFIDENT", "v-pass"], ["ANOMALY FLAG", "v-warn"], ["INDETERMINATE", "v-indet"], ["ESCALATE", "v-esc"]];
-      var si = 0;
+    var barB = document.getElementById("pb-bar-b"), barK = document.getElementById("pb-bar-k");
+    var valB = document.getElementById("pb-val-b"), valK = document.getElementById("pb-val-k");
+    if (chip && barB && barK) {
+      var CASES = [
+        { b: 0.82, k: 0.74, w: "CONFIDENT", c: "v-pass" },
+        { b: 0.66, k: 0.71, w: "ANOMALY FLAG", c: "v-warn" },
+        { b: 0.41, k: 0.35, w: "INDETERMINATE", c: "v-indet" },
+        { b: 0.72, k: 0.22, w: "ESCALATE", c: "v-esc" }
+      ];
+      var ci = 0;
       setInterval(function () {
         if (document.hidden) return;
-        si = (si + 1) % STATES.length;
-        chip.textContent = STATES[si][0];
-        chip.className = STATES[si][1];
-      }, 2800);
+        ci = (ci + 1) % CASES.length;
+        var cs = CASES[ci];
+        gsap.to(barB, { width: cs.b * 100 + "%", duration: .7, ease: "power2.out" });
+        gsap.to(barK, { width: cs.k * 100 + "%", duration: .7, ease: "power2.out" });
+        valB.textContent = cs.b.toFixed(2);
+        valK.textContent = cs.k.toFixed(2);
+        chip.textContent = cs.w;
+        chip.className = cs.c;
+      }, 3200);
     }
+
   } catch (err) {
     toStatic();
   }
