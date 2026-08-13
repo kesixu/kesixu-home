@@ -71,6 +71,8 @@
     var lines = gsap.utils.toArray(".pb-h0 .ln, .pb-h0-en");
     gsap.set(lines, { yPercent: 110 });
     gsap.to(lines, { yPercent: 0, duration: 1, ease: "power4.out", stagger: .1, delay: .15 });
+    var heroArt = document.querySelector(".pb-hero-art");
+    if (heroArt) requestAnimationFrame(function () { heroArt.classList.add("shown"); });
 
     /* ── 通用揭示:安静淡入;完成后打 seen,眉线自绘 ── */
     gsap.utils.toArray(".rv").forEach(function (el) {

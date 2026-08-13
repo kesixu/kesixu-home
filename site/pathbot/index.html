@@ -14,7 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="/pathbot/assets/icon.svg">
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/hanken-200.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/misans-300.woff2" crossorigin>
-<link rel="stylesheet" href="/pathbot/pathbot.css?v=16">
+<link rel="stylesheet" href="/pathbot/pathbot.css?v=17">
 </head>
 <body>
 
@@ -29,6 +29,7 @@
 
 <!-- ═══ 开卷 · 宣言 ═══ -->
 <header class="pb-hero" data-scene="0">
+  <div class="pb-hero-copy">
   <p class="pb-eyebrow mono rv" data-en="A PATHOLOGY CONSULTATION, CONDUCTED HONESTLY">一场诚实的病理会诊</p>
   <h1 class="pb-h0">
     <span class="ln" data-en-html="The pathology AI">会说<em>「不知道」</em>的</span>
@@ -40,6 +41,10 @@
     <a class="pb-pill" href="#exhibit-a"><span data-en="Watch the real demo">观看真实演示</span><i class="pb-chev" aria-hidden="true">›</i></a>
     <a class="pb-pill pb-pill-ghost" href="#access"><span data-en="Hand it a slide">递一张片子试试</span><i class="pb-chev" aria-hidden="true">›</i></a>
   </div>
+  </div>
+  <figure class="pb-hero-art" aria-hidden="true">
+    <img src="/pathbot/media/hero-if.webp" alt="" fetchpriority="high" decoding="async" width="1050" height="1400">
+  </figure>
 </header>
 
 <!-- ═══ 为什么做它:痛点 → 答案 ═══ -->
@@ -54,6 +59,23 @@
     <li><b data-en="Every verdict auditable">每个判决可审计</b><span data-en="Scored against CAP/WHO graphs, trail saved">对照 CAP/WHO 打分，轨迹全留</span></li>
     <li><b data-en="Every claim cited">每条结论有出处</b><span data-en="PubMed-linked evidence, or it won't load">证据挂着 PubMed，没引用不加载</span></li>
   </ul>
+</section>
+
+
+<!-- ═══ 它看的世界:五张切片,同一双眼睛 ═══ -->
+<section class="pb-sec" id="worldview" data-scene="0.8">
+  <div class="pb-edit rv">
+    <p class="pb-eyebrow mono" data-en="THE WORLD IT READS · TCGA OPEN SLIDES">它看的世界 · TCGA 公开切片</p>
+    <h2 data-en="Five views of one tissue. One pair of eyes.">同一块组织的五种看法，同一双眼睛。</h2>
+  </div>
+  <ul class="pb-strip rv" aria-label="切片示例">
+    <li><img src="/pathbot/media/strip-he.webp" alt="H&amp;E 染色结肠息肉全景" loading="lazy" width="800" height="800"><span class="mono" data-en="H&amp;E · POLYP">H&amp;E · 息肉冠</span></li>
+    <li><img src="/pathbot/media/strip-gland.webp" alt="结肠腺体柱状上皮" loading="lazy" width="800" height="800"><span class="mono" data-en="H&amp;E · GLANDS">H&amp;E · 腺体区</span></li>
+    <li><img src="/pathbot/media/strip-muscle.webp" alt="平滑肌层丝绸状纤维" loading="lazy" width="800" height="800"><span class="mono" data-en="H&amp;E · MUSCLE">H&amp;E · 肌层</span></li>
+    <li><img src="/pathbot/media/strip-ihc.webp" alt="IHC 棕染肌层" loading="lazy" width="800" height="800"><span class="mono" data-en="IHC · DAB">IHC · 棕染</span></li>
+    <li><img src="/pathbot/media/strip-if.webp" alt="免疫荧光暗场组织" loading="lazy" width="800" height="800"><span class="mono" data-en="IMMUNOFLUORESCENCE">免疫荧光</span></li>
+  </ul>
+  <p class="pb-strip-note mono rv" data-en="RENDERED FROM PUBLIC TCGA TISSUE · DETECTIONS IN THE GALLERY BELOW ARE REAL">组织图取自公开 TCGA 切片 · 下方画廊里的检测标注是真跑出来的</p>
 </section>
 
 <!-- ═══ 附件 A · 真实录屏 ═══ -->
@@ -295,6 +317,6 @@
 
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/pathbot/pathbot.js?v=13" defer></script>
+<script src="/pathbot/pathbot.js?v=14" defer></script>
 </body>
 </html>
