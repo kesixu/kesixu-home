@@ -56,6 +56,7 @@
 - 主句：灯为君留
 - 小注：有朋自远方来——来信，即复
 - 邮箱：email@kesixu.com ／ GitHub：github.com/kesixu
+- 简历按钮（联系方式下方）：简历 · 切片志 ↗ → resume.kesixu.com（变焦互动版,内含正式 PDF）
 - 页脚：此页无追踪、无埋点、无第三方<br>一砖一瓦，皆是手作
 - 落款：© 2026 徐可斯
 
@@ -72,4 +73,4 @@
 - 学校+年份+雇主的可拼接组合（学历单独表述"英国华威大学计算机博士"允许——2026-07-19 站主拍板）
 - 服务器/托管细节
 - login-gated 私有子域名
-- **允许出现：** yinian.kesixu.com、gym.kesixu.com、textbook.kesixu.com
+- **允许出现：** yinian.kesixu.com、gym.kesixu.com、textbook.kesixu.com、resume.kesixu.com

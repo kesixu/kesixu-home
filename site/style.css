@@ -43,7 +43,7 @@
 
 @font-face {
   font-family: "LXGW WenKai";
-  src: url("/fonts/wenkai-subset.woff2?v=19") format("woff2");
+  src: url("/fonts/wenkai-subset.woff2?v=20") format("woff2");
   font-weight: 400 600;
   font-display: swap;
 }
@@ -928,6 +928,24 @@ a:focus-visible {
 }
 .reach a:hover { color: var(--gold); border-color: rgba(255, 210, 138, .7); }
 .reach .mail i { font-style: normal; opacity: .75; }
+
+/* 简历入口:联系方式下的一枚"名帖"。未点亮时如烬,引信过处随灯而明 */
+.cv-row { margin: 4.6vh 0 0; }
+.cv-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 48px; padding: 12px 30px;
+  border: 1px solid rgba(255, 169, 77, .30);
+  border-radius: 999px;
+  color: var(--amber);
+  font-size: 15.5px; letter-spacing: .18em;
+  transition: color .5s ease, border-color .5s ease, box-shadow .5s ease;
+}
+.cv-btn .ext { font-size: 12px; opacity: .7; }
+.cv-btn:hover, .cv-btn.lit {
+  color: var(--gold);
+  border-color: rgba(255, 210, 138, .65);
+  box-shadow: 0 0 22px -8px rgba(255, 169, 77, .55);
+}
 
 .fine {
   font-size: 12.5px;
