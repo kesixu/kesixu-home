@@ -6,6 +6,9 @@
    .fx 作用域：仅在 JS + 允许动效时才进入"待点亮"态。
    ============================================================ */
 
+/* SVG <defs> 容器（姓名渐变）:CSP style-src 'self' 禁内联 style,类承载定位 */
+.svg-defs { position: absolute; }
+
 :root {
   --ink:   #0d0b09;
   --ember: #b33a1e;

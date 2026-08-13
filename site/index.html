@@ -14,7 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="canonical" href="https://kesixu.com/">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/wenkai-subset.woff2?v=19" crossorigin>
-<link rel="stylesheet" href="/style.css?v=31">
+<link rel="stylesheet" href="/style.css?v=32">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"徐可斯","alternateName":"Kesi Xu","url":"https://kesixu.com/","sameAs":["https://github.com/kesixu"]}
 </script>
@@ -30,7 +30,7 @@
       <!-- 字形渲染走 SVG 渐变填充（万内核一致，真机 iOS 对
            background-clip:text 的合成层裁字从机制上不存在）。
            span 内保留透明真实字符撑排版/影子底稿/动画，SVG 只负责上色。 -->
-      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+      <svg width="0" height="0" class="svg-defs" aria-hidden="true"><defs>
         <linearGradient id="nameGradXu" x1="6%" y1="27%" x2="94%" y2="74%">
           <stop offset="0" stop-color="#5f594e"/><stop offset=".3" stop-color="#978d7a"/>
           <stop offset=".58" stop-color="#d8cfbd"/><stop offset=".84" stop-color="#f0dfc0"/>
@@ -167,6 +167,6 @@
 
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/main.js?v=21" defer></script>
+<script src="/main.js?v=22" defer></script>
 </body>
 </html>

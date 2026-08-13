@@ -160,6 +160,9 @@
     var MAXP = motionProfile.matchParticles;
     var frameInterval = 1000 / motionProfile.fps;
     var lastPaint = 0;
+    // FPS 自监控（与 WildfireScene 同款）：此前只有星图会自动降档，
+    // 火柴场景在低端机上只能硬扛开局预算——"不同手机效果不同"的主因之一。
+    var renderAverage = 0, slowFrames = 0, degradedThisRun = false;
     var nameEdge = 0; // 名字右缘（px），驻位锚定用；0 = 未测量
 
     // 预渲染光斑 sprite：金 / 琥珀 / 橙 / 烬红
@@ -191,6 +194,15 @@
     function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
     function seg(p, a, b) { return clamp01((p - a) / (b - a)); }
     function smooth(v) { return v * v * (3 - 2 * v); }
+
+    // 泪滴焰形：底部圆、顶部尖，tip 随 sway 偏摆。以 (0,0) 为焰根、向上为负。
+    function flamePath(w, h, sway) {
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(-w, -h * 0.28, -w * 0.62, -h * 0.72, sway, -h);
+      ctx.bezierCurveTo(w * 0.62 + sway * 0.4, -h * 0.72, w, -h * 0.28, 0, 0);
+      ctx.closePath();
+    }
 
     /* 火柴头位置/角度/火焰强度，全部是 phase 的纯函数（resize 免疫） */
     function matchState(p, t) {
@@ -394,6 +406,45 @@
         ctx.globalAlpha = st.inten * (0.55 + flick * 0.4);
         ctx.drawImage(sprites[0], hx - cs / 2, hy - 10 - cs / 2, cs, cs);
         ctx.globalAlpha = 1;
+
+        // 焰体：泪滴形双层（蓝根→琥珀→白热），贝塞尔轮廓随 flick 摆动。
+        // 立体感的主笔——此前火焰只有径向光晕+粒子，缺一个有形体的"火苗"。
+        // 真实火柴的焰根是蓝的（完全燃烧区），顶部亮白，摆动频率错开呼吸频率。
+        var fh = (26 + 30 * st.inten) * (0.92 + flick * 0.16);
+        var fw = fh * 0.46;
+        var sway = Math.sin(t / 173) * fw * 0.22 + Math.sin(t / 89) * fw * 0.1;
+        ctx.save();
+        ctx.translate(hx, hy - 5);
+        flamePath(fw, fh, sway);
+        var fg = ctx.createLinearGradient(0, 0, 0, -fh);
+        fg.addColorStop(0, "rgba(88,124,236,.36)");
+        fg.addColorStop(0.26, "rgba(255,120,50,.4)");
+        fg.addColorStop(0.72, "rgba(255,190,110,.5)");
+        fg.addColorStop(1, "rgba(255,190,110,0)");
+        ctx.fillStyle = fg;
+        ctx.globalAlpha = st.inten;
+        ctx.fill();
+        flamePath(fw * 0.5, fh * 0.62, sway * 0.6);
+        var ig = ctx.createLinearGradient(0, 0, 0, -fh * 0.62);
+        ig.addColorStop(0, "rgba(140,170,255,.32)");
+        ig.addColorStop(0.35, "rgba(255,226,172,.78)");
+        ig.addColorStop(1, "rgba(255,246,218,0)");
+        ctx.fillStyle = ig;
+        ctx.fill();
+        ctx.restore();
+
+        // 地面反光：头部下方一枚压扁的暖光椭圆，把光"放进"房间。
+        // 立体感的第二笔——光有了落点，黑屋子才有进深。
+        var by = hy + Math.min(H * 0.15, 84);
+        var bg = ctx.createRadialGradient(hx, by, 0, hx, by, R * 0.55);
+        bg.addColorStop(0, "rgba(255,140,66," + (0.085 * st.inten) + ")");
+        bg.addColorStop(1, "rgba(255,140,66,0)");
+        ctx.save();
+        ctx.translate(hx, by); ctx.scale(1, 0.3); ctx.translate(-hx, -by);
+        ctx.fillStyle = bg;
+        ctx.beginPath(); ctx.arc(hx, by, R * 0.55, 0, 6.2832); ctx.fill();
+        ctx.restore();
+        ctx.globalAlpha = 1;
       }
       var i, q, f, sp;
       for (i = 0; i < parts.length; i++) {
@@ -424,9 +475,22 @@
       var dt = Math.min((now - last) / 1000, 0.05); last = now;
       lastPaint = now;
       var st = matchState(phase, now);
+      var renderStart = performance.now();
       spawn(st, dt, now);
       step(dt, now);
       draw(st, now);
+      // 与 WildfireScene 同款 EMA 自监控：持续跑不动就当场降一档，
+      // 降档后重读预算（粒子上限/帧率/DPR），让中端机也稳定在"最佳可达"效果。
+      var cost = performance.now() - renderStart;
+      renderAverage = renderAverage ? renderAverage * 0.88 + cost * 0.12 : cost;
+      var costLimit = Math.min(13, frameInterval * 0.52);
+      slowFrames = renderAverage > costLimit ? slowFrames + 1 : Math.max(0, slowFrames - 2);
+      if (!degradedThisRun && slowFrames > 18 && motionProfile.degrade()) {
+        degradedThisRun = true;
+        MAXP = motionProfile.matchParticles;
+        frameInterval = 1000 / motionProfile.fps;
+        resize();
+      }
       raf = requestAnimationFrame(loop);
     }
 
