@@ -235,8 +235,13 @@
         { b: 0.72, k: 0.22, w: "ESCALATE", c: "v-esc" }
       ];
       var ci = 0;
+      var looping = false;
+      ScrollTrigger.create({
+        trigger: chip, start: "top 92%", once: true,
+        onEnter: function () { setTimeout(function () { looping = true; }, 2400); }
+      });
       setInterval(function () {
-        if (document.hidden) return;
+        if (document.hidden || !looping) return;
         ci = (ci + 1) % CASES.length;
         var cs = CASES[ci];
         gsap.to(barB, { width: cs.b * 100 + "%", duration: .35, ease: "power2.out" });

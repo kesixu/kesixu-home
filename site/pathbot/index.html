@@ -14,7 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="/pathbot/assets/icon.svg">
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/hanken-200.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/misans-300.woff2" crossorigin>
-<link rel="stylesheet" href="/pathbot/pathbot.css?v=15">
+<link rel="stylesheet" href="/pathbot/pathbot.css?v=16">
 </head>
 <body>
 
@@ -128,7 +128,7 @@
 <section class="pb-sec" data-scene="2">
   <div class="pb-edit rv">
     <h2 data-en="Every other medical AI demo shows off what it can answer. This one puts the work into when it must not.">别的医疗 AI 都在演示什么都能答。这一个，功夫全花在什么时候不答。</h2>
-    <p data-en="The trust engine runs outside the language model: 107 automated checks on duty, and the code, tests and audit trails all ship with the beta — ask and you can read every line. Not a polite line buried in a prompt.">管住它的那套信任引擎，在大模型外面单独跑：107 项自动化检查盯着；代码、测试、审计轨迹都随内测开放，来信就能逐行翻。不是在提示词里写句「请谨慎回答」就完事。</p>
+    <p data-en="The trust engine runs outside the language model: 107 automated checks on duty — and that checklist, with the code, tests and audit trails, ships with the beta. Ask and you can read every line. Not a polite line buried in a prompt.">管住它的那套信任引擎，在大模型外面单独跑：107 项自动化检查盯着——这份清单连同代码、测试、审计轨迹都随内测开放，来信就能逐行翻。不是在提示词里写句「请谨慎回答」就完事。</p>
   </div>
 </section>
 
@@ -159,11 +159,11 @@
     <div class="pb-row-copy">
       <p class="pb-eyebrow mono" data-en="STEP 02 · DURING EXECUTION">第二步 · 执行之中</p>
       <h3 data-en="Every step it takes is graded. Four verdicts, none of them vibes.">它干活的每一步，都有另一双眼睛打分。</h3>
-      <p data-en="Every tool call is scored against CAP/WHO guideline graphs (β); counterfactual probes test whether it actually used the evidence (κ). Judged on behaviour, never on its own word.">每次调工具，都对照 CAP/WHO 指南流程图打分（β）；再用反事实探针试它是不是真看了证据（κ）。只看它做了什么，不听它自己说。</p>
+      <p data-en="CoFaCT — conformance times counterfactual faithfulness. Every tool call is scored against CAP/WHO guideline graphs (β); counterfactual probes test whether it actually used the evidence (κ). Judged on behaviour, never on its own word.">CoFaCT，就是「流程符合 × 反事实忠实」：每次调工具，对照 CAP/WHO 指南流程图打分（β）；再用反事实探针试它是不是真看了证据（κ）。只看它做了什么，不听它自己说。</p>
     </div>
     <figure class="pb-row-viz" aria-hidden="true">
       <div class="pb-card pb-cofact mono">
-        <p class="pb-viz-cap" data-en="COFACT VERDICT">CoFaCT 判决</p>
+        <p class="pb-viz-cap" data-en="COFACT VERDICT · FOUR-STATE DEMO LOOP">CoFaCT 判决 · 四态演示轮播</p>
         <div class="pb-meter"><span>β</span><span class="pb-meter-track"><i class="pb-meter-bar" id="pb-bar-b" data-fill="82"></i></span><b id="pb-val-b" data-mval="0.82">0.00</b></div>
         <div class="pb-meter"><span>κ</span><span class="pb-meter-track"><i class="pb-meter-bar" id="pb-bar-k" data-fill="74"></i></span><b id="pb-val-k" data-mval="0.74">0.00</b></div>
         <p class="pb-verdict"><span id="pb-vchip" class="v-pass">CONFIDENT</span></p>
@@ -295,6 +295,6 @@
 
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/pathbot/pathbot.js?v=12" defer></script>
+<script src="/pathbot/pathbot.js?v=13" defer></script>
 </body>
 </html>
