@@ -42,6 +42,22 @@
     setLang(doc.getAttribute("lang") === "en" ? "zh" : "en");
   });
 
+  /* ── 汉堡菜单(≤1023px) ── */
+  var menuBtn = document.getElementById("pb-menu-btn");
+  var navLinks = document.getElementById("pb-nav-links");
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener("click", function () {
+      var open = doc.classList.toggle("menu-open");
+      menuBtn.setAttribute("aria-expanded", String(open));
+    });
+    navLinks.addEventListener("click", function (e) {
+      if (e.target.tagName === "A") {
+        doc.classList.remove("menu-open");
+        menuBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
   /* ── 导航滚动态 ── */
   var nav = document.getElementById("pb-nav");
   addEventListener("scroll", function () {

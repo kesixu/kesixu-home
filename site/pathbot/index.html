@@ -14,16 +14,25 @@
 <link rel="icon" type="image/svg+xml" href="/pathbot/assets/icon.svg?v=2">
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/hanken-200.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/pathbot/fonts/misans-300.woff2" crossorigin>
-<link rel="stylesheet" href="/pathbot/pathbot.css?v=17">
+<link rel="stylesheet" href="/pathbot/pathbot.css?v=19">
 </head>
 <body>
 
 <nav class="pb-nav" id="pb-nav">
-  <a class="pb-nav-home" href="/" data-en="← kesixu.com">← kesixu.com</a>
   <span class="pb-wordmark"><img src="/pathbot/assets/icon.svg?v=2" alt="" class="pb-logo" width="26" height="26">PATHBOT</span>
+  <div class="pb-nav-links" id="pb-nav-links">
+    <a href="#why" data-en="Why">为什么做</a>
+    <a href="#agentflow" data-en="How it works">怎么干活</a>
+    <a href="#consult" data-en="Consult">会诊对话</a>
+    <a href="#live" data-en="Live">实拍</a>
+    <a href="#road" data-en="Roadmap">路线</a>
+    <a class="pb-nav-apply" href="#access" data-en="Request access ›">申请内测 ›</a>
+    <a class="pb-nav-home" href="/" data-en="← kesixu.com">← kesixu.com</a>
+  </div>
   <div class="pb-nav-right">
     <button class="pb-lang mono" id="pb-lang" type="button" aria-label="Switch language / 切换语言">EN</button>
     <a class="pb-nav-cta" href="#access" data-en="Request access">申请内测</a>
+    <button class="pb-menu-btn" id="pb-menu-btn" type="button" aria-label="菜单" aria-expanded="false"><i></i><i></i></button>
   </div>
 </nav>
 
@@ -76,6 +85,36 @@
     <li><img src="/pathbot/media/strip-if.webp" alt="免疫荧光暗场组织" loading="lazy" width="800" height="800"><span class="mono" data-en="IMMUNOFLUORESCENCE">免疫荧光</span></li>
   </ul>
   <p class="pb-strip-note mono rv" data-en="RENDERED FROM PUBLIC TCGA TISSUE · DETECTIONS IN THE GALLERY BELOW ARE REAL">组织图取自公开 TCGA 切片 · 下方画廊里的检测标注是真跑出来的</p>
+</section>
+
+
+<!-- ═══ 它怎么干活:一条主轨,一条拒答支路 ═══ -->
+<section class="pb-sec" id="agentflow" data-scene="0.9">
+  <div class="pb-edit rv">
+    <p class="pb-eyebrow mono" data-en="HOW IT WORKS · THE REFUSE BRANCH IS THE POINT">它怎么干活 · 拒答支路才是重点</p>
+    <h2 data-en="One rail does the work. One branch says no.">一条轨干活，一条轨说不。</h2>
+  </div>
+  <figure class="pb-flowfig rv" aria-label="PathBot 工作流:验片分诊后,主轨执行工具、审计、装订引用出报告;不合格切片走拒答支路">
+    <svg viewBox="0 0 1240 300" class="pb-flow-svg" role="img">
+      <defs>
+        <pattern id="pb-dots" width="16" height="8" patternUnits="userSpaceOnUse">
+          <circle cx="4" cy="4" r="2" class="pb-dot"/>
+        </pattern>
+      </defs>
+      <path id="pb-main" class="pb-rail" d="M60 110 H1180" fill="none"/>
+      <rect class="pb-flowdots" x="60" y="106" width="1120" height="8" fill="url(#pb-dots)"/>
+      <path class="pb-branch" d="M284 110 V225 H420" fill="none"/>
+      <g class="pb-fnodes">
+        <g transform="translate(60,110)"><circle r="9"/><text y="-24" data-en="SLIDE IN">收片</text><text y="40" class="pb-fsub" data-en="WSI · any format">全切片 · 主流格式</text></g>
+        <g transform="translate(284,110)" class="pb-gate"><circle r="9"/><text y="-24" data-en="TRIAGE">验片</text><text y="40" class="pb-fsub" data-en="competence table">对照能力表</text></g>
+        <g transform="translate(508,110)"><circle r="9"/><text y="-24" data-en="TOOLS">跑工具</text><text y="40" class="pb-fsub" data-en="HoVerNet · KongNet …">HoVerNet · KongNet …</text></g>
+        <g transform="translate(732,110)"><circle r="9"/><text y="-24" data-en="AUDIT">受审</text><text y="40" class="pb-fsub" data-en="CoFaCT β · κ">CoFaCT β · κ</text></g>
+        <g transform="translate(956,110)"><circle r="9"/><text y="-24" data-en="CITE">装订引用</text><text y="40" class="pb-fsub" data-en="PubMed or drop">缺引用就不收</text></g>
+        <g transform="translate(1180,110)" class="pb-endok"><circle r="9"/><text y="-24" data-en="REPORT">出报告</text><text y="40" class="pb-fsub" data-en="verdict attached">带判决四态</text></g>
+        <g transform="translate(420,225)" class="pb-endno"><circle r="9"/><text y="5" x="26" class="pb-ftext-l" data-en="REFUSE — out of scope, in writing">REFUSE · 超纲，白纸黑字拒掉</text></g>
+      </g>
+    </svg>
+  </figure>
 </section>
 
 <!-- ═══ 附件 A · 真实录屏 ═══ -->
@@ -290,6 +329,22 @@
   </ul>
 </section>
 
+
+<!-- ═══ 作者 ═══ -->
+<section class="pb-sec" id="maker" data-scene="8.7">
+  <div class="pb-maker rv">
+    <a class="pb-maker-badge" href="https://resume.kesixu.com" target="_blank" rel="noopener" aria-label="看徐可斯的简历">
+      <img src="/pathbot/assets/icon.svg?v=2" alt="" width="72" height="72">
+    </a>
+    <div class="pb-maker-copy">
+      <p class="pb-eyebrow mono" data-en="THE MAKER">作者</p>
+      <h2 data-en="Kesi Xu — one pair of hands.">徐可斯，一个人的手笔。</h2>
+      <p data-en="A PhD student in computational pathology: studying how AI reads tissue by day, shipping it as a product by night. Seven papers, five first-author. Every line of code and every image on this page — one person.">计算病理方向的博士生：白天研究 AI 怎么看切片，晚上把它做成产品。七篇论文，五篇一作。这一页上的每行代码、每张图，都出自同一双手。</p>
+      <p class="pb-maker-links mono"><a href="https://resume.kesixu.com" target="_blank" rel="noopener" data-en="RESUME ›">看简历 ›</a><a href="mailto:email@kesixu.com" data-en="WRITE ›">来信 ›</a></p>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ 送检 ═══ -->
 <section class="pb-sec pb-access" id="access" data-scene="9">
   <div class="pb-edit rv">
@@ -317,6 +372,6 @@
 
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/pathbot/pathbot.js?v=14" defer></script>
+<script src="/pathbot/pathbot.js?v=15" defer></script>
 </body>
 </html>
