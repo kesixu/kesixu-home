@@ -1,0 +1,179 @@
+/* MatchPoint 产品页 v1 · 墨蓝球场 × 荧光球黄 × 产品橙
+   家族纪律:CSP 禁内联 style;reduced-motion 全静;字体自托管子集。 */
+:root {
+  --court: #0F1B2D;          /* 墨蓝场地 */
+  --court-2: #14243B;
+  --chalk: #F2EEE3;          /* 粉笔白 */
+  --chalk-dim: #A8B0BC;
+  --ball: #D9E84A;           /* 荧光球黄 */
+  --hot: #F08C3A;            /* 产品橙 */
+  --hair: rgba(242, 238, 227, .14);
+  --hair-soft: rgba(242, 238, 227, .08);
+  --grot: "MP Grot", "MP Sans", Arial, sans-serif;
+  --mono: "MP Mono", "MP Sans", ui-monospace, Menlo, monospace;
+  --gutter: clamp(24px, 6vw, 96px);
+  --colw: 1320px;
+}
+@font-face { font-family: "MP Grot"; src: url("/pathbot/fonts/hanken-200.woff2") format("woff2"); font-weight: 200; font-display: swap; }
+@font-face { font-family: "MP Grot"; src: url("/pathbot/fonts/hanken-300.woff2") format("woff2"); font-weight: 300 400; font-display: swap; }
+@font-face { font-family: "MP Grot"; src: url("/pathbot/fonts/hanken-500.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
+@font-face { font-family: "MP Sans"; src: url("/matchpoint/fonts/misans-200.woff2") format("woff2"); font-weight: 200; font-display: swap; }
+@font-face { font-family: "MP Sans"; src: url("/matchpoint/fonts/misans-300.woff2") format("woff2"); font-weight: 300 400; font-display: swap; }
+@font-face { font-family: "MP Sans"; src: url("/matchpoint/fonts/misans-500.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
+@font-face { font-family: "MP Mono"; src: url("/pathbot/fonts/plexmono-300.woff2") format("woff2"); font-weight: 300 400; font-display: swap; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { background: var(--court); color-scheme: dark; -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body {
+  background:
+    radial-gradient(120% 90% at 82% -10%, rgba(217, 232, 74, .07), transparent 55%),
+    radial-gradient(90% 70% at -10% 110%, rgba(240, 140, 58, .06), transparent 50%),
+    var(--court);
+  color: var(--chalk);
+  font-family: var(--grot);
+  font-size: 1.2rem; font-weight: 300; line-height: 2.1rem;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible { outline: 1px solid var(--ball); outline-offset: 5px; }
+::selection { background: rgba(217, 232, 74, .3); }
+.mono { font-family: var(--mono); }
+html.fx .rv { opacity: 0; transform: translateY(22px); }
+html.no-fx .rv { opacity: 1; transform: none; }
+
+/* ── 导航 ── */
+.mp-nav {
+  position: sticky; top: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: calc(16px + env(safe-area-inset-top)) var(--gutter) 16px;
+  transition: background .3s;
+}
+.mp-nav.scrolled { background: rgba(15, 27, 45, .86); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.mp-nav-home, .mp-wordmark {
+  font-size: .8rem; font-weight: 300; letter-spacing: 1px; text-transform: uppercase;
+}
+.mp-nav-home { color: var(--chalk-dim); min-height: 40px; display: inline-flex; align-items: center; transition: color .25s; }
+.mp-nav-home:hover { color: var(--chalk); }
+.mp-wordmark { letter-spacing: 3px; font-weight: 400; display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
+.mp-wordmark img { display: block; width: 26px; height: 26px; }
+.mp-nav-right { display: flex; align-items: center; gap: 12px; }
+.mp-lang {
+  min-width: 44px; min-height: 40px; background: none; border: none; cursor: pointer;
+  color: var(--chalk-dim); font-family: var(--mono); font-size: .95rem; font-weight: 500;
+  letter-spacing: 1px; transition: color .25s;
+}
+.mp-lang:hover { color: var(--chalk); }
+
+/* ── 胶囊 ── */
+.mp-pill {
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1px solid var(--chalk); border-radius: 100vw;
+  padding: .55em 1.6em; min-height: 52px;
+  font-size: 1.12rem; font-weight: 300; line-height: 1.9;
+  transition: all .3s;
+}
+.mp-pill i { font-style: normal; transition: transform .25s; }
+.mp-pill:hover { background: var(--chalk); color: var(--court); }
+.mp-pill:hover i { transform: translateX(4px); }
+.mp-pill-hot { border-color: var(--ball); color: var(--ball); }
+.mp-pill-hot:hover { background: var(--ball); color: var(--court); }
+.mp-pill-ghost { border-color: var(--hair); color: var(--chalk-dim); }
+.mp-pill-ghost:hover { background: none; border-color: var(--chalk); color: var(--chalk); }
+.mp-nav-cta { min-height: 40px; padding: .4em 1.2em; font-size: .95rem; }
+
+/* ── 英雄 ── */
+.mp-hero {
+  max-width: var(--colw); margin: 0 auto;
+  padding: clamp(40px, 8vh, 96px) var(--gutter) 0;
+  display: grid; grid-template-columns: 1fr; gap: 44px; align-items: center;
+}
+.mp-eyebrow {
+  font-family: var(--mono); font-size: .72rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--ball); margin-bottom: 24px;
+}
+.mp-h0 { font-weight: 200; letter-spacing: -.02em; font-size: clamp(3rem, 9vw, 6rem); line-height: 1.14; }
+.mp-h0 .ln { display: block; overflow: hidden; }
+.mp-h0 em { font-style: normal; color: var(--ball); }
+.mp-sub { margin-top: 34px; max-width: 30em; color: var(--chalk-dim); font-size: 1.2rem; line-height: 2.1rem; }
+.mp-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 44px; }
+.mp-hero-shot img {
+  display: block; width: 100%; height: auto;
+  border: 1px solid var(--hair); border-radius: 10px;
+}
+html.fx .mp-hero-shot { opacity: 0; transform: translateY(26px) scale(.985); }
+html.fx .mp-hero-shot.shown { opacity: 1; transform: none; transition: opacity 1s ease .3s, transform 1.2s cubic-bezier(.22,.8,.3,1) .3s; }
+html.no-fx .mp-hero-shot { opacity: 1; }
+@media (min-width: 1100px) {
+  .mp-hero { grid-template-columns: minmax(0, .92fr) minmax(420px, 1.08fr); gap: 56px; }
+}
+
+/* ── 章节 ── */
+.mp-sec { max-width: var(--colw); margin: 0 auto; padding: clamp(80px, 14vh, 180px) var(--gutter) 0; }
+.mp-edit { max-width: 860px; }
+.mp-edit h2 { font-weight: 200; letter-spacing: -.01em; font-size: clamp(1.7rem, 4.6vw, 2.7rem); line-height: 1.45; text-wrap: balance; }
+.mp-edit p { margin-top: 22px; color: var(--chalk-dim); max-width: 36em; }
+
+/* ── 流程动图 ── */
+.mp-flow { margin-top: 48px; overflow-x: auto; scrollbar-width: none; }
+.mp-flow::-webkit-scrollbar { display: none; }
+.mp-flow-svg { display: block; min-width: 900px; width: 100%; height: auto; }
+.mp-rail { stroke: var(--hair); stroke-width: 2; }
+.mp-rail-glow {
+  stroke: var(--ball); stroke-width: 2; stroke-linecap: round;
+  stroke-dasharray: 42 1200; opacity: .9;
+}
+html.fx .mp-rail-glow { animation: mp-dash 7s linear infinite; }
+@keyframes mp-dash { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -1242; } }
+.mp-nodes circle { fill: var(--court); stroke: var(--chalk); stroke-width: 2; }
+.mp-nodes text {
+  fill: var(--chalk); font-family: var(--grot); font-size: 17px; font-weight: 400;
+  text-anchor: middle; letter-spacing: .06em;
+}
+.mp-nodes .mp-node-sub { fill: var(--chalk-dim); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; }
+.mp-ball { fill: var(--ball); }
+html.no-fx .mp-ball, html.no-fx .mp-rail-glow { display: none; }
+
+/* ── 三支柱 ── */
+.mp-strip { list-style: none; display: grid; grid-template-columns: 1fr; gap: 0; }
+.mp-strip li { border-top: 1px solid var(--hair); padding: 24px 0; display: grid; gap: 6px; }
+.mp-strip b { font-weight: 500; font-size: 1.18rem; color: var(--chalk); }
+.mp-strip b::before {
+  content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--ball); margin-right: 12px; vertical-align: 2px;
+}
+.mp-strip span { color: var(--chalk-dim); font-size: 1rem; }
+@media (min-width: 760px) { .mp-strip { grid-template-columns: repeat(3, 1fr); gap: 40px; } }
+
+/* ── 真机画廊 ── */
+.mp-duo { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 44px; }
+.mp-duo a { display: block; cursor: zoom-in; }
+.mp-duo img { display: block; width: 100%; height: auto; border: 1px solid var(--hair); border-radius: 10px; transition: transform .35s ease; }
+.mp-duo a:hover img { transform: translateY(-5px); }
+@media (min-width: 760px) { .mp-duo { grid-template-columns: 1fr 1fr; } }
+
+/* ── 路线 ── */
+.mp-cap { list-style: none; margin-top: 40px; }
+.mp-cap li { display: grid; gap: 5px; padding: 22px 0; border-top: 1px solid var(--hair-soft); }
+.mp-cap li b { font-family: var(--mono); font-size: .8rem; letter-spacing: 2px; color: var(--hot); }
+.mp-cap li span { color: var(--chalk-dim); font-size: 1.05rem; line-height: 1.9; }
+
+.mp-mailrow { margin-top: 40px; }
+
+/* ── 页脚 ── */
+.mp-foot {
+  max-width: var(--colw); margin: clamp(80px, 14vh, 180px) auto 0;
+  padding: 40px var(--gutter) calc(36px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--hair);
+}
+.mp-foot-fine { margin-top: 10px; font-size: .8rem; color: var(--chalk-dim); }
+
+@media (max-width: 479px) {
+  body { font-size: 1.05rem; line-height: 1.95rem; }
+  .mp-wordmark { display: none; }
+  .mp-sec { padding-top: clamp(64px, 10vh, 120px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+  html .rv, html .mp-h0 .ln, html .mp-hero-shot { opacity: 1 !important; transform: none !important; }
+}

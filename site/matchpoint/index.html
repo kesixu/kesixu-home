@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="motion-pending">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MatchPoint · 想打球，说一句就行</title>
+<meta name="description" content="MatchPoint：AI 运动组局 Agent。一句「今天想打场网球」，它查空档、找场地、配水平、排出最合适的一局——每个推荐都给理由，越用越懂你。">
+<meta name="theme-color" content="#0F1B2D">
+<meta property="og:title" content="MatchPoint · 想打球，说一句就行">
+<meta property="og:description" content="AI 运动组局 Agent：听懂一句话，排出一局好球。">
+<meta property="og:url" content="https://kesixu.com/matchpoint/">
+<meta property="og:image" content="https://kesixu.com/matchpoint/media/workbench.webp">
+<link rel="canonical" href="https://kesixu.com/matchpoint/">
+<link rel="icon" type="image/svg+xml" href="/matchpoint/assets/icon.svg">
+<link rel="preload" as="font" type="font/woff2" href="/matchpoint/fonts/misans-300.woff2" crossorigin>
+<link rel="stylesheet" href="/matchpoint/matchpoint.css?v=1">
+</head>
+<body>
+
+<nav class="mp-nav" id="mp-nav">
+  <a class="mp-nav-home" href="/" data-en="← kesixu.com">← kesixu.com</a>
+  <span class="mp-wordmark"><img src="/matchpoint/assets/icon.svg" alt="" width="26" height="26">MATCH POINT</span>
+  <div class="mp-nav-right">
+    <button class="mp-lang mono" id="mp-lang" type="button" aria-label="Switch language / 切换语言">EN</button>
+    <a class="mp-pill mp-nav-cta" href="https://sportsmatchpoint.lovable.app" target="_blank" rel="noopener" data-en="Play the demo">去玩演示</a>
+  </div>
+</nav>
+
+<!-- ═══ 开场 ═══ -->
+<header class="mp-hero">
+  <div class="mp-hero-copy">
+    <p class="mp-eyebrow mono" data-en="AI SPORTS MATCHMAKING AGENT">AI 运动组局 AGENT</p>
+    <h1 class="mp-h0">
+      <span class="ln">想打球，</span>
+      <span class="ln"><em>说一句</em>就行。</span>
+    </h1>
+    <p class="mp-sub" data-en="Say &quot;I want to play tennis today.&quot; MatchPoint checks your free slots, finds courts on your way, matches your level — and lines up the best game with reasons attached. You just show up.">「今天想打场网球」——就这一句。它查你的空档、找你顺路的场、配得上你的水平，把最合适的一局连同理由一起排到你面前。你只管出现在球场上。</p>
+    <div class="mp-cta">
+      <a class="mp-pill mp-pill-hot" href="https://sportsmatchpoint.lovable.app" target="_blank" rel="noopener"><span data-en="Play a demo game">去玩一局演示</span><i>›</i></a>
+      <a class="mp-pill mp-pill-ghost" href="#flow"><span data-en="See how it thinks">看看它怎么想</span><i>›</i></a>
+    </div>
+  </div>
+  <figure class="mp-hero-shot">
+    <img src="/matchpoint/media/workbench.webp" alt="MatchPoint 真实界面:用户说「我今天想打一场网球」,Agent 给出练习赛、球友、教练三个带理由的选项" fetchpriority="high" decoding="async" width="2000" height="1194">
+  </figure>
+</header>
+
+<!-- ═══ 痛点 ═══ -->
+<section class="mp-sec" id="why">
+  <div class="mp-edit rv">
+    <p class="mp-eyebrow mono" data-en="THE PAIN, IF YOU PLAY">组过局的人都懂</p>
+    <h2 data-en="Getting a game together is harder than the game itself.">组一场球，比打一场球累多了。</h2>
+    <p data-en="Ping the group chat, no reply. Time works, court's gone. Levels don't match, nobody has fun — and someone still bails last minute. MatchPoint hands that whole mess to an agent: it asks, it searches, it ranks. You only appear on court.">群里喊半天没人接话；时间对上了，场地没了；水平不齐，打得没意思——临了还有人放鸽子。MatchPoint 把这整串麻烦交给 Agent：它来问、它来查、它来排。你只负责出现。</p>
+  </div>
+</section>
+
+<!-- ═══ Agent 流程动图 ═══ -->
+<section class="mp-sec" id="flow">
+  <div class="mp-edit rv">
+    <p class="mp-eyebrow mono" data-en="HOW IT THINKS · LIVE IN THE PRODUCT">它怎么想 · 产品里真实可见</p>
+    <h2 data-en="Seven steps, drawn in the open.">七步，全摆在明面上。</h2>
+    <p data-en="Not a spinner — the workbench shows every move: parse the ask, request permissions, search four ways, match, rank with reasons, learn your profile, hold the spot.">不是转圈圈的 loading——工作台把每一步摊开给你看：听懂、请权限、四路搜索、匹配、给理由地排序、记住你、把名额先留住。</p>
+  </div>
+  <figure class="mp-flow rv" aria-label="Agent 七步流程图">
+    <svg viewBox="0 0 1240 240" class="mp-flow-svg" role="img">
+      <path id="mp-rail" class="mp-rail" d="M60 120 H1180" fill="none"/>
+      <path class="mp-rail-glow" d="M60 120 H1180" fill="none"/>
+      <g class="mp-nodes">
+        <g transform="translate(60,120)"><circle r="10"/><text y="-26" data-en="PARSE">听懂</text><text y="44" class="mp-node-sub" data-en="sport · time · vibe">运动·时间·偏好</text></g>
+        <g transform="translate(247,120)"><circle r="10"/><text y="-26" data-en="PERMISSIONS">请权限</text><text y="44" class="mp-node-sub" data-en="calendar · location">日历·位置·熟人</text></g>
+        <g transform="translate(434,120)"><circle r="10"/><text y="-26" data-en="SEARCH ×4">四路搜索</text><text y="44" class="mp-node-sub" data-en="games·courts·coach·partner">球局·场地·教练·搭档</text></g>
+        <g transform="translate(621,120)"><circle r="10"/><text y="-26" data-en="MATCH">匹配</text><text y="44" class="mp-node-sub" data-en="level · commute">水平·通勤·社交度</text></g>
+        <g transform="translate(808,120)"><circle r="10"/><text y="-26" data-en="RANK">排序</text><text y="44" class="mp-node-sub" data-en="with reasons">每一条都给理由</text></g>
+        <g transform="translate(995,120)"><circle r="10"/><text y="-26" data-en="LEARN">记住你</text><text y="44" class="mp-node-sub" data-en="profile update">画像沉淀</text></g>
+        <g transform="translate(1180,120)"><circle r="10"/><text y="-26" data-en="HOLD">留名额</text><text y="44" class="mp-node-sub" data-en="spot reserved">选中即保留</text></g>
+      </g>
+      <circle class="mp-ball" r="7">
+        <animateMotion dur="7s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+          <mpath href="#mp-rail"/>
+        </animateMotion>
+      </circle>
+    </svg>
+  </figure>
+</section>
+
+<!-- ═══ 三支柱 ═══ -->
+<section class="mp-sec" id="pillars">
+  <ul class="mp-strip rv">
+    <li><b data-en="Recommends with reasons">推荐必给理由</b><span data-en="&quot;4-6pm open rally, one spot left&quot; — not a black box">「下午四到六点进阶练习赛，还差一人」——不是黑箱</span></li>
+    <li><b data-en="Learns you, game by game">一局比一局懂你</b><span data-en="Level, area, social taste — your profile compounds">水平、常去的区、爱热闹还是安静，画像越滚越准</span></li>
+    <li><b data-en="Holds the spot first">名额先留住</b><span data-en="Pick a game, the seat waits for you">选中一局，位置先给你占着</span></li>
+  </ul>
+</section>
+
+<!-- ═══ 真机画廊 ═══ -->
+<section class="mp-sec" id="live">
+  <div class="mp-edit rv">
+    <p class="mp-eyebrow mono" data-en="REAL PRODUCT · LIVE DEMO">真实界面 · 在线可玩</p>
+    <h2 data-en="This is it, click and try.">这就是它，点开就能玩。</h2>
+  </div>
+  <div class="mp-duo rv">
+    <a href="https://sportsmatchpoint.lovable.app" target="_blank" rel="noopener"><img src="/matchpoint/media/home.webp" alt="MatchPoint 首页:自然语言输入框" loading="lazy" width="2000" height="1194"></a>
+    <a href="https://sportsmatchpoint.lovable.app" target="_blank" rel="noopener"><img src="/matchpoint/media/spaces.webp" alt="Active Spaces:Agent 协调中的球局卡片" loading="lazy" width="2000" height="1194"></a>
+  </div>
+</section>
+
+<!-- ═══ 边界与路线 ═══ -->
+<section class="mp-sec" id="road">
+  <div class="mp-edit rv">
+    <p class="mp-eyebrow mono" data-en="WHERE IT STANDS">现在到哪一步</p>
+    <h2 data-en="A playable demo, honestly labeled.">能玩的演示版，边界写清楚。</h2>
+  </div>
+  <ul class="mp-cap rv">
+    <li><b class="mono">01 · <span data-en="NOW">现在</span></b><span data-en="The agent workbench runs end to end: parse, permissions, search, rank, profile, hold.">Agent 工作台全流程可玩：听懂、权限、搜索、排序、画像、留位，一步不缺。</span></li>
+    <li><b class="mono">02 · <span data-en="NEXT">下一步</span></b><span data-en="Real calendar OAuth, commute-time maps, live court inventories.">接真日历（Google/Apple/Outlook）、真通勤时间、真场地库存。</span></li>
+    <li><b class="mono">03 · <span data-en="THEN">然后</span></b><span data-en="Server-side profiles and payments — from demo to your weekly game.">画像上云、支付闭环——从演示，变成你每周的那局球。</span></li>
+  </ul>
+</section>
+
+<!-- ═══ 收尾 ═══ -->
+<section class="mp-sec" id="go">
+  <div class="mp-edit rv">
+    <h2 data-en="Match point is where a game ends. Here, it's where one begins.">Match point 本是一局的终点——在这里，是每局好球的起点。</h2>
+    <p class="mp-mailrow"><a class="mp-pill mp-pill-hot" href="https://sportsmatchpoint.lovable.app" target="_blank" rel="noopener"><span data-en="Open the demo">打开演示</span><i>›</i></a></p>
+  </div>
+</section>
+
+<footer class="mp-foot">
+  <p data-en="Designed and built by Kesi Xu.">徐可斯，一个人做的。</p>
+  <p class="mp-foot-fine" data-en="Screenshots are the real product. © 2026 Kesi Xu">截图全部来自真实产品。© 2026 徐可斯</p>
+</footer>
+
+<script src="/vendor/gsap.min.js" defer></script>
+<script src="/vendor/ScrollTrigger.min.js" defer></script>
+<script src="/matchpoint/matchpoint.js?v=1" defer></script>
+</body>
+</html>
