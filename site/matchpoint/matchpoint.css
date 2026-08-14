@@ -240,7 +240,8 @@ html.fx .mp-tapline.pulse { animation: mp-tap 1.6s ease-in-out infinite; }
   body { font-size: 1.05rem; }
   .mp-wordmark { position: absolute; left: 50%; transform: translateX(-50%); }
   .mp-nav-cta { display: none; }
-  .mp-nav-home { font-size: 1.1rem; letter-spacing: 0; width: 44px; overflow: hidden; white-space: nowrap; }
+  .mp-nav-home { font-size: 0; width: 44px; justify-content: center; }
+  .mp-nav-home::before { content: "←"; font-size: 1.25rem; color: var(--cream-dim); }
   .mp-sec { padding-top: clamp(68px, 11vh, 120px); }
 }
 @media (prefers-reduced-motion: reduce) {
