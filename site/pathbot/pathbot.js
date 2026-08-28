@@ -46,15 +46,23 @@
   var menuBtn = document.getElementById("pb-menu-btn");
   var navLinks = document.getElementById("pb-nav-links");
   if (menuBtn && navLinks) {
-    menuBtn.addEventListener("click", function () {
-      var open = doc.classList.toggle("menu-open");
+    var setMenu = function (open) {
+      doc.classList.toggle("menu-open", open);
       menuBtn.setAttribute("aria-expanded", String(open));
+      /* 遮罩之下的内容对键盘与读屏隔离 */
+      document.querySelectorAll("body > *").forEach(function (el) {
+        if (el.tagName === "NAV" || el.tagName === "SCRIPT") return;
+        if (open) el.setAttribute("inert", ""); else el.removeAttribute("inert");
+      });
+    };
+    menuBtn.addEventListener("click", function () {
+      setMenu(!doc.classList.contains("menu-open"));
     });
     navLinks.addEventListener("click", function (e) {
-      if (e.target.tagName === "A") {
-        doc.classList.remove("menu-open");
-        menuBtn.setAttribute("aria-expanded", "false");
-      }
+      if (e.target.tagName === "A") setMenu(false);
+    });
+    addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && doc.classList.contains("menu-open")) { setMenu(false); menuBtn.focus(); }
     });
   }
 
@@ -66,6 +74,7 @@
 
   /* ── 英雄录屏:入视口播,离屏停 ── */
   (function heroVideo() {
+    if (RM) return;   /* reduced-motion:不自动播,海报兜底 */
     var v = document.getElementById("pb-heroloop");
     if (!v) return;
     if ("IntersectionObserver" in window) {
@@ -98,6 +107,53 @@
         onComplete: function () { el.classList.add("seen"); }
       });
     });
+
+    /* ── 架构图:入场自动巡轨一遍(整条主轨先被看见,再由用户自便) ── */
+    var archSc = document.querySelector(".pb-arch-scroll");
+    if (archSc && "IntersectionObserver" in window) {
+      var panned = false;
+      new IntersectionObserver(function (es, io) {
+        es.forEach(function (e) {
+          if (!e.isIntersecting || panned) return;
+          panned = true;
+          io.disconnect();
+          var max = archSc.scrollWidth - archSc.clientWidth;
+          if (max > 24) {
+            var panTl = gsap.timeline({ delay: .4 })
+              .to(archSc, { scrollLeft: max, duration: 2.6, ease: "power1.inOut" })
+              .to(archSc, { scrollLeft: 0, duration: 2.0, ease: "power1.inOut" }, "+=.5");
+            /* 用户一上手,自动巡轨立即让位 */
+            var stopPan = function () { panTl.kill(); };
+            archSc.addEventListener("pointerdown", stopPan, { once: true, passive: true });
+            archSc.addEventListener("touchstart", stopPan, { once: true, passive: true });
+            archSc.addEventListener("wheel", stopPan, { once: true, passive: true });
+          }
+        });
+      }, { threshold: .55 }).observe(archSc);
+    }
+
+    /* ── 顶栏瞬现倍率:滚动时浮现,停手 1.1s 即隐 ── */
+    var zEl = document.getElementById("pb-zoom");
+    if (zEl) {
+      var zTick = false, zIdle = null, zMax = 0;
+      var zMeasure = function () { zMax = document.documentElement.scrollHeight - innerHeight; };
+      zMeasure();
+      addEventListener("load", zMeasure);
+      var zRs;
+      addEventListener("resize", function () { clearTimeout(zRs); zRs = setTimeout(zMeasure, 250); }, { passive: true });
+      var zPaint = function () {
+        zTick = false;
+        var p = zMax > 0 ? Math.min(1, Math.max(0, scrollY / zMax)) : 0;
+        var mag = Math.pow(40, p);
+        zEl.textContent = "\u00d7" + (mag < 10 ? mag.toFixed(1) : Math.round(mag));
+        zEl.classList.toggle("on", scrollY > 40);
+        clearTimeout(zIdle);
+        zIdle = setTimeout(function () { zEl.classList.remove("on"); }, 1100);
+      };
+      addEventListener("scroll", function () {
+        if (!zTick) { zTick = true; requestAnimationFrame(zPaint); }
+      }, { passive: true });
+    }
 
     /* ── 英雄录屏:滚动中极缓的呼吸缩放 ── */
     var hv = document.getElementById("pb-heroloop");
@@ -215,6 +271,8 @@
         // PathBot:先以打字点现身,再换正文,标签最后浮现
         var msg = bub.textContent;
         row.dataset.msg = msg;
+        // 打字前锁定成句高度:点↔文交替不再改变布局,滚动锚定无从发难
+        bub.style.minHeight = bub.offsetHeight + "px";
         bub.textContent = "";
         var dots = document.createElement("span");
         dots.className = "pb-dots";
@@ -258,7 +316,7 @@
         trigger: chip, start: "top 92%", once: true,
         onEnter: function () { setTimeout(function () { looping = true; }, 2400); }
       });
-      setInterval(function () {
+      var cfTick = function () {
         if (document.hidden || !looping) return;
         ci = (ci + 1) % CASES.length;
         var cs = CASES[ci];
@@ -268,7 +326,19 @@
         valK.textContent = cs.k.toFixed(2);
         chip.textContent = cs.w;
         chip.className = cs.c;
-      }, 3200);
+      };
+      var cfTimer = null;
+      if ("IntersectionObserver" in window) {
+        /* 离开视口即停摆,回来再走:不给页面留常驻裸奔定时器 */
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) {
+            if (e.isIntersecting) { if (!cfTimer) cfTimer = setInterval(cfTick, 3200); }
+            else if (cfTimer) { clearInterval(cfTimer); cfTimer = null; }
+          });
+        }).observe(chip.parentElement || chip);
+      } else {
+        cfTimer = setInterval(cfTick, 3200);
+      }
     }
 
   } catch (err) {

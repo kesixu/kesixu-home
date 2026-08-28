@@ -1145,3 +1145,23 @@ a:focus-visible {
   34% { opacity: .9; }
   100% { opacity: 0; transform: scaleX(1); }
 }
+
+/* ── 点亮时的徽章光影:焰过之处,灯徽生辉 ── */
+.hero-lamp .hero-logo { transition: filter 1.2s ease, transform 1.2s cubic-bezier(.22,1,.36,1); }
+.hero-lamp.lit .hero-logo {
+  filter: drop-shadow(0 0 7px rgba(255, 200, 120, .55)) drop-shadow(0 0 22px rgba(255, 170, 80, .3));
+}
+.hero-lamp.is-igniting .hero-logo { animation: logo-bloom 1.35s cubic-bezier(.2,.8,.2,1); }
+@keyframes logo-bloom {
+  0% { transform: scale(1); filter: none; }
+  32% { transform: scale(1.14); filter: drop-shadow(0 0 14px rgba(255, 214, 140, .9)) drop-shadow(0 0 40px rgba(255, 170, 80, .55)); }
+  100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .hero-lamp.is-igniting .hero-logo { animation: none; } .hero-logo, .hero-lamp .hero-logo { transition: none; } }
+
+/* 灯火段:可点进提示(安静一行) */
+.lamps-hint {
+  margin: 10px 0 0; text-align: center;
+  font-size: 12px; letter-spacing: .3em; text-indent: .3em;
+  color: rgba(255, 210, 138, .5);
+}

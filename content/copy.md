@@ -75,3 +75,12 @@
 - 服务器/托管细节
 - login-gated 私有子域名
 - **允许出现：** yinian.kesixu.com、gym.kesixu.com、textbook.kesixu.com、resume.kesixu.com
+
+
+## 灯六 · 灶间（2026-08-28 新增，位列产品栏末位）
+
+- 卡片标题：灶间
+- 卡片文案：一边消消乐，一边学做菜：每关做一道真菜，五大菜系二十五道名菜，通关攒下真能照着做的菜谱——熊猫厨师陪你颠勺，只有锅气，没有焦虑
+- 介绍页：/zaojian/（站内页，模式同 pathbot/matchpoint；含实机录屏、写实菜照、熊猫）
+- 外链：game.kesixu.com（邀请制内测，先例同 yinian/gym 子域产品）
+- 章节副题已改：先燃五盏 → 先燃六盏

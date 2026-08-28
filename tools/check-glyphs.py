@@ -7,9 +7,11 @@ from fontTools.ttLib import TTFont
 
 PAGES = {
     "site/index.html": ["site/fonts/wenkai-subset.woff2"],
+    "site/aurelia/index.html": ["site/fonts/wenkai-subset.woff2"],
+    "site/zaojian/index.html": ["site/zaojian/fonts/zaofont-page.woff2"],
     "site/matchpoint/index.html": [
-        "site/matchpoint/fonts/nserif-350.woff2", "site/matchpoint/fonts/nserif-620.woff2",
-        "site/matchpoint/fonts/cormorant-500.woff2", "site/matchpoint/fonts/cormorant-620.woff2",
+        "site/matchpoint/fonts/misans-demi.woff2", "site/matchpoint/fonts/misans-300.woff2",
+        "site/matchpoint/fonts/arch-exp800.woff2", "site/matchpoint/fonts/arch-cond700.woff2",
     ],
     "site/pathbot/index.html": [
         "site/pathbot/fonts/misans-200.woff2", "site/pathbot/fonts/misans-300.woff2", "site/pathbot/fonts/misans-500.woff2",

@@ -1414,13 +1414,6 @@
     var storyW = story.clientWidth;
     if (storyW < 1) storyW = 360;
 
-    fuseSvg.setAttribute("viewBox", "0 -" + EXT + " " + storyW + " " + (H + EXT));
-    // CSS 的 calc(100%+90px) 会跟随 #story 实时高度，而 viewBox 是本次
-    // 构建的快照——两者一旦分家，路径被拉伸而 getPointAtLength 不知情，
-    // 火花头就会脱离曲线。把渲染尺寸钉死在 viewBox 单位上，1:1 永不缩放。
-    fuseSvg.style.width = storyW + "px";
-    fuseSvg.style.height = (H + EXT) + "px";
-
     var storyRect = story.getBoundingClientRect();
     var storyTop = storyRect.top + window.scrollY;
     // 未揭示元素带着 .fx 的 translateY(24–30px) 预位移被测量，会让灯芯
@@ -1461,14 +1454,17 @@
         y: rect.top + rect.height * 0.52 - settledLift(line) + window.scrollY - storyTop
       });
     });
+    var mainSeq = 0;
     targets.forEach(function (target, index) {
       var previous = targets[index - 1];
-      if (previous && !previous.minor && !target.minor &&
-          target.y - previous.y > 150 && Math.abs(target.x - previous.x) < storyW * 0.08) {
-        // 手机端三盏灯芯同在左侧。中间轻轻向外舒展一次，既避开卡片，
-        // 又避免两灯之间退化成机械的垂直直线。
+      if (previous && !previous.minor && !target.minor && target.y - previous.y > 130) {
+        // 主灯之间恒有一记侧弯,左右交替:火线如溪流蛇行,
+        // 弧过每一盏灯芯而非机械直坠。幅度随视宽收放,y 单调不破。
+        var amp = Math.min(40, Math.max(22, storyW * 0.085));
+        var side = (mainSeq++ % 2 === 0) ? -1 : 1;
+        var base = (previous.x + target.x) * 0.5;
         anchors.push({
-          x: Math.max(5, Math.min(previous.x, target.x) - Math.min(34, storyW * 0.075)),
+          x: Math.max(6, Math.min(storyW - 6, base + side * amp)),
           y: previous.y + (target.y - previous.y) * 0.5
         });
       }
@@ -1498,6 +1494,13 @@
         to.x.toFixed(1) + " " + to.y.toFixed(1);
     }
 
+    // CSS 的 calc(100%+90px) 会跟随 #story 实时高度，而 viewBox 是本次
+    // 构建的快照——两者一旦分家，路径被拉伸而 getPointAtLength 不知情，
+    // 火花头就会脱离曲线。把渲染尺寸钉死在 viewBox 单位上，1:1 永不缩放。
+    // (所有几何读取已在上方完成,此处才开始写,避免读写交错强制重排)
+    fuseSvg.setAttribute("viewBox", "0 -" + EXT + " " + storyW + " " + (H + EXT));
+    fuseSvg.style.width = storyW + "px";
+    fuseSvg.style.height = (H + EXT) + "px";
     fuseBase.setAttribute("d", d);
     fuseLit.setAttribute("d", d);
     fuseLen = fuseLit.getTotalLength();

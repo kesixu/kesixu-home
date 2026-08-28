@@ -1,0 +1,183 @@
+/* ═══ Aurelia 鉴赏家 · 宋瓷天青 ═══
+   全家唯一的亮色页:月白胎、天青釉、铁足灰、金缮一线。
+   宋瓷气质=静,故零 JS、零滚动机关;唯开卷一次缓显,reduced-motion 全静。
+   家规:CSP 无内联、字体自托管(共用主页文楷子集)、手机优先。 */
+:root {
+  --moon: #F4F2EA;        /* 月白胎 */
+  --moon-2: #FBFAF4;
+  --sky: #AFC8BD;         /* 天青 */
+  --sky-deep: #7FA294;
+  --ink: #273633;         /* 墨青 */
+  --iron: #6E7B76;        /* 铁足灰 */
+  --gold: #AF8A48;        /* 金缮 */
+  --seal: #A5493B;        /* 矾红 */
+  --serif: "LXGW WenKai R", "Kaiti SC", "STKaiti", serif;
+  --sans: -apple-system, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@font-face {
+  font-family: "LXGW WenKai R";
+  src: url("/fonts/wenkai-subset.woff2?v=22") format("woff2");
+  font-weight: 400 700; font-display: swap;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--moon);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px; line-height: 1.95;
+  overflow-x: hidden;
+}
+/* 开片:极淡的冰裂纹,静置不动 */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .5;
+  background:
+    linear-gradient(107deg, transparent 49.6%, rgba(127, 162, 148, .1) 49.9%, transparent 50.2%),
+    linear-gradient(23deg, transparent 49.7%, rgba(127, 162, 148, .07) 50%, transparent 50.3%),
+    linear-gradient(161deg, transparent 49.7%, rgba(110, 123, 118, .06) 50%, transparent 50.3%);
+  background-size: 340px 260px, 520px 430px, 410px 350px;
+}
+body > * { position: relative; z-index: 1; }
+a { color: var(--sky-deep); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+
+/* ── 顶栏 ── */
+.au-nav {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: calc(14px + env(safe-area-inset-top)) clamp(18px, 5vw, 48px) 14px;
+}
+.au-back {
+  font-family: var(--serif); font-size: 14px; letter-spacing: .12em;
+  color: var(--iron); text-decoration: none;
+  min-height: 40px; display: inline-flex; align-items: center;
+}
+.au-back:hover { color: var(--ink); }
+.au-mark { font-family: var(--mono); font-size: 10.5px; letter-spacing: .3em; color: var(--iron); }
+
+/* ── 开卷 ── */
+.au-hero {
+  max-width: 720px; margin: 0 auto;
+  padding: clamp(40px, 9vh, 90px) 24px clamp(40px, 8vh, 80px);
+  text-align: center;
+}
+.au-seal {
+  display: inline-grid; place-items: center;
+  width: 74px; height: 74px; border-radius: 50%;
+  font-family: var(--serif); font-size: 34px; color: var(--moon-2);
+  background: radial-gradient(circle at 34% 30%, var(--sky), var(--sky-deep) 78%);
+  box-shadow: inset 0 0 0 1px rgba(39, 54, 51, .16), 0 10px 30px rgba(127, 162, 148, .35);
+}
+.au-eyebrow {
+  margin: 26px 0 14px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .38em;
+  color: var(--iron);
+}
+.au-hero h1 {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(40px, 10.5vw, 64px); line-height: 1.32; letter-spacing: .1em;
+  color: var(--ink);
+}
+.au-sub {
+  margin: 22px auto 0; max-width: 24em;
+  font-family: var(--serif);
+  font-size: clamp(15px, 3.9vw, 18px); line-height: 2.1; letter-spacing: .04em;
+  color: var(--iron);
+}
+.au-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
+.au-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 10px 26px;
+  font-family: var(--serif); font-size: 15px; letter-spacing: .14em;
+  color: var(--ink); text-decoration: none;
+  border: 1px solid rgba(39, 54, 51, .35); border-radius: 2px;
+  background: transparent;
+  transition: border-color .2s, background .2s, transform .15s;
+}
+.au-btn:hover { border-color: var(--ink); background: rgba(175, 200, 189, .18); }
+.au-btn:active { transform: scale(.97); }
+.au-btn-gold {
+  background: var(--gold); color: var(--moon-2); border-color: var(--gold);
+  box-shadow: 0 6px 20px rgba(175, 138, 72, .3);
+}
+.au-btn-gold:hover { background: #997739; border-color: #997739; }
+
+/* 开卷缓显(一次性,静气) */
+@media (prefers-reduced-motion: no-preference) {
+  .au-hero > * { opacity: 0; transform: translateY(12px); animation: au-rise 1s cubic-bezier(.22, 1, .36, 1) forwards; }
+  .au-hero .au-seal { animation-delay: .05s; }
+  .au-hero .au-eyebrow { animation-delay: .18s; }
+  .au-hero h1 { animation-delay: .3s; }
+  .au-hero .au-sub { animation-delay: .46s; }
+  .au-hero .au-cta { animation-delay: .62s; }
+}
+@keyframes au-rise { to { opacity: 1; transform: none; } }
+
+/* ── 章节 ── */
+.au-sec { max-width: 860px; margin: 0 auto; padding: clamp(34px, 6vh, 64px) 24px; }
+.au-sec h2 {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(22px, 5.6vw, 30px); letter-spacing: .1em;
+  text-align: center; margin-bottom: 30px;
+}
+
+/* 三立身 */
+.au-three { list-style: none; display: grid; gap: 16px; }
+@media (min-width: 860px) { .au-three { grid-template-columns: 1fr 1fr 1fr; gap: 20px; } }
+.au-three li {
+  background: var(--moon-2);
+  border: 1px solid rgba(127, 162, 148, .35);
+  border-top: 3px solid var(--sky-deep);
+  border-radius: 2px;
+  padding: 20px 20px 18px;
+}
+.au-three b {
+  display: block;
+  font-family: var(--serif); font-weight: 700;
+  font-size: 18px; letter-spacing: .08em; margin-bottom: 8px;
+}
+.au-three p { font-size: 13.8px; line-height: 1.95; color: var(--iron); }
+
+/* 实机三帧 */
+.au-shots { display: grid; gap: 18px; }
+@media (min-width: 860px) { .au-shots { grid-template-columns: 1fr 1fr 1fr; } }
+.au-shots figure { margin: 0; }
+.au-shots img {
+  display: block; width: 100%; height: auto;
+  border: 1px solid rgba(127, 162, 148, .4);
+  border-radius: 6px;
+  box-shadow: 0 8px 26px rgba(39, 54, 51, .12);
+}
+.au-shots figcaption {
+  margin-top: 10px; text-align: center;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .22em;
+  color: var(--iron);
+}
+
+/* 边界 */
+.au-line-sec { max-width: 720px; }
+.au-quote {
+  border-left: 3px solid var(--seal);
+  background: var(--moon-2);
+  padding: 20px 22px;
+  font-family: var(--serif);
+  font-size: clamp(15.5px, 4vw, 18px); line-height: 2.05; letter-spacing: .04em;
+}
+.au-quote-strong { color: var(--seal); font-weight: 700; }
+.au-note { margin-top: 18px; font-size: 14px; color: var(--iron); }
+
+/* ── 收束 ── */
+.au-foot {
+  text-align: center;
+  padding: clamp(30px, 6vh, 56px) 24px calc(48px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(127, 162, 148, .3);
+}
+.au-foot-line {
+  font-family: var(--serif); font-size: clamp(19px, 5vw, 24px);
+  letter-spacing: .22em; margin-bottom: 22px;
+}
+.au-foot nav { margin-top: 26px; display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; }
+.au-foot nav a { font-family: var(--serif); font-size: 13.5px; letter-spacing: .12em; color: var(--iron); text-decoration: none; }
+.au-foot nav a:hover { color: var(--ink); }
+.au-fine { margin-top: 22px; font-size: 11.5px; color: var(--iron); }
