@@ -161,17 +161,21 @@
         if (!pts) return;
         var sec = space.parentElement, W = sec.clientWidth, H = sec.clientHeight, dpr = profile.effectiveDpr(W, H);
         space.width = Math.round(W * dpr); space.height = Math.round(H * dpr);
-        var ctx = space.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+        /* 先在离屏画布画 19,487 个点（无滤镜），再整体以一次 blur 贴上屏：星云而非尘点，成本一次性 */
+        var off = document.createElement("canvas"); off.width = space.width; off.height = space.height;
+        var oc = off.getContext("2d"); oc.setTransform(dpr, 0, 0, dpr, 0, 0);
         var S = Math.min(W, H) * (desktop ? 1.15 : 1.25), ox = (W - S) / 2, oy = (H - S) / 2;
-        /* 星云而非尘点：一次性 1.4px 模糊，点色全在色板内 */
-        try { ctx.filter = "blur(1.4px)"; } catch (e) { /* 老内核无 filter */ }
         var col = ["rgba(143,150,143,.30)", "rgba(178,74,60,.7)", "rgba(157,187,176,.62)", "rgba(157,187,176,.62)", "rgba(217,223,220,.5)", "rgba(143,150,143,.5)", "rgba(143,150,143,.30)"];
         var r = desktop ? 1.3 : 1.1, n = pts.length / 3;
         for (var i = 0; i < n; i++) {
           var x = ox + pts[i * 3] / 65535 * S, y = oy + pts[i * 3 + 1] / 65535 * S, d = pts[i * 3 + 2];
           if (x < -2 || y < -2 || x > W + 2 || y > H + 2) continue;
-          ctx.fillStyle = col[d] || col[0]; ctx.fillRect(x, y, r, r);
+          oc.fillStyle = col[d] || col[0]; oc.fillRect(x, y, r, r);
         }
+        var ctx = space.getContext("2d"); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, space.width, space.height);
+        try { ctx.filter = "blur(" + (1.4 * dpr) + "px)"; } catch (e) { /* 老内核无 filter */ }
+        ctx.drawImage(off, 0, 0);
+        try { ctx.filter = "none"; } catch (e) { /* ignore */ }
         drawn = true;
       };
       var loadSpace = function () {
