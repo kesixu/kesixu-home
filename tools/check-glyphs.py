@@ -9,7 +9,7 @@ PAGES = {
     # 根占位页（敬请期待）用独立极小子集
     "site/index.html": ["site/fonts/wenkai-coming.woff2"],
     "site/vibecoding/index.html": ["site/vibecoding/fonts/wenkai-subset.woff2"],
-    "site/vibecoding/aurelia/index.html": ["site/vibecoding/fonts/wenkai-subset.woff2"],
+    "site/vibecoding/aurelia/index.html": ["site/vibecoding/aurelia/fonts/wenkai-aurelia.woff2", "site/vibecoding/aurelia/fonts/garamond-aurelia.woff2"],
     "site/vibecoding/zaojian/index.html": ["site/vibecoding/zaojian/fonts/zaofont-page.woff2"],
     # 职场棋盘宣传页（原“职囊”）：正文用系统黑体，只有标题、引文、印章用自托管的宋体和楷体，所以不能拿整页的字去核。
     # 改成核“渲染出来用到这个字体的字”：字表由 workspace/runs/zhichang-build/glyphs.py 在浏览器里按实际字体和字重收集
