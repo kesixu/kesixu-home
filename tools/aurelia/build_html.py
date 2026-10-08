@@ -18,9 +18,7 @@ def stage(vid, alt, w, h, cap, acc, size, cls='', srcset=None, sizes=None, prio=
     else:
         img = f'<img class="au-vessel" src="media/vessels/{vid}-{size}.webp" width="{w}" height="{h}" alt="{alt}" decoding="async" loading="lazy">'
     return f'''<figure class="au-stage {cls}" data-v="{vid}">
-  <span class="au-shadow" aria-hidden="true"></span>
-  {img}
-  <span class="au-sheen" aria-hidden="true"><i></i></span>
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span>{img}<span class="au-sheen" aria-hidden="true"><i></i></span></span>
   <figcaption class="au-cap">{cap}<small>{acc}</small></figcaption>
 </figure>'''
 
@@ -44,7 +42,7 @@ html = f'''<!DOCTYPE html>
 <link rel="preload" as="font" type="font/woff2" href="fonts/mashanzheng-aurelia.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/notoserif-aurelia.woff2" crossorigin>
 <link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
-<link rel="stylesheet" href="aurelia.css?v=3">
+<link rel="stylesheet" href="aurelia.css?v=4">
 </head>
 <body>
 <a class="au-skip" href="#main">跳到内容</a>
@@ -156,14 +154,7 @@ html = f'''<!DOCTYPE html>
     <div class="au-evstage">
       {crackle}
       <figure class="au-stage au-stage--ev" data-v="cma_135015">
-        <span class="au-shadow" aria-hidden="true"></span>
-        <img class="au-vessel" src="media/vessels/cma_135015-900.webp" srcset="media/vessels/cma_135015-900.webp 900w, media/vessels/cma_135015-1400.webp 1400w" sizes="(min-width:900px) 44vw, 84vw" width="1508" height="808" alt="南宋 官窑 葵口碗，克利夫兰艺术博物馆 1957.66" decoding="async" loading="lazy">
-        <span class="au-sheen" aria-hidden="true"><i></i></span>
-        <span class="au-sheen au-sheen--v" aria-hidden="true"><i></i></span>
-        <svg class="au-outline" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="{outline}"/></svg>
-        <span class="au-part au-part--rim" aria-hidden="true">口沿</span>
-        <span class="au-part au-part--body" aria-hidden="true">腹</span>
-        <span class="au-part au-part--foot" aria-hidden="true">圈足</span>
+        <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_135015-900.webp" srcset="media/vessels/cma_135015-900.webp 900w, media/vessels/cma_135015-1400.webp 1400w" sizes="(min-width:900px) 44vw, 84vw" width="1508" height="808" alt="南宋 官窑 葵口碗，克利夫兰艺术博物馆 1957.66" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span><span class="au-sheen au-sheen--v" aria-hidden="true"><i></i></span><svg class="au-outline" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="{outline}"/></svg><span class="au-part au-part--rim" aria-hidden="true">口沿</span><span class="au-part au-part--body" aria-hidden="true">腹</span><span class="au-part au-part--foot" aria-hidden="true">圈足</span></span>
         <figcaption class="au-cap">南宋 官窑 · 葵口碗<small>克利夫兰艺术博物馆 1957.66</small></figcaption>
       </figure>
     </div>
@@ -197,11 +188,11 @@ html = f'''<!DOCTYPE html>
     </div>
     <svg class="au-beams" aria-hidden="true" focusable="false"><path pathLength="1" d=""/><path pathLength="1" d=""/><path pathLength="1" d=""/><path pathLength="1" d=""/><path pathLength="1" d=""/></svg>
     <ol class="au-nbs">
-      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('aic_80869', '西夏 黑釉剔花梅瓶，芝加哥艺术博物馆 80869', 477, 994, '西夏 · 黑釉剔花梅瓶', '芝加哥 80869 · 接近度 0.859', 700, 'au-stage--nb')}</li>
-      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('cma_134997', '宋 龙泉窑 五管瓶，克利夫兰艺术博物馆 1957.53', 690, 1128, '宋 龙泉窑 · 五管瓶', '克利夫兰 1957.53 · 接近度 0.857', 700, 'au-stage--nb')}</li>
-      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('cma_284746', '宋 刻花梅瓶，克利夫兰艺术博物馆 2017.20', 903, 1460, '宋 · 刻花梅瓶', '克利夫兰 2017.20 · 接近度 0.848', 700, 'au-stage--nb')}</li>
-      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('cma_153286', '宋 梅瓶，克利夫兰艺术博物馆 1986.245', 548, 1391, '宋 · 梅瓶', '克利夫兰 1986.245 · 接近度 0.846', 700, 'au-stage--nb')}</li>
-      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('aic_58904', '北宋 婴戏纹盖梅瓶，芝加哥艺术博物馆 58904', 515, 919, '北宋 · 婴戏纹盖梅瓶', '芝加哥 58904 · 接近度 0.844', 700, 'au-stage--nb')}</li>
+      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('aic_80869', '西夏 黑釉剔花梅瓶，芝加哥艺术博物馆 80869', 477, 994, '西夏 · 黑釉剔花梅瓶', '芝加哥 80869<br>接近度 0.859', 700, 'au-stage--nb')}</li>
+      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('cma_134997', '宋 龙泉窑 五管瓶，克利夫兰艺术博物馆 1957.53', 690, 1128, '宋 龙泉窑 · 五管瓶', '克利夫兰 1957.53<br>接近度 0.857', 700, 'au-stage--nb')}</li>
+      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('cma_284746', '宋 刻花梅瓶，克利夫兰艺术博物馆 2017.20', 903, 1460, '宋 · 刻花梅瓶', '克利夫兰 2017.20<br>接近度 0.848', 700, 'au-stage--nb')}</li>
+      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('cma_153286', '宋 梅瓶，克利夫兰艺术博物馆 1986.245', 548, 1391, '宋 · 梅瓶', '克利夫兰 1986.245<br>接近度 0.846', 700, 'au-stage--nb')}</li>
+      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('aic_58904', '北宋 婴戏纹盖梅瓶，芝加哥艺术博物馆 58904', 515, 919, '北宋 · 婴戏纹盖梅瓶', '芝加哥 58904<br>接近度 0.844', 700, 'au-stage--nb')}</li>
     </ol>
     <p class="au-p au-rise">第一件竟是西夏黑釉剔花梅瓶——器形最近，釉色相远。它只说似在何处；真伪几何、价值几何，皆留与人。</p>
     <p class="au-fine au-rise">由生产模型于一千三百七十二件 CC0 馆藏（克利夫兰、芝加哥）中离线检索而得，余弦接近度；馆方编号可据以核对著录。</p>
@@ -283,7 +274,8 @@ html = f'''<!DOCTYPE html>
 
 <script src="/vibecoding/vendor/gsap.min.js" defer></script>
 <script src="/vibecoding/vendor/ScrollTrigger.min.js" defer></script>
-<script src="aurelia.js?v=2" defer></script>
+<script src="/vibecoding/vendor/lenis.min.js" defer></script>
+<script src="aurelia.js?v=3" defer></script>
 </body>
 </html>
 '''

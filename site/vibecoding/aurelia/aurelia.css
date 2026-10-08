@@ -82,6 +82,12 @@ img { max-width: 100%; }
 .au-back:hover { color: var(--paper); }
 .au-mark { font-family: var(--echo); font-style: italic; font-size: 12.5px; letter-spacing: .2em; color: var(--smoke); }
 
+/* ── 一幕一幕：桌面每节满屏居中；S3/S5/S6 由 JS 钉住（pin）播放；手机顺流不钉 ── */
+@media (min-width: 900px) {
+  .au-s { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+  html.fx .au-evstage { position: static; }
+}
+
 /* ── 版式 ─────────────────────────────────────────────────── */
 main { position: relative; z-index: 1; }
 .au-s { position: relative; padding: clamp(56px, 11vh, 120px) var(--gutter); }
@@ -119,8 +125,11 @@ main { position: relative; z-index: 1; }
 .au-btn--moon:hover { background: var(--paper); border-color: var(--paper); }
 
 /* ── 器物舞台（四层：影 · 器 · 高光带 · 注记）───────────────── */
-.au-stage { position: relative; margin: 0 auto 54px; width: fit-content; max-width: 100%; }
+.au-stage { position: relative; margin: 0 auto 54px; width: fit-content; max-width: 100%; text-align: center; }
+.au-box { position: relative; display: inline-block; vertical-align: top; line-height: 0; max-width: 100%; }
 .au-vessel { display: block; height: auto; width: 100%; }
+.au-light { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: screen; }
+.au-box.is-lit .au-sheen { display: none; }
 .au-shadow {
   position: absolute; left: 6%; right: 6%; bottom: -3.5%; height: 10%; border-radius: 50%; pointer-events: none;
   background: radial-gradient(ellipse at center, rgba(0, 0, 0, .62) 0, rgba(0, 0, 0, .28) 42%, rgba(0, 0, 0, 0) 72%);
@@ -181,6 +190,7 @@ main { position: relative; z-index: 1; }
 .au-hero { display: grid; gap: 34px; align-items: center; }
 .au-hero__text { max-width: 36em; }
 .au-stage--hero { width: min(70vw, 330px); margin-bottom: 70px; }
+.au-stage--hero .au-box { width: 100%; }
 @media (min-width: 900px) {
   .au-hero { grid-template-columns: 1fr 42%; gap: 6%; }
   .au-stage--hero { width: 100%; max-width: 440px; margin-left: auto; margin-right: 0; }
@@ -241,8 +251,9 @@ html.motion-pending .au-intro { opacity: 0; animation: au-safety 0s 2.6s forward
 .au-two--ev { align-items: start; }
 @media (min-width: 900px) { .au-evstage { position: sticky; top: 4vh; } }
 .au-evstage { position: relative; padding: 10vh 0 6vh; }
-.au-crackle { position: absolute; left: 50%; top: 50%; width: 132%; max-width: 900px; transform: translate(-50%, -52%); pointer-events: none; opacity: .7; }
-@media (min-width: 900px) { .au-crackle { width: 150%; opacity: 1; } }
+.au-crackle { position: absolute; left: 50%; top: 50%; width: 132%; max-width: 900px; transform: translate(-50%, -52%); pointer-events: none; opacity: .7;
+  -webkit-mask-image: radial-gradient(closest-side, #000 48%, rgba(0,0,0,.35) 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 48%, rgba(0,0,0,.35) 72%, transparent 100%); }
+@media (min-width: 900px) { .au-crackle { width: 112%; max-width: 700px; opacity: .95; } }
 .au-crackle path { fill: none; stroke: var(--moon); stroke-linecap: round; }
 .au-crackle .ck-a { stroke-width: 1.4; opacity: .55; }
 .au-crackle .ck-b { stroke-width: .6; opacity: .32; }
@@ -252,7 +263,7 @@ html.motion-pending .au-intro { opacity: 0; animation: au-safety 0s 2.6s forward
 .au-outline { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .au-outline path { fill: none; stroke: var(--moon); stroke-width: 1.3; vector-effect: non-scaling-stroke; opacity: .8; stroke-linejoin: round; }
 .au-part {
-  position: absolute; font-family: var(--display); font-size: 12px; letter-spacing: .22em; color: var(--moon);
+  position: absolute; line-height: 1.6; font-family: var(--display); font-size: 12px; letter-spacing: .22em; color: var(--moon);
   padding: 2px 8px 2px 10px; border: 1px solid rgba(var(--moon-a), .4); border-radius: 2px; background: rgba(var(--ink-a), .62); white-space: nowrap;
 }
 .au-part--rim { left: 50%; top: -9%; transform: translateX(-50%); }
@@ -286,7 +297,8 @@ html.motion-pending .au-intro { opacity: 0; animation: au-safety 0s 2.6s forward
 .au-stage--nb .au-vessel { height: var(--nbh, 22vh); width: auto; max-height: 230px; }
 @media (min-width: 900px) { .au-stage--nb { width: auto; } .au-stage--nb .au-vessel { height: 24vh; max-height: 260px; } }
 .au-stage--nb .au-cap { font-size: calc(var(--cap) - 1px); max-width: 44vw; }
-@media (min-width: 900px) { .au-stage--nb .au-cap { max-width: 17vw; } }
+@media (min-width: 900px) { .au-stage--nb .au-cap { max-width: 16vw; } }
+.au-stage--nb .au-cap small { white-space: normal; }
 .au-s6 .au-p { margin-top: 20px; }
 
 /* ── S7 红线（最静）─────────────────────────────────────── */
