@@ -16,15 +16,19 @@
   --moon-a: 217, 223, 220;   /* rgba 用 */
   --sky-a: 157, 187, 176;
   --ink-a: 18, 22, 25;
+  --brush: "Ma Shan Zheng A", "Kaiti SC", "STKaiti", "LXGW WenKai", serif;
+  --serif: "Noto Serif SC A", "Noto Serif SC", "Songti SC", "SimSun", serif;
   --display: "LXGW WenKai A", "LXGW WenKai", "Kaiti SC", "STKaiti", "Noto Serif SC", serif;
   --echo: "EB Garamond A", "EB Garamond", Georgia, "Times New Roman", serif;
   --body: "Segoe UI", -apple-system, "Helvetica Neue", "PingFang SC", "HarmonyOS Sans SC", "MiSans", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   --gutter: clamp(20px, 6vw, 64px);
-  --h1: 44px; --h2: 26px; --num: 56px; --lede: 16.5px; --p: 16px; --echo-size: 13px; --eyebrow: 11px; --fine: 11.5px; --cap: 12.5px;
+  --h1: 58px; --h2: 32px; --num: 56px; --lede: 17px; --p: 16.5px; --echo-size: 13px; --eyebrow: 11px; --fine: 11.5px; --cap: 12.5px;
 }
 @media (min-width: 900px) {
-  :root { --h1: 68px; --h2: 38px; --num: 96px; --lede: 19px; --p: 17px; --echo-size: 15px; --eyebrow: 12px; --fine: 12.5px; --cap: 13px; }
+  :root { --h1: 96px; --h2: 46px; --num: 96px; --lede: 20px; --p: 17.5px; --echo-size: 15px; --eyebrow: 12px; --fine: 12.5px; --cap: 13px; }
 }
+@font-face { font-family: "Ma Shan Zheng A"; src: url("fonts/mashanzheng-aurelia.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Noto Serif SC A"; src: url("fonts/notoserif-aurelia.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "LXGW WenKai A"; src: url("fonts/wenkai-aurelia.woff2") format("woff2"); font-weight: 400 600; font-display: swap; }
 @font-face { font-family: "EB Garamond A"; src: url("fonts/garamond-aurelia.woff2") format("woff2"); font-style: italic; font-weight: 400 600; font-display: swap; }
 
@@ -32,7 +36,7 @@
 html { background: var(--ink); color-scheme: dark; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overflow-x: clip; }
 body {
   background: var(--ink); color: var(--paper);
-  font-family: var(--body); font-size: var(--p); line-height: 1.9;
+  font-family: var(--serif); font-size: var(--p); line-height: 1.95;
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden; min-height: 100vh;
 }
@@ -86,10 +90,10 @@ main { position: relative; z-index: 1; }
 .au-center { text-align: center; }
 .au-center .au-p, .au-center .au-lede { margin-left: auto; margin-right: auto; }
 .au-eyebrow { font-family: var(--display); font-size: var(--eyebrow); letter-spacing: .26em; text-transform: uppercase; color: var(--smoke); margin-bottom: 18px; }
-.au-h1 { font-family: var(--display); font-weight: 500; font-size: var(--h1); line-height: 1.22; letter-spacing: .1em; color: var(--paper); }
-.au-h2 { font-family: var(--display); font-weight: 500; font-size: var(--h2); line-height: 1.4; letter-spacing: .08em; color: var(--paper); }
+.au-h1 { font-family: var(--brush); font-weight: 400; font-size: var(--h1); line-height: 1.15; letter-spacing: .06em; color: var(--paper); display: flex; align-items: flex-end; gap: .2em; flex-wrap: nowrap; white-space: nowrap; }
+.au-h2 { font-family: var(--brush); font-weight: 400; font-size: var(--h2); line-height: 1.35; letter-spacing: .05em; color: var(--paper); }
 .au-echo { font-family: var(--echo); font-style: italic; font-size: var(--echo-size); letter-spacing: .03em; color: var(--smoke); margin: 10px 0 22px; }
-.au-lede { font-family: var(--display); font-size: var(--lede); line-height: 2.05; letter-spacing: .03em; color: var(--paper); opacity: .9; max-width: 32em; }
+.au-lede { font-family: var(--serif); font-size: var(--lede); line-height: 2.1; letter-spacing: .04em; color: var(--paper); opacity: .92; max-width: 30em; }
 .au-p { font-size: var(--p); color: var(--paper); opacity: .86; max-width: 36em; margin-top: 16px; }
 .au-p--small { font-size: calc(var(--p) - 1px); color: var(--smoke); opacity: 1; margin-top: 14px; }
 .au-fine { font-size: var(--fine); line-height: 1.8; color: var(--smoke); max-width: 52em; margin-top: 14px; }
@@ -98,7 +102,7 @@ main { position: relative; z-index: 1; }
 .au-num--inline { color: var(--moon); }
 .au-bignum { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
 .au-bignum .au-num { font-size: var(--num); line-height: 1.05; color: var(--moon); }
-.au-bignum__lab { font-family: var(--display); font-size: calc(var(--p) + 1px); letter-spacing: .12em; color: var(--smoke); }
+.au-bignum__lab { font-family: var(--brush); font-size: calc(var(--p) + 8px); letter-spacing: .1em; color: var(--smoke); }
 .au-br { display: none; }
 @media (min-width: 900px) { .au-br { display: inline; } }
 
@@ -154,9 +158,23 @@ main { position: relative; z-index: 1; }
 .au-cap {
   position: absolute; left: 50%; top: calc(100% + 14px); transform: translateX(-50%);
   width: max-content; max-width: min(92vw, 380px); text-align: center;
-  font-family: var(--display); font-size: var(--cap); letter-spacing: .12em; line-height: 1.7; color: var(--paper); opacity: .85;
+  font-family: var(--serif); font-size: var(--cap); letter-spacing: .1em; line-height: 1.75; color: var(--paper); opacity: .88;
 }
 .au-cap small { display: block; font-family: var(--echo); font-style: italic; font-size: calc(var(--cap) - 1px); letter-spacing: .04em; color: var(--smoke); }
+
+/* ── 印 · 题签 · 节线（装饰，皆节制）── */
+.au-seal { width: .56em; height: .56em; margin-bottom: .16em; flex: 0 0 auto; }
+.au-seal rect { fill: var(--cinnabar); stroke: none; }
+.au-seal .au-seal__inner { fill: none; stroke: rgba(236, 231, 219, .55); stroke-width: 2.5; }
+.au-seal text { font-family: var(--brush); font-size: 62px; fill: var(--paper); }
+.au-slip { display: inline-block; font-family: var(--serif); font-size: 13px; letter-spacing: .3em; color: var(--paper); opacity: .8; border: 1px solid rgba(var(--moon-a), .28); padding: 6px 12px 6px 14px; margin-bottom: 26px; }
+.au-slip span { display: inline-block; }
+@media (min-width: 900px) {
+  .au-hero__text { position: relative; padding-left: 58px; max-width: none; }
+  .au-slip { position: absolute; left: 0; top: 4px; writing-mode: vertical-rl; text-orientation: upright; margin: 0; padding: 16px 7px 18px; font-size: 13.5px; letter-spacing: .34em; }
+}
+.au-s:not(.au-s1)::before { content: ""; display: block; width: 72px; height: 1px; margin: 0 auto clamp(40px, 7vh, 72px); background: linear-gradient(90deg, rgba(var(--moon-a), 0), rgba(var(--moon-a), .45), rgba(var(--moon-a), 0)); }
+.au-s7::before { background: linear-gradient(90deg, rgba(var(--moon-a), 0), rgba(178, 74, 60, .7), rgba(var(--moon-a), 0)); }
 
 /* ── S1 月出 ─────────────────────────────────────────────── */
 .au-s1 { padding-top: clamp(28px, 6vh, 72px); min-height: calc(100vh - 70px); display: flex; flex-direction: column; justify-content: center; }
@@ -208,7 +226,7 @@ html.motion-pending .au-intro { opacity: 0; animation: au-safety 0s 2.6s forward
 /* ── S4 闭卷考试 ─────────────────────────────────────────── */
 .au-bars { display: grid; gap: 30px; max-width: 760px; margin-top: 26px; }
 @media (min-width: 900px) { .au-bars { grid-template-columns: 1fr 1fr; gap: 48px; } }
-.au-bargroup__t { font-family: var(--display); font-size: calc(var(--p) + 1px); letter-spacing: .1em; color: var(--paper); margin-bottom: 12px; }
+.au-bargroup__t { font-family: var(--serif); font-size: calc(var(--p) + 1px); letter-spacing: .08em; color: var(--paper); margin-bottom: 12px; }
 .au-bar { display: grid; grid-template-columns: 5.4em 1fr 4.6em; align-items: center; gap: 12px; font-size: 14px; color: var(--smoke); margin: 8px 0; }
 .au-bar--route { grid-template-columns: 11em 1fr 3.6em; }
 .au-bar__track { position: relative; height: 5px; background: rgba(var(--moon-a), .09); border-radius: 3px; overflow: hidden; }
@@ -242,11 +260,11 @@ html.motion-pending .au-intro { opacity: 0; animation: au-safety 0s 2.6s forward
 .au-part--foot { left: 22%; bottom: -5%; }
 .au-steps { list-style: none; counter-reset: step; margin-top: 10px; }
 .au-step { position: relative; padding: 14px 0 14px 44px; border-top: 1px solid rgba(var(--moon-a), .1); }
-.au-step::before { content: attr(data-step); position: absolute; left: 0; top: 14px; width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid rgba(var(--moon-a), .35); border-radius: 50%; font-family: var(--echo); font-style: italic; font-size: 14px; color: var(--moon); }
-.au-step b { display: block; font-family: var(--display); font-weight: 500; font-size: calc(var(--p) + 2px); letter-spacing: .08em; color: var(--paper); margin-bottom: 4px; }
+.au-step::before { content: attr(data-step); position: absolute; left: 0; top: 14px; width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid rgba(var(--moon-a), .35); border-radius: 50%; font-family: var(--brush); font-size: 15px; color: var(--moon); }
+.au-step b { display: block; font-family: var(--brush); font-weight: 400; font-size: calc(var(--p) + 7px); letter-spacing: .06em; color: var(--paper); margin-bottom: 4px; }
 .au-step > span { display: block; font-size: calc(var(--p) - 1px); color: var(--smoke); line-height: 1.85; }
 .au-measure { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; align-items: end; margin: 12px 0 8px; }
-.au-measure dt { font-size: 11px; letter-spacing: .04em; color: var(--smoke); white-space: nowrap; }
+.au-measure dt { font-family: var(--serif); font-size: 12px; letter-spacing: .06em; color: var(--smoke); white-space: nowrap; }
 .au-measure dd { font-family: var(--display); font-weight: 500; font-size: clamp(22px, 3.2vw, 32px); line-height: 1.2; color: var(--moon); margin-top: 4px; font-variant-numeric: tabular-nums; }
 .au-measure dd i { font-style: normal; font-size: .55em; margin-left: 1px; color: var(--smoke); }
 .au-measure small { display: block; font-size: 11px; color: var(--smoke); opacity: .85; margin-top: 2px; }
@@ -273,14 +291,14 @@ html.motion-pending .au-intro { opacity: 0; animation: au-safety 0s 2.6s forward
 
 /* ── S7 红线（最静）─────────────────────────────────────── */
 .au-s7 { padding-top: clamp(80px, 16vh, 160px); padding-bottom: clamp(80px, 16vh, 160px); }
-.au-h2--line { font-size: clamp(24px, 5.2vw, 44px); letter-spacing: .14em; }
+.au-h2--line { font-size: clamp(30px, 6vw, 60px); letter-spacing: .1em; }
 .au-redline { display: block; width: min(62vw, 440px); height: 1px; margin: 30px auto 24px; background: var(--cinnabar); box-shadow: 0 0 14px rgba(178, 74, 60, .45); }
 .au-s7 .au-echo { margin-bottom: 14px; }
 
 /* ── S8 已成 · 在做 · 未做 ─────────────────────────────── */
 .au-cols { display: grid; gap: 26px; margin-top: 26px; }
 @media (min-width: 900px) { .au-cols { grid-template-columns: repeat(3, 1fr); gap: 36px; } }
-.au-col h3 { font-family: var(--display); font-weight: 500; font-size: calc(var(--p) + 3px); letter-spacing: .14em; color: var(--moon); padding-bottom: 10px; border-bottom: 1px solid rgba(var(--moon-a), .14); margin-bottom: 12px; }
+.au-col h3 { font-family: var(--brush); font-weight: 400; font-size: calc(var(--p) + 9px); letter-spacing: .1em; color: var(--moon); padding-bottom: 10px; border-bottom: 1px solid rgba(var(--moon-a), .14); margin-bottom: 12px; }
 .au-col ul { list-style: none; }
 .au-col li { position: relative; padding-left: 18px; font-size: calc(var(--p) - 1px); color: var(--paper); opacity: .86; line-height: 1.8; margin: 8px 0; }
 .au-col li::before { content: ""; position: absolute; left: 0; top: .95em; width: 8px; height: 1px; background: var(--sky); }

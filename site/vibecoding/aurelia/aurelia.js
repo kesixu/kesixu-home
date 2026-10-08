@@ -128,7 +128,7 @@
     gsap.fromTo(ember, { opacity: 0 }, { opacity: .7, ease: "none", scrollTrigger: { trigger: "#s9", start: "top 60%", end: "bottom bottom", scrub: .8 } });
 
     /* ── 4. 逐屏揭示（一次性）── */
-    ScrollTrigger.batch(".au-rise", { start: "top 88%", once: true, onEnter: function (els) { gsap.to(els, { opacity: 1, y: 0, duration: .9, stagger: .08, ease: EASE, overwrite: true }); } });
+    ScrollTrigger.batch(".au-rise", { start: "top 88%", once: true, onEnter: function (els) { gsap.to(els, { opacity: 1, y: 0, duration: .9, stagger: Math.min(.08, .9 / els.length), ease: EASE, overwrite: true }); } });   /* 深链/快滚时一批元素同时入场：总错峰不超过 0.9 s */
 
     /* ── 5. 高光带：每个舞台随滚动扫过；阴影联动（光正对器物时影最实）── */
     function coupleShadow(stage, trig) {
