@@ -227,7 +227,7 @@
     /* ── 6. 高光带（无 WebGL 时）与接触阴影联动 ── */
     function coupleShadow(stage, trig) {
       var shadow = $(".au-shadow", stage); if (!shadow) return;
-      gsap.fromTo(shadow, { scaleX: .9, opacity: .55, xPercent: 4 }, { keyframes: [{ scaleX: 1.05, opacity: 1, xPercent: 0, ease: "sine.out" }, { scaleX: .92, opacity: .6, xPercent: -4, ease: "sine.in" }], scrollTrigger: trig });
+      gsap.fromTo(shadow, { scaleX: .92, opacity: .55 }, { keyframes: [{ scaleX: 1.04, opacity: 1, ease: "sine.out" }, { scaleX: .94, opacity: .6, ease: "sine.in" }], scrollTrigger: trig });   /* 影只随光变实变虚，不横移（否则与器物错位）*/
     }
     $$(".au-stage").forEach(function (st) {
       if (st.classList.contains("au-stage--hero") || st.classList.contains("au-stage--arc") || st.classList.contains("au-stage--ev")) return;
