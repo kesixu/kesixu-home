@@ -1,2 +1,6 @@
+# 预览页不收录
+User-agent: *
+Disallow: /preview/
+
 User-agent: *
 Allow: /

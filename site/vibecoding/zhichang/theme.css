@@ -1,0 +1,330 @@
+/* Use the font's 880/-120 typographic metrics to center Chinese ink in line boxes. */
+@font-face {
+  font-family: JadeSong;
+  src: url("./assets/fonts/zn-serif-400.woff2?v=2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  ascent-override: 88%;
+  descent-override: 12%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: JadeSong;
+  src: url("./assets/fonts/zn-serif-600.woff2?v=2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+  ascent-override: 88%;
+  descent-override: 12%;
+  line-gap-override: 0%;
+}
+:root {
+  color-scheme: dark;
+  --canvas: #081e23;
+  --stage: #0c282c;
+  --surface: #113136;
+  --raised: #173b3e;
+  --text: #dde5df;
+  --heading: #e4e0d3;
+  --muted: #a6b8b2;
+  --gold: #c2a471;
+  --celadon: #92b5aa;
+  --clay: #d2a39a;
+  --line: #43605c;
+  --soft-line: #29494a;
+  --type-caption: 12px;
+  --type-label: 14px;
+  --type-body: 16px;
+  --type-body-large: 18px;
+  --type-card: 20px;
+  --type-heading: 24px;
+  --type-title-small: 28px;
+  --type-title: 32px;
+  --serif: JadeSong, "Songti SC", "Noto Serif CJK SC", serif;
+  --sans:
+    "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  background: var(--canvas);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  line-break: strict;
+}
+body {
+  margin: 0;
+  color: var(--text);
+  font: 16px/1.75 var(--sans);
+  font-synthesis: none;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+}
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  color: inherit;
+  cursor: pointer;
+}
+button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.5;
+  text-wrap: balance;
+}
+p {
+  overflow-wrap: break-word;
+}
+.type-phrase {
+  display: inline-block;
+  white-space: nowrap;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+::selection {
+  background: var(--gold);
+  color: var(--canvas);
+}
+[hidden] {
+  display: none !important;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.skip {
+  position: fixed;
+  left: 16px;
+  top: -80px;
+  z-index: 100;
+  padding: 12px 20px;
+  background: var(--gold);
+  color: var(--canvas);
+}
+.skip:focus {
+  top: 12px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 7px;
+}
+.brand-name {
+  font-family: var(--serif);
+  font-size: var(--type-heading);
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.brand small {
+  display: block;
+  font: 12px/1.5 var(--sans);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.eyebrow {
+  font-size: var(--type-caption);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+}
+.muted {
+  color: var(--muted);
+}
+.gold {
+  color: var(--gold);
+}
+.icon {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  background: currentColor;
+  mask: var(--icon) center/contain no-repeat;
+  vertical-align: middle;
+}
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 6px;
+}
+.icon-button:hover {
+  background: var(--raised);
+}
+.button {
+  min-height: 48px;
+  padding: 10px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid var(--gold);
+  border-radius: 5px;
+  font-family: var(--serif);
+  font-size: var(--type-body);
+  line-height: 1.5;
+  background: var(--gold);
+  color: var(--canvas);
+  transition:
+    transform 0.18s,
+    opacity 0.18s;
+}
+.button:hover {
+  transform: translateY(-2px);
+  opacity: 0.93;
+}
+.button:active {
+  transform: translateY(0);
+}
+.button.secondary {
+  color: var(--text);
+  background: var(--stage);
+  border-color: var(--line);
+}
+.button.quiet {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+}
+.text-link {
+  font-size: var(--type-label);
+  line-height: 1.5;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  text-decoration-color: var(--line);
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: var(--type-caption);
+  line-height: 1.5;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.tag.gold {
+  color: var(--gold);
+  border-color: #8d7957;
+}
+.tag.caution {
+  color: var(--clay);
+  border-color: #876b65;
+}
+.tag .icon {
+  width: 15px;
+  height: 15px;
+  flex-basis: 15px;
+}
+.rule {
+  border: 0;
+  border-top: 1px solid var(--soft-line);
+  margin: 24px 0;
+}
+.toast {
+  position: fixed;
+  z-index: 100;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 32px);
+  padding: 12px 20px;
+  background: var(--raised);
+  border: 1px solid var(--gold);
+  box-shadow: 0 8px 32px #03131699;
+  border-radius: 6px;
+  text-align: center;
+}
+.noscript {
+  margin: 16px;
+  padding: 16px;
+  border: 1px solid var(--gold);
+  background: var(--surface);
+}
+.brand-name {
+  font-weight: 600;
+}
+h1 {
+  font-weight: 600;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+.button:not(.secondary):not(.quiet):not(.sheet-return),
+.send-button {
+  background-image: url(assets/bronze.webp);
+  background-size: 256px 256px;
+}
