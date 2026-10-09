@@ -30,11 +30,11 @@ html = f'''<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Aurelia 鉴赏 · 似在何处 · 古瓷风格比对</title>
-<meta name="description" content="一张照片，在 19,487 件开放馆藏中找出风格最接近的器物，并指出相似之处。不鉴真伪，不作估价，不替代上手。研习用途，邀请内测">
+<meta name="description" content="一张照片，在 19,487 件开放馆藏中找出风格最接近的器物，并指出相似之处。它回答像不像、像在哪，真伪与价值由人判断。研习用途，邀请内测">
 <meta name="theme-color" content="#121619">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Aurelia 鉴赏 · 似在何处">
-<meta property="og:description" content="一张照片，两万件开放馆藏中找出风格最接近的器物——相似在哪里，说得清楚；真伪与价值，留给人判断">
+<meta property="og:description" content="一张照片，两万件开放馆藏中找出风格最接近的器物，相似在哪里说得清楚，真伪与价值由人判断">
 <meta property="og:url" content="https://kesixu.com/vibecoding/aurelia/">
 <meta property="og:image" content="https://kesixu.com/vibecoding/aurelia/media/og.jpg">
 <link rel="canonical" href="https://kesixu.com/vibecoding/aurelia/">
@@ -42,7 +42,7 @@ html = f'''<!DOCTYPE html>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-300-aurelia.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-400-aurelia.woff2" crossorigin>
 <link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
-<link rel="stylesheet" href="aurelia.css?v=5">
+<link rel="stylesheet" href="aurelia.css?v=6">
 </head>
 <body>
 <a class="au-skip" href="#main">跳到内容</a>
@@ -69,7 +69,7 @@ html = f'''<!DOCTYPE html>
       <p class="au-eyebrow au-intro">Aurelia Connoisseur · 古瓷风格比对 · 研习用途</p>
       <h1 class="au-h1 au-intro">似在何处</h1>
       <p class="au-echo au-intro">Nearest in style, and where</p>
-      <p class="au-lede au-intro">一张照片，在 19,487 件开放馆藏中找出风格最接近的器物，并指出相似之处。<br class="au-br">不鉴真伪，不作估价，不替代上手。</p>
+      <p class="au-lede au-intro">一张照片，在 19,487 件开放馆藏中找出风格最接近的器物，并指出相似之处。<br class="au-br">它回答像不像、像在哪，真伪与价值由人判断。</p>
       <div class="au-cta au-intro">
         <a class="au-btn au-btn--moon" href="{S_MAIN}">申请研习内测</a>
         <a class="au-btn" href="/vibecoding/">回灯火</a>
@@ -86,9 +86,9 @@ html = f'''<!DOCTYPE html>
     {stage('cma_97956', '宋 钧窑 莲蕾罐，克利夫兰艺术博物馆 1917.60', 1060, 967, '宋 钧窑 · 莲蕾罐', '克利夫兰艺术博物馆 1917.60 · 本页的天青色来自它', 1100, 'au-stage--s2')}
     <div class="au-text">
       <h2 class="au-h2 au-rise">看器，先上手</h2>
-      <p class="au-echo au-rise">Not a verdict. A comparison.</p>
-      <p class="au-p au-rise">掂重量、摸胎骨、看底足、迎光看釉——鉴赏的功夫在手上，照片替代不了。</p>
-      <p class="au-p au-rise">照片能做的是另一件事：在两万件著录器物中找出最相似的几件，指出相似之处，再把判断交还给人。</p>
+      <p class="au-echo au-rise">Compare first. Then judge.</p>
+      <p class="au-p au-rise">掂重量、摸胎骨、看底足、迎光看釉，鉴赏的功夫在手上。</p>
+      <p class="au-p au-rise">照片擅长另一件事：在两万件著录器物里找出最相似的几件，指出相似之处，把判断交给人。</p>
     </div>
   </div>
 </section>
@@ -110,7 +110,7 @@ html = f'''<!DOCTYPE html>
       {stage('cma_154732', '清 雍正 釉里红海水龙纹梅瓶，克利夫兰艺术博物馆 1989.314', 870, 1477, '清 雍正 · 釉里红海水龙纹梅瓶', '克利夫兰 1989.314', 900, 'au-stage--arc')}
       {stage('cma_112196', '清 雍正 粉彩蝠桃纹盘，克利夫兰艺术博物馆 1930.639', 1612, 1613, '清 雍正 · 粉彩蝠桃纹盘', '克利夫兰 1930.639', 900, 'au-stage--arc au-wide')}
     </div>
-    <p class="au-fine au-fine--note">背景微光是 19,487 件微调嵌入的二维投影（t-SNE），仅作示意。器物照片取自克利夫兰、大都会两馆开放获取（CC0）；其余馆藏图片依各馆许可，仅用于研习。</p>
+    <p class="au-fine au-fine--note">背景微光是 19,487 件微调嵌入的二维投影（t-SNE），示意用。器物照片取自克利夫兰、大都会两馆开放获取（CC0）；其余馆藏图片依各馆许可，用于研习。</p>
   </div>
 </section>
 
@@ -119,7 +119,7 @@ html = f'''<!DOCTYPE html>
   <div class="au-wrap">
     <h2 class="au-h2 au-rise">闭卷测试</h2>
     <p class="au-echo au-rise">Held-out, no leakage</p>
-    <p class="au-p au-rise">留出 2,435 件从未参与训练的器物作为考题，检验前五件中同朝代、同器型的比例：</p>
+    <p class="au-p au-rise">另留 2,435 件器物作考题，训练时全部隔离，检验前五件中同朝代、同器型的比例：</p>
     <div class="au-bars au-rise">
       <div class="au-bargroup">
         <p class="au-bargroup__t">前五命中率 precision@5</p>
@@ -134,7 +134,7 @@ html = f'''<!DOCTYPE html>
         <p class="au-bar__delta">+6.9 分</p>
       </div>
     </div>
-    <p class="au-fine au-rise">“命中”指同朝代且同器型；单次运行，未做显著性检验。</p>
+    <p class="au-fine au-rise">“命中”指同朝代且同器型；单次运行，显著性检验待做。</p>
     <div class="au-routes au-rise">
       <p class="au-bargroup__t">六条路线，都试过了（nDCG@10）</p>
       <div class="au-bar au-bar--route"><span class="au-bar__lab">OpenCLIP 微调</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--after" style="--w:.847"></i></span><b>0.847</b></div>
@@ -143,7 +143,7 @@ html = f'''<!DOCTYPE html>
       <div class="au-bar au-bar--route"><span class="au-bar__lab">DINOv3 冻结</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.779"></i></span><b>0.779</b></div>
       <div class="au-bar au-bar--route"><span class="au-bar__lab">OpenCLIP 冻结</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.778"></i></span><b>0.778</b></div>
       <div class="au-bar au-bar--route"><span class="au-bar__lab">SDXL 生成器特征</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.689"></i></span><b>0.689</b></div>
-      <p class="au-p au-p--small">更新的模型未必更好；按数据选择，取其简。</p>
+      <p class="au-p au-p--small">模型按数据选，简单的那条路线胜出。</p>
     </div>
   </div>
 </section>
@@ -163,8 +163,8 @@ html = f'''<!DOCTYPE html>
       <h2 class="au-h2 au-rise">先分出器物，再量三项</h2>
       <p class="au-echo au-rise">Segment first, then measure</p>
       <ol class="au-steps">
-        <li class="au-step" data-step="1"><b>语言引导分割</b><span>用文字引导模型自动分出器物本体——月色轮廓就是模型给出的掩码。150 件全分辨率样本，mean IoU 0.884；点选提示为 0.614 / 0.492。</span></li>
-        <li class="au-step" data-step="2"><b>部位</b><span>光从口沿到腹部、再到圈足，与行家看器的顺序一致。部位级检索仍是概念验证：150 件样本，单看一个部位，前五件同朝代约 65%。</span></li>
+        <li class="au-step" data-step="1"><b>语言引导分割</b><span>用文字引导模型自动分出器物本体，月色轮廓就是模型给出的掩码。150 件全分辨率样本，mean IoU 0.884；点选提示为 0.614 / 0.492。</span></li>
+        <li class="au-step" data-step="2"><b>部位</b><span>光从口沿到腹部、再到圈足，与行家看器的顺序一致。部位级检索还在概念验证阶段：150 件样本，单看一个部位，前五件同朝代约 65%。</span></li>
         <li class="au-step" data-step="3"><b>三项可复核的测量</b>
           <dl class="au-measure">
             <div><dt>轮廓对称</dt><dd>98.2<i>%</i></dd><small>与镜像的 IoU</small></div>
@@ -173,7 +173,7 @@ html = f'''<!DOCTYPE html>
           </dl>
           <span class="au-fine">本页实算，以这只碗为例。</span></li>
       </ol>
-      <p class="au-p au-rise">这是测量，不是评判。开片、兔毫、窑变都“不均匀”，却各有各的精彩；系统不给美丑打分。</p>
+      <p class="au-p au-rise">三项都是测量。开片、兔毫、窑变各有各的精彩，美丑由人来定。</p>
     </div>
   </div>
 </section>
@@ -194,7 +194,7 @@ html = f'''<!DOCTYPE html>
       <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('cma_153286', '宋 梅瓶，克利夫兰艺术博物馆 1986.245', 548, 1391, '宋 · 梅瓶', '克利夫兰 1986.245<br>接近度 0.846', 700, 'au-stage--nb')}</li>
       <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('aic_58904', '北宋 婴戏纹盖梅瓶，芝加哥艺术博物馆 58904', 515, 919, '北宋 · 婴戏纹盖梅瓶', '芝加哥 58904<br>接近度 0.844', 700, 'au-stage--nb')}</li>
     </ol>
-    <p class="au-p au-rise">第一件是西夏的黑釉剔花梅瓶——器形最近，釉色相远。系统只说相似在哪里；真伪与价值，留给人判断。</p>
+    <p class="au-p au-rise">第一件是西夏的黑釉剔花梅瓶，器形最近，釉色相远。系统指出相似在哪里，真伪与价值由人判断。</p>
     <p class="au-fine au-rise">由生产模型在 1,372 件 CC0 馆藏（克利夫兰、芝加哥）中离线检索得出，余弦接近度；馆方编号可据以核对著录。</p>
   </div>
 </section>
@@ -203,10 +203,10 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s7" id="s7" aria-label="边界">
   <div class="au-wrap au-center">
     <p class="au-eyebrow au-rise">光止于此</p>
-    <h2 class="au-h2 au-h2--line au-rise">不鉴真伪　不作估价　不替代上手</h2>
+    <h2 class="au-h2 au-h2--line au-rise">像不像　像在哪　判断归人</h2>
     <span class="au-redline" aria-hidden="true"></span>
     <p class="au-echo au-rise">Taught to look before it speaks</p>
-    <p class="au-p au-rise">它回答“像不像、像在哪”；“真不真、值多少”，仍由人来回答。这条线写在产品里，也写在评测里。</p>
+    <p class="au-p au-rise">它回答像不像、像在哪。真不真、值多少，由人回答。这条线写在产品里，也写在评测里。</p>
   </div>
 </section>
 
@@ -227,21 +227,21 @@ html = f'''<!DOCTYPE html>
       <div class="au-col au-rise">
         <h3>进行中</h3>
         <ul>
-          <li>判断层：同朝代、同器型内的典范度与稀缺度百分位（描述性，不打美丑分）</li>
-          <li>“哪件更精”两两比较标注工具已建成，专家采集尚未开始</li>
+          <li>判断层：同朝代、同器型内的典范度与稀缺度百分位（描述性百分位）</li>
+          <li>“哪件更精”两两比较标注工具已建成，专家采集排在下一步</li>
           <li>发明专利交底书已成稿，申请准备中</li>
         </ul>
       </div>
       <div class="au-col au-rise">
         <h3>未完成</h3>
         <ul>
-          <li>以单视角照片为主；不替代上手</li>
-          <li>recall@k 结构性偏低（相关集大）；跨馆稳健性待测</li>
-          <li>专家偏好数据为零；铜器、玉器、书画仍在规划</li>
+          <li>以单视角照片为主，多视角待加入</li>
+          <li>recall@k 受相关集偏大拖低，跨馆稳健性待测</li>
+          <li>专家偏好数据待采集，铜器、玉器、书画在规划中</li>
         </ul>
       </div>
     </div>
-    <p class="au-p au-rise">为什么是现在：开放馆藏达到两万件量级；视觉语言模型经专项微调即提升 5.2 分；语言引导分割已能自动分出器物——三件事在同一年成熟。</p>
+    <p class="au-p au-rise">开放馆藏到了两万件量级，视觉语言模型经专项微调提升 5.2 分，语言引导分割能自动分出器物。这三件事同一年到位，所以现在做。</p>
     {stage('cma_120203', '清 乾隆 仿哥釉八卦纹琮式瓶，克利夫兰艺术博物馆 1940.969', 728, 1459, '清 乾隆 · 仿哥釉八卦纹琮式瓶', '克利夫兰艺术博物馆 1940.969 · “仿古”是鉴赏的老话题', 900, 'au-stage--s8')}
   </div>
 </section>
