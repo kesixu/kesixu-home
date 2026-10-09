@@ -29,6 +29,35 @@ import json as _json
 _D=_json.load(open("tools/aurelia/demo_reports.json",encoding="utf-8"))
 _KILN={"Jun":"钧窑","Ge":"哥窑","Guan":"官窑","Longquan":"龙泉窑","Ru":"汝窑","Jingdezhen":"景德镇"}
 _DYN={"Song":"宋","Yuan":"元","Ming":"明","Qing":"清"}; _REIGN={"Qianlong":"乾隆","Yongzheng":"雍正"}
+
+_B2=_json.load(open("tools/aurelia/baseline2_results.json",encoding="utf-8"))["pe_core_l14_336"]
+def fig_fooled():
+    rows=[("仿钧","Jun"),("仿哥","Ge"),("仿官","Guan"),("仿龙泉","Longquan"),("仿汝","Ru")]
+    out=['<div class="au-hbars" role="img" aria-label="五种仿品：被放到宋元原型旁边的比例，以及被判成清代的比例">','<p class="au-hbars__leg"><i class="au-sw au-sw--a"></i>放到宋元原型旁　<i class="au-sw au-sw--b"></i>判成清代</p>']
+    for zh,k in rows:
+        a=_B2[f"{k}:P(style>period)_matched"]; b=_B2[f"dyn_probe:{k}:pred_Qing"]; n=_B2[f"{k}:n_imit"]
+        out.append(f'<div class="au-hbars__row"><span class="au-hbars__lab">{zh}<small>n={n}</small></span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:{a:.3f}"></i><b>{a*100:.0f}%</b></span><span class="au-hbar"><i class="au-hbar__b" style="--w:{b:.3f}"></i><b>{b*100:.0f}%</b></span></span></div>')
+    out.append("</div>"); return "".join(out)
+def fig_dynasty():
+    rows=[("明",8830),("清",6577),("宋",1251),("元",407),("唐",165)]
+    out=['<div class="au-hbars au-hbars--strip" role="img" aria-label="两万件馆藏按朝代">']
+    for zh,n in rows: out.append(f'<div class="au-hbars__row"><span class="au-hbars__lab">{zh}</span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:{n/8830:.3f}"></i><b>{n:,}</b></span></span></div>')
+    out.append("</div>"); return "".join(out)
+def fig_price():
+    import math
+    items=[(4.8,"赃物核查，拍卖行按件","ref"),(10,"快筛报告（拟）","us"),(25,"在线估价 Mearto","ref"),(110,"赃物核查，单次","ref"),(150,"人工复核报告（拟）","us"),(400,"热释光检测","ref"),(2200,"AI 绘画鉴真 Art Recognition","ref")]
+    W=640; L=24; R=24; lo,hi=math.log10(3),math.log10(4000); X=lambda v:L+(W-L-R)*(math.log10(v)-lo)/(hi-lo)
+    out=[f'<svg class="au-fig au-fig--price" viewBox="0 0 {W} 150" role="img" aria-label="单件鉴定与核查服务的价格带，美元">','<line x1="24" y1="70" x2="616" y2="70" class="f-axis"/>']
+    for t in [5,10,50,100,500,1000,2000]: out.append(f'<line x1="{X(t):.1f}" y1="66" x2="{X(t):.1f}" y2="74" class="f-axis"/><text x="{X(t):.1f}" y="90" class="f-n" text-anchor="middle">${t:,}</text>')
+    up=True
+    for v,lab,cls in items:
+        x=X(v); short=lab.replace("，","<br>").replace("（拟）","<br>（拟）").split("<br>")
+        if cls=="us": out.append(f'<circle cx="{x:.1f}" cy="70" r="6" class="f-us"/>'); ty=118
+        else: out.append(f'<circle cx="{x:.1f}" cy="70" r="4" class="f-ref"/>'); ty=22 if up else 44; up=not up
+        for j,ln in enumerate(short): out.append(f'<text x="{x:.1f}" y="{ty+j*14}" class="{"f-lab-us" if cls=="us" else "f-lab-s"}" text-anchor="middle">{ln}</text>')
+    out.append("</svg>")
+    lst=['<ul class="au-pricelist">']+[f'<li class="{"is-us" if c=="us" else ""}"><span>{lab}</span><b>${v:,.0f}</b></li>' for v,lab,c in sorted(items,key=lambda t:t[0])]+["</ul>"]
+    return "".join(out)+"".join(lst)
 def demo_cards():
     out=[]
     for oid in _D["pick"]:
@@ -68,7 +97,7 @@ html = f'''<!DOCTYPE html>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-300-aurelia.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-400-aurelia.woff2" crossorigin>
 <link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
-<link rel="stylesheet" href="aurelia.css?v=15">
+<link rel="stylesheet" href="aurelia.css?v=17">
 </head>
 <body>
 <a class="au-skip" href="#main">跳到内容</a>
@@ -133,6 +162,16 @@ html = f'''<!DOCTYPE html>
       <div class="au-kpi"><b>30.7<i>万件</i></b><span>2024 年内地文物艺术品拍卖成交量，每一件都要有人看过、断过代</span></div>
       <div class="au-kpi"><b>40<i>万件/年</i></b><span>拍卖行已经按件付费核查拍品是否为赃物，每件 3.66 英镑</span></div>
     </div>
+    <h3 class="au-h3 au-rise">用钱说话</h3>
+    <div class="au-figwrap au-rise">
+      <p class="au-figcap">单件核查与鉴定服务的现行价格，美元</p>
+      {fig_price()}
+      <p class="au-fine">赃物核查为 Art Loss Register 公开价（拍卖行每件 3.66 英镑、单次 85 英镑）；在线估价为 Mearto；热释光为 Oxford Authentication 英国价起；AI 绘画鉴真为 Art Recognition 报道价。两档拟定价为本项目假设。</p>
+    </div>
+    <ul class="au-bullets au-rise">
+      <li>内地与境外每年上拍的瓷器玉器杂项约 17.5 万件（按成交额占比推算）。全部走快筛，是每年 175 万美元；两成再走人工复核，再加 525 万美元。</li>
+      <li>一件估价 1,500 英镑以上的拍品，买家为一份 150 美元的报告付钱，花的是拍品价值的十分之一以内。</li>
+    </ul>
     <h3 class="au-h3 au-rise">这份报告对市场起什么作用</h3>
     <ul class="au-bullets au-rise">
       <li>今天断代与归属全靠行家的眼睛，一件一件看，留下的书面依据很少。报告把依据写下来，按件计价，像查赃物一样成为上拍前的固定步骤。</li>
@@ -153,7 +192,8 @@ html = f'''<!DOCTYPE html>
     <h2 class="au-h2 au-rise">两万件馆藏，一次看遍</h2>
     <p class="au-echo au-rise">Five museums, one index</p>
     <p class="au-bignum au-rise"><span class="au-num">19,487</span><span class="au-bignum__lab">件 · 开放馆藏</span></p>
-    <p class="au-fine au-rise au-sources"><span class="au-nw-d">台北故宫 14,557 · 英国 V&amp;A 3,473 · 克利夫兰 699 · 芝加哥 673 · 大都会 85</span><span class="au-sep">　｜　</span><span class="au-nw-d">明 8,830 · 清 6,577 · 宋 1,251 · 元 407 · 唐 165</span></p>
+    <p class="au-fine au-rise au-sources"><span class="au-nw-d">台北故宫 14,557 · 英国 V&amp;A 3,473 · 克利夫兰 699 · 芝加哥 673 · 大都会 85</span></p>
+    <div class="au-figwrap au-rise">{fig_dynasty()}</div>
     <div class="au-arc">
       {stage('cma_134843', '宋 汝窑 笔洗，克利夫兰艺术博物馆 1957.40', 1346, 523, '宋 汝窑 · 笔洗', '克利夫兰 1957.40', 900, 'au-stage--arc au-wide')}
       {stage('cma_135015', '南宋 官窑 葵口碗，克利夫兰艺术博物馆 1957.66', 1508, 808, '南宋 官窑 · 葵口碗', '克利夫兰 1957.66', 900, 'au-stage--arc au-wide')}
@@ -259,11 +299,10 @@ html = f'''<!DOCTYPE html>
     <h2 class="au-h2 au-rise">AI 学审美的第一课：分清“像”与“是”</h2>
     <p class="au-echo au-rise">Eight centuries of taste, written in the catalogue</p>
     <p class="au-p au-rise">清代宫廷公开地仿宋代名窑，博物馆著录里写得清清楚楚：仿钧、仿哥、仿官、仿龙泉、仿汝，台北故宫就有 352 件。什么被后世一再仿，什么就是那个时代公认的美。这三百多件器物是八百年审美留下的投票，也是机器学习里少有的实验条件：同一种风格，相隔五六百年由两个作坊做出来，谁做的是已知的。我们用这个“仿”字当老师，教模型分开两件事：它想像谁，它由谁所制。检索过 222 篇论文和十件最接近的专利，这条路还没有人走过。</p>
-    <div class="au-tbl au-rise">
-      <div class="au-tbl__row au-tbl__head"><span>今年最强的五个通用视觉模型</span><span>结果</span></div>
-      <div class="au-tbl__row"><span>把清代仿品放到宋元原型旁边的比例</span><b>85% – 95%</b></div>
-      <div class="au-tbl__row"><span>断代时把清代仿品判成清代的比例</span><b>36% – 41%</b></div>
-      <div class="au-tbl__row"><span>其中仿钧被判成清代的比例</span><b>13% – 22%</b></div>
+    <div class="au-figwrap au-rise">
+      <p class="au-figcap">今年最强的通用视觉模型（以 PE-Core 为例）怎么看 190 件清代仿品</p>
+      {fig_fooled()}
+      <p class="au-fine">五个模型结果相近：放到宋元原型旁 85% – 95%，判成清代只有 36% – 41%。池大小已匹配，重采样 50 次。</p>
     </div>
     <p class="au-p au-rise">模型记住的是器物“想像谁”，对“由谁所制”只看见一部分。而行家靠的正是后者：胎、足、釉面的质感。我们正在用这 282 件仿品训练一个双头模型，一头认风格，一头认工艺，并让两头互不干扰。</p>
     <div class="au-todos au-rise">

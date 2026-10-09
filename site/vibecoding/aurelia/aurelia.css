@@ -409,3 +409,44 @@ html[data-motion-tier="eco"] .au-haze { display: none; }
   .au-s5 .au-text::before { content: ""; position: absolute; inset: -60px -80px -60px -110px; z-index: -1; filter: blur(26px);
     background: radial-gradient(ellipse 62% 58% at 48% 50%, rgba(var(--ink-a), .82) 0%, rgba(var(--ink-a), .6) 45%, rgba(var(--ink-a), 0) 100%); }
 }
+
+/* ── inline figures ── */
+.au-figwrap { margin: 22px 0 8px; max-width: 680px; }
+.au-figcap { font-size: var(--fine); letter-spacing: .08em; color: var(--smoke); margin-bottom: 10px; }
+.au-fig { display: block; width: 100%; height: auto; overflow: visible; }
+.au-fig text { font-family: var(--sans); font-weight: 300; }
+.au-fig .f-lab { font-size: 13px; fill: var(--paper); }
+.au-fig .f-val { font-size: 11px; fill: var(--moon); }
+.au-fig .f-n { font-size: 10px; fill: var(--smoke); letter-spacing: .04em; }
+.au-fig .f-leg { font-size: 11px; fill: var(--smoke); letter-spacing: .06em; }
+.au-fig .f-leg .f-a, .au-fig rect.f-a { fill: var(--sky); }
+.au-fig .f-leg .f-b, .au-fig rect.f-b { fill: var(--cinnabar); opacity: .85; }
+.au-fig .f-axis { stroke: rgba(var(--moon-a), .25); stroke-width: 1; }
+.au-fig .f-ref { fill: var(--smoke); }
+.au-fig .f-us { fill: var(--sky); }
+.au-fig .f-lab-s { font-size: 10.5px; fill: var(--smoke); }
+.au-fig .f-lab-us { font-size: 11px; fill: var(--moon); }
+.au-fig--strip { max-width: 520px; }
+
+/* ── HTML bar figures (responsive text) ── */
+.au-hbars { margin: 6px 0 4px; }
+.au-hbars__leg { font-size: var(--fine); letter-spacing: .06em; color: var(--smoke); margin-bottom: 10px; }
+.au-sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: -1px; margin-right: 6px; }
+.au-sw--a { background: var(--sky); } .au-sw--b { background: var(--cinnabar); opacity: .85; }
+.au-hbars__row { display: grid; grid-template-columns: 56px 1fr; gap: 12px; align-items: center; padding: 6px 0; }
+.au-hbars--strip .au-hbars__row { grid-template-columns: 28px 1fr; padding: 3px 0; }
+.au-hbars__lab { font-size: var(--fine); color: var(--paper); letter-spacing: .04em; }
+.au-hbars__lab small { display: block; font-size: 10.5px; color: var(--smoke); letter-spacing: .06em; }
+.au-hbars__bars { display: grid; gap: 5px; }
+.au-hbar { display: grid; grid-template-columns: 1fr 44px; gap: 10px; align-items: center; }
+.au-hbar i { display: block; height: 7px; border-radius: 3px; background: rgba(var(--moon-a), .08); position: relative; overflow: hidden; }
+.au-hbar i::after { content: ""; position: absolute; inset: 0; width: calc(var(--w, 0) * 100%); border-radius: 3px; background: var(--sky); }
+.au-hbar i.au-hbar__b::after { background: var(--cinnabar); opacity: .85; }
+.au-hbar b { font-family: var(--sans); font-weight: 300; font-size: var(--fine); color: var(--moon); font-variant-numeric: tabular-nums; text-align: right; }
+.au-hbars--strip .au-hbar i { height: 6px; }
+.au-pricelist { list-style: none; margin: 10px 0 4px; border-top: 1px solid rgba(var(--moon-a), .12); }
+.au-pricelist li { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px solid rgba(var(--moon-a), .10); font-size: var(--fine); color: var(--smoke); }
+.au-pricelist li b { font-family: var(--sans); font-weight: 300; color: var(--moon); font-variant-numeric: tabular-nums; }
+.au-pricelist li.is-us { color: var(--paper); } .au-pricelist li.is-us b { color: var(--sky); }
+.au-fig--price { display: none; }
+@media (min-width: 900px) { .au-fig--price { display: block; } .au-pricelist { display: none; } .au-figwrap { max-width: 640px; } }
