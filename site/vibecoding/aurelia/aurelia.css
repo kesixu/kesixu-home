@@ -375,3 +375,4 @@ html[data-motion-tier="eco"] .au-haze { display: none; }
 .au-bullets li { position: relative; padding: 8px 0 8px 18px; font-size: var(--p); line-height: 1.8; color: var(--paper); opacity: .9; }
 .au-bullets li::before { content: ""; position: absolute; left: 0; top: 1.05em; width: 7px; height: 1px; background: var(--sky); }
 .au-s10 .au-p, .au-s11 .au-p, .au-s12 .au-p { max-width: 40em; }
+.au-s10 .au-bullets, .au-s11 .au-bullets, .au-s12 .au-bullets, .au-s10 .au-fine { max-width: 44em; }

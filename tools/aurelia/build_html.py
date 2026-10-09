@@ -42,7 +42,7 @@ html = f'''<!DOCTYPE html>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-300-aurelia.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-400-aurelia.woff2" crossorigin>
 <link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
-<link rel="stylesheet" href="aurelia.css?v=9">
+<link rel="stylesheet" href="aurelia.css?v=10">
 </head>
 <body>
 <a class="au-skip" href="#main">跳到内容</a>
@@ -97,15 +97,26 @@ html = f'''<!DOCTYPE html>
 <!-- ═══ S10 市场 ═══ -->
 <section class="au-s au-s10" id="s10" aria-label="市场">
   <div class="au-wrap">
-    <h2 class="au-h2 au-rise">为什么值得做</h2>
-    <p class="au-echo au-rise">A market that still runs on eyes and trust</p>
+    <h2 class="au-h2 au-rise">我们做的是什么</h2>
+    <p class="au-echo au-rise">A checkable report for every piece of Chinese ceramics</p>
+    <p class="au-p au-rise">一件具体的事：给中国古代瓷器做看图比对的工具。一张照片进去，出来一份可核对的报告：它最像博物馆里的哪几件，像在哪里，风格属于哪一窑，工艺是否与所称的年代一致。每句结论都带馆方编号。</p>
+    <h3 class="au-h3 au-rise">市场在哪</h3>
     <div class="au-kpis au-rise">
-      <div class="au-kpi"><b>596<i>亿美元</i></b><span>2025 年全球艺术品销售额，中国占 14%</span></div>
-      <div class="au-kpi"><b>30.7<i>万件</i></b><span>2024 年内地文物艺术品拍卖成交量，落槌 183.5 亿元</span></div>
-      <div class="au-kpi"><b>51%</b><span>境外中国文物艺术品成交额里，瓷器玉器杂项的份额</span></div>
-      <div class="au-kpi"><b>唯一增长</b><span>2024 年与 2025 上半年，瓷器杂项都是内地唯一正增长的板块</span></div>
+      <div class="au-kpi"><b>596<i>亿美元</i></b><span>2025 年全球艺术品销售额，中国占 14%，是第三大市场</span></div>
+      <div class="au-kpi"><b>51%</b><span>境外中国文物艺术品成交额里，瓷器玉器杂项的份额；内地这一板块连续两期唯一增长</span></div>
+      <div class="au-kpi"><b>30.7<i>万件</i></b><span>2024 年内地文物艺术品拍卖成交量，每一件都要有人看过、断过代</span></div>
+      <div class="au-kpi"><b>40<i>万件/年</i></b><span>拍卖行已经按件付费核查拍品是否为赃物，每件 3.66 英镑</span></div>
     </div>
-    <p class="au-p au-rise">每一件上拍的瓷器都要有人看过、断过代、给过价。这件事今天全靠行家的眼睛，查一件的现成价格也早就存在：拍卖行按件付费核查拍品是否为赃物，一年查 40 万件以上。</p>
+    <h3 class="au-h3 au-rise">这份报告对市场起什么作用</h3>
+    <ul class="au-bullets au-rise">
+      <li>今天断代与归属全靠行家的眼睛，一件一件看，留下的书面依据很少。报告把依据写下来，按件计价，像查赃物一样成为上拍前的固定步骤。</li>
+      <li>先用在最需要它的环节：古董商与中型拍卖行的上拍前核查，竞投前的尽调，保险与抵押贷款的估值依据，交易平台的上架筛查。</li>
+    </ul>
+    <h3 class="au-h3 au-rise">未来的市场</h3>
+    <ul class="au-bullets au-rise">
+      <li>中国古瓷是起点，也是最难的一块：同窑同型的量产器最多。打穿它，青铜、玉器、书画用同一套办法。</li>
+      <li>报告之后是数据层：平台按条调用，保险与贷款条款直接引用，登记过的器物每次流转都回到这里。</li>
+    </ul>
     <p class="au-fine au-rise">来源：Art Basel &amp; UBS《艺术市场报告 2026》；中国拍卖行业协会 2024 年报；雅昌艺术市场监测中心 2025 上半年报告；Art Loss Register 收费页。</p>
   </div>
 </section>
@@ -219,9 +230,9 @@ html = f'''<!DOCTYPE html>
 <!-- ═══ S11 核心发现 ═══ -->
 <section class="au-s au-s11" id="s11" aria-label="发现">
   <div class="au-wrap">
-    <h2 class="au-h2 au-rise">我们发现了什么</h2>
-    <p class="au-echo au-rise">The best vision models are fooled by imitations</p>
-    <p class="au-p au-rise">清代宫廷公开地仿宋代名窑，博物馆著录里写得清清楚楚：仿钧、仿哥、仿官、仿龙泉、仿汝，台北故宫就有 352 件。同一种风格，相隔五六百年由两个作坊做出来，谁做的是已知的。这是机器学习里少有的实验条件。</p>
+    <h2 class="au-h2 au-rise">我们的独门绝活</h2>
+    <p class="au-echo au-rise">Imitation as the teacher</p>
+    <p class="au-p au-rise">清代宫廷公开地仿宋代名窑，博物馆著录里写得清清楚楚：仿钧、仿哥、仿官、仿龙泉、仿汝，台北故宫就有 352 件。同一种风格，相隔五六百年由两个作坊做出来，谁做的是已知的。我们用这个“仿”字当老师，教模型分开两件事：它想像谁，它由谁所制。检索过 222 篇论文和十件最接近的专利，这条路还没有人走过。</p>
     <div class="au-tbl au-rise">
       <div class="au-tbl__row au-tbl__head"><span>今年最强的五个通用视觉模型</span><span>结果</span></div>
       <div class="au-tbl__row"><span>把清代仿品放到宋元原型旁边的比例</span><b>85% – 95%</b></div>
@@ -235,11 +246,11 @@ html = f'''<!DOCTYPE html>
       <div class="au-todo"><span class="au-todo__k">跨文化检验：V&amp;A 的 88 件欧洲仿中国瓷</span><span class="au-todo__v">待补</span></div>
       <div class="au-todo"><span class="au-todo__k">公开真仿对照题（CArtBench 10 对，通用大模型目前 6/10）</span><span class="au-todo__v">待补</span></div>
     </div>
-    <h3 class="au-h3 au-rise">成立之后意味着什么</h3>
+    <h3 class="au-h3 au-rise">护城河在哪</h3>
     <ul class="au-bullets au-rise">
-      <li>一张照片就能说出一句鉴定报告的核心话：风格最近宋钧，工艺特征与清代仿钧一致。</li>
-      <li>行家“看足看釉”的经验第一次被量化，哪个部位在什么条件下泄露年代，有数可查。</li>
-      <li>同一套办法可复制到任何有“仿”著录的品类：青铜、玉器、书画。</li>
+      <li>只有我们在用著录里的“仿”做监督，它给出的能力是通用模型拿不到的：说出“风格最近宋钧，工艺特征与清代仿钧一致”。</li>
+      <li>行家“看足看釉”的经验第一次被量化，哪个部位在什么条件下泄露年代，有数可查，写进报告就是证据。</li>
+      <li>同一套办法可复制到任何有“仿”著录的品类：青铜、玉器、书画。先做的人先拿到裁定过的数据。</li>
     </ul>
   </div>
 </section>
