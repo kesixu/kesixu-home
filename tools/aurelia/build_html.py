@@ -55,11 +55,11 @@ html = f'''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Aurelia · AI 学中式审美，第一步：一张照片找出最像的古瓷</title>
+<title>Aurelia · AI 能不能学会中式古瓷的审美</title>
 <meta name="description" content="把瓷器照片交给它，它在两万件博物馆藏品里找出最像的几件，并标出像在哪里。研习用途，邀请内测">
 <meta name="theme-color" content="#121619">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Aurelia · 一张照片，找出最像的古瓷">
+<meta property="og:title" content="Aurelia · AI 能不能学会中式古瓷的审美">
 <meta property="og:description" content="把瓷器照片交给它，它在两万件博物馆藏品里找出最像的几件，并标出像在哪里">
 <meta property="og:url" content="https://kesixu.com/vibecoding/aurelia/">
 <meta property="og:image" content="https://kesixu.com/vibecoding/aurelia/media/og.jpg">
@@ -68,7 +68,7 @@ html = f'''<!DOCTYPE html>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-300-aurelia.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-400-aurelia.woff2" crossorigin>
 <link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
-<link rel="stylesheet" href="aurelia.css?v=14">
+<link rel="stylesheet" href="aurelia.css?v=15">
 </head>
 <body>
 <a class="au-skip" href="#main">跳到内容</a>
@@ -92,10 +92,10 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s1" id="s1" aria-label="开卷">
   <div class="au-wrap au-hero">
     <div class="au-hero__text">
-      <p class="au-eyebrow au-intro">Aurelia · AI 学中式审美 · 第一步</p>
-      <h1 class="au-h1 au-intro">一张照片<br><span class="au-nw">找出最像的古瓷</span></h1>
-      <p class="au-echo au-intro">Nearest in style, and where</p>
-      <p class="au-lede au-intro">我们在问一个大问题：AI 能不能学会中国人看瓷器的眼光。第一步是看懂：把瓷器照片交给它，它在两万件博物馆藏品里找出最像的几件，并标出像在哪里。</p>
+      <p class="au-eyebrow au-intro">Aurelia · 古瓷风格比对</p>
+      <h1 class="au-h1 au-intro">AI 能不能学会<br><span class="au-nw">中式古瓷的审美</span></h1>
+      <p class="au-echo au-intro">Can a machine learn the connoisseur’s eye?</p>
+      <p class="au-lede au-intro">第一步是看懂：把瓷器照片交给它，它在两万件博物馆藏品里找出最像的几件，并标出像在哪里。</p>
       <div class="au-cta au-intro">
         <a class="au-btn au-btn--moon" href="{S_MAIN}">申请研习内测</a>
         <a class="au-btn" href="/vibecoding/">回灯火</a>
