@@ -515,3 +515,6 @@ body { line-break: strict; }
 .au-toc__sheet li.is-cur a { color: var(--moon); } .au-toc__sheet li.is-cur a i { color: var(--cinnabar); }
 @media (min-width: 900px) { .au-toc__sheet { left: auto; right: 18px; bottom: 76px; width: 320px; border: 1px solid rgba(var(--moon-a), .14); border-radius: 6px; padding: 18px 22px 10px; max-height: 84vh; } .au-toc__sheet ol { columns: 1; } .au-toc[open]::before { background: transparent; } .au-rail { right: 12px; } }
 @media print { .au-rail, .au-toc { display: none; } }
+
+.au-lede { margin-top: 22px; }
+.au-h2 + .au-p, .au-h2 + .au-figwrap, .au-h2 + .au-bignum { margin-top: 22px; }
