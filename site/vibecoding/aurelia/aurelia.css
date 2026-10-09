@@ -467,41 +467,6 @@ body { line-break: strict; }
 .au-rep__fig img { content-visibility: auto; }
 @media (max-width: 899px) { .au-rep__nbs { gap: 10px; } .au-rep__nbs li { font-size: 11.5px; } }
 
-/* ── training-flow figure (pure CSS animation) ── */
-.au-figwrap--flow { max-width: 760px; }
-.au-flowwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.au-flow { display: block; width: 100%; min-width: 640px; height: auto; overflow: visible; }
-.au-flow text { font-family: var(--sans); font-weight: 300; }
-.au-flow .fl-lines path { fill: none; stroke: rgba(var(--moon-a), .22); stroke-width: 1; }
-.au-flow .fl-outline { fill: none; stroke: var(--moon); stroke-width: 1.2; stroke-dasharray: 3 3; opacity: .8; }
-.au-flow .fl-grid rect { fill: rgba(var(--moon-a), .14); }
-.au-flow .fl-grid rect:nth-child(odd) { fill: rgba(var(--sky-a), .35); }
-.au-flow .fl-box { fill: rgba(var(--ink-a), .9); stroke: rgba(var(--moon-a), .35); stroke-width: 1; }
-.au-flow .fl-seal { fill: var(--cinnabar); opacity: .85; }
-.au-flow .fl-sealt { font-size: 11px; fill: var(--paper); letter-spacing: .08em; }
-.au-flow .fl-nl { font-size: 15px; fill: var(--paper); letter-spacing: .06em; }
-.au-flow .fl-ns { font-size: 11.5px; fill: var(--smoke); letter-spacing: .06em; }
-.au-flow .fl-tl { font-size: 11.5px; fill: var(--smoke); letter-spacing: .04em; }
-.au-flow .fl-shelf rect { fill: rgba(var(--moon-a), .04); stroke: rgba(var(--moon-a), .28); stroke-width: 1; }
-.au-flow .fl-sl { font-size: 13px; fill: var(--moon); letter-spacing: .08em; }
-.au-flow .fl-out { font-size: 12.5px; fill: var(--sky); letter-spacing: .08em; }
-.au-flow .fl-tok path { stroke: rgba(var(--moon-a), .5); stroke-width: .8; }
-.au-flow .fl-tok { animation-duration: 11s; animation-iteration-count: infinite; animation-timing-function: ease-in-out; opacity: 0; }
-.au-flow .fl-t1 { animation-name: fl-t1; } .au-flow .fl-t2 { animation-name: fl-t2; }
-.au-flow .fl-s1 { animation-name: fl-s1; } .au-flow .fl-s2 { animation-name: fl-s2; }
-.au-flow .fl-k1 { animation-name: fl-k1; } .au-flow .fl-k2 { animation-name: fl-k2; }
-@keyframes fl-t1 { 0%{transform:translate(60px,110px);opacity:0} 4%{opacity:1} 20%{transform:translate(250px,118px)} 38%{transform:translate(430px,118px)} 54%{transform:translate(600px,150px);opacity:1} 58%{transform:translate(600px,165px);opacity:0} 100%{transform:translate(600px,165px);opacity:0} }
-@keyframes fl-t2 { 0%{transform:translate(60px,225px);opacity:0} 4%{opacity:1} 20%{transform:translate(250px,212px)} 38%{transform:translate(430px,212px)} 54%{transform:translate(600px,180px);opacity:1} 58%{transform:translate(600px,165px);opacity:0} 100%{transform:translate(600px,165px);opacity:0} }
-@keyframes fl-s1 { 0%,56%{transform:translate(600px,165px);opacity:0} 60%{opacity:1} 74%{transform:translate(776px,104px);opacity:1} 93%{transform:translate(776px,104px);opacity:1} 100%{transform:translate(776px,104px);opacity:0} }
-@keyframes fl-s2 { 0%,56%{transform:translate(600px,165px);opacity:0} 60%{opacity:1} 74%{transform:translate(792px,108px);opacity:1} 93%{transform:translate(792px,108px);opacity:1} 100%{transform:translate(792px,108px);opacity:0} }
-@keyframes fl-k1 { 0%,56%{transform:translate(600px,165px);opacity:0} 60%{opacity:1} 74%{transform:translate(770px,226px);opacity:1} 93%{transform:translate(770px,226px);opacity:1} 100%{transform:translate(770px,226px);opacity:0} }
-@keyframes fl-k2 { 0%,56%{transform:translate(600px,165px);opacity:0} 60%{opacity:1} 74%{transform:translate(830px,226px);opacity:1} 93%{transform:translate(830px,226px);opacity:1} 100%{transform:translate(830px,226px);opacity:0} }
-@media (prefers-reduced-motion: reduce) {
-  .au-flow .fl-tok { animation: none; opacity: 1; }
-  .au-flow .fl-t1 { transform: translate(60px,110px); } .au-flow .fl-t2 { transform: translate(60px,225px); }
-  .au-flow .fl-s1 { transform: translate(776px,104px); } .au-flow .fl-s2 { transform: translate(792px,108px); }
-  .au-flow .fl-k1 { transform: translate(770px,226px); } .au-flow .fl-k2 { transform: translate(830px,226px); }
-}
 .au-rep__nbs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 /* ── pricing tiers ── */
@@ -512,3 +477,23 @@ body { line-break: strict; }
 .au-tier b i { font-style: normal; font-size: .4em; letter-spacing: .08em; margin-left: .15em; color: var(--paper); opacity: .75; }
 .au-tier span { display: block; margin-top: 8px; font-size: var(--p); color: var(--paper); }
 .au-tier small { display: block; margin-top: 4px; font-size: var(--fine); line-height: 1.6; color: var(--smoke); }
+
+/* ── training-flow figure v2 (real cutouts, pure CSS animation) ── */
+.au-figwrap--flow { max-width: 900px; }
+.au-flowwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 6px; }
+.au-flow { display: block; width: 100%; min-width: 760px; height: auto; overflow: visible; }
+.au-flow text { font-family: var(--sans); font-weight: 300; }
+.au-flow .fl-lines path { fill: none; stroke: rgba(var(--moon-a), .20); stroke-width: 1; }
+.au-flow .fl-cap { font-size: 12.5px; fill: var(--paper); letter-spacing: .06em; opacity: .9; }
+.au-flow .fl-dash { fill: none; stroke: var(--moon); stroke-width: 1.1; stroke-dasharray: 4 4; opacity: .75; }
+.au-flow .fl-grid circle { fill: rgba(var(--moon-a), .18); }
+.au-flow .fl-grid circle:nth-child(3n) { fill: rgba(var(--sky-a), .55); }
+.au-flow .fl-tile { stroke: rgba(var(--moon-a), .45); stroke-width: 1; }
+.au-flow .fl-sealdot { fill: var(--cinnabar); opacity: .9; }
+.au-flow .fl-nl { font-size: 16px; fill: var(--paper); letter-spacing: .08em; }
+.au-flow .fl-ns { font-size: 12px; fill: var(--smoke); letter-spacing: .06em; }
+.au-flow .fl-nx { font-size: 10.5px; fill: var(--smoke); letter-spacing: .04em; opacity: .85; }
+.au-flow .fl-shelf rect { fill: rgba(var(--moon-a), .035); stroke: rgba(var(--moon-a), .3); stroke-width: 1; }
+.au-flow .fl-sl { font-size: 13.5px; fill: var(--moon); letter-spacing: .1em; }
+.au-flow .fl-out { font-size: 13px; fill: var(--sky); letter-spacing: .1em; }
+.au-flow .fl-tok { will-change: transform, opacity; }

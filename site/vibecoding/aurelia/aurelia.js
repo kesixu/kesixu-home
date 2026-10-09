@@ -15,6 +15,7 @@
   var lightTL = null, introTL = null, lenis = null, pins = [], relight = null;
 
   function toStatic() {
+    try { var fl = document.querySelector(".au-flow"); if (fl && fl.pauseAnimations) { fl.pauseAnimations(); fl.setCurrentTime(10.8); } } catch (e) {}
     try {
       doc.classList.remove("motion-pending", "fx");
       if (lenis) { lenis.destroy(); lenis = null; }

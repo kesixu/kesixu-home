@@ -59,29 +59,34 @@ def fig_price():
     lst=['<ul class="au-pricelist">']+[f'<li class="{"is-us" if c=="us" else ""}"><span>{lab}</span><b>${v:,.0f}</b></li>' for v,lab,c in sorted(items,key=lambda t:t[0])]+["</ul>"]
     return "".join(out)+"".join(lst)
 def fig_flow():
-    vase="M0,-24 C7,-24 9,-19 7,-13 C16,-7 16,13 9,21 L-9,21 C-16,13 -16,-7 -7,-13 C-9,-19 -7,-24 0,-24 Z"
-    def tok(cls,fill,label=None):
-        t=f'<g class="fl-tok {cls}"><path d="{vase}" fill="url(#{fill})"/>'
-        if label: t+=f'<text class="fl-tl" x="0" y="38" text-anchor="middle">{label}</text>'
-        return t+"</g>"
-    return f'''<div class="au-flowwrap"><svg class="au-flow" viewBox="0 0 920 330" role="img" aria-label="训练法示意：两件器物经过看图、看懂、分开两件事三步，风格一路把它们放到同一格，做工一路把它们分到宋与清两格">
+    A="media/demo/cut_npm_1321.webp"; B="media/demo/cut_npm_38059.webp"   # 宋 钧窑梅瓶 / 清 乾隆仿钧花口瓶
+    def img(href,w,h,cls="",extra=""):
+        return f'<image href="{href}" x="{-w/2:.0f}" y="{-h/2:.0f}" width="{w}" height="{h}" preserveAspectRatio="xMidYMid meet" class="{cls}" {extra}/>'
+    SPL="0.45 0.05 0.3 1"
+    def tokm(cls,inner,vals,kt):
+        n=len(kt.split(";"))-1
+        return (f'<g class="fl-tok {cls}">{inner}<animateTransform attributeName="transform" type="translate" values="{vals}" keyTimes="{kt}" dur="12s" repeatCount="indefinite" calcMode="spline" keySplines="{";".join([SPL]*n)}"/>'
+                f'<animate attributeName="opacity" values="0;1;1;1;0;0" keyTimes="0;.06;.5;.54;.58;1" dur="12s" repeatCount="indefinite"/></g>')
+    def toko(cls,inner,dest):
+        return (f'<g class="fl-tok {cls}">{inner}<animateTransform attributeName="transform" type="translate" values="720 215;720 215;{dest};{dest}" keyTimes="0;.58;.76;1" dur="12s" repeatCount="indefinite" calcMode="spline" keySplines="{SPL};{SPL};{SPL}"/>'
+                f'<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;.58;.62;.76;.95;1" dur="12s" repeatCount="indefinite"/></g>')
+    grid="".join(f'<circle cx="{-26+i*13}" cy="{-26+j*13}" r="2.2"/>' for i in range(5) for j in range(5))
+    return f'''<div class="au-flowwrap"><svg class="au-flow" viewBox="0 0 1000 430" role="img" aria-label="训练法示意：宋钧梅瓶与清乾隆仿钧花口瓶一起进入模型，风格一路把两件放进同一格，做工一路把它们分进宋与清">
 <defs>
-  <linearGradient id="gJun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FA3C8"/><stop offset="1" stop-color="#5E6FA0"/></linearGradient>
-  <linearGradient id="gJun2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#93A4C4"/><stop offset="1" stop-color="#66749E"/></linearGradient>
+  <linearGradient id="fl-tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1A2422"/><stop offset="1" stop-color="#0F1416"/></linearGradient>
+  <radialGradient id="fl-halo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#9DBBB0" stop-opacity=".22"/><stop offset="1" stop-color="#9DBBB0" stop-opacity="0"/></radialGradient>
 </defs>
-<g class="fl-lines">
-  <path d="M84,165 H214"/><path d="M286,165 H394"/><path d="M466,165 H555"/>
-  <path d="M645,150 C700,150 700,100 740,100"/><path d="M645,180 C700,180 700,230 740,230"/>
-</g>
-{tok("fl-t1","gJun","宋 · 钧窑")}{tok("fl-t2","gJun2","清 · 仿钧")}
-<g class="fl-node" transform="translate(250,165)"><path d="{vase}" class="fl-outline" transform="scale(1.35)"/><text class="fl-nl" y="56" text-anchor="middle">看图</text><text class="fl-ns" y="72" text-anchor="middle">分出器物</text></g>
-<g class="fl-node" transform="translate(430,165)"><g class="fl-grid">{"".join(f'<rect x="{-24+i*13}" y="{-24+j*13}" width="10" height="10"/>' for i in range(4) for j in range(4))}</g><text class="fl-nl" y="56" text-anchor="middle">看懂</text><text class="fl-ns" y="72" text-anchor="middle">通用视觉模型</text></g>
-<g class="fl-node" transform="translate(600,165)"><rect x="-45" y="-36" width="90" height="72" rx="4" class="fl-box"/><rect x="-22" y="-14" width="44" height="28" rx="2" class="fl-seal"/><text class="fl-sealt" y="5" text-anchor="middle">核心方法</text><text class="fl-nl" y="56" text-anchor="middle">分开两件事</text><text class="fl-ns" y="72" text-anchor="middle">结构不公开</text></g>
-<g class="fl-shelf" transform="translate(800,100)"><rect x="-56" y="-34" width="112" height="68" rx="4"/><text class="fl-ns" x="0" y="-44" text-anchor="middle">风格 · 仿的是谁</text><text class="fl-sl" x="40" y="5" text-anchor="middle">钧窑</text></g>
-<g class="fl-shelf" transform="translate(800,230)"><rect x="-56" y="-34" width="52" height="68" rx="4"/><rect x="4" y="-34" width="52" height="68" rx="4"/><text class="fl-ns" x="0" y="-44" text-anchor="middle">做工 · 出自谁手</text><text class="fl-sl" x="-30" y="26" text-anchor="middle">宋</text><text class="fl-sl" x="30" y="26" text-anchor="middle">清</text></g>
-<text class="fl-ns" x="60" y="60" text-anchor="middle">两件器物</text>
-{tok("fl-s1","gJun")}{tok("fl-s2","gJun2")}{tok("fl-k1","gJun")}{tok("fl-k2","gJun2")}
-<text class="fl-out" x="800" y="305" text-anchor="middle">风格最像钧窑 · 做工属清代</text>
+<g class="fl-lines"><path d="M180,150 C250,150 250,215 330,215"/><path d="M180,300 C250,300 250,215 330,215"/><path d="M370,215 H490"/><path d="M570,215 H672"/><path d="M768,200 C820,200 820,120 850,120"/><path d="M768,230 C820,230 820,310 850,310"/></g>
+<g transform="translate(110,150)"><circle r="78" fill="url(#fl-halo)"/>{img(A,120,140)}<text class="fl-cap" y="86" text-anchor="middle">宋 · 钧窑梅瓶</text></g>
+<g transform="translate(110,300)"><circle r="78" fill="url(#fl-halo)"/>{img(B,120,120)}<text class="fl-cap" y="80" text-anchor="middle">清 乾隆 · 仿钧釉花口瓶</text></g>
+{tokm("fl-t1",img(A,54,64),"110 150;330 215;530 215;700 208;720 215","0;.22;.4;.54;.58")}{tokm("fl-t2",img(B,54,54),"110 300;330 215;530 215;700 222;720 215","0;.22;.4;.54;.58")}
+<g class="fl-node" transform="translate(330,215)"><rect x="-34" y="-40" width="68" height="80" rx="34" class="fl-dash"/><text class="fl-nl" y="66" text-anchor="middle">看图</text><text class="fl-ns" y="84" text-anchor="middle">自动分出器物</text></g>
+<g class="fl-node" transform="translate(530,215)"><g class="fl-grid">{grid}</g><text class="fl-nl" y="66" text-anchor="middle">看懂</text><text class="fl-ns" y="84" text-anchor="middle">开源视觉大模型</text><text class="fl-nx" y="100" text-anchor="middle">Meta Perception Encoder · DINOv3 · Google SigLIP 2</text></g>
+<g class="fl-node" transform="translate(720,215)"><rect x="-48" y="-36" width="96" height="72" rx="6" fill="url(#fl-tile)" class="fl-tile"/><rect x="26" y="-28" width="12" height="12" rx="1.5" class="fl-sealdot"/><text class="fl-nl" y="66" text-anchor="middle">分开两件事</text></g>
+<g class="fl-shelf" transform="translate(900,120)"><rect x="-58" y="-48" width="116" height="96" rx="6"/><text class="fl-ns" x="0" y="-58" text-anchor="middle">风格 · 仿的是谁</text><text class="fl-sl" x="0" y="62" text-anchor="middle">钧窑</text></g>
+<g class="fl-shelf" transform="translate(900,310)"><rect x="-58" y="-48" width="52" height="96" rx="6"/><rect x="6" y="-48" width="52" height="96" rx="6"/><text class="fl-ns" x="0" y="-58" text-anchor="middle">做工 · 出自谁手</text><text class="fl-sl" x="-32" y="62" text-anchor="middle">宋</text><text class="fl-sl" x="32" y="62" text-anchor="middle">清</text></g>
+{toko("fl-s1",img(A,44,52),"888 118")}{toko("fl-s2",img(B,44,44),"912 124")}{toko("fl-k1",img(A,40,48),"868 308")}{toko("fl-k2",img(B,40,40),"932 308")}
+<text class="fl-out" x="900" y="405" text-anchor="middle">风格最像钧窑 · 做工属清代</text>
 </svg></div>'''
 
 def demo_cards():
@@ -127,7 +132,7 @@ html = f'''<!DOCTYPE html>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-300-aurelia.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-400-aurelia.woff2" crossorigin>
 <link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
-<link rel="stylesheet" href="aurelia.css?v=21">
+<link rel="stylesheet" href="aurelia.css?v=23">
 </head>
 <body>
 <a class="au-skip" href="#main">跳到内容</a>
@@ -461,7 +466,7 @@ html = f'''<!DOCTYPE html>
 <script src="/vibecoding/vendor/gsap.min.js" defer></script>
 <script src="/vibecoding/vendor/ScrollTrigger.min.js" defer></script>
 <script src="/vibecoding/vendor/lenis.min.js" defer></script>
-<script src="aurelia.js?v=5" defer></script>
+<script src="aurelia.js?v=6" defer></script>
 </body>
 </html>
 '''
