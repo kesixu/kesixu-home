@@ -156,6 +156,7 @@
     if (finePointer && window.Lenis) {
       try {
         lenis = new Lenis({ lerp: 0.085, smoothWheel: true, syncTouch: false, autoRaf: false });
+        window.__auLenis = lenis;
         lenis.on("scroll", ScrollTrigger.update);
         gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
         gsap.ticker.lagSmoothing(0);
@@ -367,4 +368,32 @@
   }
 
   requestAnimationFrame(function () { setTimeout(function () { try { boot(); } catch (err) { toStatic(); } }, 0); });
+})();
+
+/* ── 卷目导航与阅读进度（独立于动效档位，无 JS 时 <details> 与锚点照常可用） ── */
+(function () {
+  var toc = document.getElementById("toc"); if (!toc) return;
+  var rail = document.querySelector(".au-rail i"), reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var links = [].slice.call(toc.querySelectorAll('a[href^="#"]'));
+  var secs = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+  function go(sel) {
+    var el = document.querySelector(sel); if (!el) return; toc.removeAttribute("open");
+    var L = window.__auLenis;
+    if (L && L.scrollTo && !reduced) L.scrollTo(el, { offset: 0, duration: 1.1, easing: function (t) { return 1 - Math.pow(1 - t, 3); } });
+    else el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+  }
+  links.forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); go(a.getAttribute("href")); try { history.replaceState(null, "", a.getAttribute("href")); } catch (err) {} }); });
+  toc.addEventListener("click", function (e) { if (e.target === toc) toc.removeAttribute("open"); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") toc.removeAttribute("open"); });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var H = document.documentElement.scrollHeight - window.innerHeight, p = H > 0 ? window.scrollY / H : 0;
+    if (rail) rail.style.top = (Math.max(0, Math.min(1, p)) * 100).toFixed(2) + "%";
+    var y = window.scrollY + window.innerHeight * 0.38, cur = 0;
+    for (var i = 0; i < secs.length; i++) { if (secs[i] && secs[i].getBoundingClientRect().top + window.scrollY <= y) cur = i; }
+    links.forEach(function (a, i) { a.parentNode.classList.toggle("is-cur", i === cur); });
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", update); update();
 })();

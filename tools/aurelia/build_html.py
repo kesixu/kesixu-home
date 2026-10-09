@@ -132,7 +132,7 @@ html = f'''<!DOCTYPE html>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-300-aurelia.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-400-aurelia.woff2" crossorigin>
 <link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
-<link rel="stylesheet" href="aurelia.css?v=23">
+<link rel="stylesheet" href="aurelia.css?v=25">
 </head>
 <body>
 <a class="au-skip" href="#main">跳到内容</a>
@@ -459,6 +459,15 @@ html = f'''<!DOCTYPE html>
 
 </main>
 
+<aside class="au-rail" aria-hidden="true"><i></i></aside>
+<details class="au-toc" id="toc">
+  <summary aria-label="打开卷目"><span class="o">目</span><span class="c">合</span></summary>
+  <nav class="au-toc__sheet" aria-label="卷目">
+    <p class="au-toc__t">卷目</p>
+    <ol><li><a href="#s1"><i>一</i><span>开卷</span></a></li><li><a href="#s2"><i>二</i><span>从看懂开始</span></a></li><li><a href="#s3"><i>三</i><span>两万件馆藏</span></a></li><li><a href="#s4"><i>四</i><span>答对多少</span></a></li><li><a href="#s13"><i>五</i><span>它交出的报告</span></a></li><li><a href="#s11"><i>六</i><span>审美第一课</span></a></li><li><a href="#s5"><i>七</i><span>它怎么看</span></a></li><li><a href="#s6"><i>八</i><span>看一个例子</span></a></li><li><a href="#s12"><i>九</i><span>能做成什么生意</span></a></li><li><a href="#s7"><i>十</i><span>它的边界</span></a></li><li><a href="#s8"><i>十一</i><span>走到哪了</span></a></li><li><a href="#s9"><i>十二</i><span>来信</span></a></li></ol>
+  </nav>
+</details>
+
 <footer class="au-foot">
   <ul class="au-foot__list"><li>内测采用邀请制</li><li>器物照片来自克利夫兰、大都会、芝加哥三馆开放获取（CC0）</li><li>报告样例图片来自国立故宫博物院开放资料（CC BY 4.0）</li><li>页面全部资源来自本站</li><li>© 2026 徐可斯</li></ul>
 </footer>
@@ -466,7 +475,7 @@ html = f'''<!DOCTYPE html>
 <script src="/vibecoding/vendor/gsap.min.js" defer></script>
 <script src="/vibecoding/vendor/ScrollTrigger.min.js" defer></script>
 <script src="/vibecoding/vendor/lenis.min.js" defer></script>
-<script src="aurelia.js?v=6" defer></script>
+<script src="aurelia.js?v=7" defer></script>
 </body>
 </html>
 '''

@@ -497,3 +497,21 @@ body { line-break: strict; }
 .au-flow .fl-sl { font-size: 13.5px; fill: var(--moon); letter-spacing: .1em; }
 .au-flow .fl-out { font-size: 13px; fill: var(--sky); letter-spacing: .1em; }
 .au-flow .fl-tok { will-change: transform, opacity; }
+
+/* ── 卷目：阅读进度细线 + 目录折页 ── */
+.au-rail { position: fixed; right: 9px; top: 14vh; height: 72vh; width: 1px; background: rgba(var(--moon-a), .14); z-index: 40; pointer-events: none; }
+.au-rail i { position: absolute; left: -3px; top: calc(var(--p, 0) * 100%); width: 7px; height: 7px; border-radius: 50%; background: var(--moon); box-shadow: 0 0 10px 2px rgba(var(--moon-a), .35); transform: translateY(-50%); transition: top .12s linear; }
+.au-toc { position: fixed; right: 18px; bottom: calc(18px + env(safe-area-inset-bottom)); z-index: 60; }
+.au-toc summary { list-style: none; cursor: pointer; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(var(--moon-a), .38); background: rgba(var(--ink-a), .72); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--moon); font-family: var(--sans); font-weight: 300; font-size: 16px; letter-spacing: .04em; user-select: none; -webkit-tap-highlight-color: transparent; position: relative; z-index: 2; }
+.au-toc summary::-webkit-details-marker { display: none; }
+.au-toc summary .c { display: none; } .au-toc[open] summary .o { display: none; } .au-toc[open] summary .c { display: inline; }
+.au-toc[open]::before { content: ""; position: fixed; inset: 0; background: rgba(var(--ink-a), .5); z-index: 0; }
+.au-toc__sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 1; padding: 22px var(--gutter) calc(84px + env(safe-area-inset-bottom)); background: rgba(var(--ink-a), .96); border-top: 1px solid rgba(var(--moon-a), .14); max-height: 74vh; overflow-y: auto; }
+.au-toc__t { font-family: var(--sans); font-weight: 300; font-size: var(--eyebrow); letter-spacing: .3em; color: var(--smoke); margin-bottom: 10px; }
+.au-toc__sheet ol { list-style: none; columns: 2; column-gap: 28px; }
+.au-toc__sheet li { break-inside: avoid; }
+.au-toc__sheet a { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; color: var(--paper); text-decoration: none; font-size: var(--p); letter-spacing: .04em; border-bottom: 1px solid rgba(var(--moon-a), .08); }
+.au-toc__sheet a i { font-style: normal; font-size: var(--fine); color: var(--smoke); width: 2.4em; flex: none; white-space: nowrap; letter-spacing: .1em; }
+.au-toc__sheet li.is-cur a { color: var(--moon); } .au-toc__sheet li.is-cur a i { color: var(--cinnabar); }
+@media (min-width: 900px) { .au-toc__sheet { left: auto; right: 18px; bottom: 76px; width: 320px; border: 1px solid rgba(var(--moon-a), .14); border-radius: 6px; padding: 18px 22px 10px; max-height: 84vh; } .au-toc__sheet ol { columns: 1; } .au-toc[open]::before { background: transparent; } .au-rail { right: 12px; } }
+@media print { .au-rail, .au-toc { display: none; } }
