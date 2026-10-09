@@ -503,3 +503,12 @@ body { line-break: strict; }
   .au-flow .fl-k1 { transform: translate(770px,226px); } .au-flow .fl-k2 { transform: translate(830px,226px); }
 }
 .au-rep__nbs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+/* ── pricing tiers ── */
+.au-tiers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 16px; margin: 18px 0 6px; }
+@media (min-width: 900px) { .au-tiers { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+.au-tier { padding: 16px 0 0; border-top: 1px solid rgba(var(--moon-a), .18); }
+.au-tier b { display: block; font-family: var(--sans); font-weight: 300; font-size: clamp(28px, 3.6vw, 40px); line-height: 1.1; color: var(--moon); font-variant-numeric: tabular-nums; }
+.au-tier b i { font-style: normal; font-size: .4em; letter-spacing: .08em; margin-left: .15em; color: var(--paper); opacity: .75; }
+.au-tier span { display: block; margin-top: 8px; font-size: var(--p); color: var(--paper); }
+.au-tier small { display: block; margin-top: 4px; font-size: var(--fine); line-height: 1.6; color: var(--smoke); }

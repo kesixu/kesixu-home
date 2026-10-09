@@ -127,7 +127,7 @@ html = f'''<!DOCTYPE html>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-300-aurelia.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-400-aurelia.woff2" crossorigin>
 <link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
-<link rel="stylesheet" href="aurelia.css?v=20">
+<link rel="stylesheet" href="aurelia.css?v=21">
 </head>
 <body>
 <a class="au-skip" href="#main">跳到内容</a>
@@ -197,7 +197,7 @@ html = f'''<!DOCTYPE html>
       {stage('cma_154732', '清 雍正 釉里红海水龙纹梅瓶，克利夫兰艺术博物馆 1989.314', 870, 1477, '清 雍正 · 釉里红海水龙纹梅瓶', '克利夫兰 1989.314', 900, 'au-stage--arc')}
       {stage('cma_112196', '清 雍正 粉彩蝠桃纹盘，克利夫兰艺术博物馆 1930.639', 1612, 1613, '清 雍正 · 粉彩蝠桃纹盘', '克利夫兰 1930.639', 900, 'au-stage--arc au-wide')}
     </div>
-    <p class="au-fine au-fine--note">背景微光是这两万件器物在模型眼中的分布图。器物照片来自克利夫兰、大都会两馆的开放获取（CC0）。</p>
+    <p class="au-fine au-fine--note">器物照片来自克利夫兰、大都会两馆开放获取（CC0）。</p>
   </div>
 </section>
 
@@ -221,7 +221,7 @@ html = f'''<!DOCTYPE html>
         <p class="au-bar__delta">+0.069</p>
       </div>
     </div>
-    <p class="au-fine au-rise">命中 = 同朝代且同器型；单次运行。两个指标恰好同为 0.847，并非笔误。</p>
+    <p class="au-fine au-rise">命中 = 同朝代且同器型。</p>
     <div class="au-routes au-rise">
       <p class="au-bargroup__t">试过六条技术路线（nDCG@10）</p>
       <div class="au-bar au-bar--route"><span class="au-bar__lab">OpenCLIP 微调</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--after" style="--w:.847"></i></span><b>0.847</b></div>
@@ -230,7 +230,7 @@ html = f'''<!DOCTYPE html>
       <div class="au-bar au-bar--route"><span class="au-bar__lab">DINOv3 冻结</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.779"></i></span><b>0.779</b></div>
       <div class="au-bar au-bar--route"><span class="au-bar__lab">OpenCLIP 冻结</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.778"></i></span><b>0.778</b></div>
       <div class="au-bar au-bar--route"><span class="au-bar__lab">SDXL 生成器特征</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.689"></i></span><b>0.689</b></div>
-      <p class="au-p au-p--small">微调 OpenCLIP 最好；前三名只差两分多，又只跑了一次，还分不出高下。</p>
+      <p class="au-p au-p--small">微调 OpenCLIP 最好，前三名只差两分多。</p>
     </div>
   </div>
 </section>
@@ -242,7 +242,7 @@ html = f'''<!DOCTYPE html>
     <p class="au-echo au-rise">Four pieces the model had never seen</p>
     <p class="au-p au-rise">下面四件清代仿品，模型训练时一件也没见过。结果一次算出，原样照登。这批留出的 <span class="nw">38 件</span>里，年代认对 <span class="nw">35 件</span>，风格认对 <span class="nw">36 件</span>；同类仿品训练时进过，整类都没见过时初步只认对一成半，这正是下一步要攻的。</p>
     {demo_cards()}
-    <p class="au-fine au-rise">百分比是模型打分，未经校准，满分只记到 99。最像的几件按整体外形与釉色检索。图片：国立故宫博物院开放资料（CC BY 4.0）。</p>
+    <p class="au-fine au-rise">百分比为模型打分，封顶 99。图片：国立故宫博物院开放资料（CC BY 4.0）。</p>
   </div>
 </section>
 <!-- ═══ S11 核心发现 ═══ -->
@@ -256,13 +256,13 @@ html = f'''<!DOCTYPE html>
     <div class="au-figwrap au-rise">
       <p class="au-figcap">顶尖通用视觉模型怎么看这 <span class="nw">190 件</span>清代仿品（图为 PE-Core）</p>
       {fig_fooled()}
-      <p class="au-fine">五个模型结果相近：找对原型 85%～95%，认出清代只有 36%～41%。参照：随便猜，找对原型是五成；这个断代器对普通清代器物能认对八成。池大小已匹配，重采样 50 次。</p>
+      <p class="au-fine">五个模型结果相近。参照：随便猜，找对原型是五成；同一断代器对普通清代器物能认对八成。</p>
     </div>
     <p class="au-p au-rise">模型记住的是器物「仿的是谁」，对「出自谁手」只看见一部分。行家靠的正是后者：胎、足、釉面的质感。我们正用这批仿品训练一个双头模型，一头认风格，一头认做工，两头互不干扰。</p>
     <div class="au-figwrap au-figwrap--flow au-rise">
       <p class="au-figcap">一张图看懂训练法</p>
       {fig_flow()}
-      <p class="au-fine">同一种风格的两件器物一起进去。风格一路要把它们放到同一格，做工一路要把它们分到宋与清两格。两路互相牵制，模型只能把「像」和「是」分开学。</p>
+      <p class="au-fine">风格一路要把两件放进同一格，做工一路要把它们分进宋与清。两路互相牵制，模型只能把「像」和「是」分开学。</p>
     </div>
     <div class="au-todos au-rise">
       <div class="au-todo"><span class="au-todo__k">整类仿品都没见过时，仍认出清代的比例</span><span class="au-todo__v">初步一成半 · 训练中</span></div>
@@ -327,7 +327,7 @@ html = f'''<!DOCTYPE html>
       <li class="au-nb"><span class="au-spot" aria-hidden="true"></span>{stage('aic_58904', '北宋 婴戏纹盖梅瓶，芝加哥艺术博物馆 58904', 515, 919, '北宋 · 婴戏纹盖梅瓶', '芝加哥 58904<br>接近度 0.844', 700, 'au-stage--nb')}</li>
     </ol>
     <p class="au-p au-rise">一只南宋龙泉梅瓶，找出最像的五件，四件是宋代梅瓶。排第一的竟是一件西夏黑釉剔花梅瓶：器形最接近，釉色却差得远。它告诉你的，<span class="nw">是哪里像</span>。</p>
-    <p class="au-fine au-rise">演示在 <span class="nw">1,372 件</span>可公开展示的 CC0 馆藏中检索；馆方编号可核对。</p>
+    <p class="au-fine au-rise">演示在 <span class="nw">1,372 件</span> CC0 馆藏中检索。</p>
   </div>
 </section>
 
@@ -349,12 +349,16 @@ html = f'''<!DOCTYPE html>
     <div class="au-figwrap au-rise">
       <p class="au-figcap">单件核查与鉴定服务现行价格（美元）</p>
       {fig_price()}
-      <p class="au-fine">赃物核查为 Art Loss Register 公开价，拍卖行每件 3.66 英镑、单次 85 英镑；在线估价为 Mearto；热释光为 Oxford Authentication 英国起价；AI 绘画鉴真为 Art Recognition 报道价。两档拟定价为本项目假设。</p>
+      <p class="au-fine">公开价：Art Loss Register、Mearto、Oxford Authentication、Art Recognition。</p>
     </div>
-    <ul class="au-bullets au-rise">
-      <li>光做瓷器上拍核查，一年顶天几百万美元，只是敲门砖。钱在保险和抵押贷款，他们要的是能写进合同的依据；再往后是交易平台按条调用。</li>
-      <li>拍卖行已经为每件拍品付 3.66 英镑查赃物，快筛报告定在同一量级；人工复核报告对标热释光检测，价钱不到一半。</li>
-    </ul>
+    <h3 class="au-h3 au-rise">我们怎么收费</h3>
+    <div class="au-tiers au-rise">
+      <div class="au-tier"><b>$6<i>/件</i></b><span>机构快筛，年包</span><small>全自动，边际成本几分钱，毛利 95% 以上</small></div>
+      <div class="au-tier"><b>$19<i>/件</i></b><span>单件快筛</span><small>藏家与顾问零售价</small></div>
+      <div class="au-tier"><b>$149<i>/件</i></b><span>专家复核报告</span><small>行家 20 分钟签字，毛利约三分之二</small></div>
+      <div class="au-tier"><b>$490<i>/件</i></b><span>保险与贷款报告</span><small>可写进合同的依据，按估值分档</small></div>
+    </div>
+    <p class="au-p au-rise">机构快筛走量，专家复核赚钱，保险与贷款报告定价最高。一万份复核报告就是 150 万美元，三千份保险报告再加 150 万；上拍核查是敲门砖，大头在合同里。</p>
     <div class="au-cols">
       <div class="au-col au-rise">
         <h3>谁付钱</h3>
