@@ -354,3 +354,24 @@ html[data-motion-tier="eco"] .au-haze { display: none; }
   .au-stage--q { margin-bottom: 84px; }
   .au-h2--line .au-nw { white-space: nowrap; }
 }
+
+/* ── S10 市场 / S11 发现 / S12 生意 ── */
+.au-h3 { font-family: var(--sans); font-weight: 300; font-size: calc(var(--h2) * .62); letter-spacing: .06em; color: var(--paper); margin-top: 40px; }
+.au-kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 18px; margin: 26px 0 8px; }
+@media (min-width: 900px) { .au-kpis { grid-template-columns: repeat(4, 1fr); gap: 28px; } }
+.au-kpi b { display: block; font-family: var(--sans); font-weight: 300; font-size: clamp(30px, 4.2vw, 50px); line-height: 1.1; color: var(--moon); letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.au-kpi b i { font-style: normal; font-size: .42em; letter-spacing: .08em; margin-left: .25em; color: var(--paper); opacity: .8; }
+.au-kpi span { display: block; margin-top: 8px; font-size: var(--fine); line-height: 1.7; color: var(--smoke); }
+.au-tbl { margin: 26px 0 6px; border-top: 1px solid rgba(var(--moon-a), .14); }
+.au-tbl__row { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid rgba(var(--moon-a), .10); font-size: var(--p); color: var(--paper); }
+.au-tbl__row b { font-family: var(--sans); font-weight: 300; font-size: calc(var(--p) + 6px); color: var(--moon); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.au-tbl__head { font-size: var(--fine); letter-spacing: .08em; color: var(--smoke); }
+.au-todos { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 22px 0 6px; }
+@media (min-width: 900px) { .au-todos { grid-template-columns: repeat(2, 1fr); gap: 12px 18px; } }
+.au-todo { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 14px; border: 1px dashed rgba(var(--moon-a), .28); border-radius: 3px; }
+.au-todo__k { font-size: var(--fine); line-height: 1.6; color: var(--paper); opacity: .85; }
+.au-todo__v { flex: none; font-size: 11.5px; letter-spacing: .14em; color: var(--sky); white-space: nowrap; }
+.au-bullets { list-style: none; margin-top: 14px; }
+.au-bullets li { position: relative; padding: 8px 0 8px 18px; font-size: var(--p); line-height: 1.8; color: var(--paper); opacity: .9; }
+.au-bullets li::before { content: ""; position: absolute; left: 0; top: 1.05em; width: 7px; height: 1px; background: var(--sky); }
+.au-s10 .au-p, .au-s11 .au-p, .au-s12 .au-p { max-width: 40em; }

@@ -42,7 +42,7 @@ html = f'''<!DOCTYPE html>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-300-aurelia.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-400-aurelia.woff2" crossorigin>
 <link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
-<link rel="stylesheet" href="aurelia.css?v=8">
+<link rel="stylesheet" href="aurelia.css?v=9">
 </head>
 <body>
 <a class="au-skip" href="#main">跳到内容</a>
@@ -93,6 +93,22 @@ html = f'''<!DOCTYPE html>
   </div>
 </section>
 
+
+<!-- ═══ S10 市场 ═══ -->
+<section class="au-s au-s10" id="s10" aria-label="市场">
+  <div class="au-wrap">
+    <h2 class="au-h2 au-rise">为什么值得做</h2>
+    <p class="au-echo au-rise">A market that still runs on eyes and trust</p>
+    <div class="au-kpis au-rise">
+      <div class="au-kpi"><b>596<i>亿美元</i></b><span>2025 年全球艺术品销售额，中国占 14%</span></div>
+      <div class="au-kpi"><b>30.7<i>万件</i></b><span>2024 年内地文物艺术品拍卖成交量，落槌 183.5 亿元</span></div>
+      <div class="au-kpi"><b>51%</b><span>境外中国文物艺术品成交额里，瓷器玉器杂项的份额</span></div>
+      <div class="au-kpi"><b>唯一增长</b><span>2024 年与 2025 上半年，瓷器杂项都是内地唯一正增长的板块</span></div>
+    </div>
+    <p class="au-p au-rise">每一件上拍的瓷器都要有人看过、断过代、给过价。这件事今天全靠行家的眼睛，查一件的现成价格也早就存在：拍卖行按件付费核查拍品是否为赃物，一年查 40 万件以上。</p>
+    <p class="au-fine au-rise">来源：Art Basel &amp; UBS《艺术市场报告 2026》；中国拍卖行业协会 2024 年报；雅昌艺术市场监测中心 2025 上半年报告；Art Loss Register 收费页。</p>
+  </div>
+</section>
 <!-- ═══ S3 五馆同堂 ═══ -->
 <section class="au-s au-s3" id="s3" aria-label="语料">
   <canvas class="au-space" aria-hidden="true"></canvas>
@@ -199,6 +215,70 @@ html = f'''<!DOCTYPE html>
   </div>
 </section>
 
+
+<!-- ═══ S11 核心发现 ═══ -->
+<section class="au-s au-s11" id="s11" aria-label="发现">
+  <div class="au-wrap">
+    <h2 class="au-h2 au-rise">我们发现了什么</h2>
+    <p class="au-echo au-rise">The best vision models are fooled by imitations</p>
+    <p class="au-p au-rise">清代宫廷公开地仿宋代名窑，博物馆著录里写得清清楚楚：仿钧、仿哥、仿官、仿龙泉、仿汝，台北故宫就有 352 件。同一种风格，相隔五六百年由两个作坊做出来，谁做的是已知的。这是机器学习里少有的实验条件。</p>
+    <div class="au-tbl au-rise">
+      <div class="au-tbl__row au-tbl__head"><span>今年最强的五个通用视觉模型</span><span>结果</span></div>
+      <div class="au-tbl__row"><span>把清代仿品放到宋元原型旁边的比例</span><b>85% – 95%</b></div>
+      <div class="au-tbl__row"><span>断代时把清代仿品判成清代的比例</span><b>36% – 41%</b></div>
+      <div class="au-tbl__row"><span>其中仿钧被判成清代的比例</span><b>13% – 22%</b></div>
+    </div>
+    <p class="au-p au-rise">模型记住的是器物“想像谁”，对“由谁所制”只看见一部分。而行家靠的正是后者：胎、足、釉面的质感。我们正在用这 282 件仿品训练一个双头模型，一头认风格，一头认工艺，并让两头互不干扰。</p>
+    <div class="au-todos au-rise">
+      <div class="au-todo"><span class="au-todo__k">从未见过某类仿品时，仍判对年代的比例</span><span class="au-todo__v">待补 · 训练中</span></div>
+      <div class="au-todo"><span class="au-todo__k">泄露真实年代的部位：足圈、釉面还是口沿</span><span class="au-todo__v">待补 · 训练中</span></div>
+      <div class="au-todo"><span class="au-todo__k">跨文化检验：V&amp;A 的 88 件欧洲仿中国瓷</span><span class="au-todo__v">待补</span></div>
+      <div class="au-todo"><span class="au-todo__k">公开真仿对照题（CArtBench 10 对，通用大模型目前 6/10）</span><span class="au-todo__v">待补</span></div>
+    </div>
+    <h3 class="au-h3 au-rise">成立之后意味着什么</h3>
+    <ul class="au-bullets au-rise">
+      <li>一张照片就能说出一句鉴定报告的核心话：风格最近宋钧，工艺特征与清代仿钧一致。</li>
+      <li>行家“看足看釉”的经验第一次被量化，哪个部位在什么条件下泄露年代，有数可查。</li>
+      <li>同一套办法可复制到任何有“仿”著录的品类：青铜、玉器、书画。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ S12 生意 ═══ -->
+<section class="au-s au-s12" id="s12" aria-label="生意">
+  <div class="au-wrap">
+    <h2 class="au-h2 au-rise">能做成什么生意</h2>
+    <p class="au-echo au-rise">A report, sold per piece</p>
+    <p class="au-p au-rise">产品是一份报告：最像的馆藏近亲、风格归属、工艺是否与所称年代一致，以及在授权范围内的历史成交记录。按件收费，人工复核分级。</p>
+    <div class="au-cols">
+      <div class="au-col au-rise">
+        <h3>谁付钱</h3>
+        <ul>
+          <li>中型拍卖行与古董商的上拍前核查</li>
+          <li>替藏家做竞投前尽调的顾问</li>
+          <li>保险与艺术品抵押贷款的估值依据</li>
+          <li>交易平台的上架筛查</li>
+        </ul>
+      </div>
+      <div class="au-col au-rise">
+        <h3>凭什么</h3>
+        <ul>
+          <li>每句结论都附馆方编号，可核对</li>
+          <li>仿品识别能力，市面产品都没有公开做到</li>
+          <li>只用开放许可与授权数据，可商用的开放馆藏图已核实超过五万件</li>
+        </ul>
+      </div>
+      <div class="au-col au-rise">
+        <h3>怎么变大</h3>
+        <ul>
+          <li>交易平台按条计费</li>
+          <li>保险与贷款条款写入这份报告</li>
+          <li>同一方法扩到玉器、铜器、书画</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ═══ S7 光止于此 ═══ -->
 <section class="au-s au-s7" id="s7" aria-label="边界">
   <div class="au-wrap au-center">
@@ -228,16 +308,16 @@ html = f'''<!DOCTYPE html>
         <h3>进行中</h3>
         <ul>
           <li>同朝代、同器型内的典范度与稀缺度</li>
-          <li>用 282 件著录为“仿”的清代器物，教模型分开“想像谁”与“由谁所制”</li>
+          <li>双头模型训练中，留一仿型的结果本周补上</li>
           <li>发明专利申请</li>
         </ul>
       </div>
       <div class="au-col au-rise">
-        <h3>未完成</h3>
+        <h3>下一步</h3>
         <ul>
-          <li>多视角照片</li>
-          <li>跨馆稳健性</li>
-          <li>专家两两比较；铜器、玉器、书画</li>
+          <li>按博物馆原图重取 7 百万像素高清图，看清足圈与釉面</li>
+          <li>报告生成模型：把检索与两头输出写成可核对的报告</li>
+          <li>专家两两比较的审美采集；青铜、玉器、书画</li>
         </ul>
       </div>
     </div>
