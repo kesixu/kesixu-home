@@ -238,7 +238,7 @@
     /* S3 七件：一条时间线（桌面钉住 120vh），月光依次扫过；未照到的件只有 .62 的亮度 */
     var arcStages = $$(".au-stage--arc");
     if (arcStages.length) {
-      var arcTL = gsap.timeline({ scrollTrigger: pinOpts("#s3", "120%") || { trigger: ".au-arc", start: "top 85%", end: "bottom 15%", scrub: .6 } });
+      var arcTL = gsap.timeline({ scrollTrigger: pinOpts("#s3", "55%") || { trigger: ".au-arc", start: "top 85%", end: "bottom 15%", scrub: .6 } });
       if (desktop && arcTL.scrollTrigger && arcTL.scrollTrigger.pin) pins.push(arcTL.scrollTrigger);
       arcStages.forEach(function (st, i) {
         var band = $(".au-sheen i", st), img = $(".au-vessel", st), cap = $(".au-cap", st), t0 = i * .55, rs = relight && relight.byStage(st);
@@ -301,7 +301,7 @@
       gsap.set(parts, { opacity: 0, y: 6 }); gsap.set(steps, { opacity: 0, y: 10 }); gsap.set(dds, { opacity: 0, y: 8 }); gsap.set(cks, { opacity: 0 });
       if (dband) gsap.set(dband, { xPercent: 35 }); if (evP) gsap.set(evP, { opacity: 0, y: 10 });
       var scan = { y: -1.6 };
-      var evTL = gsap.timeline({ scrollTrigger: pinOpts("#s5", "140%") || { trigger: ev, start: "top 65%", end: "bottom 85%", scrub: .6 } });
+      var evTL = gsap.timeline({ scrollTrigger: pinOpts("#s5", "75%") || { trigger: ev, start: "top 65%", end: "bottom 85%", scrub: .6 } });
       if (desktop && evTL.scrollTrigger && evTL.scrollTrigger.pin) pins.push(evTL.scrollTrigger);
       evTL.to(outline, { strokeDashoffset: 0, duration: 2.2, ease: "none" }, 0)
           .to(steps[0], { opacity: 1, y: 0, duration: 1 }, .4);
@@ -321,7 +321,7 @@
     if (nbs) {
       var spots = $$(".au-spot"), nbStages = $$(".au-stage--nb"), beams = drawBeams(true);
       gsap.set(beams, { strokeDasharray: 1, strokeDashoffset: 1 }); gsap.set(spots, { opacity: 0 }); gsap.set(nbStages, { opacity: .16, y: 10 });
-      var beamTL = gsap.timeline({ scrollTrigger: pinOpts("#s6", "100%") || { trigger: nbs, start: "top 90%", end: "top 25%", scrub: .5 } });
+      var beamTL = gsap.timeline({ scrollTrigger: pinOpts("#s6", "45%") || { trigger: nbs, start: "top 90%", end: "top 25%", scrub: .5 } });
       if (desktop && beamTL.scrollTrigger && beamTL.scrollTrigger.pin) pins.push(beamTL.scrollTrigger);
       beams.forEach(function (b, i) { beamTL.to(b, { strokeDashoffset: 0, duration: 1, ease: "none" }, .3 + i * .25); });
       spots.forEach(function (s, i) { beamTL.to(s, { opacity: 1, duration: .6 }, .9 + i * .25); });
@@ -349,7 +349,7 @@
       else { var o = { y: y }; gsap.to(o, { y: best.top, duration: .55, ease: "power2.out", onUpdate: function () { window.scrollTo(0, o.y); }, onComplete: function () { snapping = false; } }); }
       setTimeout(function () { snapping = false; }, 1400);
     }
-    ScrollTrigger.addEventListener("scrollEnd", snapToScene);
+    /* 自动归位已停用：用户自由滚动，动画只在钉住段内轻微跟随 */
 
     /* ── 13. 建站点表；字体就绪与真正的 resize 时重建 ── */
     buildLight();

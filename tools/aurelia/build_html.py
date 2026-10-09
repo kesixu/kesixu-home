@@ -398,7 +398,7 @@ html = f'''<!DOCTYPE html>
 <script src="/vibecoding/vendor/gsap.min.js" defer></script>
 <script src="/vibecoding/vendor/ScrollTrigger.min.js" defer></script>
 <script src="/vibecoding/vendor/lenis.min.js" defer></script>
-<script src="aurelia.js?v=4" defer></script>
+<script src="aurelia.js?v=5" defer></script>
 </body>
 </html>
 '''
