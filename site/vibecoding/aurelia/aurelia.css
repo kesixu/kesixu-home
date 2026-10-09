@@ -26,7 +26,7 @@
   --h1: 46px; --h2: 28px; --num: 56px; --lede: 17px; --p: 16px; --echo-size: 13px; --eyebrow: 12px; --fine: 12px; --cap: 13px;
 }
 @media (min-width: 900px) {
-  :root { --h1: 76px; --h2: 40px; --num: 88px; --lede: 19px; --p: 17px; --echo-size: 14px; --eyebrow: 12.5px; --fine: 12.5px; --cap: 13.5px; }
+  :root { --h1: 64px; --h2: 40px; --num: 88px; --lede: 19px; --p: 17px; --echo-size: 14px; --eyebrow: 12.5px; --fine: 12.5px; --cap: 13.5px; }
 }
 @font-face { font-family: "Aurelia Sans"; src: url("fonts/sans-300-aurelia.woff2") format("woff2"); font-weight: 300; font-display: swap; }
 @font-face { font-family: "Aurelia Sans"; src: url("fonts/sans-400-aurelia.woff2") format("woff2"); font-weight: 400; font-display: swap; }
@@ -337,4 +337,20 @@ html[data-motion-tier="eco"] .au-haze { display: none; }
 @media (prefers-reduced-motion: reduce) {
   html.motion-pending .au-intro { opacity: 1; animation: none; }
   .au-moon, .au-lattice, .au-sheen i { will-change: auto; }
+}
+
+/* ── S6 on phones: a ranked list instead of a 2-column grid ── */
+@media (max-width: 899px) {
+  .au-beams, .au-spot { display: none; }
+  .au-nbs { display: flex; flex-direction: column; gap: 0; margin-top: 8px; counter-reset: nb; }
+  .au-nbs .au-nb { padding: 12px 0; border-top: 1px solid rgba(var(--moon-a), .10); }
+  .au-nbs .au-nb:last-child { border-bottom: 1px solid rgba(var(--moon-a), .10); }
+  .au-nbs .au-nb::before { counter-increment: nb; content: counter(nb, decimal-leading-zero); position: absolute; right: 0; top: 14px; font-family: var(--sans); font-weight: 300; font-size: 12px; letter-spacing: .12em; color: var(--smoke); }
+  .au-stage--nb { display: grid; grid-template-columns: 84px 1fr; gap: 18px; align-items: center; width: 100%; margin: 0; text-align: left; }
+  .au-stage--nb .au-box { width: 84px; height: 120px; display: flex; align-items: flex-end; justify-content: center; }
+  .au-stage--nb .au-vessel { height: auto; max-height: 120px; width: auto; max-width: 84px; }
+  .au-stage--nb .au-cap { position: static; transform: none; width: auto; max-width: none; text-align: left; padding-right: 28px; }
+  .au-stage--nb .au-cap small { white-space: normal; }
+  .au-stage--q { margin-bottom: 84px; }
+  .au-h2--line .au-nw { white-space: nowrap; }
 }
