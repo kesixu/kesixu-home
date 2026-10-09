@@ -132,7 +132,7 @@ html = f'''<!DOCTYPE html>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-300-aurelia.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-400-aurelia.woff2" crossorigin>
 <link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
-<link rel="stylesheet" href="aurelia.css?v=25">
+<link rel="stylesheet" href="aurelia.css?v=26">
 </head>
 <body>
 <a class="au-skip" href="#main">跳到内容</a>
@@ -158,7 +158,6 @@ html = f'''<!DOCTYPE html>
     <div class="au-hero__text">
       <p class="au-eyebrow au-intro">Aurelia · 古瓷风格比对</p>
       <h1 class="au-h1 au-intro">AI 能不能学会<br><span class="au-nw">中国古瓷的审美</span></h1>
-      <p class="au-echo au-intro">Can a machine learn the connoisseur’s eye?</p>
       <p class="au-lede au-intro">第一步是看懂：把瓷器照片交给它，它在<span class="nw">两万件</span>博物馆藏品里找出最像的几件，并标出<span class="nw">像在哪里</span>。</p>
       <div class="au-cta au-intro">
         <a class="au-btn au-btn--moon" href="{S_MAIN}">申请内测</a>
@@ -176,7 +175,6 @@ html = f'''<!DOCTYPE html>
     {stage('cma_97956', '宋 钧窑 莲蕾罐，克利夫兰艺术博物馆 1917.60', 1060, 967, '宋 钧窑 · 莲蕾罐', '克利夫兰艺术博物馆 1917.60 · 本页的天青色来自它', 1100, 'au-stage--s2')}
     <div class="au-text">
       <h2 class="au-h2 au-rise">审美，从看懂开始</h2>
-      <p class="au-echo au-rise">Taste begins with seeing</p>
       <p class="au-p au-rise">行家看一件瓷器，看器型、胎釉、纹饰、款识和做工：上手掂分量，翻过来看足看胎，侧光看釉面。<span class="nw">功夫都在手上</span>。</p>
       <p class="au-p au-rise">AI 学这套眼光，先学照片看得出的部分：把一件器物放进两万件馆藏里比一比，说出它最像谁、<span class="nw">像在哪</span>。</p>
     </div>
@@ -189,7 +187,6 @@ html = f'''<!DOCTYPE html>
   <canvas class="au-space" aria-hidden="true"></canvas>
   <div class="au-wrap">
     <h2 class="au-h2 au-rise">两万件馆藏，一次看遍</h2>
-    <p class="au-echo au-rise">Five museums, one index</p>
     <p class="au-bignum au-rise"><span class="au-num">19,487</span><span class="au-bignum__lab">件 · 开放馆藏</span></p>
     <p class="au-fine au-rise au-sources"><span class="nw">台北故宫 14,557</span> · <span class="nw">英国 V&amp;A 3,473</span> · <span class="nw">克利夫兰 699</span> · <span class="nw">芝加哥 673</span> · <span class="nw">大都会 85</span></p>
     <div class="au-figwrap au-rise">{fig_dynasty()}</div>
@@ -210,7 +207,6 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s4" id="s4" aria-label="结果">
   <div class="au-wrap">
     <h2 class="au-h2 au-rise">答对多少</h2>
-    <p class="au-echo au-rise">Held-out test</p>
     <p class="au-p au-rise">拿 <span class="nw">2,435 件</span>训练时没见过的器物当考题，看前五个答案里有几件跟它同朝代、<span class="nw">同器型</span>：</p>
     <div class="au-bars au-rise">
       <div class="au-bargroup">
@@ -244,7 +240,6 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s13" id="s13" aria-label="报告样例">
   <div class="au-wrap">
     <h2 class="au-h2 au-rise">它交出的报告</h2>
-    <p class="au-echo au-rise">Four pieces the model had never seen</p>
     <p class="au-p au-rise">下面四件清代仿品，模型训练时一件也没见过。结果一次算出，原样照登。这批留出的 <span class="nw">38 件</span>里，年代认对 <span class="nw">35 件</span>，风格认对 <span class="nw">36 件</span>；同类仿品训练时进过，整类都没见过时初步只认对一成半，这正是下一步要攻的。</p>
     {demo_cards()}
     <p class="au-fine au-rise">百分比为模型打分，封顶 99。图片：国立故宫博物院开放资料（CC BY 4.0）。</p>
@@ -254,12 +249,11 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s11" id="s11" aria-label="发现">
   <div class="au-wrap">
     <h2 class="au-h2 au-rise">AI 学审美的第一课<br><span class="nw">分清「像」与「是」</span></h2>
-    <p class="au-echo au-rise">Eight centuries of taste, written in the catalogue</p>
     <p class="au-p au-rise">雍正、乾隆两朝御窑厂奉旨仿古，著录直书「仿某釉」：<span class="nw">仿钧</span>、<span class="nw">仿哥</span>、<span class="nw">仿官</span>、<span class="nw">仿龙泉</span>、<span class="nw">仿汝</span>。台北故宫著录带「仿」字的有 <span class="nw">352 件</span>，<span class="nw">282 件</span>在我们库里，其中清代仿这五种釉的 <span class="nw">190 件</span>。</p>
     <p class="au-p au-rise au-p--pull">宫廷选择仿什么，是那个时代趣味留下的记录。</p>
     <p class="au-p au-rise">对机器学习来说，这是少有的实验条件：同一种风格，隔了五六百年由两处窑场各做一遍，出自谁手，早有定论。我们拿这个「仿」字当老师，教模型分开两件事：<span class="nw">它仿的是谁</span>，<span class="nw">它出自谁手</span>。查了 222 篇论文和 10 件最接近的专利，据我们检索，还没人这样做过。</p>
     <div class="au-figwrap au-rise">
-      <p class="au-figcap">顶尖通用视觉模型怎么看这 <span class="nw">190 件</span>清代仿品（图为 PE-Core）</p>
+      <p class="au-figcap">顶尖通用视觉模型怎么看这 <span class="nw">190 件</span>清代仿品（图为 Meta 的 PE-Core 模型）</p>
       {fig_fooled()}
       <p class="au-fine">五个模型结果相近。参照：随便猜，找对原型是五成；同一断代器对普通清代器物能认对八成。</p>
     </div>
@@ -298,14 +292,13 @@ html = f'''<!DOCTYPE html>
     <div class="au-text">
       <p class="au-eyebrow au-rise">怎么做到</p>
       <h2 class="au-h2 au-rise">它怎么看一件器物</h2>
-      <p class="au-echo au-rise">Segment first, then measure</p>
       <ol class="au-steps">
         <li class="au-step" data-step="1"><b>先把器物从背景里分出来</b><span>月色轮廓就是模型给出的边界。150 件样本上与人工标注的重合度 0.884。</span></li>
         <li class="au-step" data-step="2"><b>按行家的顺序看</b><span>口沿、腹部、圈足。只看一个部位，前五个结果里约 65% 同朝代，还在验证。</span></li>
         <li class="au-step" data-step="3"><b>量三把尺子</b>
           <dl class="au-measure">
-            <div><dt>轮廓对称</dt><dd>98.2<i>%</i></dd><small>与镜像的 IoU</small></div>
-            <div><dt>釉面色差</dt><dd>16.3</dd><small>Lab 标准差 · 素釉开片</small></div>
+            <div><dt>轮廓对称</dt><dd>98.2<i>%</i></dd><small>与镜像的重合度 IoU</small></div>
+            <div><dt>釉面色差</dt><dd>16.3</dd><small>Lab 色差标准差 · 素釉开片</small></div>
             <div><dt>纹饰密度</dt><dd>1.1<i>%</i></dd><small>器身边缘像素占比</small></div>
           </dl>
           <span class="au-fine">以这只碗为例，本页实算。</span></li>
@@ -319,7 +312,6 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s6" id="s6" aria-label="检索">
   <div class="au-wrap au-wrap--rel">
     <h2 class="au-h2 au-rise">看一个例子</h2>
-    <p class="au-echo au-rise">One vase, the five most alike</p>
     <div class="au-query">
       {stage('cma_134979', '南宋 龙泉窑 梅瓶，克利夫兰艺术博物馆 1957.52', 898, 1509, '查询 · 南宋 龙泉窑 · 梅瓶', '克利夫兰艺术博物馆 1957.52', 1100, 'au-stage--q')}
     </div>
@@ -341,7 +333,6 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s12" id="s12" aria-label="生意">
   <div class="au-wrap">
     <h2 class="au-h2 au-rise">能做成什么生意</h2>
-    <p class="au-echo au-rise">A report, sold per piece</p>
     <p class="au-p au-rise">我们在做一个工具：看图比对中国古瓷。一张照片进去，出来一份可核对的报告：它最像博物馆里的哪几件，像在哪里，风格属于哪个窑口，时代特征与所称年代是否相符。每句结论都带馆方编号，按件收费，人工复核分级。</p>
     <h3 class="au-h3 au-rise">市场在哪</h3>
     <div class="au-kpis au-rise">
@@ -354,7 +345,7 @@ html = f'''<!DOCTYPE html>
     <div class="au-figwrap au-rise">
       <p class="au-figcap">单件核查与鉴定服务现行价格（美元）</p>
       {fig_price()}
-      <p class="au-fine">公开价：Art Loss Register、Mearto、Oxford Authentication、Art Recognition。</p>
+      <p class="au-fine">公开价来源：失窃艺术品登记处 Art Loss Register、在线估价 Mearto、热释光检测 Oxford Authentication、AI 鉴真 Art Recognition。</p>
     </div>
     <h3 class="au-h3 au-rise">我们怎么收费</h3>
     <div class="au-tiers au-rise">
@@ -400,7 +391,6 @@ html = f'''<!DOCTYPE html>
     <p class="au-eyebrow au-rise">它的边界</p>
     <h2 class="au-h2 au-h2--line au-rise"><span class="au-nw">像不像</span><span class="au-dot">·</span><span class="au-nw">像在哪</span><span class="au-dot">·</span><span class="au-nw">判断归人</span></h2>
     <span class="au-redline" aria-hidden="true"></span>
-    <p class="au-echo au-rise">Taught to look before it speaks</p>
     <p class="au-p au-rise">它答两个问题：像不像，像在哪。第三个问题已有初步答案，还在打磨：风格最像哪个窑口，做工像哪个时代，和卖家说的对不对得上。真假与价格，由人来定。<span class="nw">审美的最后一票</span>，<span class="nw">始终在人手里</span>。</p>
   </div>
 </section>
@@ -409,7 +399,6 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s8" id="s8" aria-label="路线与局限">
   <div class="au-wrap">
     <h2 class="au-h2 au-rise">AI 学审美，走到哪了</h2>
-    <p class="au-echo au-rise">Done, doing, not yet</p>
     <div class="au-cols">
       <div class="au-col au-rise">
         <h3>已完成</h3>
@@ -445,7 +434,6 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s9" id="s9" aria-label="来信">
   <div class="au-wrap au-center">
     <h2 class="au-h2 au-rise">来信，带一件器物</h2>
-    <p class="au-echo au-rise">Write, and bring a piece</p>
     <p class="au-p au-rise">内测采用邀请制，面向研究者、博物馆与行家。说一句你在看什么，<span class="nw">附一张照片</span>。</p>
     <p class="au-fine au-rise">发起人 徐可斯 · 计算机科学博士，研究方向是医学图像分割与视觉表示学习</p>
     <p class="au-cta au-rise"><a class="au-btn au-btn--moon" href="{S_MAIN}">发张照片，试一次</a></p>
