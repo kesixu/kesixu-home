@@ -376,3 +376,36 @@ html[data-motion-tier="eco"] .au-haze { display: none; }
 .au-bullets li::before { content: ""; position: absolute; left: 0; top: 1.05em; width: 7px; height: 1px; background: var(--sky); }
 .au-s10 .au-p, .au-s11 .au-p, .au-s12 .au-p { max-width: 40em; }
 .au-s10 .au-bullets, .au-s11 .au-bullets, .au-s12 .au-bullets, .au-s10 .au-fine { max-width: 44em; }
+
+/* ── S13 报告样例 ── */
+.au-rep { display: grid; grid-template-columns: 1fr; gap: 18px; padding: 22px 0; border-top: 1px solid rgba(var(--moon-a), .12); }
+@media (min-width: 900px) { .au-rep { grid-template-columns: 220px 1fr; gap: 36px; padding: 30px 0; } }
+.au-rep__fig { margin: 0; }
+.au-rep__fig img { display: block; width: 100%; max-width: 220px; height: auto; border-radius: 3px; }
+.au-rep__fig figcaption { margin-top: 10px; font-size: var(--cap); letter-spacing: .04em; color: var(--paper); }
+.au-rep__fig figcaption small { display: block; margin-top: 3px; font-size: var(--fine); color: var(--smoke); letter-spacing: .04em; }
+.au-prob { display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 12px; padding: 7px 0; }
+.au-prob span { font-size: var(--fine); letter-spacing: .08em; color: var(--smoke); }
+.au-prob i { display: block; height: 5px; border-radius: 3px; background: rgba(var(--moon-a), .09); position: relative; overflow: hidden; }
+.au-prob i::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: calc(var(--w, 0) * 100%); background: var(--sky); border-radius: 3px; }
+.au-prob b { font-family: var(--sans); font-weight: 300; font-size: var(--p); color: var(--moon); white-space: nowrap; min-width: 6.5em; text-align: right; }
+.au-rep__verdict { margin-top: 10px; font-size: var(--p); line-height: 1.8; color: var(--paper); }
+.au-rep--miss .au-prob i::after { background: var(--cinnabar); opacity: .8; }
+.au-rep__nbs { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+.au-rep__nbs li { font-size: var(--fine); line-height: 1.55; color: var(--smoke); }
+.au-rep__nbs img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 3px; margin-bottom: 6px; }
+.au-rep__nbs i { font-style: normal; color: var(--sky); }
+.au-s13 .au-p { max-width: 40em; }
+
+/* ── S5 crackle stays on the left column on wide screens; text column gets a soft backdrop ── */
+.au-crackle { -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; overflow: hidden; }
+@media (min-width: 900px) {
+  .au-crackle { width: 104%; max-width: 640px; opacity: .62;
+    -webkit-mask-image: radial-gradient(closest-side, #000 40%, rgba(0,0,0,.3) 66%, transparent 92%), linear-gradient(90deg, #000 62%, transparent 96%);
+    mask-image: radial-gradient(closest-side, #000 40%, rgba(0,0,0,.3) 66%, transparent 92%), linear-gradient(90deg, #000 62%, transparent 96%);
+    -webkit-mask-composite: source-in; mask-composite: intersect; }
+  .au-crackle .ck-a { opacity: .42; } .au-crackle .ck-b { opacity: .24; }
+  .au-s5 .au-text { position: relative; z-index: 2; }
+  .au-s5 .au-text::before { content: ""; position: absolute; inset: -60px -80px -60px -110px; z-index: -1; filter: blur(26px);
+    background: radial-gradient(ellipse 62% 58% at 48% 50%, rgba(var(--ink-a), .82) 0%, rgba(var(--ink-a), .6) 45%, rgba(var(--ink-a), 0) 100%); }
+}

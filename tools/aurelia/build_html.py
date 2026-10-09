@@ -24,6 +24,32 @@ def stage(vid, alt, w, h, cap, acc, size, cls='', srcset=None, sizes=None, prio=
 
 SEAL = '<svg class="au-seal" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="4" y="4" width="92" height="92" rx="6"/><rect class="au-seal__inner" x="11" y="11" width="78" height="78" rx="3"/><text x="50" y="52" text-anchor="middle" dominant-baseline="central">鉴</text></svg>'
 
+
+import json as _json
+_D=_json.load(open("tools/aurelia/demo_reports.json",encoding="utf-8"))
+_KILN={"Jun":"钧窑","Ge":"哥窑","Guan":"官窑","Longquan":"龙泉窑","Ru":"汝窑","Jingdezhen":"景德镇"}
+_DYN={"Song":"宋","Yuan":"元","Ming":"明","Qing":"清"}; _REIGN={"Qianlong":"乾隆","Yongzheng":"雍正"}
+def demo_cards():
+    out=[]
+    for oid in _D["pick"]:
+        r=_D["reports"][oid]; m=_D["meta"][oid]
+        sk=max(r["style"],key=r["style"].get); sp=r["style"][sk]; dk=max(r["period"],key=r["period"].get); dp=r["period"][dk]
+        ok_s=sk==r["target"]; ok_d=dk=="Qing"
+        tgt=_KILN[r["target"]]
+        if ok_s and ok_d: verdict=f"风格最近{tgt}，工艺特征属清代。与著录“{_REIGN.get(m.get('reign'),'清')}仿{tgt[:-1] if tgt.endswith('窑') else tgt}”一致。"
+        else: verdict=f"这一件它判错了：风格看成{_KILN[sk]}，工艺看成{_DYN[dk]}代。著录为{_REIGN.get(m.get('reign'),'清')}仿{tgt[:-1]}。错例也放在这里。"
+        nbs="".join(f'<li><img src="media/demo/{_D["meta"][n["id"]]["file"]}" width="{_D["meta"][n["id"]]["size"][0]}" height="{_D["meta"][n["id"]]["size"][1]}" alt="{_D["meta"][n["id"]]["zh_s"]}" loading="lazy" decoding="async"><span>{_DYN[n["dynasty"]]} {_KILN[n["kiln"]]}<br>{_D["meta"][n["id"]]["zh_s"]}<br><i>接近度 {n["sim"]:.2f}</i></span></li>' for n in r["neighbours"])
+        out.append(f'''<article class="au-rep au-rise{'' if ok_s and ok_d else ' au-rep--miss'}">
+  <figure class="au-rep__fig"><img src="media/demo/{m['file']}" width="{m['size'][0]}" height="{m['size'][1]}" alt="{m['zh_s']}" loading="lazy" decoding="async"><figcaption>{_DYN[m['dynasty']]} {_REIGN.get(m.get('reign'),'')} · {m['zh_s']}<small>台北故宫 · 模型训练时未见过这件</small></figcaption></figure>
+  <div class="au-rep__body">
+    <div class="au-prob"><span>风格最近</span><i style="--w:{sp:.2f}"></i><b>{_KILN[sk]} {sp*100:.0f}%</b></div>
+    <div class="au-prob"><span>工艺年代</span><i style="--w:{dp:.2f}"></i><b>{_DYN[dk]}代 {dp*100:.0f}%</b></div>
+    <p class="au-rep__verdict">{verdict}</p>
+    <ul class="au-rep__nbs">{nbs}</ul>
+  </div>
+</article>''')
+    return "\n".join(out)
+
 html = f'''<!DOCTYPE html>
 <html lang="zh-CN" class="motion-pending">
 <head>
@@ -42,7 +68,7 @@ html = f'''<!DOCTYPE html>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-300-aurelia.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/sans-400-aurelia.woff2" crossorigin>
 <link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
-<link rel="stylesheet" href="aurelia.css?v=10">
+<link rel="stylesheet" href="aurelia.css?v=13">
 </head>
 <body>
 <a class="au-skip" href="#main">跳到内容</a>
@@ -255,6 +281,17 @@ html = f'''<!DOCTYPE html>
   </div>
 </section>
 
+
+<!-- ═══ S13 报告 ═══ -->
+<section class="au-s au-s13" id="s13" aria-label="报告样例">
+  <div class="au-wrap">
+    <h2 class="au-h2 au-rise">它交出的报告</h2>
+    <p class="au-echo au-rise">Four pieces the model had never seen</p>
+    <p class="au-p au-rise">下面是训练好的模型在四件它从未见过的清代仿品上的输出，一次算好，原样保存。这一批共 38 件未见过的仿品，年代判对 35 件，风格判对 36 件。</p>
+    {demo_cards()}
+    <p class="au-fine au-rise">模型训练时见过其他仿品；完全没见过某一类仿品的严格结果在训练中。图片：国立故宫博物院开放资料（CC BY 4.0）。</p>
+  </div>
+</section>
 <!-- ═══ S12 生意 ═══ -->
 <section class="au-s au-s12" id="s12" aria-label="生意">
   <div class="au-wrap">
