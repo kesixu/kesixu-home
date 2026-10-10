@@ -518,3 +518,7 @@ body { line-break: strict; }
 
 .au-lede { margin-top: 22px; }
 .au-h2 + .au-p, .au-h2 + .au-figwrap, .au-h2 + .au-bignum { margin-top: 22px; }
+
+/* v28: pending boxes stack key over value so long values wrap on phones */
+.au-todo { flex-direction: column; align-items: flex-start; gap: 6px; }
+.au-todo__v { flex: initial; white-space: normal; line-height: 1.7; letter-spacing: .08em; text-wrap: pretty; }
