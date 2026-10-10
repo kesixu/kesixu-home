@@ -12,13 +12,13 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var TEARDOWN = ".au-moonwrap,.au-moon,.au-lattice,.au-haze,.au-sky,.au-ember,.au-stage,.au-vessel,.au-shadow,.au-sheen i,.au-intro,.au-rise,.au-redline,.au-outline path,.au-part,.au-step,.au-measure dd,.au-crackle .ck,.au-beams path,.au-spot,.au-stage--nb,.au-space,.au-scroll-hint,.au-s5 .au-text > .au-p,.au-cap";
-  var lightTL = null, introTL = null, lenis = null, pins = [], relight = null;
+  var lightTL = null, introTL = null, lenis = null, lenisTicker = null, pins = [], relight = null;
 
   function toStatic() {
-    try { var fl = document.querySelector(".au-flow"); if (fl && fl.pauseAnimations) { fl.pauseAnimations(); fl.setCurrentTime(10.8); } } catch (e) {}
     try {
       doc.classList.remove("motion-pending", "fx");
-      if (lenis) { lenis.destroy(); lenis = null; }
+      if (lenisTicker && window.gsap) { gsap.ticker.remove(lenisTicker); lenisTicker = null; }
+      if (lenis) { lenis.destroy(); lenis = null; window.__auLenis = null; }
       if (relight) relight.dispose();
       if (window.ScrollTrigger) ScrollTrigger.getAll().forEach(function (st) { st.kill(true); });
       if (window.gsap) { gsap.globalTimeline.clear(); gsap.set(TEARDOWN, { clearProps: "all" }); gsap.set(".au-bar__fill", { clearProps: "transform,opacity" }); }
@@ -158,7 +158,8 @@
         lenis = new Lenis({ lerp: 0.085, smoothWheel: true, syncTouch: false, autoRaf: false });
         window.__auLenis = lenis;
         lenis.on("scroll", ScrollTrigger.update);
-        gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+        lenisTicker = function (t) { lenis.raf(t * 1000); };
+        gsap.ticker.add(lenisTicker);
         gsap.ticker.lagSmoothing(0);
       } catch (e) { lenis = null; }
     }
@@ -378,6 +379,7 @@
   var secs = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
   function go(sel) {
     var el = document.querySelector(sel); if (!el) return; toc.removeAttribute("open");
+    reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var L = window.__auLenis;
     if (L && L.scrollTo && !reduced) L.scrollTo(el, { offset: 0, duration: 1.1, easing: function (t) { return 1 - Math.pow(1 - t, 3); } });
     else el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
