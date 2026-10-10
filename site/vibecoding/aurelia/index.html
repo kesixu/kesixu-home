@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="motion-pending">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aurelia · AI 能否读懂中国古瓷之美</title>
+<meta name="description" content="以近两万件博物馆藏瓷为参照，从照片辨识风格、寻找相近之器，探索 AI 如何学习古瓷鉴赏。研究原型，邀请制内测。">
+<meta name="theme-color" content="#121619">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aurelia · AI 能否读懂中国古瓷之美">
+<meta property="og:description" content="以馆藏为参照，从识器入手：辨风格，寻同类，探索形似之外的时代特征。">
+<meta property="og:url" content="https://kesixu.com/vibecoding/aurelia/">
+<meta property="og:image" content="https://kesixu.com/vibecoding/aurelia/media/og.jpg">
+<link rel="canonical" href="https://kesixu.com/vibecoding/aurelia/">
+<link rel="icon" type="image/svg+xml" href="/vibecoding/assets/favicon.svg">
+<link rel="preload" as="font" type="font/woff2" href="fonts/sans-300-aurelia.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="fonts/sans-400-aurelia.woff2" crossorigin>
+<link rel="preload" as="image" href="media/vessels/cma_140168-900.webp" imagesrcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" imagesizes="(min-width:900px) 40vw, 78vw">
+<link rel="stylesheet" href="aurelia.css?v=28">
+</head>
+<body>
+<a class="au-skip" href="#main">跳转至正文</a>
+
+<div class="au-sky" aria-hidden="true">
+  <div class="au-lattice"></div>
+  <div class="au-haze"></div>
+  <div class="au-moonwrap"><div class="au-moon"></div></div>
+</div>
+<span class="au-ember" aria-hidden="true"></span>
+<div class="au-paper" aria-hidden="true"></div>
+
+<nav class="au-nav" aria-label="站内导航">
+  <a class="au-back" href="/vibecoding/">← kesixu.com</a>
+  <span class="au-mark">AURELIA · 古瓷风格比对</span>
+</nav>
+
+<main id="main">
+
+<!-- ═══ S1 月出 · 开卷 ═══ -->
+<section class="au-s au-s1" id="s1" aria-label="开卷">
+  <div class="au-wrap au-hero">
+    <div class="au-hero__text">
+      <p class="au-eyebrow au-intro">Aurelia · 古瓷风格比对</p>
+      <h1 class="au-h1 au-intro">AI 能否读懂<br><span class="au-nw">中国古瓷</span><wbr><span class="au-nw">之美</span></h1>
+      <p class="au-lede au-intro">从识器入手，以近<span class="nw">两万件</span>博物馆藏瓷为参照，为一张照片寻得相近之器，逐步辨明<span class="nw">相似之处</span>。</p>
+      <div class="au-cta au-intro">
+        <a class="au-btn au-btn--moon" href="mailto:email@kesixu.com?subject=Aurelia%20%E7%A0%94%E4%B9%A0%E5%86%85%E6%B5%8B%E7%94%B3%E8%AF%B7">申请内测</a>
+        <a class="au-btn" href="/vibecoding/">浏览其他作品</a>
+      </div>
+    </div>
+    <figure class="au-stage au-stage--hero au-intro" data-v="cma_140168">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_140168-900.webp" srcset="media/vessels/cma_140168-900.webp 900w, media/vessels/cma_140168-1400.webp 1400w" sizes="(min-width:900px) 40vw, 78vw" width="877" height="1419" alt="明 永乐 甜白釉暗花梅瓶，克利夫兰艺术博物馆 1964.167" decoding="async" fetchpriority="high"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">明 永乐 · 甜白釉暗花梅瓶<small>克利夫兰艺术博物馆 1964.167</small></figcaption>
+</figure>
+  </div>
+  <p class="au-scroll-hint au-intro" aria-hidden="true"><span>向下阅览</span><i></i></p>
+</section>
+
+<!-- ═══ S2 看器，贵在上手 ═══ -->
+<section class="au-s au-s2" id="s2" aria-label="从识器到鉴赏">
+  <div class="au-wrap au-two">
+    <figure class="au-stage au-stage--s2" data-v="cma_97956">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_97956-1100.webp" width="1060" height="967" alt="宋 钧窑 莲蕾罐，克利夫兰艺术博物馆 1917.60" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">宋 钧窑 · 莲蕾罐<small>克利夫兰艺术博物馆 1917.60 · 本页天青色取意于此</small></figcaption>
+</figure>
+    <div class="au-text">
+      <h2 class="au-h2 au-rise">鉴赏之始，在于识器</h2>
+      <p class="au-p au-rise">一件古瓷的意趣，见于器形、釉色，也藏在工艺细节之中。行家观器，须察胎釉、辨纹饰、读款识；上手掂量，翻看圈足，借侧光细察釉面，方能<span class="nw">见微知著</span>。</p>
+      <p class="au-p au-rise">Aurelia 先学习照片中可见的线索：以馆藏作参照，辨识器物的风格与形制。待这一步有据可依，再向专家学习，同类器物之间<span class="nw">何以见高下</span>。</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ S3 五馆同堂 ═══ -->
+<section class="au-s au-s3" id="s3" aria-label="馆藏研究语料">
+  <canvas class="au-space" aria-hidden="true"></canvas>
+  <div class="au-wrap">
+    <h2 class="au-h2 au-rise">五馆藏珍，汇为参照</h2>
+    <p class="au-bignum au-rise"><span class="au-num">19,487</span><span class="au-bignum__lab">件 · 馆藏研究语料</span></p>
+    <p class="au-fine au-rise au-sources"><span class="nw">台北故宫 14,557</span> · <span class="nw">英国 V&amp;A 3,473</span> · <span class="nw">克利夫兰 699</span> · <span class="nw">芝加哥 673</span> · <span class="nw">大都会 85</span></p>
+    <div class="au-figwrap au-rise"><div class="au-hbars au-hbars--strip" role="img" aria-label="研究语料的主要朝代分布：明 8830 件、清 6577 件、宋 1251 件、元 407 件、唐 165 件；其余朝代未列"><div class="au-hbars__row"><span class="au-hbars__lab">明</span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:1.000"></i><b>8,830</b></span></span></div><div class="au-hbars__row"><span class="au-hbars__lab">清</span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:0.745"></i><b>6,577</b></span></span></div><div class="au-hbars__row"><span class="au-hbars__lab">宋</span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:0.142"></i><b>1,251</b></span></span></div><div class="au-hbars__row"><span class="au-hbars__lab">元</span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:0.046"></i><b>407</b></span></span></div><div class="au-hbars__row"><span class="au-hbars__lab">唐</span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:0.019"></i><b>165</b></span></span></div></div></div>
+    <p class="au-fine au-rise">图列主要朝代，以明清器物居多；这份语料尚不足以代表中国古瓷的全貌。</p>
+    <div class="au-arc">
+      <figure class="au-stage au-stage--arc au-wide" data-v="cma_134843">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_134843-900.webp" width="1346" height="523" alt="宋 汝窑 笔洗，克利夫兰艺术博物馆 1957.40" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">宋 汝窑 · 笔洗<small>克利夫兰 1957.40</small></figcaption>
+</figure>
+      <figure class="au-stage au-stage--arc au-wide" data-v="cma_135015">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_135015-900.webp" width="1508" height="808" alt="南宋 官窑 葵口碗，克利夫兰艺术博物馆 1957.66" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">南宋 官窑 · 葵口碗<small>克利夫兰 1957.66</small></figcaption>
+</figure>
+      <figure class="au-stage au-stage--arc au-wide" data-v="cma_121469">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_121469-900.webp" width="1484" height="1011" alt="宋 建窑 兔毫盏，克利夫兰艺术博物馆 1942.132" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">宋 建窑 · 兔毫盏<small>克利夫兰 1942.132</small></figcaption>
+</figure>
+      <figure class="au-stage au-stage--arc" data-v="met_49855">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/met_49855-900.webp" width="653" height="1349" alt="元 青花莲池纹玉壶春瓶，大都会艺术博物馆 1984.297" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">元 · 青花莲池纹玉壶春瓶<small>大都会 1984.297</small></figcaption>
+</figure>
+      <figure class="au-stage au-stage--arc" data-v="met_39666">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/met_39666-900.webp" width="947" height="1004" alt="明 宣德 青花云龙纹罐，大都会艺术博物馆 37.191.1" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">明 宣德 · 青花云龙纹罐<small>大都会 37.191.1</small></figcaption>
+</figure>
+      <figure class="au-stage au-stage--arc" data-v="cma_154732">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_154732-900.webp" width="870" height="1477" alt="清 雍正 釉里红海水龙纹梅瓶，克利夫兰艺术博物馆 1989.314" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">清 雍正 · 釉里红海水龙纹梅瓶<small>克利夫兰 1989.314</small></figcaption>
+</figure>
+      <figure class="au-stage au-stage--arc au-wide" data-v="cma_112196">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_112196-900.webp" width="1612" height="1613" alt="清 雍正 粉彩蝠桃纹盘，克利夫兰艺术博物馆 1930.639" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">清 雍正 · 粉彩蝠桃纹盘<small>克利夫兰 1930.639</small></figcaption>
+</figure>
+    </div>
+    <p class="au-fine au-fine--note">本节器物照片来自克利夫兰与大都会艺术博物馆的开放获取资料（CC0）。</p>
+  </div>
+</section>
+
+<!-- ═══ S4 闭卷而试 ═══ -->
+<section class="au-s au-s4" id="s4" aria-label="检索评测结果">
+  <div class="au-wrap">
+    <h2 class="au-h2 au-rise">闭卷检验，检索有据</h2>
+    <p class="au-p au-rise">以 <span class="nw">2,435 件</span>未参与训练的器物作查询，在训练与验证集组成的参照库中检索。先检验一件具体的事：返回的前五件中，平均有多少与查询器物<span class="nw">同朝代、同器型</span>。</p>
+    <div class="au-bars au-rise">
+      <div class="au-bargroup">
+        <p class="au-bargroup__t">前五件相关比例 precision@5</p>
+        <div class="au-bar"><span class="au-bar__lab">微调前</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.795"></i></span><b>79.5%</b></div>
+        <div class="au-bar"><span class="au-bar__lab">微调后</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--after" style="--w:.847"></i></span><b>84.7%</b></div>
+        <p class="au-bar__delta">提高 5.2 个百分点</p>
+      </div>
+      <div class="au-bargroup">
+        <p class="au-bargroup__t">前十件排序得分 nDCG@10 · 满分 1</p>
+        <div class="au-bar"><span class="au-bar__lab">微调前</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.778"></i></span><b>0.778</b></div>
+        <div class="au-bar"><span class="au-bar__lab">微调后</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--after" style="--w:.847"></i></span><b>0.847</b></div>
+        <p class="au-bar__delta">+0.069</p>
+      </div>
+    </div>
+    <p class="au-fine au-rise">相关器物须同时满足同朝代、同器型；排序得分越高，表示相关器物越靠前。这两项指标衡量检索表现，尚未衡量审美判断。</p>
+    <div class="au-routes au-rise">
+      <p class="au-bargroup__t">六条技术路线，同一标准比较（nDCG@10）</p>
+      <div class="au-bar au-bar--route"><span class="au-bar__lab">OpenCLIP 微调</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--after" style="--w:.847"></i></span><b>0.847</b></div>
+      <div class="au-bar au-bar--route"><span class="au-bar__lab">DINOv3 微调 + 自蒸馏</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.824"></i></span><b>0.824</b></div>
+      <div class="au-bar au-bar--route"><span class="au-bar__lab">DINOv3 微调</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.822"></i></span><b>0.822</b></div>
+      <div class="au-bar au-bar--route"><span class="au-bar__lab">DINOv3 未微调</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.779"></i></span><b>0.779</b></div>
+      <div class="au-bar au-bar--route"><span class="au-bar__lab">OpenCLIP 未微调</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.778"></i></span><b>0.778</b></div>
+      <div class="au-bar au-bar--route"><span class="au-bar__lab">SDXL 生成器特征</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.689"></i></span><b>0.689</b></div>
+      <p class="au-p au-p--small">本轮评测中，微调后的 OpenCLIP 得分最高；前三条路线相差约 0.025。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S13 报告 ═══ -->
+<section class="au-s au-s13" id="s13" aria-label="报告样例">
+  <div class="au-wrap">
+    <h2 class="au-h2 au-rise">四件仿古器，见其得失</h2>
+    <p class="au-p au-rise">从留出测试集中选取四件清代仿古器，展示模型的风格、年代预测及相近参照，其中保留一件误判。样例采用同一次计算的结果，说明文字便于对照馆方著录阅读。</p>
+    <p class="au-p au-rise">这批 <span class="nw">38 件</span>器物中，年代预测与著录相符的有 <span class="nw">35 件</span>，所仿风格相符的有 <span class="nw">36 件</span>。训练中见过同类仿古器；若将仿钧整类留出，初步判为清代的比例仅约一成半。能否辨识未见过的仿古类型，仍是研究难点。</p>
+    <article class="au-rep au-rise">
+  <figure class="au-rep__fig"><img src="media/demo/npm_38059.webp" width="480" height="640" alt="仿钧釉花口瓶" decoding="async"><figcaption>清 乾隆 · 仿钧釉花口瓶<small>台北故宫 · 资料编号 38059 · 留出测试器物</small></figcaption></figure>
+  <div class="au-rep__body">
+    <div class="au-prob"><span>风格预测</span><i style="--w:0.98"></i><b>钧窑 98%</b></div>
+    <div class="au-prob"><span>年代预测</span><i style="--w:0.97"></i><b>清代 97%</b></div>
+    <p class="au-rep__verdict">风格预测为钧窑，年代预测为清，与馆方著录的「清乾隆仿钧釉」相符。第三件参照为龙泉贯耳壶，器形相近而釉色有别，可见检索结果也会受轮廓影响。</p>
+    <ul class="au-rep__nbs"><li><img src="media/demo/npm_1321.webp" width="480" height="640" alt="钧窑 月白紫斑梅瓶" loading="lazy" decoding="async"><span class="nb-h">元</span><span class="nb-t">钧窑 月白紫斑梅瓶</span><span class="nb-s">图像相似度 0.87</span><span class="nb-s">故宫资料编号 1321</span></li><li><img src="media/demo/npm_1224.webp" width="640" height="480" alt="钧窑 丁香紫釉渣斗式花盆" loading="lazy" decoding="async"><span class="nb-h">元</span><span class="nb-t">钧窑 丁香紫釉渣斗式花盆</span><span class="nb-s">图像相似度 0.86</span><span class="nb-s">故宫资料编号 1224</span></li><li><img src="media/demo/npm_26313.webp" width="480" height="640" alt="龙泉窑 青瓷弦纹贯耳壶" loading="lazy" decoding="async"><span class="nb-h">宋</span><span class="nb-t">龙泉窑 青瓷弦纹贯耳壶</span><span class="nb-s">图像相似度 0.84</span><span class="nb-s">故宫资料编号 26313</span></li></ul>
+  </div>
+</article>
+<article class="au-rep au-rise">
+  <figure class="au-rep__fig"><img src="media/demo/npm_35659.webp" width="480" height="640" alt="仿哥釉六方贯耳瓶" decoding="async"><figcaption>清 乾隆 · 仿哥釉六方贯耳瓶<small>台北故宫 · 资料编号 35659 · 留出测试器物</small></figcaption></figure>
+  <div class="au-rep__body">
+    <div class="au-prob"><span>风格预测</span><i style="--w:0.92"></i><b>哥窑 92%</b></div>
+    <div class="au-prob"><span>年代预测</span><i style="--w:0.88"></i><b>清代 88%</b></div>
+    <p class="au-rep__verdict">风格预测为哥窑，年代预测为清，与馆方著录的「清乾隆仿哥釉」相符。相近参照却均来自官窑，提示风格分类与图像检索并不完全一致；哥、官之间的相近之处，仍需逐项细辨。</p>
+    <ul class="au-rep__nbs"><li><img src="media/demo/npm_26352.webp" width="480" height="640" alt="官窑 青瓷弦纹贯耳壶" loading="lazy" decoding="async"><span class="nb-h">宋</span><span class="nb-t">官窑 青瓷弦纹贯耳壶</span><span class="nb-s">图像相似度 0.91</span><span class="nb-s">故宫资料编号 26352</span></li><li><img src="media/demo/npm_26399.webp" width="480" height="640" alt="南宋官窑 青瓷贯耳壶" loading="lazy" decoding="async"><span class="nb-h">宋 · 官窑</span><span class="nb-t">南宋官窑 青瓷贯耳壶</span><span class="nb-s">图像相似度 0.90</span><span class="nb-s">故宫资料编号 26399</span></li><li><img src="media/demo/npm_28254.webp" width="480" height="640" alt="官窑 青瓷八方弦纹盘口瓶" loading="lazy" decoding="async"><span class="nb-h">宋</span><span class="nb-t">官窑 青瓷八方弦纹盘口瓶</span><span class="nb-s">图像相似度 0.90</span><span class="nb-s">故宫资料编号 28254</span></li></ul>
+  </div>
+</article>
+<article class="au-rep au-rise">
+  <figure class="au-rep__fig"><img src="media/demo/npm_31706.webp" width="480" height="640" alt="仿龙泉釉八卦纹琮式瓶" decoding="async"><figcaption>清 乾隆 · 仿龙泉釉八卦纹琮式瓶<small>台北故宫 · 资料编号 31706 · 留出测试器物</small></figcaption></figure>
+  <div class="au-rep__body">
+    <div class="au-prob"><span>风格预测</span><i style="--w:0.97"></i><b>龙泉窑 97%</b></div>
+    <div class="au-prob"><span>年代预测</span><i style="--w:0.99"></i><b>清代 99%</b></div>
+    <p class="au-rep__verdict">风格预测为龙泉窑，年代预测为清，与馆方著录的「清乾隆仿龙泉釉」相符。</p>
+    <ul class="au-rep__nbs"><li><img src="media/demo/npm_29188.webp" width="480" height="640" alt="龙泉窑 青瓷琮式瓶" loading="lazy" decoding="async"><span class="nb-h">宋</span><span class="nb-t">龙泉窑 青瓷琮式瓶</span><span class="nb-s">图像相似度 0.93</span><span class="nb-s">故宫资料编号 29188</span></li><li><img src="media/demo/npm_26304.webp" width="480" height="640" alt="龙泉窑 青瓷琮式瓶" loading="lazy" decoding="async"><span class="nb-h">宋</span><span class="nb-t">龙泉窑 青瓷琮式瓶</span><span class="nb-s">图像相似度 0.91</span><span class="nb-s">故宫资料编号 26304</span></li><li><img src="media/demo/npm_26303.webp" width="480" height="640" alt="龙泉窑 青瓷琮式瓶" loading="lazy" decoding="async"><span class="nb-h">宋</span><span class="nb-t">龙泉窑 青瓷琮式瓶</span><span class="nb-s">图像相似度 0.89</span><span class="nb-s">故宫资料编号 26303</span></li></ul>
+  </div>
+</article>
+<article class="au-rep au-rise au-rep--miss">
+  <figure class="au-rep__fig"><img src="media/demo/npm_38775.webp" width="480" height="640" alt="仿汝釉贯耳八方壶" decoding="async"><figcaption>清 雍正 · 仿汝釉贯耳八方壶<small>台北故宫 · 资料编号 38775 · 留出测试器物</small></figcaption></figure>
+  <div class="au-rep__body">
+    <div class="au-prob"><span>风格预测</span><i style="--w:0.58"></i><b>官窑 58%</b></div>
+    <div class="au-prob"><span>年代预测</span><i style="--w:0.92"></i><b>宋代 92%</b></div>
+    <p class="au-rep__verdict">此件的风格与年代均有误判：模型倾向官窑风格，并将年代判为宋；馆方著录为「清雍正仿汝釉」。正面照片不足以呈现圈足与款识，具体误判原因尚待核查。较高的模型分值，也可能对应错误结论。</p>
+    <ul class="au-rep__nbs"><li><img src="media/demo/npm_26402.webp" width="480" height="640" alt="龙泉窑 青瓷弦纹贯耳壶" loading="lazy" decoding="async"><span class="nb-h">宋</span><span class="nb-t">龙泉窑 青瓷弦纹贯耳壶</span><span class="nb-s">图像相似度 0.92</span><span class="nb-s">故宫资料编号 26402</span></li><li><img src="media/demo/npm_17.webp" width="480" height="640" alt="官窑 青瓷贯耳壶" loading="lazy" decoding="async"><span class="nb-h">宋</span><span class="nb-t">官窑 青瓷贯耳壶</span><span class="nb-s">图像相似度 0.91</span><span class="nb-s">故宫资料编号 17</span></li><li><img src="media/demo/npm_26352.webp" width="480" height="640" alt="官窑 青瓷弦纹贯耳壶" loading="lazy" decoding="async"><span class="nb-h">宋</span><span class="nb-t">官窑 青瓷弦纹贯耳壶</span><span class="nb-s">图像相似度 0.91</span><span class="nb-s">故宫资料编号 26352</span></li></ul>
+  </div>
+</article>
+    <p class="au-fine au-rise">百分比为模型分类分值，显示上限 99%，未经校准，不能作为判断正确的概率。参照检索使用未微调的视觉特征，与分类结果分别计算。图片：国立故宫博物院开放资料（CC BY 4.0）。</p>
+  </div>
+</section>
+<!-- ═══ S11 核心发现 ═══ -->
+<section class="au-s au-s11" id="s11" aria-label="仿古器与风格年代研究">
+  <div class="au-wrap">
+    <h2 class="au-h2 au-rise">形似之外，时代有别<br><span class="nw">分清「像」与「是」</span></h2>
+    <p class="au-p au-rise">雍正、乾隆时期的仿古瓷，将宋元名窑的釉色与形制重新演绎。馆方著录中的「仿钧」「仿哥」「仿官」「仿龙泉」「仿汝」，同时记录了所仿风格与制作年代。台北故宫著录带「仿」字的器物有 <span class="nw">352 件</span>，其中 <span class="nw">282 件</span>已纳入研究库；清代仿这五类釉色的有 <span class="nw">190 件</span>。</p>
+    <p class="au-p au-rise au-p--pull">仿古之中，也有当时的审美。</p>
+    <p class="au-p au-rise">这些著录提供了一组跨时代的对照：风格承袭宋元，器物却制于清代。我们据此训练模型分别回答：<span class="nw">承袭何种风格</span>，<span class="nw">可能制于何时</span>。目标是辨识形似之外的时代线索，而这一步能否成立，须由未见类型的测试来回答。</p>
+    <p class="au-fine au-rise">相关研究已有瓷器属性识别与艺术风格解耦的方法。Aurelia AI 的研究着眼于历史仿古著录：以所仿风格和制作年代分别监督训练，再将整类仿古器留出，检验模型能否举一反三。</p>
+    <div class="au-figwrap au-rise">
+      <p class="au-figcap">通用视觉模型如何看待这 <span class="nw">190 件</span>清代仿古器（以 Meta PE-Core 为例）</p>
+      <div class="au-hbars" role="img" aria-label="五类清代仿古器：更接近宋元风格原型的比例，以及年代分类器判为清代的比例"><p class="au-hbars__leg"><i class="au-sw au-sw--a"></i>更近宋元原型　<i class="au-sw au-sw--b"></i>年代判为清代</p><div class="au-hbars__row"><span class="au-hbars__lab">仿钧<small>n=110</small></span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:0.951"></i><b>95%</b></span><span class="au-hbar"><i class="au-hbar__b" style="--w:0.155"></i><b>16%</b></span></span></div><div class="au-hbars__row"><span class="au-hbars__lab">仿哥<small>n=26</small></span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:0.904"></i><b>90%</b></span><span class="au-hbar"><i class="au-hbar__b" style="--w:0.846"></i><b>85%</b></span></span></div><div class="au-hbars__row"><span class="au-hbars__lab">仿官<small>n=30</small></span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:0.885"></i><b>88%</b></span><span class="au-hbar"><i class="au-hbar__b" style="--w:0.567"></i><b>57%</b></span></span></div><div class="au-hbars__row"><span class="au-hbars__lab">仿龙泉<small>n=19</small></span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:0.948"></i><b>95%</b></span><span class="au-hbar"><i class="au-hbar__b" style="--w:0.368"></i><b>37%</b></span></span></div><div class="au-hbars__row"><span class="au-hbars__lab">仿汝<small>n=5</small></span><span class="au-hbars__bars"><span class="au-hbar"><i class="au-hbar__a" style="--w:0.992"></i><b>99%</b></span><span class="au-hbar"><i class="au-hbar__b" style="--w:0.800"></i><b>80%</b></span></span></div></div>
+      <p class="au-fine">比较时匹配两组参照的件数，并重复抽样；「更近原型」指与宋元同窑器物比与清代对照器物更相似。年代分类器在非仿古器的留出集上准确率约 86%，对这 190 件仿古器仅约 35% 判为清代。</p>
+    </div>
+    <p class="au-p au-rise">图像中的相近风格较容易被捕捉，制作年代却更难辨明。胎质、圈足与釉面能否提供更可靠的线索，是下一步要检验的问题。双头模型因此设置风格与年代两个分支。加入训练约束后，对未见仿古类型的年代判断与仅训练年代分支持平，线索须另寻。</p>
+    <div class="au-figwrap au-figwrap--flow au-rise">
+      <p class="au-figcap">同一风格，不同年代：双分支训练目标</p>
+      <style>
+.au-flowwrap{overflow:visible;padding:10px 0 0}
+.au-flowwrap .au-flow{width:100%;min-width:0;height:auto;overflow:visible}
+.au-flowwrap .af-mobile{display:none}
+.au-flowwrap text{font-family:var(--sans);font-weight:300;letter-spacing:.035em}
+.af-path{fill:none;stroke:#9DBBB0;stroke-opacity:.32;stroke-width:1.4}
+.af-panel{fill:#17211f;stroke:#9DBBB0;stroke-opacity:.4;stroke-width:1}
+.af-title{fill:#ECE9E1;font-size:21px}
+.af-note{fill:#A9B5AE;font-size:17px}
+.af-label{fill:#C9DAD2;font-size:19px}
+.af-brand{fill:#ECE9E1;font-size:29px;font-weight:400!important;letter-spacing:.06em!important}
+.af-rule{stroke:#9DBBB0;stroke-opacity:.35;fill:none}
+.af-mark{fill:#A34736}
+.af-orbit{fill:none;stroke:#9DBBB0;stroke-width:1;opacity:.45}
+.af-glow{animation:af-breathe 11s ease-in-out infinite}
+.af-token{opacity:0;animation-duration:24s;animation-timing-function:linear;animation-iteration-count:infinite;pointer-events:none}
+.af-token circle{fill:#C9DAD2;fill-opacity:.14;stroke:#C9DAD2;stroke-opacity:.45}
+@keyframes af-breathe{0%,100%{opacity:.35}50%{opacity:.7}}
+@media(max-width:899px){.au-flowwrap .af-wide{display:none}.au-flowwrap .af-mobile{display:block}}
+@media(prefers-reduced-motion:reduce){.au-flowwrap .af-token{display:none}.au-flowwrap .af-glow{animation:none;opacity:.55}}
+@keyframes af-wide-0{0%{transform:translate(94px,165px);opacity:0}5%{transform:translate(94px,165px);opacity:1}25%{transform:translate(345px,267px);opacity:1}46%{transform:translate(604px,267px);opacity:1}50%{transform:translate(604px,267px);opacity:0}100%{transform:translate(604px,267px);opacity:0}}
+.af-wide-0{animation-name:af-wide-0}
+@keyframes af-wide-1{0%{transform:translate(94px,370px);opacity:0}5%{transform:translate(94px,370px);opacity:1}25%{transform:translate(345px,267px);opacity:1}46%{transform:translate(604px,267px);opacity:1}50%{transform:translate(604px,267px);opacity:0}100%{transform:translate(604px,267px);opacity:0}}
+.af-wide-1{animation-name:af-wide-1}
+@keyframes af-wide-2{0%{transform:translate(604px,267px);opacity:0}50%{transform:translate(604px,267px);opacity:0}54%{transform:translate(604px,267px);opacity:1}78%{transform:translate(930px,157px);opacity:1}88%{transform:translate(930px,157px);opacity:0}100%{transform:translate(930px,157px);opacity:0}}
+.af-wide-2{animation-name:af-wide-2}
+@keyframes af-wide-3{0%{transform:translate(604px,267px);opacity:0}50%{transform:translate(604px,267px);opacity:0}54%{transform:translate(604px,267px);opacity:1}78%{transform:translate(1016px,157px);opacity:1}88%{transform:translate(1016px,157px);opacity:0}100%{transform:translate(1016px,157px);opacity:0}}
+.af-wide-3{animation-name:af-wide-3}
+@keyframes af-wide-4{0%{transform:translate(604px,267px);opacity:0}50%{transform:translate(604px,267px);opacity:0}54%{transform:translate(604px,267px);opacity:1}78%{transform:translate(930px,418px);opacity:1}88%{transform:translate(930px,418px);opacity:0}100%{transform:translate(930px,418px);opacity:0}}
+.af-wide-4{animation-name:af-wide-4}
+@keyframes af-wide-5{0%{transform:translate(604px,267px);opacity:0}50%{transform:translate(604px,267px);opacity:0}54%{transform:translate(604px,267px);opacity:1}78%{transform:translate(1016px,418px);opacity:1}88%{transform:translate(1016px,418px);opacity:0}100%{transform:translate(1016px,418px);opacity:0}}
+.af-wide-5{animation-name:af-wide-5}
+@keyframes af-mobile-0{0%{transform:translate(110px,82px);opacity:0}5%{transform:translate(110px,82px);opacity:1}25%{transform:translate(220px,237px);opacity:1}46%{transform:translate(220px,403px);opacity:1}50%{transform:translate(220px,403px);opacity:0}100%{transform:translate(220px,403px);opacity:0}}
+.af-mobile-0{animation-name:af-mobile-0}
+@keyframes af-mobile-1{0%{transform:translate(330px,82px);opacity:0}5%{transform:translate(330px,82px);opacity:1}25%{transform:translate(220px,237px);opacity:1}46%{transform:translate(220px,403px);opacity:1}50%{transform:translate(220px,403px);opacity:0}100%{transform:translate(220px,403px);opacity:0}}
+.af-mobile-1{animation-name:af-mobile-1}
+@keyframes af-mobile-2{0%{transform:translate(220px,403px);opacity:0}50%{transform:translate(220px,403px);opacity:0}54%{transform:translate(220px,403px);opacity:1}78%{transform:translate(69px,697px);opacity:1}88%{transform:translate(69px,697px);opacity:0}100%{transform:translate(69px,697px);opacity:0}}
+.af-mobile-2{animation-name:af-mobile-2}
+@keyframes af-mobile-3{0%{transform:translate(220px,403px);opacity:0}50%{transform:translate(220px,403px);opacity:0}54%{transform:translate(220px,403px);opacity:1}78%{transform:translate(155px,697px);opacity:1}88%{transform:translate(155px,697px);opacity:0}100%{transform:translate(155px,697px);opacity:0}}
+.af-mobile-3{animation-name:af-mobile-3}
+@keyframes af-mobile-4{0%{transform:translate(220px,403px);opacity:0}50%{transform:translate(220px,403px);opacity:0}54%{transform:translate(220px,403px);opacity:1}78%{transform:translate(285px,697px);opacity:1}88%{transform:translate(285px,697px);opacity:0}100%{transform:translate(285px,697px);opacity:0}}
+.af-mobile-4{animation-name:af-mobile-4}
+@keyframes af-mobile-5{0%{transform:translate(220px,403px);opacity:0}50%{transform:translate(220px,403px);opacity:0}54%{transform:translate(220px,403px);opacity:1}78%{transform:translate(371px,697px);opacity:1}88%{transform:translate(371px,697px);opacity:0}100%{transform:translate(371px,697px);opacity:0}}
+.af-mobile-5{animation-name:af-mobile-5}
+</style><div class="au-flowwrap"><svg class="au-flow af-wide" viewBox="0 0 1160 540" role="img" aria-label="Aurelia AI 双分支训练目标：元代钧窑梅瓶与清乾隆仿钧花口瓶，风格同属钧窑，制作年代分别为元与清。"><g class="af-path"><path d="M164,165 C220,165 238,267 278,267"/><path d="M164,370 C220,370 238,267 278,267"/><path d="M440,267 H495"/><path d="M713,239 C765,239 774,143 834,143"/><path d="M713,295 C765,295 774,404 834,404"/></g><image href="media/demo/cut_npm_1321.webp" x="43.0" y="105.0" width="102" height="120" preserveAspectRatio="xMidYMid meet"/><text x="94" y="249" text-anchor="middle" class="af-note">元 · 钧窑梅瓶</text><image href="media/demo/cut_npm_38059.webp" x="43.0" y="310.0" width="102" height="120" preserveAspectRatio="xMidYMid meet"/><text x="94" y="454" text-anchor="middle" class="af-note">清乾隆 · 仿钧花口瓶</text><rect x="250.0" y="211.0" width="190" height="112" rx="14" class="af-panel"/><text x="345" y="264" text-anchor="middle" class="af-label">取形 · 提取特征</text><text x="345" y="290" text-anchor="middle" class="af-note">视觉编码器</text><g transform="translate(604 267)">
+<rect x="-109.0" y="-75.0" width="218" height="150" rx="14" class="af-panel"/>
+<g class="af-glow"><ellipse class="af-orbit" cx="0" cy="-34" rx="54" ry="14"/><ellipse class="af-orbit" cx="0" cy="-34" rx="35" ry="25"/><path class="af-orbit" d="M-73,-34 H73 M0,-62 V-7"/><circle cx="0" cy="-34" r="4" fill="#C9DAD2"/></g>
+<path class="af-rule" d="M-94,-59 v-4 h19 M94,59 v4 h-19"/>
+<rect x="79" y="-61" width="14" height="14" rx="2" class="af-mark"/>
+<text x="0" y="18" text-anchor="middle" class="af-brand">Aurelia AI</text><text x="0" y="49" text-anchor="middle" class="af-label">分辨风格与年代</text>
+</g><rect x="835.0" y="44.0" width="276" height="198" rx="14" class="af-panel"/><text x="973" y="78.0" text-anchor="middle" class="af-title">风格分支</text><text x="973" y="105.0" text-anchor="middle" class="af-note">承袭何种范式</text><image href="media/demo/cut_npm_1321.webp" x="901.0" y="115.0" width="58" height="84" preserveAspectRatio="xMidYMid meet"/><image href="media/demo/cut_npm_38059.webp" x="987.0" y="115.0" width="58" height="84" preserveAspectRatio="xMidYMid meet"/><path d="M895,205 v7 h156 v-7" class="af-rule"/><text x="973" y="225.0" text-anchor="middle" class="af-label">同属钧窑风格</text><rect x="835.0" y="305.0" width="276" height="198" rx="14" class="af-panel"/><text x="973" y="339.0" text-anchor="middle" class="af-title">年代分支</text><text x="973" y="366.0" text-anchor="middle" class="af-note">制作于何时</text><image href="media/demo/cut_npm_1321.webp" x="901.0" y="376.0" width="58" height="84" preserveAspectRatio="xMidYMid meet"/><image href="media/demo/cut_npm_38059.webp" x="987.0" y="376.0" width="58" height="84" preserveAspectRatio="xMidYMid meet"/><path d="M973,379 v88" class="af-rule"/><text x="930" y="486.0" text-anchor="middle" class="af-label">元</text><text x="1016" y="486.0" text-anchor="middle" class="af-label">清</text><g class="af-token af-wide-0" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_1321.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><g class="af-token af-wide-1" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_38059.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><g class="af-token af-wide-2" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_1321.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><g class="af-token af-wide-3" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_38059.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><g class="af-token af-wide-4" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_1321.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><g class="af-token af-wide-5" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_38059.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><text x="604" y="525" text-anchor="middle" class="af-note">同一风格，分辨不同年代 · 训练目标示意</text></svg><svg class="au-flow af-mobile" viewBox="0 0 440 875" role="img" aria-label="Aurelia AI 双分支训练目标：元代钧窑梅瓶与清乾隆仿钧花口瓶，风格同属钧窑，制作年代分别为元与清。"><g class="af-path"><path d="M110,156 C110,185 220,176 220,208"/><path d="M330,156 C330,185 220,176 220,208"/><path d="M220,269 V328"/><path d="M172,478 C172,506 112,505 112,550"/><path d="M268,478 C268,506 328,505 328,550"/></g><image href="media/demo/cut_npm_1321.webp" x="59.0" y="22.0" width="102" height="120" preserveAspectRatio="xMidYMid meet"/><text x="110" y="166" text-anchor="middle" class="af-note">元 · 钧窑梅瓶</text><image href="media/demo/cut_npm_38059.webp" x="279.0" y="22.0" width="102" height="120" preserveAspectRatio="xMidYMid meet"/><text x="330" y="166" text-anchor="middle" class="af-note">清乾隆 · 仿钧花口瓶</text><rect x="110.0" y="204.0" width="220" height="66" rx="14" class="af-panel"/><text x="220" y="234" text-anchor="middle" class="af-label">取形 · 提取特征</text><text x="220" y="260" text-anchor="middle" class="af-note">视觉编码器</text><g transform="translate(220 403)">
+<rect x="-109.0" y="-75.0" width="218" height="150" rx="14" class="af-panel"/>
+<g class="af-glow"><ellipse class="af-orbit" cx="0" cy="-34" rx="54" ry="14"/><ellipse class="af-orbit" cx="0" cy="-34" rx="35" ry="25"/><path class="af-orbit" d="M-73,-34 H73 M0,-62 V-7"/><circle cx="0" cy="-34" r="4" fill="#C9DAD2"/></g>
+<path class="af-rule" d="M-94,-59 v-4 h19 M94,59 v4 h-19"/>
+<rect x="79" y="-61" width="14" height="14" rx="2" class="af-mark"/>
+<text x="0" y="18" text-anchor="middle" class="af-brand">Aurelia AI</text><text x="0" y="49" text-anchor="middle" class="af-label">分辨风格与年代</text>
+</g><rect x="16.0" y="563.0" width="192" height="240" rx="14" class="af-panel"/><text x="112" y="597.0" text-anchor="middle" class="af-title">风格分支</text><text x="112" y="624.0" text-anchor="middle" class="af-note">承袭何种范式</text><image href="media/demo/cut_npm_1321.webp" x="40.0" y="655.0" width="58" height="84" preserveAspectRatio="xMidYMid meet"/><image href="media/demo/cut_npm_38059.webp" x="126.0" y="655.0" width="58" height="84" preserveAspectRatio="xMidYMid meet"/><path d="M34,745 v7 h156 v-7" class="af-rule"/><text x="112" y="786.0" text-anchor="middle" class="af-label">同属钧窑风格</text><rect x="232.0" y="563.0" width="192" height="240" rx="14" class="af-panel"/><text x="328" y="597.0" text-anchor="middle" class="af-title">年代分支</text><text x="328" y="624.0" text-anchor="middle" class="af-note">制作于何时</text><image href="media/demo/cut_npm_1321.webp" x="256.0" y="655.0" width="58" height="84" preserveAspectRatio="xMidYMid meet"/><image href="media/demo/cut_npm_38059.webp" x="342.0" y="655.0" width="58" height="84" preserveAspectRatio="xMidYMid meet"/><path d="M328,658 v88" class="af-rule"/><text x="285" y="786.0" text-anchor="middle" class="af-label">元</text><text x="371" y="786.0" text-anchor="middle" class="af-label">清</text><g class="af-token af-mobile-0" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_1321.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><g class="af-token af-mobile-1" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_38059.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><g class="af-token af-mobile-2" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_1321.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><g class="af-token af-mobile-3" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_38059.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><g class="af-token af-mobile-4" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_1321.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><g class="af-token af-mobile-5" aria-hidden="true"><circle r="22"/><image href="media/demo/cut_npm_38059.webp" x="-14.5" y="-18.0" width="29" height="36" preserveAspectRatio="xMidYMid meet"/></g><text x="220" y="850" text-anchor="middle" class="af-note">同一风格，分辨不同年代 · 训练目标示意</text></svg></div>
+      <p class="au-fine">风格分支将两件归入钧窑风格，年代分支则区分元与清。图示表达训练目标，尚不代表模型已能稳定识别未见过的仿古类型。</p>
+    </div>
+    <div class="au-todos au-rise">
+      <div class="au-todo"><span class="au-todo__k">整类仿古器未参与训练时，判为清代的比例</span><span class="au-todo__v">仿钧约两成 · 仿龙泉约三成 · 仿官约七成 · 仿哥约八成</span></div>
+      <div class="au-todo"><span class="au-todo__k">年代线索来自何处：圈足、釉面或口沿</span><span class="au-todo__v">按比例切分的部位未见线索 · 口沿改由 SAM 3 分割模型定位 · 圈足需底部照片</span></div>
+      <div class="au-todo"><span class="au-todo__k">跨文化对照：V&amp;A 的 88 件欧洲仿中国瓷</span><span class="au-todo__v">待开展</span></div>
+      <div class="au-todo"><span class="au-todo__k">公开真仿对照集 CArtBench：通用大模型现有基线答对 6 / 10 对</span><span class="au-todo__v">本模型尚待测试</span></div>
+    </div>
+    <h3 class="au-h3 au-rise">值得长期积累的是什么</h3>
+    <ul class="au-bullets au-rise">
+      <li>将相似风格与年代判断分别验证，并为每项判断寻找可复核的线索。能否在未见类型上仍然有效，比一份漂亮的样例报告更能说明方法的价值。</li>
+      <li>馆藏著录虽公开，专家逐件评议、误判修正及经授权的交易反馈，仍需日积月累。每条记录有出处、每次修正有依据，才能逐步形成可靠的研究资料。</li>
+      <li>若这一方法在古瓷上得到验证，可进一步探索青铜、玉器与书画中的仿古现象；各品类的材料与工艺不同，须重新建立参照与评测。</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ═══ S5 开片 · 证据 ═══ -->
+<section class="au-s au-s5" id="s5" aria-label="器物分割与图像测量">
+  <div class="au-wrap au-two au-two--ev">
+    <div class="au-evstage">
+      <svg class="au-crackle" viewBox="0 0 1000 1000" aria-hidden="true" focusable="false">
+<g class="ck ck1"><path class="ck-a" d="M481,452 Q474,443 466,437 M481,452 Q484,447 494,455 M494,455 Q506,437 526,433 M481,452 Q448,492 416,531 M534,521 Q563,546 586,555 M534,521 Q487,547 444,585 M494,455 Q516,488 534,521"/><path class="ck-b" d="M539,487 Q550,489 564,490 M539,487 Q532,505 522,525 M522,525 Q549,526 574,528 M564,490 Q570,489 572,482 M537,434 Q534,455 526,472 M526,472 Q506,474 489,477 M488,427 Q482,431 482,432 M482,432 Q490,455 489,477 M537,434 Q539,438 538,434 M526,472 Q533,478 539,487 M572,482 Q565,459 562,436 M434,438 Q443,451 444,472 M444,472 Q463,481 481,488 M518,528 Q502,528 481,519 M482,570 Q504,560 525,554 M525,554 Q532,563 536,568 M444,472 Q432,486 418,503 M518,528 Q522,540 525,554 M536,568 Q544,568 554,570 M470,540 Q472,530 475,524 M481,519 Q476,521 475,524 M482,570 Q473,553 470,540"/></g>
+<g class="ck ck2"><path class="ck-a" d="M466,437 Q407,443 342,449 M466,437 Q452,406 444,371 M542,371 Q529,405 526,433 M542,371 Q560,370 572,354 M526,433 Q568,426 619,432 M619,432 Q620,396 634,376 M444,371 Q463,350 483,325 M483,325 Q510,344 542,371 M335,467 Q343,485 355,519 M416,531 Q383,523 355,519 M586,555 Q584,593 570,623 M466,651 Q452,636 446,624 M466,651 Q512,642 560,631 M560,631 Q564,627 570,623 M444,585 Q445,607 446,624 M619,432 Q640,465 658,514 M658,514 Q625,537 586,555 M416,531 Q424,556 444,585"/><path class="ck-b" d="M610,477 Q589,478 572,482 M610,477 Q611,498 614,522 M521,383 Q531,388 536,395 M612,474 Q613,463 618,449 M614,522 Q619,522 626,528 M647,525 Q637,525 626,528 M647,525 Q655,521 658,513 M658,513 Q661,501 665,493 M492,398 Q481,388 472,377 M440,429 Q436,420 436,408 M472,377 Q454,393 436,408 M521,383 Q517,369 520,353 M478,345 Q476,353 470,357 M472,377 Q469,370 470,357 M429,359 Q423,362 418,365 M534,342 Q524,346 520,353 M375,602 Q410,603 443,606 M433,629 Q442,616 443,606 M434,438 Q438,432 440,429 M567,383 Q562,370 560,359 M578,429 Q581,410 584,392 M624,398 Q614,391 600,385 M562,436 Q570,432 578,429 M567,383 Q577,388 584,392 M386,399 Q380,396 377,391 M386,399 Q401,393 417,386 M376,437 Q381,417 386,399 M373,579 Q357,573 336,563 M373,579 Q376,590 375,601 M375,601 Q377,602 375,602 M482,570 Q483,587 482,602 M482,602 Q492,604 504,608 M626,528 Q624,549 625,571 M434,438 Q414,445 389,450 M343,494 Q354,491 364,484 M387,449 Q386,451 389,450 M427,567 Q403,574 374,578 M342,517 Q365,523 386,532 M364,484 Q386,501 406,519 M374,578 Q379,557 386,532 M578,533 Q576,545 573,556 M573,556 Q560,562 554,570 M625,571 Q615,578 615,587 M615,587 Q618,591 615,589 M615,589 Q593,606 576,623 M577,632 Q575,627 576,623 M504,608 Q509,610 510,616 M554,570 Q559,594 565,614 M510,616 Q537,612 565,614 M565,614 Q573,623 576,623 M510,616 Q513,639 518,658 M474,605 Q472,627 472,649 M418,508 Q412,512 407,519"/></g>
+<g class="ck ck3"><path class="ck-a" d="M331,367 Q336,404 342,449 M331,367 Q344,352 346,341 M444,371 Q395,354 346,341 M572,354 Q599,365 634,376 M554,261 Q564,316 572,354 M653,272 Q649,322 639,372 M639,372 Q630,372 634,376 M335,467 Q343,458 342,449 M490,292 Q453,269 416,255 M490,292 Q522,275 544,256 M483,325 Q481,316 490,292 M639,372 Q687,386 746,388 M355,519 Q337,561 313,585 M446,624 Q379,617 318,620 M313,585 Q315,598 318,620 M750,401 Q706,456 663,515 M697,539 Q673,524 663,515 M658,514 Q665,517 663,515 M676,654 Q691,598 697,539 M676,654 Q659,657 647,663 M647,663 Q606,640 570,623 M647,663 Q639,693 640,732 M560,631 Q572,690 576,761 M454,697 Q462,719 475,730 M454,697 Q461,673 466,651 M454,697 Q412,715 356,741 M318,620 Q307,629 304,650 M313,585 Q274,561 228,538 M335,467 Q280,468 222,481"/><path class="ck-b" d="M320,474 Q335,453 353,432 M296,463 Q319,441 338,418 M338,418 Q344,423 353,432 M582,322 Q597,321 615,322 M582,322 Q571,316 561,311 M615,322 Q610,304 604,279 M580,264 Q551,265 527,276 M656,444 Q663,466 671,487 M732,434 Q722,418 710,397 M615,322 Q618,326 620,326 M717,448 Q690,438 673,426 M673,426 Q671,415 671,409 M671,409 Q687,401 698,388 M527,276 Q526,286 526,299 M526,299 Q536,303 540,315 M296,463 Q289,448 284,438 M338,418 Q332,407 328,401 M288,406 Q294,403 305,396 M478,345 Q477,330 472,320 M479,260 Q477,275 468,283 M526,299 Q502,301 477,308 M468,283 Q473,301 477,308 M540,315 Q533,327 534,342 M477,308 Q476,314 472,320 M273,552 Q285,574 299,598 M299,598 Q287,601 274,611 M337,696 Q365,692 387,690 M387,690 Q390,710 395,732 M582,322 Q576,336 575,350 M620,326 Q621,332 622,338 M622,338 Q612,354 604,363 M575,350 Q587,354 604,363 M575,350 Q572,355 560,359 M650,391 Q660,399 671,409 M622,338 Q638,349 652,362 M604,363 Q603,373 600,385 M682,319 Q677,335 669,354 M652,362 Q664,360 669,354 M698,388 Q698,380 702,372 M382,335 Q402,348 418,365 M437,320 Q421,309 411,303 M348,362 Q363,353 375,345 M305,396 Q301,374 301,353 M336,564 Q309,552 282,540 M341,515 Q311,522 284,526 M284,526 Q283,533 282,540 M308,599 Q322,577 336,564 M273,552 Q277,544 282,540 M308,599 Q304,595 299,598 M286,479 Q291,477 297,468 M320,474 Q332,484 343,494 M282,521 Q279,524 284,526 M333,653 Q328,649 323,641 M333,653 Q330,663 329,670 M314,608 Q319,622 323,641 M647,525 Q664,543 675,562 M675,562 Q673,561 669,566 M625,571 Q647,567 669,566 M671,487 Q691,487 712,486 M717,479 Q714,483 712,486 M578,724 Q584,702 594,684 M468,283 Q447,280 428,277 M380,319 Q356,315 334,311 M381,320 Q378,321 380,319 M664,642 Q669,624 676,615 M634,647 Q630,648 633,646 M676,615 Q665,609 658,604 M658,604 Q647,608 634,606 M633,646 Q635,625 634,606 M634,647 Q631,665 630,682 M572,662 Q572,656 569,655 M633,646 Q603,638 577,632 M569,655 Q570,646 577,632 M540,709 Q529,684 518,659 M569,655 Q543,660 518,658 M752,540 Q726,553 701,561 M752,538 Q730,520 713,497 M713,497 Q708,515 699,532 M701,561 Q697,550 699,532 M712,486 Q713,490 713,497 M701,562 Q683,558 675,562 M701,562 Q701,561 701,561 M717,479 Q732,481 753,485 M708,610 Q709,606 714,601 M664,642 Q672,655 685,664 M676,615 Q693,612 708,610 M701,562 Q703,582 714,601 M479,719 Q485,715 492,712 M462,661 Q478,674 494,683 M443,666 Q444,670 437,678 M494,683 Q494,688 490,697 M437,678 Q442,677 438,680 M518,659 Q507,672 494,683 M395,674 Q417,678 437,678 M631,684 Q640,688 648,692 M630,682 Q629,684 631,684"/></g>
+<g class="ck ck4"><path class="ck-a" d="M257,249 Q297,266 338,274 M331,367 Q270,378 207,394 M346,341 Q346,311 338,274 M367,151 Q360,210 349,263 M338,274 Q347,267 349,263 M554,261 Q604,264 653,272 M416,255 Q446,209 476,163 M544,256 Q542,229 535,201 M527,192 Q526,196 535,201 M349,263 Q381,262 416,255 M554,261 Q538,260 544,256 M653,272 Q659,259 669,261 M669,261 Q724,286 774,315 M746,388 Q760,348 774,315 M816,455 Q778,432 750,401 M816,455 Q811,500 798,549 M788,560 Q788,549 798,549 M788,560 Q741,550 697,539 M746,388 Q749,389 750,401 M800,645 Q804,602 788,560 M762,689 Q717,675 676,654 M640,732 Q605,743 576,761 M475,730 Q527,746 574,764 M576,761 Q575,758 574,764 M640,732 Q669,751 698,762 M475,730 Q464,771 460,822 M575,832 Q582,797 574,764 M304,650 Q333,691 356,741 M356,741 Q346,756 345,774 M209,643 Q222,652 235,669 M235,669 Q267,656 304,650 M228,538 Q218,549 212,557 M228,538 Q227,510 222,481 M222,481 Q211,464 197,453 M209,643 Q204,602 212,557 M207,394 Q206,424 197,453"/><path class="ck-b" d="M583,270 Q597,274 604,279 M196,565 Q193,583 188,604 M198,666 Q214,647 232,620 M427,811 Q432,811 428,811 M401,810 Q415,808 427,811 M532,226 Q529,244 523,267 M532,226 Q557,226 577,225 M577,225 Q577,242 580,264 M813,469 Q812,451 815,435 M755,361 Q758,371 760,385 M760,385 Q784,394 813,400 M751,426 Q756,409 758,389 M710,397 Q735,393 758,389 M760,385 Q761,386 758,389 M762,433 Q783,431 811,430 M604,279 Q619,273 633,263 M653,306 Q654,287 653,272 M248,562 Q257,555 273,552 M248,562 Q250,586 245,609 M274,611 Q262,608 245,609 M196,565 Q200,558 203,553 M203,553 Q225,557 244,560 M232,620 Q233,618 233,620 M245,609 Q237,613 233,620 M235,675 Q236,653 239,633 M233,620 Q238,628 239,633 M380,741 Q388,733 395,732 M486,815 Q498,813 508,804 M508,804 Q510,784 509,769 M458,773 Q472,769 478,767 M428,811 Q436,795 445,772 M458,773 Q451,774 445,772 M401,810 Q388,796 376,779 M376,779 Q408,772 441,766 M365,770 Q368,772 376,779 M441,766 Q437,751 430,736 M518,214 Q516,196 517,173 M466,181 Q470,180 467,179 M580,222 Q582,221 577,225 M580,193 Q573,188 570,184 M580,222 Q595,224 615,224 M633,263 Q628,246 624,233 M701,315 Q688,319 682,319 M715,294 Q708,307 701,315 M755,361 Q739,361 721,356 M301,353 Q308,346 316,344 M251,350 Q252,342 251,330 M288,406 Q276,402 258,394 M301,353 Q299,352 295,350 M246,357 Q252,374 258,394 M246,357 Q247,349 251,350 M231,301 Q241,312 251,330 M316,344 Q323,331 330,312 M330,312 Q313,301 292,288 M288,278 Q289,282 292,288 M236,508 Q239,538 244,560 M323,641 Q300,646 284,643 M284,643 Q279,646 273,656 M273,656 Q272,667 274,680 M276,683 Q277,681 274,680 M239,633 Q256,643 273,656 M246,681 Q261,680 274,680 M281,718 Q277,699 276,683 M674,259 Q682,252 680,241 M624,233 Q643,229 666,225 M680,241 Q671,234 666,225 M721,292 Q727,283 738,273 M288,278 Q295,269 302,262 M428,277 Q435,250 446,228 M382,237 Q407,226 432,214 M446,228 Q440,222 433,214 M432,214 Q428,213 433,214 M473,238 Q459,233 446,228 M429,207 Q429,211 432,214 M334,311 Q337,293 340,275 M286,479 Q257,478 232,475 M284,438 Q256,439 235,443 M235,443 Q231,456 229,472 M232,475 Q233,476 229,472 M236,508 Q236,510 236,507 M232,475 Q232,493 236,507 M203,553 Q197,538 197,533 M258,394 Q246,402 233,414 M233,414 Q215,403 187,388 M229,472 Q207,473 191,477 M182,519 Q185,499 185,480 M232,438 Q211,436 195,434 M526,754 Q546,773 572,794 M565,816 Q570,807 573,798 M572,794 Q569,796 573,798 M573,798 Q598,801 621,804 M752,540 Q753,540 752,538 M793,510 Q782,508 769,514 M769,514 Q759,498 753,485 M803,475 Q787,469 772,468 M773,569 Q760,551 752,540 M773,569 Q790,566 805,562 M815,533 Q812,546 805,562 M813,469 Q810,473 803,475 M761,649 Q758,628 756,601 M761,649 Q742,657 719,656 M761,598 Q758,598 756,601 M725,681 Q720,671 719,656 M685,664 Q699,656 712,651 M805,562 Q815,570 820,577 M714,739 Q707,735 696,729 M725,681 Q712,691 701,702 M685,664 Q683,671 683,669 M701,702 Q691,683 683,669 M615,224 Q627,208 638,188 M338,213 Q342,222 351,227 M374,233 Q363,231 351,227 M374,233 Q383,202 385,168 M378,236 Q377,230 374,233 M346,776 Q335,765 322,757 M335,706 Q325,717 309,732 M478,767 Q478,741 479,719 M629,782 Q626,776 622,770 M622,770 Q602,773 586,769 M590,737 Q589,752 586,769 M648,692 Q656,713 668,731 M668,731 Q668,734 663,737 M696,729 Q684,726 668,731 M622,770 Q620,759 624,743"/></g>
+<g class="ck ck5"><path class="ck-a" d="M448,121 Q409,141 367,151 M182,348 Q219,296 257,249 M182,348 Q197,370 207,394 M476,163 Q504,175 527,192 M448,121 Q462,138 476,163 M645,146 Q590,178 535,201 M811,268 Q777,225 744,169 M645,146 Q669,170 684,186 M669,261 Q677,224 684,186 M744,169 Q713,178 684,186 M922,478 Q891,459 861,434 M861,434 Q871,403 884,374 M811,268 Q793,287 788,308 M884,374 Q839,338 788,308 M774,315 Q789,311 788,308 M861,434 Q840,443 816,455 M906,547 Q855,550 798,549 M800,645 Q832,654 867,666 M800,645 Q778,668 762,689 M762,689 Q760,707 758,717 M802,773 Q775,738 758,717 M758,717 Q724,737 698,762 M460,822 Q516,827 569,839 M460,822 Q455,824 446,831 M575,832 Q572,836 569,839 M351,809 Q347,797 345,774 M351,809 Q401,816 446,831 M202,748 Q201,746 203,751 M209,643 Q155,635 103,628 M235,669 Q218,706 202,748 M345,774 Q270,765 203,751 M670,851 Q681,839 690,829 M575,832 Q623,842 670,851 M698,762 Q694,790 690,829 M103,561 Q123,514 141,469 M103,561 Q105,565 110,577 M110,577 Q159,567 212,557 M141,469 Q170,461 197,453"/><path class="ck-b" d="M412,896 Q435,893 462,890 M462,890 Q468,874 468,864 M412,895 Q413,874 417,865 M483,855 Q495,855 506,862 M506,862 Q511,877 514,892 M514,892 Q521,900 527,899 M527,899 Q544,895 562,896 M197,720 Q191,740 180,759 M233,733 Q242,708 246,681 M198,679 Q198,680 201,681 M197,720 Q197,718 205,716 M154,611 Q142,626 133,648 M163,607 Q172,605 181,608 M133,648 Q139,657 149,667 M149,667 Q164,650 181,636 M181,636 Q180,621 181,608 M135,554 Q135,554 139,557 M139,557 Q149,582 163,607 M196,565 Q166,562 139,557 M188,604 Q183,604 181,608 M154,680 Q154,672 149,667 M198,666 Q201,671 198,679 M483,855 Q480,839 479,826 M401,810 Q387,823 374,836 M372,885 Q370,869 370,854 M236,736 Q236,739 236,743 M236,743 Q222,755 204,772 M600,896 Q605,883 614,868 M614,868 Q638,870 662,869 M857,483 Q883,491 905,499 M857,483 Q868,463 874,443 M853,387 Q858,406 862,434 M853,387 Q833,388 817,394 M817,394 Q812,401 813,400 M813,400 Q812,415 811,430 M813,469 Q833,477 850,487 M857,483 Q854,485 850,487 M809,351 Q812,373 817,394 M809,315 Q812,316 816,321 M184,270 Q214,273 239,275 M184,270 Q182,268 181,264 M181,264 Q196,244 213,224 M242,242 Q237,231 232,224 M242,242 Q248,255 248,266 M178,310 Q186,314 194,317 M231,301 Q240,286 239,275 M178,310 Q161,318 149,319 M101,515 Q114,515 128,520 M128,520 Q134,522 137,531 M143,330 Q168,358 188,385 M210,360 Q197,372 188,385 M511,858 Q518,835 522,815 M806,736 Q807,712 808,689 M820,682 Q817,684 808,689 M782,737 Q797,738 806,736 M808,689 Q791,687 774,680 M845,521 Q879,524 905,534 M750,801 Q758,790 767,781 M750,801 Q731,805 720,810 M720,810 Q721,777 719,750 M763,765 Q765,771 767,781 M730,847 Q720,830 717,814 M782,737 Q777,752 763,765 M719,750 Q716,746 717,748 M714,739 Q714,743 717,748 M717,814 Q701,813 681,813 M664,829 Q671,823 681,813 M517,173 Q517,166 521,165 M610,117 Q616,136 615,153 M841,310 Q843,296 846,279 M902,389 Q877,389 857,383 M857,383 Q859,368 855,354 M853,387 Q856,385 857,383 M812,347 Q834,353 855,354 M246,190 Q264,190 283,191 M294,139 Q288,166 284,190 M283,191 Q283,190 284,190 M374,133 Q378,142 383,154 M327,133 Q350,133 374,133 M101,515 Q100,514 98,512 M281,718 Q258,726 236,736 M345,820 Q345,810 339,794 M346,776 Q346,785 339,794 M561,851 Q564,842 568,839 M565,816 Q564,828 568,839 M664,829 Q644,822 630,816 M603,851 Q584,843 568,839 M820,682 Q821,663 821,640 M857,694 Q855,667 852,642 M821,640 Q815,633 813,632 M771,658 Q793,649 813,632 M568,138 Q546,141 526,147 M568,138 Q568,136 569,138 M570,184 Q570,161 568,138 M526,147 Q523,150 522,151 M775,279 Q787,276 795,277 M795,277 Q798,275 804,271 M804,271 Q810,248 808,227 M808,227 Q790,224 776,220 M809,315 Q801,296 795,277 M242,242 Q268,230 296,223 M283,191 Q288,205 298,217 M296,223 Q295,219 298,217 M430,152 Q441,155 455,154 M467,179 Q464,165 455,154 M137,531 Q159,526 182,519 M236,743 Q245,756 256,770 M256,770 Q242,789 230,806 M285,850 Q283,837 284,816 M230,806 Q257,814 284,816 M815,533 Q831,528 843,523 M845,521 Q841,519 843,523 M812,624 Q813,629 813,632 M865,634 Q872,623 873,608 M852,642 Q859,644 865,634 M858,595 Q842,588 828,592 M820,577 Q838,570 855,555 M820,577 Q828,584 828,592 M855,555 Q855,559 865,563 M904,551 Q886,557 865,563 M873,608 Q867,603 858,595 M522,151 Q505,138 484,124 M425,149 Q427,148 430,152 M455,154 Q468,140 479,124 M666,225 Q667,208 664,194 M664,194 Q651,189 638,188 M580,193 Q600,173 616,155 M615,153 Q615,154 616,155 M724,234 Q747,222 771,215 M715,227 Q716,213 713,200 M771,215 Q769,202 765,187 M776,220 Q775,216 771,215 M680,241 Q702,234 715,227 M338,213 Q338,201 337,181 M337,181 Q357,171 382,157 M385,168 Q386,164 382,157 M328,176 Q334,178 337,181 M383,154 Q381,153 382,157 M429,207 Q404,189 385,168 M128,520 Q134,495 143,465 M185,480 Q163,469 147,461 M143,465 Q146,465 147,461 M143,465 Q117,465 96,467 M147,450 Q120,441 94,429 M187,388 Q184,402 182,418 M187,388 Q165,389 145,393 M182,418 Q167,434 147,449 M147,449 Q137,427 128,403 M187,388 Q184,389 187,388 M133,340 Q139,369 145,393 M147,450 Q144,447 147,449 M267,774 Q277,784 281,789 M256,770 Q262,773 267,774 M286,809 Q280,798 281,789 M675,792 Q667,783 660,771 M678,183 Q672,158 665,134 M678,183 Q691,184 703,185 M664,194 Q669,187 678,183"/></g>
+<g class="ck ck6"><path class="ck-a" d="M932,574 Q921,560 906,547 M906,547 Q911,519 922,478 M891,370 Q888,370 884,374 M899,748 Q879,708 867,666 M904,643 Q881,659 867,666 M932,574 Q922,614 904,643 M899,748 Q850,754 802,773 M60,686 Q127,723 202,748 M103,628 Q82,662 60,686 M690,829 Q740,832 799,837 M802,773 Q799,796 799,837 M103,628 Q109,604 110,577"/><path class="ck-b" d="M412,896 Q410,894 412,895 M100,387 Q101,375 97,367 M761,858 Q767,845 775,830 M958,451 Q960,446 950,447 M958,391 Q958,420 950,447 M958,391 Q937,394 911,400 M915,451 Q931,447 950,447 M915,451 Q908,444 902,437 M911,400 Q904,423 902,437 M149,319 Q137,294 127,269 M144,326 Q117,311 89,304 M81,316 Q87,311 89,304 M103,357 Q121,346 133,340 M136,253 Q131,261 127,269 M97,608 Q100,623 97,641 M63,565 Q49,586 46,606 M103,595 Q103,599 97,608 M103,595 Q105,587 101,579 M101,579 Q92,571 82,566 M148,732 Q149,730 152,719 M148,732 Q153,744 151,761 M151,761 Q167,761 180,759 M146,697 Q148,708 152,719 M146,697 Q111,699 81,698 M100,647 Q112,646 133,648 M330,890 Q326,876 321,866 M207,808 Q208,789 204,772 M807,814 Q803,802 805,797 M805,797 Q810,788 816,780 M858,776 Q837,774 816,780 M717,862 Q690,868 666,876 M761,858 Q743,850 730,847 M730,847 Q725,856 717,862 M666,876 Q666,871 662,869 M915,451 Q916,460 916,468 M916,468 Q935,477 951,485 M951,485 Q951,493 960,502 M180,206 Q168,227 153,249 M153,249 Q167,258 181,264 M180,206 Q194,214 213,224 M66,564 Q61,541 53,521 M32,412 Q38,426 48,435 M321,866 Q315,859 312,856 M816,780 Q809,760 808,737 M808,737 Q835,735 857,729 M890,689 Q897,688 900,676 M912,522 Q910,512 905,499 M912,522 Q910,530 905,534 M775,830 Q760,814 750,801 M946,519 Q955,539 962,550 M912,522 Q931,521 946,519 M610,117 Q591,106 574,96 M848,278 Q846,255 846,237 M848,278 Q870,280 894,277 M896,300 Q896,288 894,277 M821,200 Q817,212 814,224 M814,224 Q829,232 846,237 M891,316 Q892,319 895,337 M294,139 Q306,140 314,143 M53,521 Q55,517 60,513 M60,513 Q78,512 98,512 M958,603 Q956,623 953,645 M941,570 Q925,570 912,568 M912,568 Q913,560 904,551 M571,89 Q552,95 537,105 M814,224 Q807,228 808,227 M223,809 Q246,837 266,864 M312,856 Q295,851 285,850 M266,864 Q278,858 285,850 M223,809 Q228,808 230,806 M911,608 Q914,622 921,642 M911,608 Q907,608 904,601 M901,666 Q884,651 865,634 M901,666 Q912,654 921,642 M958,603 Q933,606 911,608 M953,645 Q936,642 921,642 M900,676 Q903,671 901,666 M537,105 Q524,96 511,88 M821,200 Q801,178 774,153 M59,492 Q71,472 83,458 M96,467 Q91,462 83,458 M48,435 Q61,438 78,447 M78,447 Q83,455 83,458 M78,447 Q86,441 94,429 M109,399 Q99,415 94,429 M703,185 Q715,157 732,133 M663,133 Q665,130 665,134"/></g>
+</svg>
+      <figure class="au-stage au-stage--ev" data-v="cma_135015">
+        <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_135015-900.webp" srcset="media/vessels/cma_135015-900.webp 900w, media/vessels/cma_135015-1400.webp 1400w" sizes="(min-width:900px) 44vw, 84vw" width="1508" height="808" alt="南宋 官窑 葵口碗，克利夫兰艺术博物馆 1957.66" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span><span class="au-sheen au-sheen--v" aria-hidden="true"><i></i></span><svg class="au-outline" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M0.0,218.9 L10.0,314.7 L113.0,598.3 L177.5,715.2 L268.0,823.4 L353.1,886.8 L361.7,930.3 L381.6,957.7 L496.0,998.8 L616.4,965.2 L638.3,941.5 L654.3,884.3 L760.6,798.5 L823.8,720.1 L898.9,579.6 L942.2,466.4 L999.3,255.0 L994.0,207.7 L966.1,158.0 L935.5,129.4 L915.6,134.3 L902.9,105.7 L744.7,32.3 L572.5,1.2 L525.3,18.7 L504.7,0.0 L352.4,7.5 L186.8,49.8 L53.2,125.6 L16.6,171.6 Z"/></svg><span class="au-part au-part--rim" aria-hidden="true">口沿</span><span class="au-part au-part--body" aria-hidden="true">腹</span><span class="au-part au-part--foot" aria-hidden="true">圈足</span></span>
+        <figcaption class="au-cap">南宋 官窑 · 葵口碗<small>克利夫兰艺术博物馆 1957.66</small></figcaption>
+      </figure>
+    </div>
+    <div class="au-text">
+      <p class="au-eyebrow au-rise">从图像到线索</p>
+      <h2 class="au-h2 au-rise">观器有法，循迹求证</h2>
+      <ol class="au-steps">
+        <li class="au-step" data-step="1"><b>取器物之形，分离背景</b><span>月色勾勒的轮廓来自模型分割。150 件样本上，与自动生成的参考分割平均重合度为 0.884，人工标注验证尚待开展。</span></li>
+        <li class="au-step" data-step="2"><b>由整体入局部，细察形制</b><span>分别比较器颈、腹部与圈足。初步实验中，仅用单个部位检索，前五件参照约 65% 与查询器物同朝代；部位定位与证据仍待验证。</span></li>
+        <li class="au-step" data-step="3"><b>将可见特征化为度量</b>
+          <dl class="au-measure">
+            <div><dt>轮廓对称度</dt><dd>98.2<i>%</i></dd><small>轮廓与其镜像的重合度 IoU</small></div>
+            <div><dt>釉面色差</dt><dd>16.3</dd><small>Lab 色差标准差 · 描述色彩变化</small></div>
+            <div><dt>纹理密度</dt><dd>1.1<i>%</i></dd><small>器身区域内边缘像素的占比</small></div>
+          </dl>
+          <span class="au-fine">数值取自本页这只葵口碗的照片。</span></li>
+      </ol>
+      <p class="au-p au-rise">这些度量描述照片中的形与色。开片之疏密、兔毫之流动、窑变之斑斓，各有意趣；如何品评，仍须放回器物所属的时代与工艺传统之中。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S6 一瓶，五亲 ═══ -->
+<section class="au-s au-s6" id="s6" aria-label="相近器物检索示例">
+  <div class="au-wrap au-wrap--rel">
+    <h2 class="au-h2 au-rise">以一瓶为引，寻相近之器</h2>
+    <div class="au-query">
+      <figure class="au-stage au-stage--q" data-v="cma_134979">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_134979-1100.webp" width="898" height="1509" alt="南宋 龙泉窑 梅瓶，克利夫兰艺术博物馆 1957.52" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">查询 · 南宋 龙泉窑 · 梅瓶<small>克利夫兰艺术博物馆 1957.52</small></figcaption>
+</figure>
+    </div>
+    <svg class="au-beams" aria-hidden="true" focusable="false"><path pathLength="1" d=""/><path pathLength="1" d=""/><path pathLength="1" d=""/><path pathLength="1" d=""/><path pathLength="1" d=""/></svg>
+    <ol class="au-nbs">
+      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span><figure class="au-stage au-stage--nb" data-v="aic_80869">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/aic_80869-700.webp" width="477" height="994" alt="西夏 黑釉剔花梅瓶，芝加哥艺术博物馆 80869" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">西夏 · 黑釉剔花梅瓶<small>芝加哥 80869<br>图像相似度 0.859</small></figcaption>
+</figure></li>
+      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span><figure class="au-stage au-stage--nb" data-v="cma_134997">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_134997-700.webp" width="690" height="1128" alt="宋 龙泉窑 五管瓶，克利夫兰艺术博物馆 1957.53" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">宋 龙泉窑 · 五管瓶<small>克利夫兰 1957.53<br>图像相似度 0.857</small></figcaption>
+</figure></li>
+      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span><figure class="au-stage au-stage--nb" data-v="cma_284746">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_284746-700.webp" width="903" height="1460" alt="宋 刻花梅瓶，克利夫兰艺术博物馆 2017.20" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">宋 · 刻花梅瓶<small>克利夫兰 2017.20<br>图像相似度 0.848</small></figcaption>
+</figure></li>
+      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span><figure class="au-stage au-stage--nb" data-v="cma_153286">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_153286-700.webp" width="548" height="1391" alt="宋 梅瓶，克利夫兰艺术博物馆 1986.245" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">宋 · 梅瓶<small>克利夫兰 1986.245<br>图像相似度 0.846</small></figcaption>
+</figure></li>
+      <li class="au-nb"><span class="au-spot" aria-hidden="true"></span><figure class="au-stage au-stage--nb" data-v="aic_58904">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/aic_58904-700.webp" width="515" height="919" alt="北宋 婴戏纹盖梅瓶，芝加哥艺术博物馆 58904" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">北宋 · 婴戏纹盖梅瓶<small>芝加哥 58904<br>图像相似度 0.844</small></figcaption>
+</figure></li>
+    </ol>
+    <p class="au-p au-rise">以一只南宋龙泉梅瓶作查询，前五件参照中，四件著录为宋代，其中三件同为梅瓶。首位却是西夏黑釉剔花梅瓶：轮廓相近，釉色与装饰迥异。相似度将它们引到一处，具体像在哪里、又有何不同，仍须<span class="nw">逐项比对</span>。</p>
+    <p class="au-fine au-rise">此演示仅在 <span class="nw">1,372 件</span> CC0 馆藏中检索。图像相似度用于排序，不能解释为年代或真伪判断的概率。</p>
+  </div>
+</section>
+
+
+<!-- ═══ S12 生意 ═══ -->
+<section class="au-s au-s12" id="s12" aria-label="应用方向与商业设想">
+  <div class="au-wrap">
+    <h2 class="au-h2 au-rise">从馆藏研究，走向实际应用</h2>
+    <p class="au-p au-rise">古瓷研究若能沉淀为工具，应先帮助人把参照找全、把疑点看清。我们拟将检索结果、风格与年代预测整理成可复核的比对报告，附馆方资料编号，并按需要交由专家复核。当前仍处于研究与内测阶段，以下为应用方向及定价设想。</p>
+    <h3 class="au-h3 au-rise">哪些场景需要这样的参照</h3>
+    <div class="au-kpis au-rise">
+      <div class="au-kpi"><b>42.7<i>亿元</i></b><span>2025 年上半年内地百家拍卖行样本中，瓷器杂项成交额，占总成交额 38.7%</span></div>
+      <div class="au-kpi"><b>51%</b><span>瓷玉杂项占境外中国文物艺术品成交额的比重，2024 年</span></div>
+      <div class="au-kpi"><b>30.7<i>万件</i></b><span>2024 年内地文物艺术品拍卖成交量，包含书画与杂项，并非仅指瓷器</span></div>
+      <div class="au-kpi"><b>40<i>万件/年</i></b><span>Art Loss Register 披露的拍品核查量；机构按件核查费为 3.66 英镑，提供专业核查付费的参照</span></div>
+    </div>
+    <h3 class="au-h3 au-rise">专业核查服务的价格参照</h3>
+    <div class="au-figwrap au-rise">
+      <p class="au-figcap">调研所录公开报价与拟议价格（美元）</p>
+      <svg class="au-fig au-fig--price" viewBox="0 0 640 150" role="img" aria-label="外部服务调研报价与 Aurelia 拟议价格，单位为美元；服务范围各不相同"><line x1="24" y1="70" x2="616" y2="70" class="f-axis"/><line x1="66.0" y1="66" x2="66.0" y2="74" class="f-axis"/><text x="66.0" y="90" class="f-n" text-anchor="middle">$5</text><line x1="123.1" y1="66" x2="123.1" y2="74" class="f-axis"/><text x="123.1" y="90" class="f-n" text-anchor="middle">$10</text><line x1="255.5" y1="66" x2="255.5" y2="74" class="f-axis"/><text x="255.5" y="90" class="f-n" text-anchor="middle">$50</text><line x1="312.5" y1="66" x2="312.5" y2="74" class="f-axis"/><text x="312.5" y="90" class="f-n" text-anchor="middle">$100</text><line x1="444.9" y1="66" x2="444.9" y2="74" class="f-axis"/><text x="444.9" y="90" class="f-n" text-anchor="middle">$500</text><line x1="501.9" y1="66" x2="501.9" y2="74" class="f-axis"/><text x="501.9" y="90" class="f-n" text-anchor="middle">$1,000</text><line x1="559.0" y1="66" x2="559.0" y2="74" class="f-axis"/><text x="559.0" y="90" class="f-n" text-anchor="middle">$2,000</text><circle cx="62.7" cy="70" r="4" class="f-ref"/><text x="62.7" y="22" class="f-lab-s" text-anchor="middle">失窃记录核查</text><text x="62.7" y="36" class="f-lab-s" text-anchor="middle">机构按件</text><circle cx="175.9" cy="70" r="6" class="f-us"/><text x="175.9" y="118" class="f-lab-us" text-anchor="middle">单件初筛</text><text x="175.9" y="132" class="f-lab-us" text-anchor="middle">（拟）</text><circle cx="198.4" cy="70" r="4" class="f-ref"/><text x="198.4" y="44" class="f-lab-s" text-anchor="middle">在线估价 Mearto</text><circle cx="320.3" cy="70" r="4" class="f-ref"/><text x="320.3" y="22" class="f-lab-s" text-anchor="middle">失窃记录核查</text><text x="320.3" y="36" class="f-lab-s" text-anchor="middle">单次</text><circle cx="345.3" cy="70" r="6" class="f-us"/><text x="345.3" y="118" class="f-lab-us" text-anchor="middle">专家复核</text><text x="345.3" y="132" class="f-lab-us" text-anchor="middle">（拟）</text><circle cx="426.6" cy="70" r="4" class="f-ref"/><text x="426.6" y="44" class="f-lab-s" text-anchor="middle">热释光检测</text><circle cx="566.8" cy="70" r="4" class="f-ref"/><text x="566.8" y="22" class="f-lab-s" text-anchor="middle">绘画 AI 鉴真</text><text x="566.8" y="36" class="f-lab-s" text-anchor="middle">Art Recognition</text></svg><ul class="au-pricelist"><li class=""><span>失窃记录核查，机构按件</span><b>$5</b></li><li class="is-us"><span>单件初筛（拟）</span><b>$19</b></li><li class=""><span>在线估价 Mearto</span><b>$25</b></li><li class=""><span>失窃记录核查，单次</span><b>$110</b></li><li class="is-us"><span>专家复核（拟）</span><b>$149</b></li><li class=""><span>热释光检测</span><b>$400</b></li><li class=""><span>绘画 AI 鉴真，Art Recognition</span><b>$2,200</b></li></ul>
+      <p class="au-fine">报价参考 Art Loss Register、Mearto、Oxford Authentication 与 Art Recognition。失窃记录核查、估价、材料检测及绘画鉴真各有用途，服务范围与 Aurelia 不同；图中标「拟」者为本项目设想。</p>
+    </div>
+    <h3 class="au-h3 au-rise">拟议服务与定价</h3>
+    <div class="au-tiers au-rise">
+      <div class="au-tier"><b>$6<i>/件</i></b><span>机构批量初筛 · 拟按年签约</span><small>自动检索与线索整理；单位成本及毛利待实测</small></div>
+      <div class="au-tier"><b>$19<i>/件</i></b><span>单件比对报告</span><small>面向藏家与顾问，提供馆藏参照</small></div>
+      <div class="au-tier"><b>$149<i>/件</i></b><span>专家复核报告</span><small>拟由专家审阅；复核范围与责任须另行约定</small></div>
+      <div class="au-tier"><b>$490<i>/件</i></b><span>保险与融资资料报告</span><small>远期设想，须先明确专业资质与机构采信要求</small></div>
+    </div>
+    <p class="au-p au-rise">先以机构批量初筛验证需求，再探索专家复核服务。按拟议单价测算，一万份复核报告收入约 150 万美元，三千份保险与融资资料报告亦约 150 万美元；这只是收入情景，尚未扣除专家、获客与合规等成本，实际需求仍待试点验证。</p>
+    <div class="au-cols">
+      <div class="au-col au-rise">
+        <h3>面向谁</h3>
+        <ul>
+          <li>拍卖行与古董商：编目及上拍前比对</li>
+          <li>藏家与顾问：竞投前查找参照</li>
+          <li>交易平台：上架资料初筛</li>
+          <li>保险与融资机构：远期资料辅助场景</li>
+        </ul>
+      </div>
+      <div class="au-col au-rise">
+        <h3>交付什么价值</h3>
+        <ul>
+          <li>参照器物附馆方资料编号，便于核对著录</li>
+          <li>分别呈现风格与年代预测，记录疑点与误判</li>
+          <li>研究数据与商用数据须按用途分别核验许可</li>
+        </ul>
+      </div>
+      <div class="au-col au-rise">
+        <h3>如何拓展</h3>
+        <ul>
+          <li>与机构试点，验证效率与复核质量</li>
+          <li>在需求成立后，探索平台按件调用</li>
+          <li>逐类建立青铜、玉器与书画的参照体系</li>
+        </ul>
+      </div>
+    </div>
+    <p class="au-fine au-rise">市场资料参考中国拍卖行业协会 2024 年报、雅昌艺术市场监测中心 2025 年上半年报告及 Art Loss Register 公开资料。各项统计范围不同，不能直接视为本项目的可服务市场规模。</p>
+  </div>
+</section>
+<!-- ═══ S7 光止于此 ═══ -->
+<section class="au-s au-s7" id="s7" aria-label="判断边界">
+  <div class="au-wrap au-center">
+    <p class="au-eyebrow au-rise">比对有据，鉴赏有度</p>
+    <h2 class="au-h2 au-h2--line au-rise"><span class="au-nw">参照可寻</span><span class="au-dot">·</span><span class="au-nw">判断在人</span></h2>
+    <span class="au-redline" aria-hidden="true"></span>
+    <p class="au-p au-rise">照片可以提供器形、釉色与纹饰的线索，却难以尽呈胎质、重量、款识与修复痕迹。Aurelia 目前提供相近馆藏及初步的风格、年代预测，供研习与复核。真伪与估值仍须结合实物、来源记录和专家意见；器物之美，也需由人细看、细品。</p>
+  </div>
+</section>
+
+<!-- ═══ S8 既成 · 方作 · 未竟 ═══ -->
+<section class="au-s au-s8" id="s8" aria-label="路线与局限">
+  <div class="au-wrap">
+    <h2 class="au-h2 au-rise">由识器到品评</h2>
+    <div class="au-cols">
+      <div class="au-col au-rise">
+        <h3>已建立的基础</h3>
+        <ul>
+          <li>近两万件馆藏语料与器物检索</li>
+          <li>自动分割器物，提取三项图像度量</li>
+          <li>以 2,435 件留出器物检验检索表现</li>
+        </ul>
+      </div>
+      <div class="au-col au-rise">
+        <h3>正在探索</h3>
+        <ul>
+          <li>同朝代、同器型内的典范度与稀缺度：描述典型性与少见程度</li>
+          <li>风格与年代的双分支模型，重点检验未见过的仿古类型</li>
+          <li>发明专利申请工作</li>
+        </ul>
+      </div>
+      <div class="au-col au-rise">
+        <h3>下一步</h3>
+        <ul>
+          <li>在许可明确的范围内获取高清图像，补充圈足与釉面细节</li>
+          <li>将检索、分类及部位线索整理成可核对的报告</li>
+          <li>邀请专家在同类器物间比较「何者更精」，学习不同时代的品评尺度</li>
+        </ul>
+      </div>
+    </div>
+    <p class="au-p au-rise">检索的进步，让我们有了继续研究的基础。下一步须把典型与精妙、少见与珍贵分别辨清，再以专家的比较意见检验模型。由识器到品评，尚需一段细致的功夫。</p>
+    <figure class="au-stage au-stage--s8" data-v="cma_120203">
+  <span class="au-box"><span class="au-shadow" aria-hidden="true"></span><img class="au-vessel" src="media/vessels/cma_120203-900.webp" width="728" height="1459" alt="清 乾隆 仿哥釉八卦纹琮式瓶，克利夫兰艺术博物馆 1940.969" decoding="async" loading="lazy"><span class="au-sheen" aria-hidden="true"><i></i></span></span>
+  <figcaption class="au-cap">清 乾隆 · 仿哥釉八卦纹琮式瓶<small>克利夫兰艺术博物馆 1940.969 · 仿古，也是时代趣味的表达</small></figcaption>
+</figure>
+  </div>
+</section>
+
+<!-- ═══ S9 来函，携一器 ═══ -->
+<section class="au-s au-s9" id="s9" aria-label="内测与研究合作">
+  <div class="au-wrap au-center">
+    <h2 class="au-h2 au-rise">携一器，来信相谈</h2>
+    <p class="au-p au-rise">邀请研究者、博物馆同仁与鉴赏行家参与内测。来信时，可附一张器物照片，简述所关注的问题，让讨论<span class="nw">从具体器物谈起</span>。</p>
+    <p class="au-fine au-rise">发起人 徐可斯 · 计算机科学博士，研究医学图像分割与视觉表示学习</p>
+    <p class="au-cta au-rise"><a class="au-btn au-btn--moon" href="mailto:email@kesixu.com?subject=Aurelia%20%E7%A0%94%E4%B9%A0%E5%86%85%E6%B5%8B%E7%94%B3%E8%AF%B7">来信申请内测</a></p>
+    <p class="au-doors au-rise">
+      <a href="mailto:email@kesixu.com?subject=Aurelia%20%E4%B8%93%E5%AE%B6%E6%A0%87%E6%B3%A8%E5%8F%82%E4%B8%8E">参与器物品评标注</a>
+      <a href="mailto:email@kesixu.com?subject=Aurelia%20%E6%9C%BA%E6%9E%84%E7%A0%94%E7%A9%B6%E5%90%88%E4%BD%9C">机构研究合作</a>
+      <a href="mailto:email@kesixu.com?subject=Aurelia%20%E6%96%B9%E6%B3%95%E6%8A%A5%E5%91%8A%E7%B4%A2%E5%8F%96">索取方法报告</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<aside class="au-rail" aria-hidden="true"><i></i></aside>
+<details class="au-toc" id="toc">
+  <summary aria-label="展开或收起卷目"><span class="o">目</span><span class="c">合</span></summary>
+  <nav class="au-toc__sheet" aria-label="卷目">
+    <p class="au-toc__t">卷目</p>
+    <ol><li><a href="#s1"><i>一</i><span>开卷</span></a></li><li><a href="#s2"><i>二</i><span>识器与鉴赏</span></a></li><li><a href="#s3"><i>三</i><span>五馆参照</span></a></li><li><a href="#s4"><i>四</i><span>闭卷检验</span></a></li><li><a href="#s13"><i>五</i><span>报告得失</span></a></li><li><a href="#s11"><i>六</i><span>风格与年代</span></a></li><li><a href="#s5"><i>七</i><span>观器之法</span></a></li><li><a href="#s6"><i>八</i><span>梅瓶比对</span></a></li><li><a href="#s12"><i>九</i><span>应用设想</span></a></li><li><a href="#s7"><i>十</i><span>判断边界</span></a></li><li><a href="#s8"><i>十一</i><span>研究进展</span></a></li><li><a href="#s9"><i>十二</i><span>来信相谈</span></a></li></ol>
+  </nav>
+</details>
+
+<footer class="au-foot">
+  <ul class="au-foot__list"><li>研究原型 · 邀请制内测</li><li>本页展示的器物照片来自克利夫兰、大都会、芝加哥三馆开放获取资料（CC0）</li><li>报告样例与流程图图片来自国立故宫博物院开放资料（CC BY 4.0）</li><li>页面资源均由本站托管</li><li>© 2026 徐可斯</li></ul>
+</footer>
+
+<script src="/vibecoding/vendor/gsap.min.js" defer></script>
+<script src="/vibecoding/vendor/ScrollTrigger.min.js" defer></script>
+<script src="/vibecoding/vendor/lenis.min.js" defer></script>
+<script src="aurelia.js?v=28" defer></script>
+</body>
+</html>

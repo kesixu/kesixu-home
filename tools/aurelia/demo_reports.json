@@ -1,0 +1,422 @@
+{
+ "pick": [
+  "npm:38059",
+  "npm:35659",
+  "npm:31706",
+  "npm:38775"
+ ],
+ "reports": {
+  "npm:38059": {
+   "id": "npm:38059",
+   "zh_title": "仿鈞釉花口瓶",
+   "target": "Jun",
+   "reign": "Qianlong",
+   "img": "data/processed/images_unified/npm_38059/img0.jpg",
+   "style": {
+    "Jun": 0.976,
+    "Ge": 0.002,
+    "Guan": 0.003,
+    "Longquan": 0.006,
+    "Ru": 0.005,
+    "Jingdezhen": 0.007
+   },
+   "period": {
+    "Song": 0.0,
+    "Yuan": 0.008,
+    "Ming": 0.021,
+    "Qing": 0.97
+   },
+   "neighbours": [
+    {
+     "id": "npm:1321",
+     "sim": 0.866,
+     "title": "Meiping vase with moon-white glaze and purple splashes",
+     "kiln": "Jun",
+     "dynasty": "Yuan",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_1321/img0.jpg"
+    },
+    {
+     "id": "npm:1224",
+     "sim": 0.864,
+     "title": "Zhadou-shaped planter in lilac purple glaze, Jun ware",
+     "kiln": "Jun",
+     "dynasty": "Yuan",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_1224/img0.jpg"
+    },
+    {
+     "id": "npm:26313",
+     "sim": 0.84,
+     "title": "Jar with tubular handles and linear pattern in celadon glaze, Longquan ware",
+     "kiln": "Longquan",
+     "dynasty": "Song",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_26313/img0.jpg"
+    }
+   ]
+  },
+  "npm:35659": {
+   "id": "npm:35659",
+   "zh_title": "仿哥釉六方貫耳瓶",
+   "target": "Ge",
+   "reign": "Qianlong",
+   "img": "data/processed/images_unified/npm_35659/img0.jpg",
+   "style": {
+    "Jun": 0.027,
+    "Ge": 0.92,
+    "Guan": 0.014,
+    "Longquan": 0.01,
+    "Ru": 0.013,
+    "Jingdezhen": 0.016
+   },
+   "period": {
+    "Song": 0.001,
+    "Yuan": 0.075,
+    "Ming": 0.048,
+    "Qing": 0.876
+   },
+   "neighbours": [
+    {
+     "id": "npm:26352",
+     "sim": 0.909,
+     "title": "Vase with tubular lug handles in celadon glaze, Guan ware",
+     "kiln": "Guan",
+     "dynasty": "Song",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_26352/img0.jpg"
+    },
+    {
+     "id": "npm:26399",
+     "sim": 0.899,
+     "title": "Vase with tubular handles in celadon glaze, Guan ware",
+     "kiln": "Guan",
+     "dynasty": "Song",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_26399/img0.jpg"
+    },
+    {
+     "id": "npm:28254",
+     "sim": 0.897,
+     "title": "Octagonal vase with dish-shaped mouth and linear pattern in celadon glaze",
+     "kiln": "Guan",
+     "dynasty": "Song",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_28254/img0.jpg"
+    }
+   ]
+  },
+  "npm:31706": {
+   "id": "npm:31706",
+   "zh_title": "仿龍泉釉八卦紋琮式瓶",
+   "target": "Longquan",
+   "reign": "Qianlong",
+   "img": "data/processed/images_unified/npm_31706/img0.jpg",
+   "style": {
+    "Jun": 0.002,
+    "Ge": 0.017,
+    "Guan": 0.003,
+    "Longquan": 0.97,
+    "Ru": 0.005,
+    "Jingdezhen": 0.003
+   },
+   "period": {
+    "Song": 0.001,
+    "Yuan": 0.001,
+    "Ming": 0.001,
+    "Qing": 0.997
+   },
+   "neighbours": [
+    {
+     "id": "npm:29188",
+     "sim": 0.926,
+     "title": "Cong-shaped vase in celadon glaze, Longquan ware",
+     "kiln": "Longquan",
+     "dynasty": "Song",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_29188/img0.jpg"
+    },
+    {
+     "id": "npm:26304",
+     "sim": 0.906,
+     "title": "Cong-shaped vase in celadon glaze, Longquan ware",
+     "kiln": "Longquan",
+     "dynasty": "Song",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_26304/img0.jpg"
+    },
+    {
+     "id": "npm:26303",
+     "sim": 0.889,
+     "title": "Cong-shaped vase in celadon glaze, Longquan ware",
+     "kiln": "Longquan",
+     "dynasty": "Song",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_26303/img0.jpg"
+    }
+   ]
+  },
+  "npm:38775": {
+   "id": "npm:38775",
+   "zh_title": "仿汝釉貫耳八方壺",
+   "target": "Ru",
+   "reign": "Yongzheng",
+   "img": "data/processed/images_unified/npm_38775/img0.jpg",
+   "style": {
+    "Jun": 0.027,
+    "Ge": 0.028,
+    "Guan": 0.579,
+    "Longquan": 0.036,
+    "Ru": 0.308,
+    "Jingdezhen": 0.022
+   },
+   "period": {
+    "Song": 0.915,
+    "Yuan": 0.037,
+    "Ming": 0.001,
+    "Qing": 0.047
+   },
+   "neighbours": [
+    {
+     "id": "npm:26402",
+     "sim": 0.921,
+     "title": "Hu jar with tubular handles and linear pattern in celadon glaze, Longquan ware",
+     "kiln": "Longquan",
+     "dynasty": "Song",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_26402/img0.jpg"
+    },
+    {
+     "id": "npm:17",
+     "sim": 0.911,
+     "title": "Hu jar with tubular handles in green glaze, Guan ware",
+     "kiln": "Guan",
+     "dynasty": "Song",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_17/img0.jpg"
+    },
+    {
+     "id": "npm:26352",
+     "sim": 0.91,
+     "title": "Vase with tubular lug handles in celadon glaze, Guan ware",
+     "kiln": "Guan",
+     "dynasty": "Song",
+     "source": "npm",
+     "img": "data/processed/images_unified/npm_26352/img0.jpg"
+    }
+   ]
+  }
+ },
+ "meta": {
+  "npm:1224": {
+   "file": "npm_1224.webp",
+   "zh": "鈞窯 丁香紫釉渣斗式花盆",
+   "zh_s": "钧窑 丁香紫釉渣斗式花盆",
+   "en": "Zhadou-shaped planter in lilac purple glaze, Jun ware",
+   "dynasty": "Yuan",
+   "reign": null,
+   "kiln": "Jun",
+   "size": [
+    640,
+    480
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B008676N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:1321": {
+   "file": "npm_1321.webp",
+   "zh": "鈞窯 月白紫斑梅瓶",
+   "zh_s": "钧窑 月白紫斑梅瓶",
+   "en": "Meiping vase with moon-white glaze and purple splashes",
+   "dynasty": "Yuan",
+   "reign": null,
+   "kiln": "Jun",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B006087N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:17": {
+   "file": "npm_17.webp",
+   "zh": "官窯 青瓷貫耳壺",
+   "zh_s": "官窑 青瓷贯耳壶",
+   "en": "Hu jar with tubular handles in green glaze, Guan ware",
+   "dynasty": "Song",
+   "reign": null,
+   "kiln": "Guan",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B013477N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:26303": {
+   "file": "npm_26303.webp",
+   "zh": "龍泉窯 青瓷琮式瓶",
+   "zh_s": "龙泉窑 青瓷琮式瓶",
+   "en": "Cong-shaped vase in celadon glaze, Longquan ware",
+   "dynasty": "Song",
+   "reign": null,
+   "kiln": "Longquan",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B014107N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:26304": {
+   "file": "npm_26304.webp",
+   "zh": "龍泉窯 青瓷琮式瓶",
+   "zh_s": "龙泉窑 青瓷琮式瓶",
+   "en": "Cong-shaped vase in celadon glaze, Longquan ware",
+   "dynasty": "Song",
+   "reign": null,
+   "kiln": "Longquan",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B014108N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:26313": {
+   "file": "npm_26313.webp",
+   "zh": "龍泉窯 青瓷弦紋貫耳壺",
+   "zh_s": "龙泉窑 青瓷弦纹贯耳壶",
+   "en": "Jar with tubular handles and linear pattern in celadon glaze, Longquan ware",
+   "dynasty": "Song",
+   "reign": null,
+   "kiln": "Longquan",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B014119N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:26352": {
+   "file": "npm_26352.webp",
+   "zh": "官窯 青瓷弦紋貫耳壺",
+   "zh_s": "官窑 青瓷弦纹贯耳壶",
+   "en": "Vase with tubular lug handles in celadon glaze, Guan ware",
+   "dynasty": "Song",
+   "reign": null,
+   "kiln": "Guan",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B014022N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:26399": {
+   "file": "npm_26399.webp",
+   "zh": "南宋官窯 青瓷貫耳壺",
+   "zh_s": "南宋官窑 青瓷贯耳壶",
+   "en": "Vase with tubular handles in celadon glaze, Guan ware",
+   "dynasty": "Song",
+   "reign": null,
+   "kiln": "Guan",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B014090N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:26402": {
+   "file": "npm_26402.webp",
+   "zh": "龍泉窯 青瓷弦紋貫耳壺",
+   "zh_s": "龙泉窑 青瓷弦纹贯耳壶",
+   "en": "Hu jar with tubular handles and linear pattern in celadon glaze, Longquan ware",
+   "dynasty": "Song",
+   "reign": null,
+   "kiln": "Longquan",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B014094N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:28254": {
+   "file": "npm_28254.webp",
+   "zh": "官窯 青瓷八方弦紋盤口瓶",
+   "zh_s": "官窑 青瓷八方弦纹盘口瓶",
+   "en": "Octagonal vase with dish-shaped mouth and linear pattern in celadon glaze",
+   "dynasty": "Song",
+   "reign": null,
+   "kiln": "Guan",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B016924N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:29188": {
+   "file": "npm_29188.webp",
+   "zh": "龍泉窯 青瓷琮式瓶",
+   "zh_s": "龙泉窑 青瓷琮式瓶",
+   "en": "Cong-shaped vase in celadon glaze, Longquan ware",
+   "dynasty": "Song",
+   "reign": null,
+   "kiln": "Longquan",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B011926N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:31706": {
+   "file": "npm_31706.webp",
+   "zh": "仿龍泉釉八卦紋琮式瓶",
+   "zh_s": "仿龙泉釉八卦纹琮式瓶",
+   "en": "Cong-shaped vase with eight trigrams decoration in glaze imitating Longquan ware",
+   "dynasty": "Qing",
+   "reign": "Qianlong",
+   "kiln": "Longquan",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B016546N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:35659": {
+   "file": "npm_35659.webp",
+   "zh": "仿哥釉六方貫耳瓶",
+   "zh_s": "仿哥釉六方贯耳瓶",
+   "en": "Hexagonal vase with tubular handles in glaze imitating Ge ware",
+   "dynasty": "Qing",
+   "reign": "Qianlong",
+   "kiln": "Ge",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B012108N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:38059": {
+   "file": "npm_38059.webp",
+   "zh": "仿鈞釉花口瓶",
+   "zh_s": "仿钧釉花口瓶",
+   "en": "Vase with floral-shaped rim in glaze imitating Jun ware",
+   "dynasty": "Qing",
+   "reign": "Qianlong",
+   "kiln": "Jun",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B008811N000000000PAA/full/843,/0/default.jpg"
+  },
+  "npm:38775": {
+   "file": "npm_38775.webp",
+   "zh": "仿汝釉貫耳八方壺",
+   "zh_s": "仿汝釉贯耳八方壶",
+   "en": "Octagonal vase with tubular handle in glaze imitating Ru ware",
+   "dynasty": "Qing",
+   "reign": "Yongzheng",
+   "kiln": "Ru",
+   "size": [
+    480,
+    640
+   ],
+   "src": "https://iiifod.npm.gov.tw/iiif/2/K1B%2FK1B012763N000000000PAA/full/843,/0/default.jpg"
+  }
+ }
+}

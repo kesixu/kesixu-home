@@ -1,151 +1,32 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="motion-pending">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>徐可斯 Kesi Xu · 划亮</title>
-<meta name="description" content="徐可斯（Kesi Xu）的个人主页《划亮》，格物于毫厘，点灯于长夜">
+<title>敬请期待 · 徐可斯 Kesi Xu</title>
+<meta name="description" content="徐可斯（Kesi Xu）的个人主页，全新面貌正在点亮中，敬请期待。">
 <meta name="theme-color" content="#0d0b09">
 <meta property="og:type" content="website">
-<meta property="og:title" content="徐可斯 · 划亮">
-<meta property="og:description" content="长夜未央，先取一根火柴">
+<meta property="og:title" content="敬请期待 · 徐可斯 Kesi Xu">
+<meta property="og:description" content="全新面貌正在点亮中，敬请期待。">
 <meta property="og:url" content="https://kesixu.com/">
-<meta property="og:image" content="https://kesixu.com/assets/og.jpg">
-<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="canonical" href="https://kesixu.com/">
-<link rel="preload" as="font" type="font/woff2" href="/fonts/wenkai-subset.woff2?v=18" crossorigin>
-<link rel="stylesheet" href="/style.css?v=22">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"徐可斯","alternateName":"Kesi Xu","url":"https://kesixu.com/","sameAs":["https://github.com/kesixu"]}
-</script>
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/wenkai-coming.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/garamond-coming.woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=1">
 </head>
 <body>
-
-<!-- 章零 + 章一 · 黑暗 / 划亮 -->
-<header id="hero" aria-label="划亮">
-  <canvas id="flame" aria-hidden="true"></canvas>
-  <p class="whisper" id="whisper">长夜未央，<em class="echo">先取一根火柴</em></p>
-  <div class="hero-name" id="heroName">
-    <div class="calligraphy-lockup">
-      <h1 lang="zh-CN" aria-label="徐可斯"><span data-char="徐" aria-hidden="true">徐</span><span data-char="可" aria-hidden="true">可</span><span data-char="斯" aria-hidden="true">斯</span></h1>
-    </div>
-    <p class="latin" lang="en">Kesi&nbsp;Xu</p>
-    <p class="tagline">格物于毫厘，点灯于长夜</p>
-    <p class="echo">计算机博士，计算病理学方向，借 AI 之手，写有趣的代码</p>
+<main class="stage">
+  <div class="match-wrap" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 104">
+      <path d="M32 12c5 8 12 11.5 12 21a12 12 0 0 1-24 0c0-5 2.5-8.5 5-12 1.6 3 4.5 4.5 4.5 4.5S28 18 32 12z" fill="#ff6b35"/>
+      <path d="M32 24c3 4.6 6.8 7 6.8 12.4A6.9 6.9 0 0 1 32 43a6.9 6.9 0 0 1-6.8-6.6c0-3 1.4-5 2.9-7 1 1.7 2.6 2.6 2.6 2.6S30.2 27.4 32 24z" fill="#ffd28a"/>
+      <rect x="30.6" y="43" width="2.8" height="47" rx="1.4" fill="#31241b"/>
+    </svg>
   </div>
-  <p class="scroll-hint" id="scrollHint" aria-hidden="true"><span>持续向下滑动</span><i><b></b></i></p>
-</header>
-
-<!-- 引信贯穿的主叙事 -->
-<main id="story">
-  <svg id="fuse" aria-hidden="true" preserveAspectRatio="none" viewBox="0 -90 390 3000">
-    <defs>
-      <linearGradient id="fuseGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#b33a1e"/>
-        <stop offset=".45" stop-color="#ffa94d"/>
-        <stop offset="1" stop-color="#ffd28a"/>
-      </linearGradient>
-    </defs>
-    <path id="fuseBase" d="" fill="none"/>
-    <path id="fuseLit" d="" fill="none" stroke="url(#fuseGrad)"/>
-  </svg>
-  <div id="fuseHead" aria-hidden="true"><canvas id="fuseSpark"></canvas></div>
-
-  <!-- 章二 · 自述 -->
-  <section id="about" class="chapter" aria-label="自述">
-    <p class="line">计算机博士，计算病理学方向<br>显微镜下的世界，是我的另一种代码</p>
-    <p class="line">论文之外，最爱写 web，借 AI 搭东西——<br>一个念头，一夜，一个产品</p>
-    <p class="line strong">我信小而亮的东西：<br>一灯点亮，能燃百灯</p>
-  </section>
-
-  <!-- 章三 · 灯火 -->
-  <section id="lamps" class="chapter" aria-label="灯火">
-    <h2>灯火</h2>
-    <p class="chapter-sub">先燃三盏，再唤九星</p>
-
-    <!-- 三盏主灯 -->
-    <div class="hero-lamps">
-      <a class="hero-lamp" href="https://yinian.kesixu.com" rel="noopener" data-ignite>
-        <span class="hero-dot" aria-hidden="true"></span>
-        <img class="hero-logo" src="/assets/logos/yinian-app-128.webp" alt="" width="48" height="48" loading="lazy">
-        <h3>一念起卦<span class="ext" aria-hidden="true">↗</span></h3>
-        <p class="lamp-desc">一位懂易经的老友，听你诉说，再以大衍筮法郑重起卦；卦象锚住记忆，三层人格引擎越用越懂你，学堂读易，吾身自观——念起即答</p>
-      </a>
-      <a class="hero-lamp" href="https://gym.kesixu.com" rel="noopener" data-ignite>
-        <span class="hero-dot" aria-hidden="true"></span>
-        <img class="hero-logo" src="/assets/logos/tiefanwan-128.webp" alt="" width="48" height="48" loading="lazy">
-        <h3>铁饭碗<span class="ext" aria-hidden="true">↗</span></h3>
-        <p class="lamp-desc">说一句，饮食与训练就入账，你的 AI 健康账本：铁子教练帮你估热量、算训练量、给下一步，干净利落</p>
-      </a>
-      <a class="hero-lamp" href="https://textbook.kesixu.com/" rel="noopener" data-ignite>
-        <span class="hero-dot" aria-hidden="true"></span>
-        <img class="hero-logo" src="/assets/logos/jingxing-app-128.webp" alt="" width="48" height="48" loading="lazy">
-        <h3>经史星图<span class="ext" aria-hidden="true">↗</span></h3>
-        <p class="lamp-desc">一张可点、可问、可追溯原典的世界经济史地图，3D 地球仪上拖动千年时间轴，AI 老师小贝引用 13 部中外经典作答——每个回答精确到原书段落</p>
-      </a>
-    </div>
-
-    <!-- 其余灯火 -->
-    <p class="rest-label">更多项目</p>
-    <ul class="rest-lamps">
-      <li data-ignite><strong><a href="https://sportsmatchpoint.lovable.app" rel="noopener">MatchPoint<span class="ext" aria-hidden="true">↗</span></a></strong> — 联袂之作：一句话组局，剩下的交给智能</li>
-      <li data-ignite data-locked><strong>见微 <span class="project-lock" role="img" aria-label="介绍页尚未开放"><i></i></span></strong> — 每天拂晓，把科学智能与生医信号读成三分钟晨报</li>
-      <li data-ignite data-locked><strong>杏林观澜 <span class="project-lock" role="img" aria-label="介绍页尚未开放"><i></i></span></strong> — 前列腺癌智能电子病历，织检查、文献与随访为一图</li>
-      <li data-ignite data-locked><strong>ThesisAtlas <span class="project-lock" role="img" aria-label="介绍页尚未开放"><i></i></span></strong> — 博士论文的交互式舆图，按图索骥，层层放大</li>
-      <li data-ignite data-locked><strong>取之有道 <span class="project-lock" role="img" aria-label="介绍页尚未开放"><i></i></span></strong> — A 股智能投资情报看板，数据如灯，明察秋毫</li>
-      <li data-ignite data-locked><strong>Conference Cockpit <span class="project-lock" role="img" aria-label="介绍页尚未开放"><i></i></span></strong> — 学术会议的私人驾驶舱，会前庙算、会中引路、会后致意</li>
-    </ul>
-  </section>
+  <h1>敬请期待</h1>
+  <p class="echo" lang="en">Kesi Xu</p>
 </main>
-
-<!-- 章四 · 星图 -->
-<section id="sky" class="chapter" aria-label="星图">
-  <canvas id="wildfire" aria-hidden="true"></canvas>
-  <svg id="dipper" viewBox="0 0 360 520" aria-hidden="true">
-    <g id="skyField"></g>
-    <g id="dipperLines" fill="none">
-      <line class="core-line" x1="66" y1="108" x2="178" y2="66"/>
-      <line class="core-line" x1="178" y1="66" x2="294" y2="118"/>
-      <line class="core-line" x1="294" y1="118" x2="66" y2="108"/>
-      <line x1="294" y1="118" x2="330" y2="216"/>
-      <line x1="330" y1="216" x2="270" y2="286"/>
-      <line x1="270" y1="286" x2="166" y2="250"/>
-      <line x1="166" y1="250" x2="50" y2="306"/>
-      <line x1="50" y1="306" x2="106" y2="406"/>
-      <line x1="106" y1="406" x2="258" y2="388"/>
-      <line x1="258" y1="388" x2="270" y2="286"/>
-    </g>
-    <g id="dipperStars">
-      <a href="https://yinian.kesixu.com" rel="noopener" aria-label="了解一念起卦"><g class="star core bright" transform="translate(66 108)"><line class="flare" x1="-10" y1="0" x2="10" y2="0"/><line class="flare" x1="0" y1="-10" x2="0" y2="10"/><circle r="3"/><text x="0" y="-16" text-anchor="middle">一念起卦</text></g></a>
-      <a href="https://gym.kesixu.com" rel="noopener" aria-label="了解铁饭碗"><g class="star core bright" transform="translate(178 66)"><line class="flare" x1="-10" y1="0" x2="10" y2="0"/><line class="flare" x1="0" y1="-10" x2="0" y2="10"/><circle r="3"/><text x="0" y="-16" text-anchor="middle">铁饭碗</text></g></a>
-      <a href="https://textbook.kesixu.com/" rel="noopener" aria-label="了解经史星图"><g class="star core bright" transform="translate(294 118)"><line class="flare" x1="-10" y1="0" x2="10" y2="0"/><line class="flare" x1="0" y1="-10" x2="0" y2="10"/><circle r="3"/><text x="0" y="-16" text-anchor="middle">经史星图</text></g></a>
-      <a href="https://sportsmatchpoint.lovable.app" rel="noopener" aria-label="了解 MatchPoint"><g class="star bright" transform="translate(330 216)"><line class="flare" x1="-9" y1="0" x2="9" y2="0"/><line class="flare" x1="0" y1="-9" x2="0" y2="9"/><circle r="2.7"/><text x="-12" y="-13" text-anchor="end">MatchPoint</text></g></a>
-      <g class="star" transform="translate(270 286)"><circle r="2.2"/><text x="10" y="4">见微</text></g>
-      <g class="star" transform="translate(166 250)"><circle r="2.2"/><text x="-8" y="-14" text-anchor="middle">杏林观澜</text></g>
-      <g class="star" transform="translate(50 306)"><circle r="2.2"/><text x="8" y="-12">ThesisAtlas</text></g>
-      <g class="star" transform="translate(106 406)"><circle r="2.2"/><text x="-8" y="20" text-anchor="middle">取之有道</text></g>
-      <g class="star" transform="translate(258 388)"><circle r="2.2"/><text x="-104" y="18">Conference Cockpit</text></g>
-    </g>
-  </svg>
-  <p class="sky-line">点过的灯，抬头再看，<br>已成星斗</p>
-  <p class="echo">九星在野，灯火相望</p>
-</section>
-
-<!-- 章五 · 灯为君留 -->
-<footer id="ember" aria-label="联系">
-  <span class="ember-dot" aria-hidden="true"></span>
-  <p class="keep">灯为君留</p>
-  <p class="echo">有朋自远方来——来信，即复</p>
-  <p class="reach">
-    <a class="mail" id="mailLink" href="#ember" data-u="email" data-d="kesixu.com"><span>email<i> [at] </i>kesixu.com</span></a>
-    <a class="gh" href="https://github.com/kesixu" rel="me noopener">GitHub&nbsp;@kesixu</a>
-  </p>
-  <p class="fine">此页无追踪、无埋点、无第三方<br>一砖一瓦，皆是手作</p>
-  <p class="copyright">© 2026 徐可斯</p>
-</footer>
-
-<script src="/vendor/gsap.min.js" defer></script>
-<script src="/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/main.js?v=18" defer></script>
 </body>
 </html>

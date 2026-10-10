@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="MatchPoint">
+  <!-- 族徽:对话气泡 × 荧光网球 —— 会聊天的球局 -->
+  <path d="M148 64 H364 Q452 64 452 152 V296 Q452 384 364 384 H240 L164 452 Q148 466 154 444 L168 384 H148 Q60 384 60 296 V152 Q60 64 148 64 Z"
+        fill="#0F1B2D"/>
+  <path d="M148 64 H364 Q452 64 452 152 V296 Q452 384 364 384 H240 L164 452 Q148 466 154 444 L168 384 H148 Q60 384 60 296 V152 Q60 64 148 64 Z"
+        fill="none" stroke="#EDE7DC" stroke-opacity=".15" stroke-width="6"/>
+  <circle cx="256" cy="224" r="104" fill="#D9E84A"/>
+  <path d="M167 172 q56 52 0 104" fill="none" stroke="#F7F4EA" stroke-width="17" stroke-linecap="round"/>
+  <path d="M345 172 q-56 52 0 104" fill="none" stroke="#F7F4EA" stroke-width="17" stroke-linecap="round"/>
+  <circle cx="430" cy="86" r="34" fill="#0F1B2D"/>
+  <circle cx="430" cy="86" r="24" fill="#F08C3A"/>
+</svg>
