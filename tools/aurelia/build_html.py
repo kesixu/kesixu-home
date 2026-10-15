@@ -300,9 +300,9 @@ html = f'''<!DOCTYPE html>
     <p class="au-p au-rise au-p--pull">仿古之中，也有当时的审美。</p>
     <p class="au-p au-rise">这给了一个现成的检验：模型看到一件仿钧，认的是「像谁」，还是「谁造的」。</p>
     <div class="au-figwrap au-rise">
-      <p class="au-figcap">通用视觉模型如何看待这 <span class="nw">190 件</span>清代仿古器（以 Meta PE-Core 为例）</p>
+      <p class="au-figcap">通用视觉模型如何看待这 <span class="nw">240 件</span>清代仿古器（以 Meta PE-Core 为例）</p>
       {fig_fooled()}
-      <p class="au-fine">「更近原型」指比起清代对照器，更像宋元同窑器物。年代分类器在非仿古器上准确率约 86%，对仿古器只有约 35% 判为清代。</p>
+      <p class="au-fine">「更近原型」指比起清代对照器，更像宋元同窑器物。年代分类器在非仿古器上准确率约 86%，对仿古器只有约 45% 判为清代。</p>
     </div>
     <p class="au-p au-rise">通用模型把仿品全部认成宋代。专门训练并加上分离风格与年代的约束之后，对没见过的仿古类型仍然如此。模型学会的是宋人的意图，看不见清代的做工，因为做工的证据在正面照片之外。</p>
     <div class="au-figwrap au-figwrap--flow au-rise">
