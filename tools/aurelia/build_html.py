@@ -262,7 +262,7 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s4" id="s4" aria-label="检索评测结果">
   <div class="au-wrap">
     <h2 class="au-h2 au-rise">闭卷检验，检索有据</h2>
-    <p class="au-p au-rise">以 <span class="nw">2,435 件</span>未参与训练的器物作查询，在训练与验证集组成的参照库中检索。先检验一件具体的事：返回的前五件中，平均有多少与查询器物<span class="nw">同朝代、同器型</span>。</p>
+    <p class="au-p au-rise">以 <span class="nw">2,435 件</span>未参与训练的器物作查询，看返回的前五件里有多少与它<span class="nw">同朝代、同器型</span>。</p>
     <div class="au-bars au-rise">
       <div class="au-bargroup">
         <p class="au-bargroup__t">前五件相关比例 precision@5</p>
@@ -277,17 +277,8 @@ html = f'''<!DOCTYPE html>
         <p class="au-bar__delta">+0.069</p>
       </div>
     </div>
-    <p class="au-fine au-rise">相关器物须同时满足同朝代、同器型；排序得分越高，表示相关器物越靠前。这两项指标衡量检索表现，尚未衡量审美判断。</p>
-    <div class="au-routes au-rise">
-      <p class="au-bargroup__t">六条技术路线，同一标准比较（nDCG@10）</p>
-      <div class="au-bar au-bar--route"><span class="au-bar__lab">OpenCLIP 微调</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--after" style="--w:.847"></i></span><b>0.847</b></div>
-      <div class="au-bar au-bar--route"><span class="au-bar__lab">DINOv3 微调 + 自蒸馏</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.824"></i></span><b>0.824</b></div>
-      <div class="au-bar au-bar--route"><span class="au-bar__lab">DINOv3 微调</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.822"></i></span><b>0.822</b></div>
-      <div class="au-bar au-bar--route"><span class="au-bar__lab">DINOv3 未微调</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.779"></i></span><b>0.779</b></div>
-      <div class="au-bar au-bar--route"><span class="au-bar__lab">OpenCLIP 未微调</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.778"></i></span><b>0.778</b></div>
-      <div class="au-bar au-bar--route"><span class="au-bar__lab">SDXL 生成器特征</span><span class="au-bar__track"><i class="au-bar__fill au-bar__fill--before" style="--w:.689"></i></span><b>0.689</b></div>
-      <p class="au-p au-p--small">本轮评测中，微调后的 OpenCLIP 得分最高；前三条路线相差约 0.025。</p>
-    </div>
+    <p class="au-fine au-rise">这两项衡量检索表现，尚未衡量审美判断。</p>
+    <p class="au-fine au-rise">六条技术路线同标准比较，微调后的 OpenCLIP 最高，前三名相差约 0.025。</p>
   </div>
 </section>
 
@@ -295,43 +286,36 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s13" id="s13" aria-label="报告样例">
   <div class="au-wrap">
     <h2 class="au-h2 au-rise">四件仿古器，见其得失</h2>
-    <p class="au-p au-rise">从留出测试集中选取四件清代仿古器，展示模型的风格、年代预测及相近参照，其中保留一件误判。样例采用同一次计算的结果，说明文字便于对照馆方著录阅读。</p>
-    <p class="au-p au-rise">这批 <span class="nw">38 件</span>器物中，年代预测与著录相符的有 <span class="nw">35 件</span>，所仿风格相符的有 <span class="nw">36 件</span>。训练中见过同类仿古器；若将仿钧整类留出，初步判为清代的比例仅约一成半。能否辨识未见过的仿古类型，仍是研究难点。</p>
+    <p class="au-p au-rise">四件清代仿古器的模型报告，保留一件误判。</p>
+    <p class="au-p au-rise">这批 <span class="nw">38 件</span>里年代判对 <span class="nw">35 件</span>，所仿风格判对 <span class="nw">36 件</span>；训练中见过同类仿古器，与下一节的留出测试口径不同。</p>
     {demo_cards()}
-    <p class="au-fine au-rise">百分比为模型分类分值，显示上限 99%，未经校准，不能作为判断正确的概率。参照检索使用未微调的视觉特征，与分类结果分别计算。图片：国立故宫博物院开放资料（CC BY 4.0）。</p>
+    <p class="au-fine au-rise">百分比为未经校准的分类分值，上限 99%。图片：国立故宫博物院开放资料（CC BY 4.0）。</p>
   </div>
 </section>
 <!-- ═══ S11 核心发现 ═══ -->
 <section class="au-s au-s11" id="s11" aria-label="仿古器与风格年代研究">
   <div class="au-wrap">
     <h2 class="au-h2 au-rise">形似之外，时代有别<br><span class="nw">分清「像」与「是」</span></h2>
-    <p class="au-p au-rise">雍正、乾隆时期的仿古瓷，将宋元名窑的釉色与形制重新演绎。馆方著录中的「仿钧」「仿哥」「仿官」「仿龙泉」「仿汝」，同时记录了所仿风格与制作年代。台北故宫著录带「仿」字的器物有 <span class="nw">352 件</span>，其中 <span class="nw">282 件</span>已纳入研究库；清代仿这五类釉色的有 <span class="nw">190 件</span>。</p>
+    <p class="au-p au-rise">雍正、乾隆的御窑照着宫中旧藏的宋瓷做仿古器，督陶官唐英在《陶成纪事碑记》里写明「仿内发旧器」。釉色、开片、器形照样做，足底涂一层酱色装出宋器的铁足；胎质、修足与支钉保留着清代的做法。馆方著录把这两层写得清楚：风格属宋，制作属清。研究库里这样的清仿五窑器有 <span class="nw">240 件</span>。</p>
     <p class="au-p au-rise au-p--pull">仿古之中，也有当时的审美。</p>
-    <p class="au-p au-rise">这些著录提供了一组跨时代的对照：风格承袭宋元，器物却制于清代。我们据此训练模型分别回答：<span class="nw">承袭何种风格</span>，<span class="nw">可能制于何时</span>。目标是辨识形似之外的时代线索，而这一步能否成立，须由未见类型的测试来回答。</p>
-    <p class="au-fine au-rise">相关研究已有瓷器属性识别与艺术风格解耦的方法。Aurelia AI 的研究着眼于历史仿古著录：以所仿风格和制作年代分别监督训练，再将整类仿古器留出，检验模型能否举一反三。</p>
+    <p class="au-p au-rise">这给了一个现成的检验：模型看到一件仿钧，认的是「像谁」，还是「谁造的」。</p>
     <div class="au-figwrap au-rise">
       <p class="au-figcap">通用视觉模型如何看待这 <span class="nw">190 件</span>清代仿古器（以 Meta PE-Core 为例）</p>
       {fig_fooled()}
-      <p class="au-fine">比较时匹配两组参照的件数，并重复抽样；「更近原型」指与宋元同窑器物比与清代对照器物更相似。年代分类器在非仿古器的留出集上准确率约 86%，对这 190 件仿古器仅约 35% 判为清代。</p>
+      <p class="au-fine">「更近原型」指比起清代对照器，更像宋元同窑器物。年代分类器在非仿古器上准确率约 86%，对仿古器只有约 35% 判为清代。</p>
     </div>
-    <p class="au-p au-rise">图像中的相近风格较容易被捕捉，制作年代却更难辨明。胎质、圈足与釉面能否提供更可靠的线索，是下一步要检验的问题。双头模型因此设置风格与年代两个分支。加入训练约束后，对未见仿古类型的年代判断与仅训练年代分支持平，线索须另寻。</p>
+    <p class="au-p au-rise">通用模型把仿品全部认成宋代。专门训练并加上分离风格与年代的约束之后，对没见过的仿古类型仍然如此。模型学会的是宋人的意图，看不见清代的做工，因为做工的证据在正面照片之外。</p>
     <div class="au-figwrap au-figwrap--flow au-rise">
       <p class="au-figcap">同一风格，不同年代：双分支训练目标</p>
       {fig_flow()}
-      <p class="au-fine">风格分支将两件归入钧窑风格，年代分支则区分元与清。图示表达训练目标，尚不代表模型已能稳定识别未见过的仿古类型。</p>
+      <p class="au-fine">风格分支把两件归入钧窑风格，年代分支区分元与清；图示为训练目标。</p>
     </div>
     <div class="au-todos au-rise">
       <div class="au-todo"><span class="au-todo__k">整类仿古器未参与训练时，判为清代的比例</span><span class="au-todo__v">仿钧约两成 · 仿龙泉约三成 · 仿官约七成 · 仿哥约八成</span></div>
-      <div class="au-todo"><span class="au-todo__k">年代线索来自何处：圈足、釉面或口沿</span><span class="au-todo__v">按比例切分的部位未见线索 · 口沿改由 SAM 3 分割模型定位 · 圈足需底部照片</span></div>
-      <div class="au-todo"><span class="au-todo__k">跨文化对照：V&amp;A 的 88 件欧洲仿中国瓷</span><span class="au-todo__v">待开展</span></div>
-      <div class="au-todo"><span class="au-todo__k">公开真仿对照集 CArtBench：通用大模型现有基线答对 6 / 10 对</span><span class="au-todo__v">本模型尚待测试</span></div>
+      <div class="au-todo"><span class="au-todo__k">底部圈足能否看穿涂色的伪装</span><span class="au-todo__v">SAM 3 分割模型已定位 <span class="nw">1,112 件</span>底部照片 · 实验进行中</span></div>
+      <div class="au-todo"><span class="au-todo__k">哪件宋瓷是哪件仿品的样</span><span class="au-todo__v">原型就在同一个库里 · 检索给出候选，档案核对中</span></div>
     </div>
-    <h3 class="au-h3 au-rise">值得长期积累的是什么</h3>
-    <ul class="au-bullets au-rise">
-      <li>将相似风格与年代判断分别验证，并为每项判断寻找可复核的线索。能否在未见类型上仍然有效，比一份漂亮的样例报告更能说明方法的价值。</li>
-      <li>馆藏著录虽公开，专家逐件评议、误判修正及经授权的交易反馈，仍需日积月累。每条记录有出处、每次修正有依据，才能逐步形成可靠的研究资料。</li>
-      <li>若这一方法在古瓷上得到验证，可进一步探索青铜、玉器与书画中的仿古现象；各品类的材料与工艺不同，须重新建立参照与评测。</li>
-    </ul>
+    <p class="au-p au-rise">「仿」在书画与青铜里同样是作者写明的意图。这一方法在古瓷上成立之后，同一套检验可以搬到书画与青铜上。</p>
   </div>
 </section>
 
@@ -350,8 +334,8 @@ html = f'''<!DOCTYPE html>
       <p class="au-eyebrow au-rise">从图像到线索</p>
       <h2 class="au-h2 au-rise">观器有法，循迹求证</h2>
       <ol class="au-steps">
-        <li class="au-step" data-step="1"><b>取器物之形，分离背景</b><span>月色勾勒的轮廓来自模型分割。150 件样本上，与自动生成的参考分割平均重合度为 0.884，人工标注验证尚待开展。</span></li>
-        <li class="au-step" data-step="2"><b>由整体入局部，细察形制</b><span>分别比较器颈、腹部与圈足。初步实验中，仅用单个部位检索，前五件参照约 65% 与查询器物同朝代；部位定位与证据仍待验证。</span></li>
+        <li class="au-step" data-step="1"><b>取器物之形，分离背景</b><span>轮廓来自模型分割，<span class="nw">150 件</span>样本上与参考分割重合度 0.884。</span></li>
+        <li class="au-step" data-step="2"><b>由整体入局部，细察形制</b><span>分别比较口沿、器身与圈足；圈足要从底部照片取。</span></li>
         <li class="au-step" data-step="3"><b>将可见特征化为度量</b>
           <dl class="au-measure">
             <div><dt>轮廓对称度</dt><dd>98.2<i>%</i></dd><small>轮廓与其镜像的重合度 IoU</small></div>
@@ -360,7 +344,7 @@ html = f'''<!DOCTYPE html>
           </dl>
           <span class="au-fine">数值取自本页这只葵口碗的照片。</span></li>
       </ol>
-      <p class="au-p au-rise">这些度量描述照片中的形与色。开片之疏密、兔毫之流动、窑变之斑斓，各有意趣；如何品评，仍须放回器物所属的时代与工艺传统之中。</p>
+      <p class="au-p au-rise">这些度量描述照片里的形与色；如何品评，仍须放回器物所属的时代与工艺传统之中。</p>
     </div>
   </div>
 </section>
@@ -390,7 +374,7 @@ html = f'''<!DOCTYPE html>
 <section class="au-s au-s12" id="s12" aria-label="应用方向与商业设想">
   <div class="au-wrap">
     <h2 class="au-h2 au-rise">从馆藏研究，走向实际应用</h2>
-    <p class="au-p au-rise">古瓷研究若能沉淀为工具，应先帮助人把参照找全、把疑点看清。我们拟将检索结果、风格与年代预测整理成可复核的比对报告，附馆方资料编号，并按需要交由专家复核。当前仍处于研究与内测阶段，以下为应用方向及定价设想。</p>
+    <p class="au-p au-rise">工具先帮人把参照找全、把疑点看清：检索结果与风格、年代预测整理成可复核的比对报告，附馆方资料编号。当前处于研究与内测阶段。</p>
     <h3 class="au-h3 au-rise">哪些场景需要这样的参照</h3>
     <div class="au-kpis au-rise">
       <div class="au-kpi"><b>42.7<i>亿元</i></b><span>2025 年上半年内地百家拍卖行样本中，瓷器杂项成交额，占总成交额 38.7%</span></div>
@@ -411,34 +395,8 @@ html = f'''<!DOCTYPE html>
       <div class="au-tier"><b>$149<i>/件</i></b><span>专家复核报告</span><small>拟由专家审阅；复核范围与责任须另行约定</small></div>
       <div class="au-tier"><b>$490<i>/件</i></b><span>保险与融资资料报告</span><small>远期设想，须先明确专业资质与机构采信要求</small></div>
     </div>
-    <p class="au-p au-rise">先以机构批量初筛验证需求，再探索专家复核服务。按拟议单价测算，一万份复核报告收入约 150 万美元，三千份保险与融资资料报告亦约 150 万美元；这只是收入情景，尚未扣除专家、获客与合规等成本，实际需求仍待试点验证。</p>
-    <div class="au-cols">
-      <div class="au-col au-rise">
-        <h3>面向谁</h3>
-        <ul>
-          <li>拍卖行与古董商：编目及上拍前比对</li>
-          <li>藏家与顾问：竞投前查找参照</li>
-          <li>交易平台：上架资料初筛</li>
-          <li>保险与融资机构：远期资料辅助场景</li>
-        </ul>
-      </div>
-      <div class="au-col au-rise">
-        <h3>交付什么价值</h3>
-        <ul>
-          <li>参照器物附馆方资料编号，便于核对著录</li>
-          <li>分别呈现风格与年代预测，记录疑点与误判</li>
-          <li>研究数据与商用数据须按用途分别核验许可</li>
-        </ul>
-      </div>
-      <div class="au-col au-rise">
-        <h3>如何拓展</h3>
-        <ul>
-          <li>与机构试点，验证效率与复核质量</li>
-          <li>在需求成立后，探索平台按件调用</li>
-          <li>逐类建立青铜、玉器与书画的参照体系</li>
-        </ul>
-      </div>
-    </div>
+    <p class="au-p au-rise">先以机构批量初筛验证需求，再探索专家复核服务；定价为设想，须经试点验证。</p>
+    <p class="au-p au-rise">面向拍卖行、古董商、藏家与顾问；参照器物附馆方资料编号，风格与年代分别呈现并记录疑点。需求成立后，逐类建立青铜、玉器与书画的参照体系。</p>
     <p class="au-fine au-rise">市场资料参考中国拍卖行业协会 2024 年报、雅昌艺术市场监测中心 2025 年上半年报告及 Art Loss Register 公开资料。各项统计范围不同，不能直接视为本项目的可服务市场规模。</p>
   </div>
 </section>
@@ -460,7 +418,7 @@ html = f'''<!DOCTYPE html>
       <div class="au-col au-rise">
         <h3>已建立的基础</h3>
         <ul>
-          <li>近两万件馆藏语料与器物检索</li>
+          <li>近两万件馆藏语料与器物检索；七馆 <span class="nw">3.4 万张</span>可商用照片的预训练语料</li>
           <li>自动分割器物，提取三项图像度量</li>
           <li>以 2,435 件留出器物检验检索表现</li>
         </ul>
@@ -468,21 +426,21 @@ html = f'''<!DOCTYPE html>
       <div class="au-col au-rise">
         <h3>正在探索</h3>
         <ul>
-          <li>同朝代、同器型内的典范度与稀缺度：描述典型性与少见程度</li>
-          <li>风格与年代的双分支模型，重点检验未见过的仿古类型</li>
+          <li>底部圈足实验：模型能否看穿仿古器足底的涂色</li>
+          <li>为每件仿品找到宫中旧藏的原型，用造办处档案核对</li>
           <li>发明专利申请工作</li>
         </ul>
       </div>
       <div class="au-col au-rise">
         <h3>下一步</h3>
         <ul>
-          <li>在许可明确的范围内获取高清图像，补充圈足与釉面细节</li>
+          <li>把同一套检验搬到书画与青铜的「仿」上</li>
           <li>将检索、分类及部位线索整理成可核对的报告</li>
           <li>邀请专家在同类器物间比较「何者更精」，学习不同时代的品评尺度</li>
         </ul>
       </div>
     </div>
-    <p class="au-p au-rise">检索的进步，让我们有了继续研究的基础。下一步须把典型与精妙、少见与珍贵分别辨清，再以专家的比较意见检验模型。由识器到品评，尚需一段细致的功夫。</p>
+    <p class="au-p au-rise">模型已学会宋人可被复刻的意图，缺的是行家翻过来看底的眼睛。由识器到品评，尚需一段细致的功夫。</p>
     {stage('cma_120203', '清 乾隆 仿哥釉八卦纹琮式瓶，克利夫兰艺术博物馆 1940.969', 728, 1459, '清 乾隆 · 仿哥釉八卦纹琮式瓶', '克利夫兰艺术博物馆 1940.969 · 仿古，也是时代趣味的表达', 900, 'au-stage--s8')}
   </div>
 </section>
