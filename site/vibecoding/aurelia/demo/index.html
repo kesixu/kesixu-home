@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>试一试 · Aurelia 古瓷风格比对</title>
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<header class="top">
+  <a class="back" href="/vibecoding/aurelia/">← 介绍页</a>
+  <div class="brand">AURELIA · 试一试</div>
+</header>
+
+<main class="wrap">
+  <section id="gate" class="card gate hidden">
+    <p class="eyebrow">凭邀请码体验</p>
+    <h1>上传一张瓷器照片，看模型怎么看它</h1>
+    <p class="lead">它会在近两万件博物馆藏瓷里找出最相近的几件，标出像在哪里，并给出风格与年代的读数。</p>
+    <form id="gateform" autocomplete="off">
+      <input id="code" type="password" placeholder="邀请码" aria-label="邀请码" required>
+      <button type="submit" id="gatebtn">进入</button>
+    </form>
+    <div class="msg" id="gatemsg" aria-live="polite"></div>
+  </section>
+
+  <section id="upload" class="card hidden">
+    <p class="eyebrow">第一步</p>
+    <h1>选一张照片</h1>
+    <p class="lead">器物居中、背景简单的正面照效果最好。手机可以直接拍。再加一张底部照片，就能看到圈足。</p>
+    <form id="form">
+      <div class="pick">
+        <label class="drop" for="file"><input id="file" type="file" accept="image/*" capture="environment" required><span class="drop__t">正面照片</span><span class="drop__s">点此选择或拍摄</span><img id="pv" alt="" hidden></label>
+        <label class="drop drop--opt" for="bfile"><input id="bfile" type="file" accept="image/*" capture="environment"><span class="drop__t">底部照片</span><span class="drop__s">可选，用于看圈足</span><img id="bpv" alt="" hidden></label>
+      </div>
+      <label class="consent"><input id="consent" type="checkbox"><span>允许把这张照片留作研究用途。不勾选则只保留分析结果 24 小时，照片不落盘。</span></label>
+      <div class="row">
+        <button type="submit" id="go">开始分析</button>
+        <span class="msg" id="msg" aria-live="polite"></span>
+      </div>
+    </form>
+    <p class="fine">结果是照片层面的参照与线索。真伪与价值由人判断。</p>
+  </section>
+
+  <section id="result" class="hidden">
+    <div class="grid2">
+      <figure class="card q">
+        <p class="eyebrow">模型看到的器物</p>
+        <img id="ov" alt="分割结果">
+        <figcaption id="qcap"></figcaption>
+      </figure>
+      <div class="card verdict">
+        <p class="eyebrow">模型怎么看</p>
+        <div id="bars"></div>
+        <ul id="vlist"></ul>
+      </div>
+    </div>
+    <section class="card">
+      <p class="eyebrow">最相近的馆藏参照</p>
+      <div class="nb" id="nb"></div>
+      <p class="fine" id="nbnote"></p>
+    </section>
+    <section class="card">
+      <p class="eyebrow">像在哪里</p>
+      <div class="parts" id="parts"></div>
+      <p class="fine" id="partnote"></p>
+    </section>
+    <div class="row actions">
+      <button id="again" type="button">再试一张</button>
+      <button id="share" type="button">复制结果链接</button>
+      <span class="msg" id="sharemsg"></span>
+    </div>
+    <p class="fine" id="notes"></p>
+  </section>
+</main>
+<footer class="foot">图片参照来自各博物馆开放资料，署名与许可随馆方 · 本页不收录于搜索引擎</footer>
+<script src="demo.js" defer></script>
+</body>
+</html>

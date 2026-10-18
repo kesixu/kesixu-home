@@ -214,7 +214,8 @@ html = f'''<!DOCTYPE html>
       <h1 class="au-h1 au-intro">AI 能否读懂<br><span class="au-nw">中国古瓷</span><wbr><span class="au-nw">之美</span></h1>
       <p class="au-lede au-intro">从识器入手，以近<span class="nw">两万件</span>博物馆藏瓷为参照，为一张照片寻得相近之器，逐步辨明<span class="nw">相似之处</span>。</p>
       <div class="au-cta au-intro">
-        <a class="au-btn au-btn--moon" href="{S_MAIN}">申请内测</a>
+        <a class="au-btn" href="{S_MAIN}">申请内测</a>
+        <a class="au-btn au-btn--moon" href="demo/">试一试 · 上传照片</a>
         <a class="au-btn" href="brief/">研究简报 · 凭邀请码阅读</a>
         <a class="au-btn" href="/vibecoding/">浏览其他作品</a>
       </div>
