@@ -14,14 +14,14 @@
     derive(code).then(function (h) { if (h === EXPECT) { tok = h; sessionStorage.setItem('aurelia-brief', h); $('gatemsg').textContent = ''; boot(); } else { $('gatemsg').className = 'msg err'; $('gatemsg').textContent = '邀请码不对，请再试一次。'; $('gatebtn').disabled = false; } });
   });
   // previews
-  function preview(input, img) { input.addEventListener('change', function () { var f = input.files && input.files[0]; var lab = input.parentNode; if (!f) { img.hidden = true; lab.classList.remove('has'); return; } img.src = URL.createObjectURL(f); img.hidden = false; lab.classList.add('has'); }); }
+  function preview(input, img) { input.addEventListener('change', function () { var f = input.files && input.files[0]; var lab = input.parentNode; if (!f) { img.hidden = true; lab.classList.remove('has'); return; } var rd = new FileReader(); rd.onload = function () { img.src = rd.result; img.hidden = false; lab.classList.add('has'); }; rd.readAsDataURL(f); }); }
   preview($('file'), $('pv')); preview($('bfile'), $('bpv'));
   // submit
   $('form').addEventListener('submit', function (e) {
     e.preventDefault(); var f = $('file').files[0]; if (!f) return;
     var fd = new FormData(); fd.append('image', f); if ($('bfile').files[0]) fd.append('base', $('bfile').files[0]); fd.append('consent', $('consent').checked ? '1' : '0');
     $('go').disabled = true; $('msg').className = 'msg'; $('msg').innerHTML = '<span class="spin"></span>分割、检索、读数，通常 5 到 15 秒…';
-    fetch(API + '/analyze', { method: 'POST', body: fd, headers: { 'X-Aurelia-Token': tok } }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, j: j }; }); })
+    fetch(API + '/analyze', { method: 'POST', body: fd, headers: { 'X-Aurelia-Token': tok } }).then(function (r) { return r.text().then(function (t) { var j = null; try { j = JSON.parse(t); } catch (e) { j = { detail: r.status === 413 ? '图片太大，请压缩到 12 MB 以内。' : (r.status === 429 ? '请求太频繁，请稍后再试。' : (r.status === 503 ? '模型服务暂时不可用，请稍后再试。' : ('服务返回 ' + r.status))) }; } return { ok: r.ok && !!j && !!j.id, status: r.status, j: j }; }); })
       .then(function (x) { if (!x.ok) { throw new Error(x.j && x.j.detail ? x.j.detail : ('服务返回 ' + x.status)); } render(x.j); history.replaceState(null, '', '?r=' + x.j.id); show('result'); })
       .catch(function (err) { $('msg').className = 'msg err'; $('msg').textContent = err.message || '分析失败，请稍后再试。'; })
       .then(function () { $('go').disabled = false; });
