@@ -29,7 +29,7 @@ button:hover{border-color:var(--sky);background:rgba(157,187,176,.1)} button[dis
 figure.q{margin:14px 0 0} figure.q img{width:100%;border-radius:10px;display:block;background:#0b0e10} figure.q figcaption{font-size:12.5px;color:var(--ash);margin-top:8px}
 .verdict ul{margin:14px 0 0;padding-left:18px;font-size:14px} .verdict li{margin:6px 0}
 .bar{display:grid;grid-template-columns:96px 1fr 48px;gap:10px;align-items:center;font-size:13px;margin:7px 0} .bar i{height:8px;border-radius:4px;background:rgba(217,223,220,.12);position:relative;display:block} .bar i::after{content:"";position:absolute;left:0;top:0;bottom:0;width:var(--w);border-radius:4px;background:var(--sky)} .bar.p i::after{background:var(--ver)} .bar b{font-weight:400;color:var(--ash);text-align:right;font-variant-numeric:tabular-nums}
-.bar.head{color:var(--ash);font-size:12px;letter-spacing:.1em;margin:12px 0 2px}
+.bar.head{display:block;color:var(--ash);font-size:12px;letter-spacing:.1em;margin:14px 0 4px}
 .nb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
 .nb figure{margin:0;background:rgba(0,0,0,.2);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .nb .im{aspect-ratio:1/1;background:#0b0e10} .nb img{width:100%;height:100%;object-fit:cover;display:block}
