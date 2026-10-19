@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PathBot · 可信度压力测试</title>
+<meta name="description" content="在四个合成场景中观察 PathBot 如何依据流程符合度与证据忠实度给出 CONFIDENT、ANOMALY FLAG、ESCALATE 或 INDETERMINATE。研究演示，不用于诊断。">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="PathBot · 可信度压力测试">
+<meta property="og:description" content="把同一套会诊流程推向四种边界，看它何时继续、暂停、升级给人或交白卷。">
+<meta property="og:url" content="https://kesixu.com/vibecoding/pathbot/visual-demo/">
+<meta property="og:image" content="https://kesixu.com/vibecoding/pathbot/visual-demo/media/tissue-loop-poster.webp">
+<link rel="canonical" href="https://kesixu.com/vibecoding/pathbot/visual-demo/">
+<link rel="icon" type="image/svg+xml" href="/vibecoding/pathbot/assets/icon.svg?v=2">
+<link rel="preload" as="font" type="font/woff2" href="/vibecoding/pathbot/fonts/hanken-300.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/vibecoding/pathbot/fonts/misans-300.woff2" crossorigin>
+<link rel="stylesheet" href="/vibecoding/pathbot/visual-demo/demo.css?v=1">
+</head>
+<body>
+<nav class="demo-nav" aria-label="演示导航">
+  <a class="brand" href="/vibecoding/pathbot/"><img src="/vibecoding/pathbot/assets/brand.webp" alt="" width="28" height="28">PATHBOT</a>
+  <div class="nav-actions">
+    <a href="/vibecoding/pathbot/" data-en="← Product page">← 产品页</a>
+    <button id="lang-toggle" type="button" aria-label="Switch language / 切换语言">EN</button>
+  </div>
+</nav>
+
+<main>
+  <header class="demo-hero">
+    <div class="hero-copy">
+      <p class="eyebrow" data-en="INTERACTIVE TRUST STRESS-TEST">可信度压力测试 · 交互演示</p>
+      <h1 data-en-html="Push the workflow.<br>Watch where it &lt;em&gt;stops&lt;/em&gt;.">把流程推到边界，<br>看它在哪里<em>停下</em></h1>
+      <p class="hero-lead" data-en="Four synthetic cases. The same consult pipeline. Change the evidence conditions and watch the verdict — continue, flag, hand over to a human, or submit no answer.">四个合成案例，同一套会诊程序。改变流程与证据条件，看系统继续、标记异常、升级给人，还是交白卷。</p>
+      <p class="synthetic-note" data-en="SYNTHETIC CASES · EXPLANATORY VALUES · NO PATIENT DATA">合成案例 · 数值仅作规则演示 · 无病人数据</p>
+      <a class="jump" href="#stress-test"><span data-en="Start the test">开始测试</span><i aria-hidden="true">↓</i></a>
+    </div>
+    <figure class="hero-media">
+      <video id="tissue-loop" muted loop playsinline preload="metadata" poster="/vibecoding/pathbot/visual-demo/media/tissue-loop-poster.webp" aria-label="抽象组织微环境与审计轨迹动画">
+        <source src="/vibecoding/pathbot/visual-demo/media/tissue-loop.mp4" type="video/mp4">
+      </video>
+      <figcaption data-en="ABSTRACT TISSUE FIELD · BLENDER / CYCLES / 2× RTX A5000">抽象组织场 · BLENDER / CYCLES / 双 RTX A5000</figcaption>
+    </figure>
+  </header>
+
+  <section class="stress" id="stress-test" aria-labelledby="stress-title">
+    <div class="section-head">
+      <p class="eyebrow" data-en="ONE PIPELINE · FOUR OUTCOMES">同一流程 · 四种去向</p>
+      <h2 id="stress-title" data-en="Move the evidence. The system must move its verdict.">证据变了，判决必须跟着变</h2>
+      <p data-en="Choose a condition below. β describes whether the tool path follows the declared procedure; κ tests whether the answer actually depends on its cited evidence.">选择一种条件。β 表示工具路径是否遵循声明流程；κ 用反事实探针检查回答是否真的依赖所引证据。</p>
+    </div>
+
+    <div class="scenario-tabs" role="tablist" aria-label="合成测试场景">
+      <button type="button" role="tab" aria-selected="true" data-scenario="confident" data-en="01 · Clear in-domain">01 · 域内清晰</button>
+      <button type="button" role="tab" aria-selected="false" data-scenario="anomaly" data-en="02 · Local drift">02 · 局部偏离</button>
+      <button type="button" role="tab" aria-selected="false" data-scenario="escalate" data-en="03 · Evidence conflict">03 · 证据失真</button>
+      <button type="button" role="tab" aria-selected="false" data-scenario="indeterminate" data-en="04 · Both low">04 · 双低不定</button>
+    </div>
+
+    <div class="lab" data-state="confident">
+      <figure class="case-field">
+        <canvas id="case-map" width="900" height="620" aria-label="合成组织场，可移动指针查看审计焦点">
+          <p>合成组织场：绿色、红色、蓝色节点代表不同模拟细胞类别，连线代表可回溯的证据路径。</p>
+        </canvas>
+        <figcaption><span data-en="SYNTHETIC FIELD · MOVE OR TAP TO INSPECT">合成组织场 · 移动或轻触查看</span><b id="focus-label">ROI 04 · TRACE OK</b></figcaption>
+      </figure>
+
+      <article class="audit" aria-live="polite">
+        <div class="audit-head">
+          <p class="eyebrow" data-en="AUDIT TRAIL">审计轨迹</p>
+          <span id="verdict" class="verdict">CONFIDENT</span>
+        </div>
+
+        <ol class="gates" aria-label="会诊检查步骤">
+          <li data-gate="intake"><span>01</span><b data-en="Slide triage">切片分诊</b><i data-en="PASS">通过</i></li>
+          <li data-gate="scope"><span>02</span><b data-en="Scope check">能力边界</b><i data-en="PASS">通过</i></li>
+          <li data-gate="tools"><span>03</span><b data-en="Tool path">工具路径</b><i data-en="PASS">通过</i></li>
+          <li data-gate="evidence"><span>04</span><b data-en="Evidence probe">证据探针</b><i data-en="PASS">通过</i></li>
+          <li data-gate="handoff"><span>05</span><b data-en="Human handoff">人工交接</b><i data-en="READY">就绪</i></li>
+        </ol>
+
+        <div class="metrics">
+          <label for="beta"><span data-en="β · PROCESS CONFORMANCE">β · 流程符合度</span><b id="beta-value">0.91</b></label>
+          <progress id="beta" max="1" value="0.91">0.91</progress>
+          <label for="kappa"><span data-en="κ · EVIDENCE FAITHFULNESS">κ · 证据忠实度</span><b id="kappa-value">0.87</b></label>
+          <progress id="kappa" max="1" value="0.87">0.87</progress>
+        </div>
+
+        <div class="finding">
+          <p class="finding-label" data-en="WHY THIS VERDICT">为什么这样判</p>
+          <p id="reason">流程完整，反事实替换后回答随证据改变；当前轨迹没有发现越界或证据脱钩。</p>
+        </div>
+        <div class="next-step">
+          <p class="finding-label" data-en="NEXT ACTION">下一步</p>
+          <p id="next-action">允许生成带引用的研究报告，交病理医生复核。</p>
+        </div>
+      </article>
+    </div>
+    <p class="metric-caveat" data-en="β and κ here are hand-set explanatory values, not measured model performance. This page demonstrates decision logic, not diagnostic accuracy.">这里的 β 与 κ 是人为设定的解释性数值，不是模型性能结果。本页演示判决逻辑，不演示诊断准确率。</p>
+  </section>
+
+  <section class="outcomes" aria-labelledby="outcomes-title">
+    <div class="section-head">
+      <p class="eyebrow" data-en="THE FOUR-STATE CONTRACT">四态契约</p>
+      <h2 id="outcomes-title" data-en="Every state changes what happens next.">每一种状态，都要改变下一步</h2>
+    </div>
+    <div class="outcome-grid">
+      <article><b class="state confident">CONFIDENT</b><h3 data-en="Continue, with citations">带引用继续</h3><p data-en="The declared procedure and the evidence probe both hold. A human still reviews the report.">流程和证据探针同时成立；报告仍需人工复核。</p></article>
+      <article><b class="state anomaly">ANOMALY FLAG</b><h3 data-en="Pause the affected step">暂停异常步骤</h3><p data-en="A local workflow deviation is isolated and written into the audit trail before work resumes.">局部流程偏离被隔离并写入轨迹，复核后再继续。</p></article>
+      <article><b class="state escalate">ESCALATE</b><h3 data-en="Hand over to a human">立即交给人</h3><p data-en="The answer stops tracking its evidence. No automated conclusion is allowed through.">回答不再跟随证据变化，自动结论不得放行。</p></article>
+      <article><b class="state indeterminate">INDETERMINATE</b><h3 data-en="Submit no answer">交白卷</h3><p data-en="Neither the procedure nor the evidence is strong enough. Uncertainty is the result.">流程与证据都不足；不确定本身就是结果。</p></article>
+    </div>
+  </section>
+
+  <section class="honest" aria-labelledby="honest-title">
+    <p class="eyebrow" data-en="READ THIS BEFORE THE DEMO ENDS">演示结束前，请先读这段</p>
+    <h2 id="honest-title" data-en="A boundary demo is not a medical device.">边界演示，不是医疗器械</h2>
+    <p data-en="Everything on this page is synthetic and educational. It accepts no files, makes no diagnosis, and stores no visitor data. PathBot remains a research preview and has not been cleared for clinical diagnostic use.">本页全部内容均为合成与教学用途：不接收文件，不给出诊断，也不保存访客数据。PathBot 仍是研究预览，尚未获批用于临床诊断。</p>
+    <div class="final-actions">
+      <a href="/vibecoding/pathbot/"><span data-en="Read the full project">查看完整项目</span><i aria-hidden="true">›</i></a>
+      <a href="mailto:email@kesixu.com?subject=PathBot%20Visual%20Demo"><span data-en="Discuss a research pilot">讨论研究试点</span><i aria-hidden="true">›</i></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>PATHBOT · TRUST BEFORE BRILLIANCE</p>
+  <p data-en="Synthetic demo · no tracking · no third parties · © 2026 Kesi Xu">合成演示 · 无追踪 · 无第三方请求 · © 2026 徐可斯</p>
+</footer>
+<script src="/vibecoding/pathbot/visual-demo/demo.js?v=1" defer></script>
+</body>
+</html>

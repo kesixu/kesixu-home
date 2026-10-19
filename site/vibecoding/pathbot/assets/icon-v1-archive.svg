@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PathBot">
+  <defs>
+    <clipPath id="bub">
+      <path d="M150 56 H362 Q456 56 456 150 V282 Q456 376 362 376 H252 L178 446 Q160 462 168 438 L184 376 H150 Q56 376 56 282 V150 Q56 56 150 56 Z"/>
+    </clipPath>
+  </defs>
+  <!-- 气泡本体:近黑靛 -->
+  <path d="M150 56 H362 Q456 56 456 150 V282 Q456 376 362 376 H252 L178 446 Q160 462 168 438 L184 376 H150 Q56 376 56 282 V150 Q56 56 150 56 Z" fill="#0E1116"/>
+  <g clip-path="url(#bub)">
+    <!-- 玻片纸底 -->
+    <rect x="68" y="68" width="376" height="296" rx="60" fill="#F7F0EA"/>
+    <!-- 伊红间质:一笔斜扫 -->
+    <path d="M68 268 Q170 196 258 238 Q352 282 444 214 V364 H68 Z" fill="#F2A9C6"/>
+    <path d="M68 306 Q186 252 282 288 Q368 318 444 272 V364 H68 Z" fill="#E87FA9" opacity=".9"/>
+    <!-- 苏木精腺体:扇贝缘 + 腺腔 -->
+    <path d="M208 96
+             q34 -18 66 -4 q36 -22 64 4 q40 -6 52 30 q30 18 16 52 q10 36 -22 50 q-6 38 -44 40 q-24 30 -58 16 q-38 18 -64 -8 q-40 4 -50 -32 q-30 -16 -18 -50 q-14 -34 14 -52 q6 -36 44 -46 Z"
+          fill="#6E48B8"/>
+    <path d="M232 122 q26 -12 48 -2 q28 -14 48 4 q30 -4 38 24 q22 14 11 39 q8 28 -17 38 q-5 29 -34 30 q-18 23 -44 12 q-29 13 -48 -6 q-30 3 -37 -25 q-22 -12 -13 -38 q-11 -26 11 -39 q5 -27 37 -37 Z"
+          fill="#8C63D2" opacity=".65"/>
+    <!-- 腺腔(留白) -->
+    <ellipse cx="282" cy="190" rx="46" ry="38" fill="#F7F0EA"/>
+    <ellipse cx="282" cy="190" rx="46" ry="38" fill="#F2E4EE" opacity=".5"/>
+    <ellipse cx="356" cy="238" rx="17" ry="14" fill="#F7F0EA"/>
+    <ellipse cx="216" cy="248" rx="13" ry="11" fill="#F7F0EA"/>
+    <!-- 核点:稀疏,防密恐 -->
+    <g fill="#3C2A66" opacity=".8">
+      <circle cx="238" cy="150" r="5"/><circle cx="322" cy="146" r="5"/>
+      <circle cx="366" cy="196" r="5"/><circle cx="330" cy="266" r="5"/>
+      <circle cx="240" cy="276" r="5"/><circle cx="196" cy="212" r="5"/>
+    </g>
+  </g>
+  <!-- 气泡描边:极细米白,黑底上出形 -->
+  <path d="M150 56 H362 Q456 56 456 150 V282 Q456 376 362 376 H252 L178 446 Q160 462 168 438 L184 376 H150 Q56 376 56 282 V150 Q56 56 150 56 Z"
+        fill="none" stroke="#E8E2DA" stroke-opacity=".22" stroke-width="6"/>
+  <!-- PROCEED 灯 -->
+  <circle cx="436" cy="84" r="34" fill="#0E1116"/>
+  <circle cx="436" cy="84" r="26" fill="#1BCE71"/>
+</svg>

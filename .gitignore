@@ -3,3 +3,4 @@ workspace/runs/
 workspace/fonts-src/
 *.bak.*
 .DS_Store
+__pycache__/

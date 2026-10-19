@@ -1,2 +1,8 @@
+# 预览页不收录
+User-agent: *
+Disallow: /preview/
+Disallow: /vibecoding/aurelia-brief/
+Disallow: /vibecoding/aurelia/brief/
+
 User-agent: *
 Allow: /

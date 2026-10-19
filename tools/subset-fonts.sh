@@ -13,12 +13,16 @@ mkdir -p "$SRCDIR" site/fonts
 
 # 1) 提取页面可见文字 + title/meta（星图 SVG 里的 <text> 也在 DOM 里，一并覆盖）
 python3 - > "$SRCDIR/glyphs.txt" <<'EOF'
-import re, html, sys
-h = open('site/index.html', encoding='utf-8').read()
-h = re.sub(r'<script[^>]*>.*?</script>', ' ', h, flags=re.S)
-meta = ' '.join(re.findall(r'content="([^"]*)"', h)) + ' ' + ' '.join(re.findall(r'<title>(.*?)</title>', h))
-text = re.sub(r'<[^>]+>', ' ', h)
-chars = sorted(set(html.unescape(text + meta)) - set('\n\r\t'))
+import re, html, sys, glob
+# 主页 + 子页面(如 /pathbot/)共用同一份子集,任一页面新增文字都要覆盖
+files = ['site/index.html'] + sorted(glob.glob('site/*/index.html'))
+buf = []
+for f in files:
+    h = open(f, encoding='utf-8').read()
+    h = re.sub(r'<script[^>]*>.*?</script>', ' ', h, flags=re.S)
+    meta = ' '.join(re.findall(r'content="([^"]*)"', h)) + ' ' + ' '.join(re.findall(r'<title>(.*?)</title>', h))
+    buf.append(re.sub(r'<[^>]+>', ' ', h) + ' ' + meta)
+chars = sorted(set(html.unescape(' '.join(buf))) - set('\n\r\t'))
 sys.stdout.write(''.join(chars))
 EOF
 # 附加 ASCII 全集，保证英文数字标点永远齐全

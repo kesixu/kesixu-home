@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>灶间 · 消着消着，就会做菜了</title>
+<meta name="description" content="灶间：一个把三消玩成菜谱的游戏。消的不是方块是食材，过一关会一道菜，五大菜系二十五道名菜。">
+<link rel="icon" href="/vibecoding/assets/logos/zaojian-128.webp">
+<style>
+:root{
+  --ink:#0d0b09; --ember:#b33a1e; --flame:#ff6b35; --amber:#ffa94d; --gold:#ffd28a;
+  --paper:#f2ece1; --smoke:#8a8378;
+}
+@font-face{font-family:ZaoFont;src:url(fonts/zaofont-page.woff2) format("woff2");font-display:swap}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);color:var(--paper);font-family:ZaoFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.7;overflow-x:hidden}
+a{color:var(--amber);text-decoration:none}
+.wrap{max-width:680px;margin:0 auto;padding:0 22px}
+/* 火光 hero */
+.hero{position:relative;text-align:center;padding:64px 0 40px;
+  background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(255,107,53,.16),transparent 70%)}
+.hero img.logo{width:96px;height:96px;border-radius:22px;box-shadow:0 0 40px rgba(255,169,77,.35)}
+h1{font-size:44px;letter-spacing:10px;margin:18px 0 6px;color:var(--gold);
+  text-shadow:0 0 24px rgba(255,169,77,.4)}
+.tagline{font-size:19px;color:var(--paper)}
+.sub{color:var(--smoke);font-size:14px;margin-top:8px}
+/* 特色（最前部） */
+.features{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:44px 0}
+.feature{border:1px solid rgba(255,169,77,.22);border-radius:16px;padding:18px 16px;
+  background:linear-gradient(180deg,rgba(255,107,53,.06),transparent)}
+.feature h3{color:var(--amber);font-size:17px;margin-bottom:6px}
+.feature p{font-size:13.5px;color:var(--paper);opacity:.85}
+@media (max-width:520px){.features{grid-template-columns:1fr}}
+/* 视频手机框 */
+.phone{width:min(320px,80vw);margin:14px auto 8px;border-radius:32px;padding:10px;
+  background:#1a1512;border:1px solid rgba(255,169,77,.25);
+  box-shadow:0 0 60px rgba(255,107,53,.18)}
+.phone video{width:100%;border-radius:24px;display:block}
+.caption{text-align:center;color:var(--smoke);font-size:13px;margin-bottom:44px}
+/* 菜照 */
+h2{color:var(--gold);font-size:26px;letter-spacing:4px;text-align:center;margin:50px 0 8px}
+.h2sub{text-align:center;color:var(--smoke);font-size:14px;margin-bottom:20px}
+.dishes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dishes figure{border-radius:14px;overflow:hidden;border:1px solid rgba(255,169,77,.18)}
+.dishes img{width:100%;display:block;aspect-ratio:1;object-fit:cover}
+.dishes figcaption{font-size:12.5px;text-align:center;color:var(--smoke);padding:6px 0;background:rgba(255,107,53,.05)}
+@media (max-width:520px){.dishes{grid-template-columns:repeat(3,1fr)}}
+/* 熊猫 */
+.panda{display:flex;align-items:center;gap:18px;margin:46px 0;padding:20px;
+  border-radius:16px;border:1px solid rgba(255,169,77,.22)}
+.panda img{width:110px;flex-shrink:0}
+.panda p{font-size:14.5px;color:var(--paper);opacity:.9}
+/* 尾 */
+.cta{text-align:center;margin:52px 0 18px}
+.cta a.btn{display:inline-block;padding:14px 38px;border-radius:999px;font-size:18px;letter-spacing:3px;
+  color:var(--ink);background:linear-gradient(180deg,var(--gold),var(--flame));
+  box-shadow:0 0 34px rgba(255,107,53,.35)}
+.cta .note{color:var(--smoke);font-size:13px;margin-top:10px}
+footer{text-align:center;color:var(--smoke);font-size:12.5px;padding:30px 0 44px}
+footer a{color:var(--smoke)}
+@media (prefers-reduced-motion:no-preference){
+  .hero img.logo{animation:glow 3.2s ease-in-out infinite alternate}
+  @keyframes glow{from{box-shadow:0 0 26px rgba(255,169,77,.25)}to{box-shadow:0 0 52px rgba(255,169,77,.5)}}
+}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="wrap">
+    <img class="logo" src="/vibecoding/assets/logos/zaojian-128.webp" alt="灶间" width="96" height="96">
+    <h1>灶间</h1>
+    <p class="tagline">消着消着，就会做菜了</p>
+    <p class="sub">把三消，玩成一本菜谱。</p>
+    <p class="cta" style="margin-top:22px"><a class="btn" href="https://game.kesixu.com" rel="noopener">马上开玩</a></p>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="features" aria-label="产品特色">
+    <div class="feature"><h3>消的不是方块，是食材</h3>
+      <p>番茄炒蛋，就得凑齐番茄和鸡蛋；烤鸭上桌，薄饼黄瓜大葱一样不能少。开局先看菜，再动手。</p></div>
+    <div class="feature"><h3>过一关，会一道菜</h3>
+      <p>配比是真的，火候是真的，贴士也是真的——"蛋液加半勺水更嫩"，今晚回家就能试。</p></div>
+    <div class="feature"><h3>二十五道名菜，五大菜系</h3>
+      <p>从奶奶的番茄炒蛋，做到淮扬的狮子头。熊猫团团陪你拜师学艺，卡住了它悄悄指路。</p></div>
+    <div class="feature"><h3>不坑钱，不上火</h3>
+      <p>没有体力，没有广告，没有付费复活。它会悄悄看你的手感调难度——只想陪你把这道菜做完。</p></div>
+  </section>
+
+  <h2>真实对局</h2>
+  <p class="h2sub">实机录屏 · 未加速</p>
+  <div class="phone">
+    <video src="assets/gameplay.mp4" poster="assets/gameplay-poster.webp"
+           autoplay muted loop playsinline width="390" height="844"></video>
+  </div>
+  <p class="caption">第十四关 · 地三鲜：茄子、土豆、青椒——地里长的三样鲜</p>
+
+  <h2>菜谱图鉴</h2>
+  <p class="h2sub">家常菜 · 北京菜 · 东北菜 · 粤菜 · 淮扬菜</p>
+  <div class="dishes">
+    <figure><img src="assets/photo-fanqiechaodan.webp" alt="番茄炒蛋" loading="lazy"><figcaption>番茄炒蛋</figcaption></figure>
+    <figure><img src="assets/photo-kaoya.webp" alt="北京烤鸭" loading="lazy"><figcaption>北京烤鸭</figcaption></figure>
+    <figure><img src="assets/photo-songshuguiyu.webp" alt="松鼠桂鱼" loading="lazy"><figcaption>松鼠桂鱼</figcaption></figure>
+  </div>
+
+  <div class="panda">
+    <img src="assets/panda.webp" alt="熊猫厨师" loading="lazy">
+    <p>「满汉全席！」——只有你连消得漂亮，团团才这么喊。其余时候它守着灶，像等你回家吃饭的人。</p>
+  </div>
+
+  <div class="cta">
+    <a class="btn" href="https://game.kesixu.com" rel="noopener">马上开玩</a>
+    <p class="note">邀请制内测 · 注册要邀请码，问可斯要一个</p>
+  </div>
+</main>
+
+<footer>
+  <p>灶火可亲，来者有份。</p>
+  <p>© 2026 徐可斯 · 版权所有 · <a href="/vibecoding/">回到划亮</a></p>
+</footer>
+</body>
+</html>
