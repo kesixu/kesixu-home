@@ -212,7 +212,7 @@ html = f'''<!DOCTYPE html>
     <div class="au-hero__text">
       <p class="au-eyebrow au-intro">Aurelia · 古瓷风格比对</p>
       <h1 class="au-h1 au-intro">AI 能否读懂<br><span class="au-nw">中国古瓷</span><wbr><span class="au-nw">之美</span></h1>
-      <p class="au-lede au-intro">从识器入手，以近<span class="nw">两万件</span>博物馆藏瓷为参照，为一张照片寻得相近之器，逐步辨明<span class="nw">相似之处</span>。</p>
+      <p class="au-lede au-intro">模型读到的是古瓷的“意图”，还是它的“制作”？上传一张照片，在近<span class="nw">两万件</span>馆藏里找出最相近的几件，看它像在哪里。</p>
       <div class="au-cta au-intro">
         <a class="au-btn" href="{S_MAIN}">申请内测</a>
         <a class="au-btn au-btn--moon" href="demo/">试一试 · 上传照片</a>
@@ -232,7 +232,7 @@ html = f'''<!DOCTYPE html>
     <div class="au-text">
       <h2 class="au-h2 au-rise">鉴赏之始，在于识器</h2>
       <p class="au-p au-rise">一件古瓷的意趣，见于器形、釉色，也藏在工艺细节之中。行家观器，须察胎釉、辨纹饰、读款识；上手掂量，翻看圈足，借侧光细察釉面，方能<span class="nw">见微知著</span>。</p>
-      <p class="au-p au-rise">Aurelia 先学习照片中可见的线索：以馆藏作参照，辨识器物的风格与形制。待这一步有据可依，再向专家学习，同类器物之间<span class="nw">何以见高下</span>。</p>
+      <p class="au-p au-rise">Aurelia 做三件事：<b>找</b>，在近两万件馆藏里检索最相近的器物；<b>指</b>，用分割模型标出器物的口沿、器身与圈足，说明像在哪里；<b>验</b>，借清代仿古瓷这个自然实验，检验模型读到的是风格还是做工。</p>
     </div>
   </div>
 </section>
@@ -306,7 +306,7 @@ html = f'''<!DOCTYPE html>
       {fig_fooled()}
       <p class="au-fine">「更近原型」指比起清代对照器，更像宋元同窑器物。年代分类器在非仿古器上准确率约 86%，对仿古器只有约 45% 判为清代。</p>
     </div>
-    <p class="au-p au-rise">通用模型把仿品全部认成宋代。专门训练并加上分离风格与年代的约束之后，对没见过的仿古类型仍然如此。模型学会的是宋人的意图，看不见清代的做工，因为做工的证据在正面照片之外。</p>
+    <p class="au-p au-rise">通用模型把仿品全部认成宋代；多模态大模型零样本也一样，<span class="nw">190 件</span>仿品只有一成判为清代，理由多是“开片、天青，符合宋代汝窑特征”。专门训练并加上分离风格与年代的约束之后，对没见过的仿古类型仍然如此。模型学会的是宋人的意图，看不见清代的做工，因为做工的证据在正面照片之外。</p>
     <div class="au-figwrap au-figwrap--flow au-rise">
       <p class="au-figcap">同一风格，不同年代：双分支训练目标</p>
       {fig_flow()}
@@ -336,8 +336,8 @@ html = f'''<!DOCTYPE html>
       <p class="au-eyebrow au-rise">从图像到线索</p>
       <h2 class="au-h2 au-rise">观器有法，循迹求证</h2>
       <ol class="au-steps">
-        <li class="au-step" data-step="1"><b>取器物之形，分离背景</b><span>轮廓来自模型分割，<span class="nw">150 件</span>样本上与参考分割重合度 0.884。</span></li>
-        <li class="au-step" data-step="2"><b>由整体入局部，细察形制</b><span>分别比较口沿、器身与圈足；圈足要从底部照片取。</span></li>
+        <li class="au-step" data-step="1"><b>取器物之形，分离背景</b><span>器物与口沿由 SAM 3 分割模型按文字提示定位，<span class="nw">50 件</span>抽检，整器轮廓全部贴合，口沿 <span class="nw">49 件</span>落点正确。</span></li>
+        <li class="au-step" data-step="2"><b>由整体入局部，细察形制</b><span>圈足要从底部照片取：<span class="nw">100 件</span>抽检，精确率 0.90、召回 0.81；清代仿钧器有 97% 配有底部照。</span></li>
         <li class="au-step" data-step="3"><b>将可见特征化为度量</b>
           <dl class="au-measure">
             <div><dt>轮廓对称度</dt><dd>98.2<i>%</i></dd><small>轮廓与其镜像的重合度 IoU</small></div>
@@ -421,7 +421,7 @@ html = f'''<!DOCTYPE html>
         <h3>已建立的基础</h3>
         <ul>
           <li>近两万件馆藏语料与器物检索；七馆 <span class="nw">3.4 万张</span>可商用照片的预训练语料</li>
-          <li>自动分割器物，提取三项图像度量</li>
+          <li>分割模型定位器物、口沿与圈足；在线上传体验</li>
           <li>以 2,435 件留出器物检验检索表现</li>
         </ul>
       </div>
